@@ -43,4 +43,8 @@ $map('GET', '/src/plataforma/teacher',            [new TeacherDashboardControlle
 /* ========== Panel ADMIN ========== */
 $map('GET', '/src/plataforma/admin',              [new AdminDashboardController,'index']);
 
+
+/* ========== Panel CAPTURISTA ========== */
+$map('GET', '/src/plataforma/capturista', [new CapturistaDashboardController,'index']);
+
 $router->dispatch();

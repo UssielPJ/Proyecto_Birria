@@ -15,21 +15,14 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
 
-  <!-- Tailwind config: paleta verde -->
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            primary: { /* emerald */
-              50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',
-              500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b'
-            },
-            neutral: { /* slate */
-              50:'#f8fafc',100:'#f1f5f9',200:'#e2e8f0',300:'#cbd5e1',400:'#94a3b8',
-              500:'#64748b',600:'#475569',700:'#334155',800:'#1e293b',900:'#0f172a'
-            }
+            primary: {50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b'},
+            neutral: {50:'#f8fafc',100:'#f1f5f9',200:'#e2e8f0',300:'#cbd5e1',400:'#94a3b8',500:'#64748b',600:'#475569',700:'#334155',800:'#1e293b',900:'#0f172a'}
           }
         }
       }
@@ -37,28 +30,34 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
   </script>
 
   <style>
-    .sidebar { transition:all .25s ease; }
-    .sidebar-collapsed { width:5rem; }
-    .sidebar-collapsed .nav-text,
-    .sidebar-collapsed .logo-text,
-    .sidebar-collapsed .user-info { display:none; }
-    .sidebar-collapsed .nav-item { justify-content:center; }
+    /* ====== FIX de colapso consistente ====== */
+    :root{ --sb-expanded:16rem; --sb-collapsed:5rem; }
+    .sidebar{
+      position:fixed; inset:0 auto 0 0; width:var(--sb-expanded);
+      z-index:50; overflow-x:hidden; overflow-y:auto; transition:width .25s ease;
+    }
+    .content-area{ margin-left:var(--sb-expanded); transition:margin-left .25s ease; position:relative; z-index:40; }
 
-    .content-area { transition:all .25s ease; }
-    .content-expanded { margin-left:16rem; }
-    .content-collapsed { margin-left:5rem; }
+    .body--sb-collapsed .sidebar{ width:var(--sb-collapsed); }
+    .body--sb-collapsed .content-area{ margin-left:var(--sb-collapsed); }
+    .body--sb-collapsed .logo-text,
+    .body--sb-collapsed .user-info,
+    .body--sb-collapsed .nav-text{ display:none; }
 
-    @media (max-width: 768px){
-      .sidebar { position:fixed; z-index:50; transform:translateX(-100%); }
-      .sidebar-mobile { transform:translateX(0); }
-      .content-area { margin-left:0 !important; }
+    .nav-item{ display:flex; align-items:center; gap:.75rem; padding:.75rem; border-radius:.5rem; }
+    .body--sb-collapsed .nav-item{ justify-content:center; gap:0; }
+
+    @media (max-width:768px){
+      .sidebar{ transform:translateX(-100%); }
+      .sidebar.sidebar-mobile{ transform:translateX(0); }
+      .content-area{ margin-left:0 !important; }
     }
 
     /* Botón tema (sol/luna) animado */
-    .nav-toggle { position:relative; }
-    .nav-toggle .icon-sun, .nav-toggle .icon-moon{
+    .nav-toggle{ position:relative; }
+    .nav-toggle .icon-sun,.nav-toggle .icon-moon{
       position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-      transition: opacity .25s ease, transform .25s ease;
+      transition:opacity .25s ease, transform .25s ease;
     }
     .nav-toggle .icon-moon{ opacity:0; transform:scale(.5) rotate(-90deg); }
     html.dark .nav-toggle .icon-sun{ opacity:0; transform:scale(.5) rotate(90deg); }
@@ -69,7 +68,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
 <body class="bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 min-h-screen">
   <div class="flex">
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg h-screen fixed top-0 left-0 w-64 overflow-y-auto">
+    <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg">
       <div class="p-4 flex items-center space-x-3">
         <div class="bg-primary-500 p-2 rounded-lg">
           <i data-feather="book" class="text-white"></i>
@@ -91,66 +90,34 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
 
       <nav class="p-4">
         <ul class="space-y-2">
-          <li>
-            <a href="/src/plataforma/app" class="nav-item flex items-center space-x-3 p-3 rounded-lg bg-primary-50 dark:bg-neutral-700/60 text-primary-700 dark:text-primary-300">
-              <i data-feather="home"></i><span class="nav-text">Panel</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/materias" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="book-open"></i><span class="nav-text">Materias</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/horario" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="calendar"></i><span class="nav-text">Horario</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/calificaciones" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="award"></i><span class="nav-text">Calificaciones</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/encuestas" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="clipboard"></i><span class="nav-text">Encuestas</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/becas" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="dollar-sign"></i><span class="nav-text">Becas</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/anuncios" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="bell"></i><span class="nav-text">Anuncios</span>
-            </a>
-          </li>
+          <li><a href="/src/plataforma/app" class="nav-item bg-primary-50 dark:bg-neutral-700/60 text-primary-700 dark:text-primary-300"><i data-feather="home"></i><span class="nav-text">Panel</span></a></li>
+          <li><a href="/src/plataforma/app/materias" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="book-open"></i><span class="nav-text">Materias</span></a></li>
+          <li><a href="/src/plataforma/app/horario" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="calendar"></i><span class="nav-text">Horario</span></a></li>
+          <li><a href="/src/plataforma/app/calificaciones" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="award"></i><span class="nav-text">Calificaciones</span></a></li>
+          <li><a href="/src/plataforma/app/encuestas" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="clipboard"></i><span class="nav-text">Encuestas</span></a></li>
+          <li><a href="/src/plataforma/app/becas" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="dollar-sign"></i><span class="nav-text">Becas</span></a></li>
+          <li><a href="/src/plataforma/app/anuncios" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="bell"></i><span class="nav-text">Anuncios</span></a></li>
 
           <?php if ($role === 'admin'): ?>
-          <li>
-            <a href="/src/plataforma/app/admin" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="settings"></i><span class="nav-text">Admin</span>
-            </a>
-          </li>
+          <li><a href="/src/plataforma/app/admin" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="settings"></i><span class="nav-text">Admin</span></a></li>
           <?php endif; ?>
         </ul>
       </nav>
 
       <div class="p-4 border-t border-neutral-200 dark:border-neutral-700 mt-auto">
-        <a href="/src/plataforma/logout" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 w-full">
+        <a href="/src/plataforma/logout" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700 w-full">
           <i data-feather="log-out"></i><span class="nav-text">Cerrar sesión</span>
         </a>
       </div>
     </aside>
 
     <!-- Contenido -->
-    <div id="content" class="content-area flex-1 content-expanded min-h-screen">
+    <div id="content" class="content-area flex-1 min-h-screen">
       <!-- Topbar -->
       <header class="bg-white dark:bg-neutral-800 shadow-sm sticky top-0 z-40">
         <div class="flex items-center justify-between p-4">
           <div class="flex items-center gap-4">
-            <button id="sidebar-toggle" class="text-neutral-500 dark:text-neutral-400">
+            <button id="sidebar-toggle" class="text-neutral-500 dark:text-neutral-400" aria-label="Alternar menú">
               <i data-feather="menu"></i>
             </button>
             <h1 class="text-xl font-bold">Panel Principal</h1>
@@ -158,7 +125,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
 
           <div class="flex items-center gap-3">
             <!-- Toggle tema -->
-            <button id="theme-toggle" class="nav-toggle h-9 w-9 rounded-xl ring-1 ring-black/10 dark:ring-white/10 hover:ring-black/20 dark:hover:ring-white/20 bg-white/80 dark:bg-neutral-700/60">
+            <button id="theme-toggle" class="nav-toggle h-9 w-9 rounded-xl ring-1 ring-black/10 dark:ring-white/10 hover:ring-black/20 dark:hover:ring-white/20 bg-white/80 dark:bg-neutral-700/60" aria-label="Cambiar tema">
               <span class="icon-sun">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <circle cx="12" cy="12" r="4"></circle>
@@ -172,7 +139,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
               </span>
             </button>
 
-            <a href="/src/plataforma/app/anuncios" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700 relative">
+            <a href="/src/plataforma/app/anuncios" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700 relative" aria-label="Notificaciones">
               <i data-feather="bell"></i>
               <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </a>
@@ -379,30 +346,28 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
   </div>
 
   <script>
-    AOS.init();
-    feather.replace();
+    AOS.init(); feather.replace();
 
-    // Sidebar
     const sidebar = document.getElementById('sidebar');
-    const content = document.getElementById('content');
     const sidebarToggle = document.getElementById('sidebar-toggle');
-    let isCollapsed = false;
 
-    sidebarToggle.addEventListener('click', ()=>{
-      // Desktop colapsable
-      isCollapsed = !isCollapsed;
-      if(isCollapsed){
-        sidebar.classList.add('sidebar-collapsed');
-        content.classList.remove('content-expanded');
-        content.classList.add('content-collapsed');
-      }else{
-        sidebar.classList.remove('sidebar-collapsed');
-        content.classList.remove('content-collapsed');
-        content.classList.add('content-expanded');
+    // Colapso desktop (clase en body) y drawer mobile
+    sidebarToggle.addEventListener('click', () => {
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      if (isMobile) {
+        sidebar.classList.toggle('sidebar-mobile');
+      } else {
+        document.body.classList.toggle('body--sb-collapsed');
+        localStorage.setItem('sbCollapsed', document.body.classList.contains('body--sb-collapsed') ? '1' : '0');
       }
-      // Mobile drawer
-      sidebar.classList.toggle('sidebar-mobile');
     });
+
+    // Restaurar estado en desktop
+    (function(){
+      const saved = localStorage.getItem('sbCollapsed') === '1';
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      if (!isMobile && saved) document.body.classList.add('body--sb-collapsed');
+    })();
 
     // Tema persistente
     (function(){
