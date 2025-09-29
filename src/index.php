@@ -29,7 +29,7 @@ function render_fragment_from($file){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UTEC - Plataforma de E-Learning</title>
+    <title>UTSC - Plataforma de E-Learning</title>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -156,7 +156,7 @@ function render_fragment_from($file){
                     </div>
                 </div>
                 <div data-aos="fade-left">
-                    <img src="http://static.photos/technology/640x360/1" alt="E-learning" class="rounded-lg shadow-xl">
+                    <img src=".//plataforma/app/img/PlantelUT.jpg" alt="E-learning" class="rounded-lg shadow-xl">
                 </div>
             </div>
         </div>
@@ -208,18 +208,18 @@ function render_fragment_from($file){
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Course 1 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-md course-card transition duration-300 ease-in-out" data-aos="fade-up">
-                    <img class="w-full h-48 object-cover" src="http://static.photos/technology/640x360/2" alt="Inteligencia Artificial">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/IndustrialM.jpg" alt="Inteligencia Artificial">
                     <div class="p-6">
                         <div class="flex items-center mb-2">
                             <span class="bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs font-semibold px-2.5 py-0.5 rounded">Nuevo</span>
-                            <span class="ml-2 text-gray-500 text-sm">Tecnología</span>
+                            <span class="ml-2 text-gray-500 text-sm">Mantenimiento</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Inteligencia Artificial</h3>
-                        <p class="text-gray-600 mb-4">Fundamentos y aplicaciones prácticas de IA en la industria.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Mantenimiento Industrial</h3>
+                        <p class="text-gray-600 mb-4">Gestión y soluciones en Mantenimiento Industrial.</p>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
                                 <i data-feather="clock" class="w-4 h-4 text-gray-500 mr-1"></i>
-                                <span class="text-sm text-gray-500">8 semanas</span>
+                                <span class="text-sm text-gray-500">1 año 8 meses</span>
                             </div>
                             <span class="text-[var(--ut-green-700)] font-medium">Inscripciones abiertas</span>
                         </div>
@@ -227,18 +227,18 @@ function render_fragment_from($file){
                 </div>
                 <!-- Course 2 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-md course-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="100">
-                    <img class="w-full h-48 object-cover" src="http://static.photos/technology/640x360/3" alt="Desarrollo Web">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/Negocios.jpg" alt="Desarrollo Web">
                     <div class="p-6">
                         <div class="flex items-center mb-2">
                             <span class="bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs font-semibold px-2.5 py-0.5 rounded">Popular</span>
-                            <span class="ml-2 text-gray-500 text-sm">Programación</span>
+                            <span class="ml-2 text-gray-500 text-sm">Crecimiento</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Desarrollo Web Full Stack</h3>
-                        <p class="text-gray-600 mb-4">Aprende a crear aplicaciones web completas con las últimas tecnologías.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Negocios Internacionales</h3>
+                        <p class="text-gray-600 mb-4">Formación integral para gestionar empresas en un entorno global competitivo.</p>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
                                 <i data-feather="clock" class="w-4 h-4 text-gray-500 mr-1"></i>
-                                <span class="text-sm text-gray-500">12 semanas</span>
+                                <span class="text-sm text-gray-500">1 año 8 meses</span>
                             </div>
                             <span class="text-[var(--ut-green-700)] font-medium">Inscripciones abiertas</span>
                         </div>
@@ -246,18 +246,18 @@ function render_fragment_from($file){
                 </div>
                 <!-- Course 3 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-md course-card transition duration-300 ease-in-out" data-aos="fade-up" data-aos-delay="200">
-                    <img class="w-full h-48 object-cover" src="http://static.photos/technology/640x360/4" alt="Ciberseguridad">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/Mecatronica.jpg" alt="Ciberseguridad">
                     <div class="p-6">
                         <div class="flex items-center mb-2">
                             <span class="bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs font-semibold px-2.5 py-0.5 rounded">Avanzado</span>
-                            <span class="ml-2 text-gray-500 text-sm">Seguridad</span>
+                            <span class="ml-2 text-gray-500 text-sm">Automatización</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ciberseguridad Avanzada</h3>
-                        <p class="text-gray-600 mb-4">Técnicas profesionales para proteger sistemas y redes.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Robótica Industrial</h3>
+                        <p class="text-gray-600 mb-4">Desarrollo de robots capaces de optimizar procesos productivos con precisión y eficiencia.</p>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
                                 <i data-feather="clock" class="w-4 h-4 text-gray-500 mr-1"></i>
-                                <span class="text-sm text-gray-500">10 semanas</span>
+                                <span class="text-sm text-gray-500">1 año 8 meses</span>
                             </div>
                             <span class="text-[var(--ut-green-700)] font-medium">Inscripciones abiertas</span>
                         </div>
@@ -278,7 +278,7 @@ function render_fragment_from($file){
                 <!-- Testimonios iguales a tu diseño -->
                 <div class="bg-gray-50 p-8 rounded-lg" data-aos="fade-up">
                     <div class="flex items-center mb-4">
-                        <img class="w-12 h-12 rounded-full object-cover" src="http://static.photos/people/200x200/1" alt="Ana Martínez">
+                        <img class="w-12 h-12 rounded-full object-cover" src=" alt="Ana Martínez">
                         <div class="ml-4">
                             <h4 class="font-bold text-gray-900">Ana Martínez</h4>
                             <p class="text-[var(--ut-green-700)]">Ing. en Sistemas</p>
@@ -344,7 +344,7 @@ function render_fragment_from($file){
                     </div>
                 </div>
                 <div data-aos="fade-left">
-                    <img src="http://static.photos/education/640x360/5" alt="Estudiantes" class="rounded-lg shadow-xl">
+                    <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Estudiantes" class="rounded-lg shadow-xl">
                 </div>
             </div>
         </div>

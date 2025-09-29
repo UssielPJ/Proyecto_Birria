@@ -9,7 +9,7 @@
       <!-- Brand -->
       <a href="#inicio" class="flex items-center gap-2 group">
         <img src="/static/logo_utec.png" alt="UTEC" class="h-9 w-9 rounded-md object-cover ring-2 ring-white/20 group-hover:ring-white/40 transition" onerror="this.style.display='none'">
-        <span class="text-lg font-semibold tracking-wide nav-title">UTEC</span>
+        <span class="text-lg font-semibold tracking-wide nav-title">UTSC</span>
       </a>
 
       <!-- Desktop menu -->
@@ -18,6 +18,8 @@
         <a href="#cursos"    class="nav-link">Cursos</a>
         <a href="#docentes"  class="nav-link">Docentes</a>
         <a href="#recursos"  class="nav-link">Recursos</a>
+        <a href="nosotros.php" class="nav-link">Nosotros</a>
+
       </div>
 
       <!-- Actions -->
