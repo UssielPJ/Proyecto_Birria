@@ -23,7 +23,14 @@ class Gate
 
   /** Si no tiene el/los roles, redirige fuera (al login por simplicidad) */
   public static function allow($roles): void {
-    if (!self::any((array)$roles)) {
+    $mapped_roles = array_map(function($role) {
+      return match($role) {
+        'alumno' => 'student',
+        'maestro' => 'teacher',
+        default => $role
+      };
+    }, (array)$roles);
+    if (!self::any($mapped_roles)) {
       header('Location: /src/plataforma/'); exit;
     }
   }
