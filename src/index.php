@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="text-center mt-12">
             <a href="nosotros.php" class="inline-flex items-center bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white px-8 py-4 rounded-lg font-semibold transition transform hover:scale-105 shadow-lg">
                 <i data-feather="book-open" class="mr-3 w-5 h-5"></i>
-                Conoce Todas Nuestras Carreras
+                Conoce más de nosotros
             </a>
         </div>
     </div>
