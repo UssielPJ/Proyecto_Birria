@@ -1,5 +1,5 @@
-<?php 
-$layout = $_SESSION['user_role'] . '.php';
+<?php
+$layout = $_SESSION['user']['role'] . '.php';
 require_once __DIR__ . '/../layouts/' . $layout;
 ?>
 

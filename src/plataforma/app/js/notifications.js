@@ -16,7 +16,7 @@ class NotificationsManager {
             this.unreadCount = parsed.filter(n => !n.is_read).length;
             return parsed;
         }
-        // Notificaciones de ejemplo iniciales
+        // Notificaciones iniciales
         const sampleNotifications = [
             {
                 id: 1,
@@ -44,19 +44,25 @@ class NotificationsManager {
     }
 
     initializeUI() {
-        // Agregar el botón de notificaciones al topbar
-        const topbarRight = document.querySelector('.flex.items-center.gap-3');
-        if (topbarRight) {
-            const notificationBtn = document.createElement('button');
-            notificationBtn.className = 'relative p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700';
-            notificationBtn.innerHTML = `
-                <i data-feather="bell"></i>
-                <span id="notification-badge" class="notification-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" style="display: none;">0</span>
-            `;
-            topbarRight.insertBefore(notificationBtn, topbarRight.firstChild);
-            feather.replace();
+        // Buscar el botón de notificaciones existente (campanita)
+        const notificationBtn = document.querySelector('a[href*="anuncios"], a[href="#"].p-2.rounded-full.relative, a.p-2.rounded-full.relative');
+        if (!notificationBtn) {
+            console.warn('No se encontró el botón de notificaciones existente');
+            return;
+        }
 
-            // Agregar el dropdown de notificaciones
+        // Agregar el badge al botón existente
+        if (!document.getElementById('notification-badge')) {
+            const badge = document.createElement('span');
+            badge.id = 'notification-badge';
+            badge.className = 'notification-badge absolute top-1 right-1 bg-red-500 text-white text-xs rounded-full min-w-[8px] h-2 flex items-center justify-center px-1';
+            badge.style.display = 'none';
+            notificationBtn.style.position = 'relative';
+            notificationBtn.appendChild(badge);
+        }
+
+        // Agregar el dropdown de notificaciones
+        if (!document.getElementById('notifications-dropdown')) {
             const dropdown = document.createElement('div');
             dropdown.id = 'notifications-dropdown';
             dropdown.className = 'notifications-dropdown absolute right-0 mt-2 w-80 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 hidden z-50';
@@ -74,27 +80,31 @@ class NotificationsManager {
                 </div>
             `;
             document.body.appendChild(dropdown);
-
-            // Event listeners
-            notificationBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                dropdown.classList.toggle('hidden');
-                if (!dropdown.classList.contains('hidden')) {
-                    this.updateUI(); // Refrescar lista al abrir
-                }
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!dropdown.contains(e.target) && !notificationBtn.contains(e.target)) {
-                    dropdown.classList.add('hidden');
-                }
-            });
-
-            document.getElementById('mark-all-read').addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.markAllAsRead();
-            });
         }
+
+        // Event listeners
+        notificationBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const dropdown = document.getElementById('notifications-dropdown');
+            dropdown.classList.toggle('hidden');
+            if (!dropdown.classList.contains('hidden')) {
+                this.updateUI(); // Refrescar lista al abrir
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('notifications-dropdown');
+            const btn = document.querySelector('a[href*="anuncios"], a[href="#"].p-2.rounded-full.relative, a.p-2.rounded-full.relative');
+            if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('mark-all-read').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.markAllAsRead();
+        });
     }
 
     // Simular fetch de notificaciones (lógica real con localStorage y generación dinámica)
@@ -159,13 +169,20 @@ class NotificationsManager {
         const badge = document.getElementById('notification-badge');
         const list = document.getElementById('notifications-list');
         const dropdown = document.getElementById('notifications-dropdown');
-        
+
         // Actualizar badge
-        if (this.unreadCount > 0) {
-            badge.style.display = 'flex';
-            badge.textContent = this.unreadCount > 99 ? '99+' : this.unreadCount;
-        } else {
-            badge.style.display = 'none';
+        if (badge) {
+            if (this.unreadCount > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = this.unreadCount > 99 ? '99+' : this.unreadCount;
+                badge.classList.remove('w-2', 'min-w-[8px]');
+                badge.classList.add('min-w-[18px]', 'h-5');
+            } else {
+                badge.style.display = 'none';
+                badge.textContent = '';
+                badge.classList.remove('min-w-[18px]', 'h-5');
+                badge.classList.add('w-2', 'min-w-[8px]');
+            }
         }
 
         // Actualizar lista

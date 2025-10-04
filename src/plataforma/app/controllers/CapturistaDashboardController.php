@@ -1,4 +1,11 @@
 <?php
+
+namespace App\Controllers;
+
+use App\Models\User;
+use App\Models\Course;
+use App\Models\Grade;
+
 class CapturistaDashboardController {
   public function index(){
     if (session_status() === PHP_SESSION_NONE) session_start();
@@ -6,17 +13,17 @@ class CapturistaDashboardController {
       header('Location: /src/plataforma/'); exit;
     }
 
-    // Cargar modelos necesarios
-    require_once __DIR__ . '/../models/User.php';
-    require_once __DIR__ . '/../models/Course.php';
-    require_once __DIR__ . '/../models/Grade.php';
-
     // Obtener datos del capturista
-    $userModel = new \App\Models\User();
-    $courseModel = new \App\Models\Course();
-    $gradeModel = new \App\Models\Grade();
+    $userModel = new User();
+    $courseModel = new Course();
+    $gradeModel = new Grade();
 
     $recentRegistrations = $userModel->getRecentUsers(5);
+    // Map role_id to role name for display
+    $roleMapping = [1 => 'admin', 2 => 'teacher', 3 => 'student', 4 => 'capturista'];
+    foreach ($recentRegistrations as $user) {
+        $user->role = $roleMapping[$user->role_id] ?? 'student';
+    }
     $pendingGrades = $gradeModel->getPendingGrades();
     $totalStudents = $userModel->countByRole('student');
     $totalTeachers = $userModel->countByRole('teacher');
@@ -37,7 +44,13 @@ class CapturistaDashboardController {
     ];
 
     // Cargar vista con los datos
-    $user = $_SESSION['user'];
-    include __DIR__.'/../views/capturista/dashboard.php';
+    \App\Core\View::render('capturista/dashboard', 'capturista', [
+      'title' => 'UTEC · Capturista',
+      'user'  => $_SESSION['user'] ?? null,
+      'todayStats' => $todayStats,
+      'pendingActions' => $pendingActions,
+      'recentRegistrations' => $recentRegistrations,
+      'pendingGrades' => $pendingGrades
+    ]);
   }
 }

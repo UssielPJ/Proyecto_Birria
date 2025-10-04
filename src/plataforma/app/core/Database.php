@@ -25,6 +25,7 @@ class Database {
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, // Changed to FETCH_OBJ for consistency with Notification.php
                 PDO::ATTR_EMULATE_PREPARES   => false,
+                PDO::ATTR_PERSISTENT         => true,
             ]);
         } catch (PDOException $e) {
             http_response_code(500);
@@ -45,7 +46,10 @@ class Database {
         return $this->stmt;
     }
 
-    public function fetchAll() {
+    public function fetchAll(?int $fetchMode = null, ...$args) {
+        if ($fetchMode !== null) {
+            return $this->stmt->fetchAll($fetchMode, ...$args);
+        }
         return $this->stmt->fetchAll();
     }
 
@@ -59,5 +63,9 @@ class Database {
 
     public function fetchColumn() {
         return $this->stmt->fetchColumn();
+    }
+
+    public function lastInsertId() {
+        return $this->pdo->lastInsertId();
     }
 }

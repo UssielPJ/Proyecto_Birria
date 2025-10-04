@@ -1,4 +1,7 @@
 <?php
+namespace App\Controllers;
+use PDO;
+use Exception;
 
 class SettingsController
 {
@@ -16,11 +19,9 @@ class SettingsController
         }
 
         $settings = $this->getAllSettings();
-        
+
         // Renderizar la vista usando el patrón del proyecto
-        ob_start();
-        include __DIR__ . '/../views/settings/index.php';
-        return ob_get_clean();
+        \App\Core\View::render('admin/settings/index', 'admin', ['settings' => $settings]);
     }
 
     public function updateGeneral()
@@ -47,13 +48,13 @@ class SettingsController
         // Validaciones básicas
         if (empty($data['school_name'])) {
             $_SESSION['error'] = 'El nombre de la institución es requerido';
-            header('Location: /src/plataforma/settings');
+            header('Location: /src/plataforma/app/admin/settings');
             exit;
         }
 
         if (!empty($data['contact_email']) && !filter_var($data['contact_email'], FILTER_VALIDATE_EMAIL)) {
             $_SESSION['error'] = 'El email de contacto no es válido';
-            header('Location: /src/plataforma/settings');
+            header('Location: /src/plataforma/app/admin/settings');
             exit;
         }
 
@@ -63,7 +64,7 @@ class SettingsController
             $_SESSION['error'] = 'Error al actualizar la configuración general';
         }
 
-        header('Location: /src/plataforma/settings');
+        header('Location: /src/plataforma/app/admin/settings');
         exit;
     }
 
@@ -91,19 +92,19 @@ class SettingsController
         // Validaciones básicas
         if (empty($data['current_period'])) {
             $_SESSION['error'] = 'El periodo actual es requerido';
-            header('Location: /src/plataforma/settings');
+            header('Location: /src/plataforma/app/admin/settings');
             exit;
         }
 
         if ($data['min_attendance'] < 0 || $data['min_attendance'] > 100) {
             $_SESSION['error'] = 'La asistencia mínima debe estar entre 0 y 100';
-            header('Location: /src/plataforma/settings');
+            header('Location: /src/plataforma/app/admin/settings');
             exit;
         }
 
         if ($data['passing_grade'] < 0 || $data['passing_grade'] > 100) {
             $_SESSION['error'] = 'La calificación mínima debe estar entre 0 y 100';
-            header('Location: /src/plataforma/settings');
+            header('Location: /src/plataforma/app/admin/settings');
             exit;
         }
 
@@ -113,7 +114,7 @@ class SettingsController
             $_SESSION['error'] = 'Error al actualizar la configuración académica';
         }
 
-        header('Location: /src/plataforma/settings');
+        header('Location: /src/plataforma/app/admin/settings');
         exit;
     }
 
@@ -148,7 +149,7 @@ class SettingsController
             $_SESSION['error'] = 'Error al actualizar la configuración de notificaciones';
         }
 
-        header('Location: /src/plataforma/settings');
+        header('Location: /src/plataforma/app/admin/settings');
         exit;
     }
 

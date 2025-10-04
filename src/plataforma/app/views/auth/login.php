@@ -322,7 +322,7 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
   <?php endif; ?>
 
   <!-- Form -->
-  <form class="space-y-6" method="post" action="/src/plataforma/login" autocomplete="on" id="loginForm">
+  <form class="space-y-6" method="post" action="/src/plataforma/login" autocomplete="on" id="loginForm" onsubmit="return validateForm()">
     <div class="space-y-6">
       <div class="relative">
         <label for="email" class="block text-sm font-medium text-white/90 mb-2 sr-only">Correo Institucional</label>
@@ -337,7 +337,7 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
             required
             inputmode="email"
             autocomplete="email"
-            placeholder="tu.correo@utsc.edu"
+            placeholder="admin|maestro|alumno|capturista@utec.edu"
             class="input-field w-full pr-12"
             value="<?php echo htmlspecialchars($_POST['email'] ?? $_COOKIE['user_email'] ?? ''); ?>"
             aria-describedby="email-error">
@@ -358,7 +358,7 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
             required
             autocomplete="current-password"
             class="input-field w-full pr-12"
-            placeholder="Tu contraseña"
+            placeholder="Contraseña: 12345"
             value="<?php echo htmlspecialchars($_COOKIE['user_password'] ?? ''); ?>"
             aria-describedby="password-error">
           <button type="button"
@@ -383,8 +383,7 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
       <button type="submit" 
               class="btn-login w-full flex justify-center items-center gap-2 py-4 px-6 rounded-xl text-base font-medium text-white mt-4 relative overflow-hidden"
               id="submitBtn"
-              aria-label="Iniciar sesión"
-              onclick="console.log('Botón de inicio de sesión clickeado')">
+              aria-label="Iniciar sesión">
         <span class="relative z-10 flex items-center gap-2">
           <i data-feather="log-in" class="w-5 h-5"></i>
           Iniciar Sesión
@@ -451,52 +450,47 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
     const passwordError = document.getElementById('password-error');
     const submitBtn = document.getElementById('submitBtn');
 
-    form.addEventListener('submit', function(e) {
-      console.log('Formulario enviado');
-      console.log('Email:', emailField.value);
-      console.log('Password length:', passwordField.value.length);
-      
+    function validateForm() {
+      const email = emailField.value.trim();
+      const password = passwordField.value;
       let isValid = true;
 
       // Email validation
-      const email = emailField.value.trim();
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        console.log('Email inválido');
         emailError.classList.remove('hidden');
+        emailError.textContent = 'Por favor ingresa un correo válido';
         isValid = false;
       } else {
-        console.log('Email válido');
         emailError.classList.add('hidden');
       }
 
       // Password validation
-      const password = passwordField.value;
-      if (password.length < 6) {
-        console.log('Contraseña demasiado corta');
+      if (password.length < 5) {
         passwordError.classList.remove('hidden');
+        passwordError.textContent = 'La contraseña debe tener al menos 5 caracteres';
         isValid = false;
       } else {
-        console.log('Contraseña válida');
         passwordError.classList.add('hidden');
       }
 
-      if (!isValid) {
-        console.log('Formulario inválido');
-        e.preventDefault();
-        return false;
+      if (isValid) {
+        // Loading state
+        submitBtn.disabled = true;
+        const spinner = submitBtn.querySelector('.loading-spinner');
+        const text = submitBtn.querySelector('span');
+        spinner.classList.remove('hidden');
+        text.style.opacity = '0.5';
       }
 
-      // Loading state
-      submitBtn.disabled = true;
-      const spinner = submitBtn.querySelector('.loading-spinner');
-      const text = submitBtn.querySelector('span');
-      spinner.classList.remove('hidden');
-      text.style.opacity = '0.5';
-      
-      console.log('Formulario válido, enviando...');
-      console.log('Action:', form.action);
-      console.log('Method:', form.method);
+      return isValid;
+    }
+
+    // Real-time validation
+    form.addEventListener('submit', function(e) {
+      if (!validateForm()) {
+        e.preventDefault();
+      }
     });
 
     // Real-time validation
@@ -511,7 +505,7 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
     });
 
     passwordField.addEventListener('blur', function() {
-      if (this.value.length < 6) {
+      if (this.value.length < 5) {
         passwordError.classList.remove('hidden');
       } else {
         passwordError.classList.add('hidden');

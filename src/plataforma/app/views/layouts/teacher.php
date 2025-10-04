@@ -3,7 +3,7 @@
 /** @var array|null $user */
 /** @var string $content */
 if (!isset($title))  $title  = 'UTEC · Panel Maestro';
-if (!isset($user))   $user   = $_SESSION['user'] ?? ['name'=>'Profesor', 'email'=>'profesor@utec.edu'];
+if (!isset($user))   $user   = $_SESSION['user'] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="es" class="light">
@@ -26,7 +26,7 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? ['name'=>'Profesor', 'email'
       theme: {
         extend: {
           colors: {
-            primary:{50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b'},
+            primary:{50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a'},
             neutral:{50:'#f8fafc',100:'#f1f5f9',200:'#e2e8f0',300:'#cbd5e1',400:'#94a3b8',500:'#64748b',600:'#475569',700:'#334155',800:'#1e293b',900:'#0f172a'}
           }
         }
@@ -49,7 +49,79 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? ['name'=>'Profesor', 'email'
     .body--sb-collapsed .user-info,
     .body--sb-collapsed .nav-text{ display:none; }
 
-    .nav-item{ display:flex; align-items:center; gap:.75rem; padding:.75rem; border-radius:.5rem; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .75rem;
+      border-radius: .5rem;
+      font-weight: 500;
+      color: #4a5568;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav-item:hover::before {
+      left: 100%;
+    }
+
+    .nav-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+      background: linear-gradient(135deg, rgba(219, 234, 254, 0.8), rgba(191, 219, 254, 0.8));
+      color: #1d4ed8;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #bfdbfe, #93c5fd);
+      color: #1e3a8a;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60%;
+      background: #1d4ed8;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .dark .nav-item {
+      color: #a0aec0;
+    }
+
+    .dark .nav-item:hover {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+    }
+
+    .dark .nav-item.active {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(96, 165, 250, 0.1));
+      color: #60a5fa;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .dark .nav-item.active::after {
+      background: #60a5fa;
+    }
 
     @media (max-width:768px){
       .sidebar{ transform:translateX(-100%); }
@@ -86,30 +158,13 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? ['name'=>'Profesor', 'email'
             <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
           </div>
           <div>
-            <p class="font-medium leading-tight"><?= htmlspecialchars($user['name'] ?? 'Profesor') ?></p>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-tight"><?= htmlspecialchars($user['email'] ?? 'profesor@utec.edu') ?></p>
+            <p class="font-medium leading-tight"><?= htmlspecialchars($user['name'] ?? '') ?></p>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-tight"><?= htmlspecialchars($user['email'] ?? '') ?></p>
           </div>
         </div>
       </div>
 
-      <nav class="p-4">
-        <ul class="space-y-2">
-          <li>
-            <a href="/src/plataforma/app/maestro"
-               class="nav-item <?php echo ($_SERVER['REQUEST_URI'] === '/src/plataforma/app/maestro')
-                ? 'bg-primary-50 dark:bg-neutral-700/60 text-primary-700 dark:text-primary-300'
-                : 'hover:bg-neutral-100 dark:hover:bg-neutral-700'; ?>">
-              <i data-feather="home"></i><span class="nav-text">Panel</span>
-            </a>
-          </li>
-          <li><a href="/src/plataforma/app/maestro/clases" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="book-open"></i><span class="nav-text">Mis Clases</span></a></li>
-          <li><a href="/src/plataforma/app/maestro/horario" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="calendar"></i><span class="nav-text">Horario</span></a></li>
-          <li><a href="/src/plataforma/app/maestro/calificar" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="edit"></i><span class="nav-text">Calificar</span></a></li>
-          <li><a href="/src/plataforma/app/maestro/estudiantes" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="users"></i><span class="nav-text">Estudiantes</span></a></li>
-          <li><a href="/src/plataforma/app/maestro/asistencia" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="clipboard"></i><span class="nav-text">Asistencia</span></a></li>
-          <li><a href="/src/plataforma/app/anuncios" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="bell"></i><span class="nav-text">Anuncios</span></a></li>
-        </ul>
-      </nav>
+      <?php include __DIR__ . '/../partials/navbar.php'; ?>
 
       <div class="p-4 border-t border-neutral-200 dark:border-neutral-700 mt-auto">
         <a href="/src/plataforma/logout" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700 w-full">
@@ -157,7 +212,7 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? ['name'=>'Profesor', 'email'
       </header>
 
       <main class="p-6">
-        <?= $content /* <- aquí entra la vista hija */ ?>
+        <?= $content ?? '' /* <- aquí entra la vista hija */ ?>
       </main>
 
       <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
@@ -190,18 +245,6 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? ['name'=>'Profesor', 'email'
       if(!isMobile && saved) document.body.classList.add('body--sb-collapsed');
     })();
 
-    function loadJS(src) {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-    
-    // Cargar gestor de tema
-    loadJS('/src/plataforma/app/js/theme.js');
   </script>
 </body>
 </html>

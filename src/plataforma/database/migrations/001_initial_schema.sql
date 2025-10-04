@@ -1,7 +1,3 @@
--- Crear la base de datos si no existe
-CREATE DATABASE IF NOT EXISTS birria_db;
-USE birria_db;
-
 -- Tabla de usuarios
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -138,6 +134,6 @@ CREATE TABLE IF NOT EXISTS survey_responses (
 );
 
 -- Insertar un usuario administrador por defecto
-INSERT INTO users (name, email, password, role) VALUES 
-('Admin', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
+INSERT INTO users (name, email, password, role) VALUES
+('Admin', 'admin@utec.edu', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
 -- La contraseña es 'password'

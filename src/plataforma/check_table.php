@@ -26,11 +26,71 @@ try {
     echo "Conexión a la base de datos exitosa.
 ";
 
+    // Listar todas las tablas
+    echo "
+=== Tablas en la base de datos ===
+";
+    $stmt = $pdo->query("SHOW TABLES");
+    $tables = $stmt->fetchAll(PDO::FETCH_NUM);
+
+    foreach ($tables as $table) {
+        echo "- " . $table[0] . "
+";
+    }
+
     // Verificar la estructura de la tabla users
     echo "
 === Estructura de la tabla users ===
 ";
     $stmt = $pdo->query("DESCRIBE users");
+    $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($columns as $column) {
+        echo "- " . $column['Field'] . " (" . $column['Type'] . ")
+";
+    }
+
+    // Verificar la estructura de la tabla courses
+    echo "
+=== Estructura de la tabla courses ===
+";
+    $stmt = $pdo->query("DESCRIBE courses");
+    $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($columns as $column) {
+        echo "- " . $column['Field'] . " (" . $column['Type'] . ")
+";
+    }
+
+    // Verificar la estructura de la tabla rooms
+    echo "
+=== Estructura de la tabla rooms ===
+";
+    $stmt = $pdo->query("DESCRIBE rooms");
+    $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($columns as $column) {
+        echo "- " . $column['Field'] . " (" . $column['Type'] . ")
+";
+    }
+
+    // Verificar la estructura de la tabla groups
+    echo "
+=== Estructura de la tabla groups ===
+";
+    $stmt = $pdo->query("DESCRIBE `groups`");
+    $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($columns as $column) {
+        echo "- " . $column['Field'] . " (" . $column['Type'] . ")
+";
+    }
+
+    // Verificar la estructura de la tabla terms
+    echo "
+=== Estructura de la tabla terms ===
+";
+    $stmt = $pdo->query("DESCRIBE terms");
     $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($columns as $column) {

@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
   header('Location: /src/plataforma/'); exit;
 }
-$U = $_SESSION['user'] ?? ['name'=>'Capturista','email'=>'capturista@utec.edu'];
+$U = $_SESSION['user'] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="es" class="light">
@@ -24,8 +24,8 @@ $U = $_SESSION['user'] ?? ['name'=>'Capturista','email'=>'capturista@utec.edu'];
         extend: {
           colors: {
             primary: {
-              50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',
-              500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b'
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',400:'#c084fc',
+              500:'#a855f7',600:'#9333ea',700:'#7c3aed',800:'#6b21a8',900:'#581c87'
             },
             neutral: {
               50:'#f8fafc',100:'#f1f5f9',200:'#e2e8f0',300:'#cbd5e1',400:'#94a3b8',
@@ -65,7 +65,80 @@ $U = $_SESSION['user'] ?? ['name'=>'Capturista','email'=>'capturista@utec.edu'];
     .body--sb-collapsed .user-info,
     .body--sb-collapsed .nav-text{ display:none; }
 
-    .nav-item{ display:flex; align-items:center; gap:.75rem; padding:.75rem; border-radius:.5rem; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .75rem;
+      border-radius: .5rem;
+      font-weight: 500;
+      color: #4a5568;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav-item:hover::before {
+      left: 100%;
+    }
+
+    .nav-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.15);
+      background: linear-gradient(135deg, rgba(243, 232, 255, 0.8), rgba(233, 213, 255, 0.8));
+      color: #7c3aed;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #e9d5ff, #d8b4fe);
+      color: #581c87;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60%;
+      background: #7c3aed;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .dark .nav-item {
+      color: #a0aec0;
+    }
+
+    .dark .nav-item:hover {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(147, 51, 234, 0.1));
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.2);
+      color: #c084fc;
+    }
+
+    .dark .nav-item.active {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(196, 181, 253, 0.1));
+      color: #c084fc;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    }
+
+    .dark .nav-item.active::after {
+      background: #c084fc;
+    }
+
     .body--sb-collapsed .nav-item{ justify-content:center; gap:0; }
 
     /* Mobile: drawer */
@@ -110,50 +183,7 @@ $U = $_SESSION['user'] ?? ['name'=>'Capturista','email'=>'capturista@utec.edu'];
         </div>
       </div>
 
-      <nav class="p-4">
-        <ul class="space-y-2">
-          <li>
-            <a href="/src/plataforma/capturista/" class="nav-item bg-primary-50 dark:bg-neutral-700/60 text-primary-700 dark:text-primary-300">
-              <i data-feather="home"></i><span class="nav-text">Panel</span>
-            </a>
-          </li>
-
-          <li class="pt-2 pb-1 text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 nav-text">Inscripciones</li>
-
-          <li>
-            <a href="/src/plataforma/solicitudes" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="file-text"></i><span class="nav-text">Solicitudes</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/solicitudes/nueva" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="edit-3"></i><span class="nav-text">Capturar solicitud</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/capturista/importar" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="upload-cloud"></i><span class="nav-text">Importar CSV/Excel</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/capturista/alumnos" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="users"></i><span class="nav-text">Alumnos</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/capturista/inscripciones" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="check-circle"></i><span class="nav-text">Inscripciones</span>
-            </a>
-          </li>
-
-          <li class="pt-3 pb-1 text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 nav-text">Utilidades</li>
-          <li>
-            <a href="/src/plataforma/capturista/reportes" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="bar-chart-2"></i><span class="nav-text">Reportes</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <?php include __DIR__ . '/../partials/navbar.php'; ?>
 
       <div class="p-4 border-t border-neutral-200 dark:border-neutral-700 mt-auto">
         <a href="/src/plataforma/logout" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700 w-full">
@@ -202,111 +232,7 @@ $U = $_SESSION['user'] ?? ['name'=>'Capturista','email'=>'capturista@utec.edu'];
       </header>
 
       <main class="p-6">
-        <div class="bg-gradient-to-r from-primary-500 to-primary-700 rounded-xl p-6 text-white mb-6" data-aos="fade-up">
-          <h2 class="text-2xl font-bold mb-1">¡Hola, <?= htmlspecialchars($U['name']) ?>!</h2>
-          <p class="opacity-90">Captura solicitudes, importa información y ayuda a dar de alta alumnos.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-primary-500" data-aos="fade-up">
-            <div class="flex items-center justify-between">
-              <div><p class="text-neutral-500 dark:text-neutral-400 text-sm">Solicitudes de hoy</p><h3 class="text-2xl font-bold mt-1">42</h3></div>
-              <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700"><i data-feather="file-text" class="text-primary-600"></i></div>
-            </div>
-          </div>
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-emerald-500" data-aos="fade-up" data-aos-delay="50">
-            <div class="flex items-center justify-between">
-              <div><p class="text-neutral-500 dark:text-neutral-400 text-sm">Aprobadas</p><h3 class="text-2xl font-bold mt-1">28</h3></div>
-              <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700"><i data-feather="check-circle" class="text-emerald-600"></i></div>
-            </div>
-          </div>
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-amber-500" data-aos="fade-up" data-aos-delay="100">
-            <div class="flex items-center justify-between">
-              <div><p class="text-neutral-500 dark:text-neutral-400 text-sm">En revisión</p><h3 class="text-2xl font-bold mt-1">11</h3></div>
-              <div class="p-3 rounded-lg bg-amber-50 dark:bg-neutral-700"><i data-feather="alert-circle" class="text-amber-600"></i></div>
-            </div>
-          </div>
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-rose-500" data-aos="fade-up" data-aos-delay="150">
-            <div class="flex items-center justify-between">
-              <div><p class="text-neutral-500 dark:text-neutral-400 text-sm">Rechazadas</p><h3 class="text-2xl font-bold mt-1">3</h3></div>
-              <div class="p-3 rounded-lg bg-rose-50 dark:bg-neutral-700"><i data-feather="x-circle" class="text-rose-600"></i></div>
-            </div>
-          </div>
-        </div>
-
-        <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 mb-6" data-aos="fade-up">
-          <h2 class="text-xl font-bold mb-4">Acciones rápidas</h2>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <a href="/src/plataforma/solicitudes/nueva" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700 mb-2"><i data-feather="edit-3" class="text-primary-600"></i></div>
-              <span class="text-sm font-medium">Capturar solicitud</span>
-            </a>
-            <a href="/src/plataforma/capturista/importar" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700 mb-2"><i data-feather="upload-cloud" class="text-emerald-600"></i></div>
-              <span class="text-sm font-medium">Importar CSV/Excel</span>
-            </a>
-            <a href="/src/plataforma/capturista/inscripciones" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="p-3 rounded-lg bg-amber-50 dark:bg-neutral-700 mb-2"><i data-feather="check-circle" class="text-amber-600"></i></div>
-              <span class="text-sm font-medium">Inscribir alumno</span>
-            </a>
-            <a href="/src/plataforma/capturista/alumnos" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700 mb-2"><i data-feather="users" class="text-purple-600"></i></div>
-              <span class="text-sm font-medium">Ver alumnos</span>
-            </a>
-          </div>
-        </section>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-xl font-bold">Últimas solicitudes</h2>
-              <a href="/src/plataforma/solicitudes" class="text-primary-700 dark:text-primary-300 text-sm">Ver todas</a>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center"><i data-feather="user"></i></div>
-                  <div><h3 class="font-medium">Ana Rodríguez</h3><p class="text-sm text-neutral-500 dark:text-neutral-400">Ing. Sistemas · Periodo 2025-1</p></div>
-                </div>
-                <span class="text-xs bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-2 py-1 rounded-full">Capturada</span>
-              </div>
-
-              <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center"><i data-feather="clock"></i></div>
-                  <div><h3 class="font-medium">Carlos Méndez</h3><p class="text-sm text-neutral-500 dark:text-neutral-400">Lic. Administración · 2025-1</p></div>
-                </div>
-                <span class="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-1 rounded-full">En revisión</span>
-              </div>
-            </div>
-          </section>
-
-          <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-xl font-bold">Pendientes de captura</h2>
-              <a href="/src/plataforma/capturista/reportes" class="text-primary-700 dark:text-primary-300 text-sm">Ver reportes</a>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-start gap-3">
-                  <div class="p-2 rounded-lg bg-rose-50 dark:bg-neutral-700 mt-1"><i data-feather="alert-triangle" class="text-rose-600"></i></div>
-                  <div><h3 class="font-medium">Documentos faltantes</h3><p class="text-sm text-neutral-500 dark:text-neutral-400">15 solicitudes con archivos incompletos</p></div>
-                </div>
-                <a href="/src/plataforma/solicitudes?f=faltantes" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="chevron-right" class="text-neutral-400"></i></a>
-              </div>
-
-              <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-start gap-3">
-                  <div class="p-2 rounded-lg bg-primary-50 dark:bg-neutral-700 mt-1"><i data-feather="upload" class="text-primary-600"></i></div>
-                  <div><h3 class="font-medium">Importaciones en cola</h3><p class="text-sm text-neutral-500 dark:text-neutral-400">2 archivos pendientes de procesar</p></div>
-                </div>
-                <a href="/src/plataforma/capturista/importar" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="chevron-right" class="text-neutral-400"></i></a>
-              </div>
-            </div>
-          </section>
-        </div>
+        <?= $content ?? '' ?>
       </main>
 
       <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
@@ -340,18 +266,6 @@ $U = $_SESSION['user'] ?? ['name'=>'Capturista','email'=>'capturista@utec.edu'];
       if (!isMobile && saved) document.body.classList.add('body--sb-collapsed');
     })();
 
-    function loadJS(src) {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-    
-    // Cargar gestor de tema
-    loadJS('/src/plataforma/app/js/theme.js');
   </script>
 </body>
 </html>

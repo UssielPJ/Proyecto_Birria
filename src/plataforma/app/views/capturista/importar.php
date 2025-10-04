@@ -5,7 +5,7 @@ if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
   header('Location: /src/plataforma/'); exit;
 }
 
-require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../../../config/database.php';
 
 // Procesar archivo subido
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Crear registro de importación
                 $stmt = $conn->prepare("
                     INSERT INTO importaciones (
-                        nombre_archivo, tipo, estado, total_registros, fecha_inicio
+                        nombre_archivo, tipo, estado, total_registros
                     ) VALUES (
-                        :nombre, :tipo, 'en_proceso', 0, NOW()
+                        :nombre, :tipo, 'en_proceso', 0
                     )
                 ");
                 
@@ -53,12 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Obtener historial de importaciones
 $importaciones = $conn->query("
     SELECT * FROM importaciones 
-    ORDER BY fecha_inicio DESC 
+    ORDER BY id DESC 
     LIMIT 5
 ")->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
-<?php require __DIR__ . '/../layouts/capturista.php' ?>
 
 <main class="p-6">
     <div class="mb-6">
@@ -135,7 +133,7 @@ $importaciones = $conn->query("
                                 <?= htmlspecialchars($imp['nombre_archivo']) ?>
                             </h3>
                             <p class="text-sm text-neutral-500 dark:text-neutral-400">
-                                <?= ucfirst($imp['tipo']) ?> · <?= date('d/m/Y H:i', strtotime($imp['fecha_inicio'])) ?>
+                                <?= ucfirst($imp['tipo'] ?? '') ?> · ID: <?= $imp['id'] ?>
                             </p>
                             <div class="mt-1">
                                 <?php
@@ -144,10 +142,10 @@ $importaciones = $conn->query("
                                     'en_proceso' => 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
                                     'error' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
                                 ];
-                                $clase = $estadoClases[$imp['estado']] ?? 'bg-neutral-100 text-neutral-800';
+                                $clase = $estadoClases[$imp['estado'] ?? 'desconocido'] ?? 'bg-neutral-100 text-neutral-800';
                                 ?>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?= $clase ?>">
-                                    <?= ucfirst(str_replace('_', ' ', $imp['estado'])) ?>
+                                    <?= ucfirst(str_replace('_', ' ', $imp['estado'] ?? '')) ?>
                                 </span>
                             </div>
                         </div>

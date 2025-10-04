@@ -5,8 +5,6 @@ if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
   header('Location: /src/plataforma/'); exit;
 }
 
-require_once __DIR__ . '/../../../../config/database.php';
-
 // Obtener solicitudes con paginación
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 10;
@@ -30,21 +28,19 @@ switch($filtro) {
 }
 
 // Consulta para obtener el total de registros
-$stmt = $conn->query("SELECT COUNT(*) as total FROM solicitudes $where");
+$stmt = db()->query("SELECT COUNT(*) as total FROM solicitudes $where");
 $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 $totalPages = ceil($total / $limit);
 
 // Consulta para obtener las solicitudes con join a la tabla alumnos
-$query = "SELECT s.*, a.nombre, a.carrera 
-          FROM solicitudes s 
-          LEFT JOIN alumnos a ON s.alumno_id = a.id 
+$query = "SELECT s.*, a.nombre, a.carrera, a.email
+          FROM solicitudes s
+          LEFT JOIN alumnos a ON s.alumno_id = a.id
           $where
-          ORDER BY s.fecha_creacion DESC 
+          ORDER BY s.fecha_creacion DESC
           LIMIT $offset, $limit";
-$solicitudes = $conn->query($query)->fetchAll(PDO::FETCH_ASSOC);
+$solicitudes = db()->query($query)->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
-<?php require __DIR__ . '/../../layouts/capturista.php' ?>
 
 <main class="p-6">
     <div class="flex justify-between items-center mb-6">
@@ -141,7 +137,7 @@ $solicitudes = $conn->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                 <?= date('d/m/Y', strtotime($solicitud['fecha_creacion'])) ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="/src/plataforma/solicitudes/editar?id=<?= $solicitud['id'] ?>" class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
+                                <a href="/src/plataforma/solicitudes/editar/<?= $solicitud['id'] ?>" class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
                                     Editar
                                 </a>
                             </td>

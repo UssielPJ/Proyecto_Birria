@@ -1,5 +1,6 @@
-<?php 
-$layout = $_SESSION['user_role'] . '.php';
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+$layout = ($_SESSION['user_role'] ?? 'student') . '.php';
 require_once __DIR__ . '/../layouts/' . $layout;
 
 // Anuncios reales basados en búsqueda reciente (Octubre 2025)

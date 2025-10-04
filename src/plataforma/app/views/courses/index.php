@@ -1,5 +1,6 @@
-<?php 
-$layout = $_SESSION['user_role'] . '.php';
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+$layout = ($_SESSION['user_role'] ?? 'student') . '.php';
 require_once __DIR__ . '/../layouts/' . $layout;
 ?>
 
@@ -55,47 +56,52 @@ require_once __DIR__ . '/../layouts/' . $layout;
 
     <!-- Grid de Cursos -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <!-- Curso -->
-        <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm overflow-hidden" data-aos="fade-up">
-            <div class="relative h-48 bg-neutral-200 dark:bg-neutral-700">
-                <img src="/src/plataforma/app/img/courses/math.jpg" alt="Matemáticas" class="w-full h-full object-cover">
-                <div class="absolute top-4 right-4">
-                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
-                        Activo
-                    </span>
-                </div>
-            </div>
-            <div class="p-6">
-                <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-2">Cálculo Diferencial</h3>
-                <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
-                    Fundamentos del cálculo diferencial y sus aplicaciones en la ingeniería.
-                </p>
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                            <i data-feather="user" class="w-4 h-4 text-primary-600 dark:text-primary-400"></i>
+        <?php if (!empty($courses)): ?>
+            <?php foreach ($courses as $course): ?>
+                <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm overflow-hidden" data-aos="fade-up">
+                    <div class="relative h-48 bg-neutral-200 dark:bg-neutral-700">
+                        <img src="/src/plataforma/app/img/UT.jpg" alt="<?= htmlspecialchars($course->name) ?>" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                                Activo
+                            </span>
                         </div>
-                        <span class="text-sm text-neutral-600 dark:text-neutral-300">Dr. Juan Pérez</span>
                     </div>
-                    <div class="flex items-center space-x-1">
-                        <i data-feather="users" class="w-4 h-4 text-neutral-400"></i>
-                        <span class="text-sm text-neutral-500 dark:text-neutral-400">32 estudiantes</span>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-2"><?= htmlspecialchars($course->name) ?></h3>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
+                            <?= htmlspecialchars($course->description ?? 'Descripción no disponible') ?>
+                        </p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
+                                    <i data-feather="user" class="w-4 h-4 text-primary-600 dark:text-primary-400"></i>
+                                </div>
+                                <span class="text-sm text-neutral-600 dark:text-neutral-300"><?= htmlspecialchars($course->teacher_name ?? 'Profesor no asignado') ?></span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i data-feather="users" class="w-4 h-4 text-neutral-400"></i>
+                                <span class="text-sm text-neutral-500 dark:text-neutral-400"><?= $course->student_count ?? 0 ?> estudiantes</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-1">
+                                <i data-feather="clock" class="w-4 h-4 text-neutral-400"></i>
+                                <span class="text-sm text-neutral-500 dark:text-neutral-400">Horario por definir</span>
+                            </div>
+                            <a href="#" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium">
+                                Ver detalles
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-1">
-                        <i data-feather="clock" class="w-4 h-4 text-neutral-400"></i>
-                        <span class="text-sm text-neutral-500 dark:text-neutral-400">Lun/Mie 9:00-11:00</span>
-                    </div>
-                    <a href="#" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium">
-                        Ver detalles
-                    </a>
-                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="col-span-full text-center py-12">
+                <i data-feather="book" class="w-16 h-16 text-neutral-300 dark:text-neutral-600 mx-auto mb-4"></i>
+                <p class="text-neutral-500 dark:text-neutral-400">No hay cursos disponibles</p>
             </div>
-        </div>
-
-        <!-- Más cursos aquí -->
-        
+        <?php endif; ?>
     </div>
 
     <!-- Paginación -->

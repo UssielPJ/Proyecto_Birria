@@ -1,70 +1,18 @@
-<?php
-require_once __DIR__ . '/../../layouts/admin.php';
-
-// Obtener parámetros de búsqueda y filtrado
-$buscar = $_GET['q'] ?? '';
-$departamento = $_GET['departamento'] ?? '';
-$estado = $_GET['estado'] ?? '';
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = 10;
-$offset = ($page - 1) * $limit;
-
-// Construir la consulta
-$where = [];
-$params = [];
-
-if ($buscar) {
-    $where[] = "(nombre LIKE :buscar OR email LIKE :buscar OR num_empleado LIKE :buscar)";
-    $params[':buscar'] = "%$buscar%";
-}
-
-if ($departamento) {
-    $where[] = "departamento = :departamento";
-    $params[':departamento'] = $departamento;
-}
-
-if ($estado) {
-    $where[] = "estado = :estado";
-    $params[':estado'] = $estado;
-}
-
-$whereClause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
-
-// Consulta para obtener el total
-$queryTotal = "SELECT COUNT(*) as total FROM profesores $whereClause";
-$stmt = $conn->prepare($queryTotal);
-$stmt->execute($params);
-$total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-$totalPages = ceil($total / $limit);
-
-// Consulta para obtener los profesores
-$query = "
-    SELECT * FROM profesores 
-    $whereClause 
-    ORDER BY nombre ASC 
-    LIMIT $offset, $limit
-";
-
-$stmt = $conn->prepare($query);
-$stmt->execute($params);
-$profesores = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Obtener lista de departamentos para el filtro
-$departamentos = $conn->query("SELECT DISTINCT departamento FROM profesores WHERE departamento IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
-?>
-
-<main class="p-6">
-    <div class="flex justify-between items-center mb-6">
-        <div>
-            <h1 class="text-2xl font-bold mb-2">Profesores</h1>
-            <p class="text-neutral-500 dark:text-neutral-400">Administra el personal docente de la institución.</p>
+<div class="container px-6 py-8">
+    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Gestión de Profesores</h1>
+            <div class="flex gap-3">
+                <a href="/src/plataforma/app/admin/teachers/export?format=csv&q=<?= urlencode($buscar ?? '') ?>&departamento=<?= urlencode($departamento ?? '') ?>&estado=<?= urlencode($estado ?? '') ?>" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                    <i data-feather="download" class="w-4 h-4"></i>
+                    Exportar CSV
+                </a>
+                <a href="/src/plataforma/app/admin/teachers/create" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                    <i data-feather="user-plus" class="w-4 h-4"></i>
+                    Nuevo Profesor
+                </a>
+            </div>
         </div>
-        <a href="/src/plataforma/admin/teachers/create" 
-           class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2">
-            <i data-feather="user-plus"></i>
-            Nuevo profesor
-        </a>
-    </div>
 
     <!-- Filtros y búsqueda -->
     <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-4 mb-6">
@@ -144,72 +92,44 @@ $departamentos = $conn->query("SELECT DISTINCT departamento FROM profesores WHER
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700">
-                    <?php foreach ($profesores as $profesor): ?>
+                    <?php foreach ($teachers as $teacher): ?>
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
-                                        <?php if ($profesor['foto']): ?>
-                                            <img class="h-10 w-10 rounded-full" src="<?= htmlspecialchars($profesor['foto']) ?>" alt="">
-                                        <?php else: ?>
-                                            <div class="h-10 w-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                                                <i data-feather="user" class="text-primary-600 dark:text-primary-400"></i>
-                                            </div>
-                                        <?php endif; ?>
+                                        <div class="h-10 w-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
+                                            <i data-feather="user" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+                                        </div>
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                                            <?= htmlspecialchars($profesor['nombre']) ?>
-                                        </div>
-                                        <div class="text-sm text-neutral-500 dark:text-neutral-400">
-                                            <?= htmlspecialchars($profesor['email']) ?>
-                                        </div>
+                                        <div class="text-sm font-medium"><?= htmlspecialchars($teacher->name) ?></div>
+                                        <div class="text-sm text-neutral-500 dark:text-neutral-400"><?= htmlspecialchars($teacher->email) ?></div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($profesor['num_empleado']) ?>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($profesor['departamento']) ?>
-                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?= htmlspecialchars($teacher->num_empleado ?? '') ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm"><?= htmlspecialchars($teacher->department ?? '') ?></td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <?php
-                                $estadoClases = [
-                                    'activo' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
-                                    'inactivo' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
-                                    'sabático' => 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
-                                ];
-                                $clase = $estadoClases[$profesor['estado']] ?? 'bg-neutral-100 text-neutral-800';
-                                ?>
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $clase ?>">
-                                    <?= ucfirst(htmlspecialchars($profesor['estado'])) ?>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $teacher->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
+                                    <?= ucfirst($teacher->status ?? 'inactive') ?>
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="flex justify-end gap-3">
-                                    <a href="/src/plataforma/admin/teachers/<?= $profesor['id'] ?>/schedule" 
-                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
-                                        Horario
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="flex items-center gap-3">
+                                    <a href="/src/plataforma/app/admin/teachers/edit/<?= $teacher->id ?>" class="text-primary-600 hover:text-primary-900">
+                                        <i data-feather="edit" class="w-4 h-4"></i>
                                     </a>
-                                    <a href="/src/plataforma/admin/teachers/<?= $profesor['id'] ?>" 
-                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
-                                        Ver
-                                    </a>
-                                    <a href="/src/plataforma/admin/teachers/<?= $profesor['id'] ?>/edit" 
-                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
-                                        Editar
-                                    </a>
-                                    <button onclick="confirmDelete(<?= $profesor['id'] ?>)" 
-                                            class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
-                                        Eliminar
-                                    </button>
+                                    <form action="/src/plataforma/app/admin/teachers/delete/<?= $teacher->id ?>" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este profesor?');">
+                                        <button type="submit" class="text-red-600 hover:text-red-900">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
 
-                    <?php if (empty($profesores)): ?>
+                    <?php if (empty($teachers)): ?>
                         <tr>
                             <td colspan="5" class="px-6 py-4 text-center text-neutral-500 dark:text-neutral-400">
                                 No se encontraron profesores
@@ -225,13 +145,13 @@ $departamentos = $conn->query("SELECT DISTINCT departamento FROM profesores WHER
         <div class="bg-neutral-50 dark:bg-neutral-800 px-4 py-3 flex items-center justify-between border-t border-neutral-200 dark:border-neutral-700 sm:px-6">
             <div class="flex-1 flex justify-between sm:hidden">
                 <?php if ($page > 1): ?>
-                    <a href="?page=<?= $page - 1 ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>" 
+                    <a href="?page=<?= $page - 1 ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>"
                        class="relative inline-flex items-center px-4 py-2 border border-neutral-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50">
                         Anterior
                     </a>
                 <?php endif; ?>
                 <?php if ($page < $totalPages): ?>
-                    <a href="?page=<?= $page + 1 ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>" 
+                    <a href="?page=<?= $page + 1 ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>"
                        class="ml-3 relative inline-flex items-center px-4 py-2 border border-neutral-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50">
                         Siguiente
                     </a>
@@ -240,11 +160,11 @@ $departamentos = $conn->query("SELECT DISTINCT departamento FROM profesores WHER
             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div>
                     <p class="text-sm text-neutral-700 dark:text-neutral-400">
-                        Mostrando 
-                        <span class="font-medium"><?= $offset + 1 ?></span>
-                        a 
-                        <span class="font-medium"><?= min($offset + $limit, $total) ?></span>
-                        de 
+                        Mostrando
+                        <span class="font-medium"><?= (($page - 1) * 10) + 1 ?></span>
+                        a
+                        <span class="font-medium"><?= min($page * 10, $total) ?></span>
+                        de
                         <span class="font-medium"><?= $total ?></span>
                         resultados
                     </p>
@@ -252,22 +172,22 @@ $departamentos = $conn->query("SELECT DISTINCT departamento FROM profesores WHER
                 <div>
                     <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                         <?php if ($page > 1): ?>
-                            <a href="?page=<?= $page - 1 ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>" 
+                            <a href="?page=<?= $page - 1 ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>"
                                class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-sm font-medium text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-600">
                                 <span class="sr-only">Previous</span>
                                 <i data-feather="chevron-left" class="h-5 w-5"></i>
                             </a>
                         <?php endif; ?>
-                        
+
                         <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
-                            <a href="?page=<?= $i ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>" 
+                            <a href="?page=<?= $i ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>"
                                class="relative inline-flex items-center px-4 py-2 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-sm font-medium <?= $i === $page ? 'text-primary-600 dark:text-primary-400' : 'text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-600' ?>">
                                 <?= $i ?>
                             </a>
                         <?php endfor; ?>
 
                         <?php if ($page < $totalPages): ?>
-                            <a href="?page=<?= $page + 1 ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>" 
+                            <a href="?page=<?= $page + 1 ?>&q=<?= urlencode($buscar) ?>&departamento=<?= urlencode($departamento) ?>&estado=<?= urlencode($estado) ?>"
                                class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-sm font-medium text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-600">
                                 <span class="sr-only">Next</span>
                                 <i data-feather="chevron-right" class="h-5 w-5"></i>
@@ -279,7 +199,8 @@ $departamentos = $conn->query("SELECT DISTINCT departamento FROM profesores WHER
         </div>
         <?php endif; ?>
     </div>
-</main>
+    </div>
+</div>
 
 <script>
     // Inicializar los íconos

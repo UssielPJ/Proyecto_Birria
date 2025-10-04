@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Core;
+
 /** Comprobaciones de rol basadas en la sesión */
 class Gate
 {

@@ -7,9 +7,27 @@ use PDO;
 
 class User {
     private $db;
+    public $id;
+    public $name;
+    public $email;
+    public $password;
+    public $role_id;
+    public $status;
+    public $created_at;
+    public $matricula;
+    public $semestre;
+    public $carrera;
+    public $num_empleado;
+    public $departamento;
 
     public function __construct() {
         $this->db = new Database();
+    }
+
+    public function getRoleIdBySlug($slug) {
+        $this->db->query("SELECT id FROM roles WHERE slug = ?", [$slug]);
+        $result = $this->db->fetch();
+        return $result ? $result->id : null;
     }
 
     public function count() {
@@ -18,7 +36,7 @@ class User {
     }
 
     public function countByRole($role) {
-        $this->db->query("SELECT COUNT(*) FROM users WHERE role = ?", [$role]);
+        $this->db->query("SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.id WHERE r.slug = ?", [$role]);
         return $this->db->fetchColumn();
     }
 
@@ -33,11 +51,23 @@ class User {
     }
 
     public function getRoleDistribution() {
-        $query = "SELECT role, COUNT(*) as count
-                 FROM users
-                 GROUP BY role";
+        $query = "SELECT r.slug as role, COUNT(*) as count
+                  FROM users u
+                  JOIN roles r ON u.role_id = r.id
+                  GROUP BY r.slug";
         $this->db->query($query);
-        return $this->db->fetchAll();
+        $results = $this->db->fetchAll();
+
+        // Transformar los resultados
+        $transformedResults = [];
+        foreach ($results as $result) {
+            $transformedResults[] = (object)[
+                'role' => $result->role,
+                'count' => $result->count
+            ];
+        }
+
+        return $transformedResults;
     }
 
     public function findById($id) {
@@ -48,28 +78,39 @@ class User {
     }
 
     public function getStudentsByTeacher($teacherId) {
-        $query = "SELECT DISTINCT u.* FROM users u
-                 JOIN enrollments e ON u.id = e.student_id
-                 JOIN courses c ON e.course_id = c.id
-                 WHERE c.teacher_id = ? AND u.role = 'student'";
-        $this->db->query($query, [$teacherId]);
-        return $this->db->fetchAll();
+        // Note: enrollments table structure is different - using user_id instead of student_id
+        // and carrera_id instead of course_id. For now, return empty array
+        return [];
     }
 
     public function getRecentUsers($limit = 5) {
-        $query = "SELECT * FROM users ORDER BY created_at DESC LIMIT ?";
+        $query = "SELECT u.*, r.slug as role FROM users u JOIN roles r ON u.role_id = r.id ORDER BY u.created_at DESC LIMIT ?";
         $this->db->query($query, [$limit]);
         return $this->db->fetchAll();
     }
 
+    public function getRecentByRole($role, $limit = 5) {
+        $query = "SELECT u.* FROM users u JOIN roles r ON u.role_id = r.id WHERE r.slug = ? ORDER BY u.created_at DESC LIMIT ?";
+        $this->db->query($query, [$role, $limit]);
+        return $this->db->fetchAll();
+    }
+
+    public function getByRole($role) {
+        $query = "SELECT u.* FROM users u JOIN roles r ON u.role_id = r.id WHERE r.slug = ?";
+        $this->db->query($query, [$role]);
+        return $this->db->fetchAll();
+    }
+
     public function create($data) {
-        $query = "INSERT INTO users (name, email, password, role, created_at)
-                 VALUES (?, ?, ?, ?, NOW())";
+        $roleSlug = $data['role'] ?? 'alumno';
+        $roleId = $this->getRoleIdBySlug($roleSlug);
+        $query = "INSERT INTO users (name, email, password, role_id, status, created_at)
+                  VALUES (?, ?, ?, ?, 'active', NOW())";
         $this->db->query($query, [
             $data['name'],
             $data['email'],
             password_hash($data['password'], PASSWORD_DEFAULT),
-            $data['role']
+            $roleId
         ]);
         return $this->db->rowCount() > 0;
     }
@@ -117,30 +158,14 @@ class User {
     }
 
     public function getUserRoles($userId) {
-        // Get user from database
-        $user = $this->findById($userId);
+        // Get user with role from database
+        $this->db->query("SELECT u.*, r.slug as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.id = ?", [$userId]);
+        $user = $this->db->fetch();
 
-        // Return the role from the user table
-        if ($user && !empty($user->role_id)) {
-            // Translate role IDs to match the expected values in the code
-            $roleTranslation = [
-                1 => 'admin',
-                2 => 'teacher',
-                3 => 'student',
-                4 => 'capturista'
-            ];
-
-            $roleId = $user->role_id;
-            error_log("User::getUserRoles - Original role ID: " . $roleId);
-
-            if (isset($roleTranslation[$roleId])) {
-                $translatedRole = $roleTranslation[$roleId];
-                error_log("User::getUserRoles - Translated role: " . $translatedRole);
-                return [$translatedRole];
-            }
-
-            error_log("User::getUserRoles - No translation found for role ID: " . $roleId);
-            return [];
+        // Return the role slug
+        if ($user && !empty($user->role)) {
+            error_log("User::getUserRoles - Role: " . $user->role);
+            return [$user->role];
         }
 
         error_log("User::getUserRoles - No role found for user ID: " . $userId);
@@ -148,8 +173,149 @@ class User {
     }
 
     public function countPendingRegistrations() {
-        $this->db->query("SELECT COUNT(*) FROM users WHERE status = 'pending'");
+        $this->db->query("SELECT COUNT(*) FROM users WHERE status = 'inactive'");
         return $this->db->fetchColumn();
+    }
+
+    public function countPendingSolicitudes() {
+        $this->db->query("SELECT COUNT(*) FROM solicitudes WHERE estado = 'pendiente'");
+        return $this->db->fetchColumn();
+    }
+
+    public function countIncompleteDocuments() {
+        $this->db->query("SELECT COUNT(*) FROM solicitudes WHERE documentos_completos = FALSE");
+        return $this->db->fetchColumn();
+    }
+
+    public function getStudentsWithFilters($filters = []) {
+        $where = ["r.slug = 'alumno'"];
+        $params = [];
+
+        if (!empty($filters['search'])) {
+            $where[] = "(u.name LIKE :search OR u.email LIKE :search OR u.matricula LIKE :search)";
+            $params[':search'] = '%' . $filters['search'] . '%';
+        }
+
+        if (!empty($filters['semestre'])) {
+            $where[] = "u.semestre = :semestre";
+            $params[':semestre'] = $filters['semestre'];
+        }
+
+        if (!empty($filters['carrera'])) {
+            $where[] = "u.carrera = :carrera";
+            $params[':carrera'] = $filters['carrera'];
+        }
+
+        if (!empty($filters['estado'])) {
+            $where[] = "u.status = :estado";
+            $params[':estado'] = $filters['estado'];
+        }
+
+        $whereClause = implode(' AND ', $where);
+        $limit = $filters['limit'] ?? 10;
+        $offset = $filters['offset'] ?? 0;
+
+        $query = "SELECT u.* FROM users u JOIN roles r ON u.role_id = r.id WHERE $whereClause ORDER BY u.name ASC LIMIT $limit OFFSET $offset";
+        $this->db->query($query, $params);
+        return $this->db->fetchAll();
+    }
+
+    public function countStudentsWithFilters($filters = []) {
+        $where = ["r.slug = 'alumno'"];
+        $params = [];
+
+        if (!empty($filters['search'])) {
+            $where[] = "(u.name LIKE :search OR u.email LIKE :search OR u.matricula LIKE :search)";
+            $params[':search'] = '%' . $filters['search'] . '%';
+        }
+
+        if (!empty($filters['semestre'])) {
+            $where[] = "u.semestre = :semestre";
+            $params[':semestre'] = $filters['semestre'];
+        }
+
+        if (!empty($filters['carrera'])) {
+            $where[] = "u.carrera = :carrera";
+            $params[':carrera'] = $filters['carrera'];
+        }
+
+        if (!empty($filters['estado'])) {
+            $where[] = "u.status = :estado";
+            $params[':estado'] = $filters['estado'];
+        }
+
+        $whereClause = implode(' AND ', $where);
+        $query = "SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.id WHERE $whereClause";
+        $this->db->query($query, $params);
+        return $this->db->fetchColumn();
+    }
+
+    public function getDistinctCarreras(): array {
+        $this->db->query("SELECT DISTINCT carrera FROM users WHERE carrera IS NOT NULL AND carrera != '' ORDER BY carrera");
+        return $this->db->fetchAll(PDO::FETCH_COLUMN, 0);
+    }
+
+    public function getDistinctSemestres(): array {
+        $this->db->query("SELECT DISTINCT semestre FROM users WHERE semestre IS NOT NULL AND semestre != '' ORDER BY semestre");
+        return $this->db->fetchAll(PDO::FETCH_COLUMN, 0);
+    }
+
+    public function getTeachersWithFilters($filters = []) {
+        $where = ["r.slug = 'maestro'"];
+        $params = [];
+
+        if (!empty($filters['search'])) {
+            $where[] = "(u.name LIKE :search OR u.email LIKE :search OR u.num_empleado LIKE :search)";
+            $params[':search'] = '%' . $filters['search'] . '%';
+        }
+
+        if (!empty($filters['departamento'])) {
+            $where[] = "u.departamento = :departamento";
+            $params[':departamento'] = $filters['departamento'];
+        }
+
+        if (!empty($filters['estado'])) {
+            $where[] = "u.status = :estado";
+            $params[':estado'] = $filters['estado'];
+        }
+
+        $whereClause = implode(' AND ', $where);
+        $limit = $filters['limit'] ?? 10;
+        $offset = $filters['offset'] ?? 0;
+
+        $query = "SELECT u.* FROM users u JOIN roles r ON u.role_id = r.id WHERE $whereClause ORDER BY u.name ASC LIMIT $limit OFFSET $offset";
+        $this->db->query($query, $params);
+        return $this->db->fetchAll();
+    }
+
+    public function countTeachersWithFilters($filters = []) {
+        $where = ["r.slug = 'maestro'"];
+        $params = [];
+
+        if (!empty($filters['search'])) {
+            $where[] = "(u.name LIKE :search OR u.email LIKE :search OR u.num_empleado LIKE :search)";
+            $params[':search'] = '%' . $filters['search'] . '%';
+        }
+
+        if (!empty($filters['departamento'])) {
+            $where[] = "u.departamento = :departamento";
+            $params[':departamento'] = $filters['departamento'];
+        }
+
+        if (!empty($filters['estado'])) {
+            $where[] = "u.status = :estado";
+            $params[':estado'] = $filters['estado'];
+        }
+
+        $whereClause = implode(' AND ', $where);
+        $query = "SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.id WHERE $whereClause";
+        $this->db->query($query, $params);
+        return $this->db->fetchColumn();
+    }
+
+    public function getDistinctDepartamentos() {
+        $this->db->query("SELECT DISTINCT departamento FROM users WHERE departamento IS NOT NULL AND departamento != '' ORDER BY departamento");
+        return $this->db->fetchAll(PDO::FETCH_COLUMN, 0);
     }
 
 }

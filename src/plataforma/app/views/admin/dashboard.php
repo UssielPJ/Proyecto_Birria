@@ -1,476 +1,329 @@
-<?php require_once __DIR__ . '/../layouts/admin.php'; ?>
+<!-- Bienvenida -->
+<div class="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-xl p-6 text-white mb-8 shadow-2xl relative overflow-hidden" data-aos="fade-up">
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
+    <div class="relative flex items-center gap-4">
+        <div class="p-3 bg-white/20 rounded-full backdrop-blur-sm animate-bounce">
+            <i data-feather="shield" class="w-8 h-8"></i>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold mb-1 animate-fade-in">Panel de Administración</h2>
+            <p class="opacity-90 animate-fade-in animation-delay-200">Administra y supervisa todos los aspectos de la plataforma.</p>
+        </div>
+    </div>
+    <div class="absolute top-4 right-4 opacity-20">
+        <i data-feather="settings" class="w-16 h-16 animate-spin-slow"></i>
+    </div>
+</div>
 
-<div class="container px-6 py-8">
-    <!-- Bienvenida -->
-    <div class="bg-gradient-to-r from-red-600 to-orange-600 rounded-xl p-6 text-white mb-8" data-aos="fade-up">
-        <div class="flex items-center gap-4">
-            <div class="p-3 bg-white/20 rounded-full">
-                <i data-feather="shield" class="w-8 h-8"></i>
-            </div>
+<!-- Estadísticas Principales -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Total de Estudiantes -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl shadow-lg p-6 border border-red-200 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-tooltip="Ver detalles de estudiantes">
+        <div class="absolute inset-0 bg-gradient-to-r from-red-400/20 to-orange-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center justify-between">
             <div>
-                <h2 class="text-2xl font-bold mb-1">Panel de Administración</h2>
-                <p class="opacity-90">Administra y supervisa todos los aspectos de la plataforma.</p>
+                <p class="text-red-600 text-sm font-medium">Total Estudiantes</p>
+                <h3 class="text-3xl font-bold mt-1 text-red-800 counter" data-target="<?= $stats['total_students'] ?>">0</h3>
+                <p class="text-red-500 text-xs mt-1">↗️ +12% este mes</p>
+            </div>
+            <div class="p-4 rounded-xl bg-red-100 shadow-inner group-hover:bg-red-200 group-hover:rotate-12 transition-all duration-300">
+                <i data-feather="users" class="w-8 h-8 text-red-600"></i>
             </div>
         </div>
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-red-400 to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
     </div>
 
-    <!-- Estadísticas Principales -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <!-- Total de Estudiantes -->
-        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500" data-aos="fade-up">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm">Total Estudiantes</p>
-                    <h3 class="text-2xl font-bold mt-1"><?= $stats['total_students'] ?></h3>
-                </div>
-                <div class="p-3 rounded-lg bg-blue-50">
-                    <i data-feather="users" class="w-6 h-6 text-blue-500"></i>
-                </div>
+    <!-- Total de Profesores -->
+    <div class="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl shadow-lg p-6 border border-orange-200 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-aos-delay="100" data-tooltip="Ver detalles de profesores">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center justify-between">
+            <div>
+                <p class="text-orange-600 text-sm font-medium">Total Profesores</p>
+                <h3 class="text-3xl font-bold mt-1 text-orange-800 counter" data-target="<?= $stats['total_teachers'] ?>">0</h3>
+                <p class="text-orange-500 text-xs mt-1">↗️ +2% este mes</p>
+            </div>
+            <div class="p-4 rounded-xl bg-orange-100 shadow-inner group-hover:bg-orange-200 group-hover:rotate-12 transition-all duration-300">
+                <i data-feather="user-check" class="w-8 h-8 text-orange-600"></i>
             </div>
         </div>
-
-        <!-- Total de Profesores -->
-        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500" data-aos="fade-up" data-aos-delay="100">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm">Total Profesores</p>
-                    <h3 class="text-2xl font-bold mt-1"><?= $stats['total_teachers'] ?></h3>
-                </div>
-                <div class="p-3 rounded-lg bg-green-50">
-                    <i data-feather="book-open" class="w-6 h-6 text-green-500"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total de Cursos -->
-        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-purple-500" data-aos="fade-up" data-aos-delay="200">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm">Total Cursos</p>
-                    <h3 class="text-2xl font-bold mt-1"><?= $stats['total_courses'] ?></h3>
-                </div>
-                <div class="p-3 rounded-lg bg-purple-50">
-                    <i data-feather="book" class="w-6 h-6 text-purple-500"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Cursos Activos -->
-        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-500" data-aos="fade-up" data-aos-delay="300">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm">Cursos Activos</p>
-                    <h3 class="text-2xl font-bold mt-1"><?= $stats['active_courses'] ?></h3>
-                </div>
-                <div class="p-3 rounded-lg bg-yellow-50">
-                    <i data-feather="activity" class="w-6 h-6 text-yellow-500"></i>
-                </div>
-            </div>
-        </div>
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-yellow-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
     </div>
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',
-              500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b'
-            },
-            neutral: {
-              50:'#f8fafc',100:'#f1f5f9',200:'#e2e8f0',300:'#cbd5e1',400:'#94a3b8',
-              500:'#64748b',600:'#475569',700:'#334155',800:'#1e293b',900:'#0f172a'
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    .sidebar { transition:all .25s ease; }
-    .sidebar-collapsed { width:5rem; }
-    .sidebar-collapsed .nav-text,
-    .sidebar-collapsed .logo-text,
-    .sidebar-collapsed .user-info { display:none; }
-    .sidebar-collapsed .nav-item { justify-content:center; }
-
-    .content-area { transition:all .25s ease; }
-    .content-expanded { margin-left:16rem; }
-    .content-collapsed { margin-left:5rem; }
-
-    @media (max-width: 768px){
-      .sidebar { position:fixed; z-index:50; transform:translateX(-100%); }
-      .sidebar-mobile { transform:translateX(0); }
-      .content-area { margin-left:0 !important; }
-    }
-
-    .nav-toggle { position:relative; }
-    .nav-toggle .icon-sun, .nav-toggle .icon-moon{
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-      transition: opacity .25s ease, transform .25s ease;
-    }
-    .nav-toggle .icon-moon{ opacity:0; transform:scale(.5) rotate(-90deg); }
-    html.dark .nav-toggle .icon-sun{ opacity:0; transform:scale(.5) rotate(90deg); }
-    html.dark .nav-toggle .icon-moon{ opacity:1; transform:scale(1) rotate(0deg); }
-  </style>
-</head>
-
-<body class="bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 min-h-screen">
-  <div class="flex">
-    <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg h-screen fixed top-0 left-0 w-64 overflow-y-auto">
-      <div class="p-4 flex items-center space-x-3">
-        <div class="bg-primary-500 p-2 rounded-lg">
-          <i data-feather="book" class="text-white"></i>
+    <!-- Total de Materias -->
+    <div class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-xl shadow-lg p-6 border border-yellow-200 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-aos-delay="200" data-tooltip="Ver detalles de materias">
+        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-amber-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center justify-between">
+            <div>
+                <p class="text-yellow-600 text-sm font-medium">Total Materias</p>
+                <h3 class="text-3xl font-bold mt-1 text-yellow-800 counter" data-target="<?= $stats['total_subjects'] ?>">0</h3>
+                <p class="text-yellow-500 text-xs mt-1">→ Sin cambios</p>
+            </div>
+            <div class="p-4 rounded-xl bg-yellow-100 shadow-inner group-hover:bg-yellow-200 group-hover:rotate-12 transition-all duration-300">
+                <i data-feather="book-open" class="w-8 h-8 text-yellow-600"></i>
+            </div>
         </div>
-        <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+    </div>
+
+    <!-- Cursos Activos -->
+    <div class="bg-gradient-to-br from-amber-50 to-red-50 rounded-xl shadow-lg p-6 border border-amber-200 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-aos-delay="300" data-tooltip="Ver cursos activos">
+        <div class="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-red-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center justify-between">
+            <div>
+                <p class="text-amber-600 text-sm font-medium">Cursos Activos</p>
+                <h3 class="text-3xl font-bold mt-1 text-amber-800 counter" data-target="<?= $stats['active_courses'] ?>">0</h3>
+                <p class="text-amber-500 text-xs mt-1">↗️ +5% este mes</p>
+            </div>
+            <div class="p-4 rounded-xl bg-amber-100 shadow-inner group-hover:bg-amber-200 group-hover:rotate-12 transition-all duration-300">
+                <i data-feather="activity" class="w-8 h-8 text-amber-600"></i>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-red-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+    </div>
+</div>
+
+<section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 mb-6" data-aos="fade-up">
+  <h2 class="text-xl font-bold mb-4">Acciones rápidas</h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
+      <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700 mb-2">
+        <i data-feather="user-plus" class="text-primary-600"></i>
       </div>
+      <span class="text-sm font-medium">Nuevo estudiante</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
+      <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700 mb-2">
+        <i data-feather="user-plus" class="text-emerald-600"></i>
+      </div>
+      <span class="text-sm font-medium">Nuevo profesor</span>
+    </a>
+    <a href="/src/plataforma/app/admin/subjects/create" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
+      <div class="p-3 rounded-lg bg-amber-50 dark:bg-neutral-700 mb-2">
+        <i data-feather="book-open" class="text-amber-600"></i>
+      </div>
+      <span class="text-sm font-medium">Nueva materia</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
+      <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700 mb-2">
+        <i data-feather="bell" class="text-purple-600"></i>
+      </div>
+      <span class="text-sm font-medium">Nuevo anuncio</span>
+    </a>
+  </div>
+</section>
 
-      <div class="px-4 pb-4 border-b border-neutral-200 dark:border-neutral-700">
-        <div class="user-info flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-            <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-bold">Últimos estudiantes</h2>
+      <a href="#" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
+    </div>
+
+    <div class="space-y-4">
+      <?php if (!empty($stats['recent_users'])): ?>
+        <?php foreach ($stats['recent_users'] as $user): ?>
+          <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
+                <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
+              </div>
+              <div>
+                <h3 class="font-medium"><?= htmlspecialchars($user->name) ?></h3>
+                <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= htmlspecialchars($user->role ?? 'Unknown') ?></p>
+              </div>
+            </div>
+            <span class="text-xs bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-2 py-1 rounded-full">Nuevo</span>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p class="text-neutral-500 dark:text-neutral-400">No hay usuarios recientes.</p>
+      <?php endif; ?>
+    </div>
+  </section>
+
+  <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-bold">Pendientes administrativos</h2>
+      <a href="#" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
+    </div>
+
+    <div class="space-y-4">
+      <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
+        <div class="flex items-start gap-3">
+          <div class="p-2 rounded-lg bg-amber-50 dark:bg-neutral-700 mt-1">
+            <i data-feather="alert-circle" class="text-amber-600"></i>
           </div>
           <div>
-            <p class="font-medium leading-tight"><?= $name ?></p>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-tight"><?= $email ?></p>
+            <h3 class="font-medium">Documentos faltantes</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $stats['incomplete_documents'] ?> estudiantes con documentos incompletos</p>
           </div>
         </div>
-      </div>
-
-      <nav class="p-4">
-        <ul class="space-y-2">
-          <li>
-            <a href="/src/plataforma/app/admin" class="nav-item flex items-center space-x-3 p-3 rounded-lg bg-primary-50 dark:bg-neutral-700/60 text-primary-700 dark:text-primary-300">
-              <i data-feather="home"></i><span class="nav-text">Panel</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/admin/students" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="users"></i><span class="nav-text">Estudiantes</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/admin/teachers" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="user-plus"></i><span class="nav-text">Profesores</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/admin/subjects" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="book-open"></i><span class="nav-text">Materias</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/admin/schedule" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="calendar"></i><span class="nav-text">Horarios</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/admin/grades" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="award"></i><span class="nav-text">Calificaciones</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/admin/payments" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="dollar-sign"></i><span class="nav-text">Pagos</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/admin/settings" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="settings"></i><span class="nav-text">Configuración</span>
-            </a>
-          </li>
-          <li>
-            <a href="/src/plataforma/app/admin/announcements" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
-              <i data-feather="bell"></i><span class="nav-text">Anuncios</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <div class="p-4 border-t border-neutral-200 dark:border-neutral-700 mt-auto">
-        <a href="/src/plataforma/logout" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 w-full">
-          <i data-feather="log-out"></i><span class="nav-text">Cerrar sesión</span>
+        <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
+          <i data-feather="chevron-right" class="text-neutral-400"></i>
         </a>
       </div>
-    </aside>
 
-    <!-- Contenido -->
-    <div id="content" class="content-area flex-1 content-expanded min-h-screen">
-      <!-- Topbar -->
-      <header class="bg-white dark:bg-neutral-800 shadow-sm sticky top-0 z-40">
-        <div class="flex items-center justify-between p-4">
-          <div class="flex items-center gap-4">
-            <button id="sidebar-toggle" class="text-neutral-500 dark:text-neutral-400">
-              <i data-feather="menu"></i>
-            </button>
-            <h1 class="text-xl font-bold">Panel Administrativo</h1>
+      <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
+        <div class="flex items-start gap-3">
+          <div class="p-2 rounded-lg bg-primary-50 dark:bg-neutral-700 mt-1">
+            <i data-feather="dollar-sign" class="text-primary-600"></i>
           </div>
-
-          <div class="flex items-center gap-3">
-            <button id="theme-toggle" class="nav-toggle h-9 w-9 rounded-xl ring-1 ring-black/10 dark:ring-white/10 hover:ring-black/20 dark:hover:ring-white/20 bg-white/80 dark:bg-neutral-700/60">
-              <span class="icon-sun">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="4"></circle>
-                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-                </svg>
-              </span>
-              <span class="icon-moon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
-                </svg>
-              </span>
-            </button>
-
-            <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700 relative">
-              <i data-feather="bell"></i>
-              <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </a>
-
-            <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-              <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
-            </div>
+          <div>
+            <h3 class="font-medium">Pagos pendientes</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $stats['pending_payments'] ?> pagos pendientes de confirmación</p>
           </div>
         </div>
-      </header>
+        <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
+          <i data-feather="chevron-right" class="text-neutral-400"></i>
+        </a>
+      </div>
 
-      <main class="p-6">
-        <div class="bg-gradient-to-r from-primary-500 to-primary-700 rounded-xl p-6 text-white mb-6" data-aos="fade-up">
-          <h2 class="text-2xl font-bold mb-1">¡Bienvenida, <?= $name ?>!</h2>
-          <p class="opacity-90">Gestiona toda la institución desde este panel centralizado.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-primary-500" data-aos="fade-up">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-neutral-500 dark:text-neutral-400 text-sm">Estudiantes</p>
-                <h3 class="text-2xl font-bold mt-1">1,245</h3>
-              </div>
-              <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700">
-                <i data-feather="users" class="text-primary-600"></i>
-              </div>
-            </div>
+      <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
+        <div class="flex items-start gap-3">
+          <div class="p-2 rounded-lg bg-rose-50 dark:bg-neutral-700 mt-1">
+            <i data-feather="alert-triangle" class="text-rose-600"></i>
           </div>
-
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-emerald-500" data-aos="fade-up" data-aos-delay="50">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-neutral-500 dark:text-neutral-400 text-sm">Profesores</p>
-                <h3 class="text-2xl font-bold mt-1">87</h3>
-              </div>
-              <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700">
-                <i data-feather="user-plus" class="text-emerald-600"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-amber-500" data-aos="fade-up" data-aos-delay="100">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-neutral-500 dark:text-neutral-400 text-sm">Materias</p>
-                <h3 class="text-2xl font-bold mt-1">56</h3>
-              </div>
-              <div class="p-3 rounded-lg bg-amber-50 dark:bg-neutral-700">
-                <i data-feather="book-open" class="text-amber-600"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-purple-500" data-aos="fade-up" data-aos-delay="150">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-neutral-500 dark:text-neutral-400 text-sm">Pagos pendientes</p>
-                <h3 class="text-2xl font-bold mt-1">32</h3>
-              </div>
-              <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700">
-                <i data-feather="dollar-sign" class="text-purple-600"></i>
-              </div>
-            </div>
+          <div>
+            <h3 class="font-medium">Solicitudes pendientes</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $stats['pending_solicitudes'] ?> solicitudes requieren atención</p>
           </div>
         </div>
-
-        <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 mb-6" data-aos="fade-up">
-          <h2 class="text-xl font-bold mb-4">Acciones rápidas</h2>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700 mb-2">
-                <i data-feather="user-plus" class="text-primary-600"></i>
-              </div>
-              <span class="text-sm font-medium">Nuevo estudiante</span>
-            </a>
-            <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700 mb-2">
-                <i data-feather="user-plus" class="text-emerald-600"></i>
-              </div>
-              <span class="text-sm font-medium">Nuevo profesor</span>
-            </a>
-            <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="p-3 rounded-lg bg-amber-50 dark:bg-neutral-700 mb-2">
-                <i data-feather="book-open" class="text-amber-600"></i>
-              </div>
-              <span class="text-sm font-medium">Nueva materia</span>
-            </a>
-            <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700 mb-2">
-                <i data-feather="bell" class="text-purple-600"></i>
-              </div>
-              <span class="text-sm font-medium">Nuevo anuncio</span>
-            </a>
-          </div>
-        </section>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-xl font-bold">Últimos estudiantes</h2>
-              <a href="#" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
-            </div>
-
-            <div class="space-y-4">
-              <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                    <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Ana Rodríguez</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Ing. Sistemas</p>
-                  </div>
-                </div>
-                <span class="text-xs bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-2 py-1 rounded-full">Nuevo</span>
-              </div>
-
-              <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                    <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Carlos Méndez</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Lic. Administración</p>
-                  </div>
-                </div>
-                <span class="text-xs bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 px-2 py-1 rounded-full">Activo</span>
-              </div>
-
-              <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                    <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Luis Fernández</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Ing. Industrial</p>
-                  </div>
-                </div>
-                <span class="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-1 rounded-full">Pendiente</span>
-              </div>
-            </div>
-          </section>
-
-          <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-xl font-bold">Pendientes administrativos</h2>
-              <a href="#" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
-            </div>
-
-            <div class="space-y-4">
-              <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-start gap-3">
-                  <div class="p-2 rounded-lg bg-amber-50 dark:bg-neutral-700 mt-1">
-                    <i data-feather="alert-circle" class="text-amber-600"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Documentos faltantes</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">15 estudiantes con documentos incompletos</p>
-                  </div>
-                </div>
-                <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                  <i data-feather="chevron-right" class="text-neutral-400"></i>
-                </a>
-              </div>
-
-              <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-start gap-3">
-                  <div class="p-2 rounded-lg bg-primary-50 dark:bg-neutral-700 mt-1">
-                    <i data-feather="dollar-sign" class="text-primary-600"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Pagos atrasados</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">32 pagos pendientes de confirmación</p>
-                  </div>
-                </div>
-                <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hoverbg-neutral-700">
-                  <i data-feather="chevron-right" class="text-neutral-400"></i>
-                </a>
-              </div>
-
-              <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-start gap-3">
-                  <div class="p-2 rounded-lg bg-rose-50 dark:bg-neutral-700 mt-1">
-                    <i data-feather="alert-triangle" class="text-rose-600"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Solicitudes urgentes</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">5 solicitudes requieren atención inmediata</p>
-                  </div>
-                </div>
-                <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                  <i data-feather="chevron-right" class="text-neutral-400"></i>
-                </a>
-              </div>
-            </div>
-          </section>
-        </div>
-      </main>
-
-      <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
-        <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTEC · Panel Administrativo</p>
-      </footer>
+        <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
+          <i data-feather="chevron-right" class="text-neutral-400"></i>
+        </a>
+      </div>
     </div>
-  </div>
+  </section>
+</div>
 
-  <script>
-    AOS.init();
-    feather.replace();
+<!-- Materias Recientes -->
+<section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
+ <div class="flex items-center justify-between mb-4">
+   <h2 class="text-xl font-bold">Materias recientes</h2>
+   <a href="/src/plataforma/app/admin/subjects" class="text-primary-700 dark:text-primary-300 text-sm">Ver todas</a>
+ </div>
 
-    const sidebar = document.getElementById('sidebar');
-    const content = document.getElementById('content');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    let isCollapsed = false;
+ <div class="space-y-4">
+   <?php if (!empty($stats['recent_subjects'])): ?>
+     <?php foreach ($stats['recent_subjects'] as $subject): ?>
+       <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
+         <div class="flex items-center gap-3">
+           <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
+             <i data-feather="book" class="text-amber-600 dark:text-amber-400"></i>
+           </div>
+           <div>
+             <h3 class="font-medium"><?= htmlspecialchars($subject['name']) ?></h3>
+             <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= htmlspecialchars($subject['code'] ?? '') ?> · <?= $subject['creditos'] ?? 0 ?> créditos</p>
+           </div>
+         </div>
+         <span class="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-1 rounded-full">Nueva</span>
+       </div>
+     <?php endforeach; ?>
+   <?php else: ?>
+     <p class="text-neutral-500 dark:text-neutral-400">No hay materias recientes.</p>
+   <?php endif; ?>
+ </div>
+</section>
 
-    sidebarToggle.addEventListener('click', ()=>{
-      isCollapsed = !isCollapsed;
-      if(isCollapsed){
-        sidebar.classList.add('sidebar-collapsed');
-        content.classList.remove('content-expanded');
-        content.classList.add('content-collapsed');
-      }else{
-        sidebar.classList.remove('sidebar-collapsed');
-        content.classList.remove('content-collapsed');
-        content.classList.add('content-expanded');
-      }
-      sidebar.classList.toggle('sidebar-mobile');
+<script>
+AOS.init();
+feather.replace();
+
+// Counter animation
+function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const step = target / (duration / 16); // 60fps
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                counter.textContent = target;
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current);
+            }
+        }, 16);
     });
+}
 
-    (function(){
-      const html = document.documentElement;
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if(saved){ html.classList.toggle('dark', saved==='dark'); }
-      else { html.classList.toggle('dark', prefersDark); }
+// Tooltip functionality
+function initTooltips() {
+    const cards = document.querySelectorAll('[data-tooltip]');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function(e) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'absolute bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg z-50 pointer-events-none';
+            tooltip.textContent = this.getAttribute('data-tooltip');
+            tooltip.style.top = e.clientY - 30 + 'px';
+            tooltip.style.left = e.clientX + 10 + 'px';
+            document.body.appendChild(tooltip);
 
-      document.getElementById('theme-toggle')?.addEventListener('click', ()=>{
-        const toDark = !html.classList.contains('dark');
-        html.classList.toggle('dark', toDark);
-        localStorage.setItem('theme', toDark ? 'dark' : 'light');
-        feather.replace();
-      });
-    })();
-  </script>
-</body>
-</html>
+            this.addEventListener('mousemove', function(e) {
+                tooltip.style.top = e.clientY - 30 + 'px';
+                tooltip.style.left = e.clientX + 10 + 'px';
+            });
+
+            this.addEventListener('mouseleave', function() {
+                tooltip.remove();
+            });
+        });
+    });
+}
+
+// Enhanced hover effects
+document.querySelectorAll('.grid > div').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px) scale(1.05)';
+        this.style.boxShadow = '0 25px 50px rgba(0,0,0,0.15), 0 0 30px rgba(239, 68, 68, 0.3)';
+    });
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+        this.style.boxShadow = '';
+    });
+});
+
+// Quick actions hover effects
+document.querySelectorAll('.grid.grid-cols-2 a').forEach(action => {
+    action.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+    });
+    action.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '';
+    });
+});
+
+// Initialize animations on load
+window.addEventListener('load', function() {
+    animateCounters();
+    initTooltips();
+});
+
+// Add custom CSS animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .animate-fade-in {
+        animation: fade-in 0.8s ease-out forwards;
+    }
+    .animation-delay-200 {
+        animation-delay: 0.2s;
+    }
+    .animate-spin-slow {
+        animation: spin-slow 3s linear infinite;
+    }
+`;
+document.head.appendChild(style);
+</script>

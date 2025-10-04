@@ -1,9 +1,10 @@
-<?php 
-$layout = $_SESSION['user_role'] . '.php';
+<?php
+$layout = $_SESSION['user']['role'] . '.php';
 require_once __DIR__ . '/../layouts/' . $layout;
 ?>
 
-<div class="container px-6 py-8">
+<div class="flex items-center justify-center min-h-[70vh]">
+<div class="container px-6">
     <!-- Encabezado -->
     <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl p-6 text-white mb-8" data-aos="fade-up">
         <div class="flex items-center gap-4">
@@ -238,6 +239,7 @@ require_once __DIR__ . '/../layouts/' . $layout;
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script>

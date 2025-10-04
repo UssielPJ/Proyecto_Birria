@@ -1,5 +1,6 @@
-<?php 
-$layout = $_SESSION['user_role'] . '.php';
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+$layout = ($_SESSION['user_role'] ?? 'student') . '.php';
 require_once __DIR__ . '/../layouts/' . $layout;
 ?>
 
@@ -19,57 +20,72 @@ require_once __DIR__ . '/../layouts/' . $layout;
 
     <!-- Resumen de Calificaciones -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <!-- Promedio General -->
-        <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-emerald-500" data-aos="fade-up">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-neutral-500 dark:text-neutral-400 text-sm">Promedio General</p>
-                    <h3 class="text-2xl font-bold mt-1">9.2</h3>
-                </div>
-                <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700">
-                    <i data-feather="bar-chart-2" class="text-emerald-600 dark:text-emerald-400"></i>
+        <?php if ($_SESSION['user_role'] === 'student'): ?>
+            <!-- Promedio General -->
+            <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-emerald-500" data-aos="fade-up">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-neutral-500 dark:text-neutral-400 text-sm">Promedio General</p>
+                        <h3 class="text-2xl font-bold mt-1"><?= number_format($stats['average'], 1) ?></h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700">
+                        <i data-feather="bar-chart-2" class="text-emerald-600 dark:text-emerald-400"></i>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Materias Aprobadas -->
-        <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-blue-500" data-aos="fade-up" data-aos-delay="100">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-neutral-500 dark:text-neutral-400 text-sm">Materias Aprobadas</p>
-                    <h3 class="text-2xl font-bold mt-1">24/30</h3>
-                </div>
-                <div class="p-3 rounded-lg bg-blue-50 dark:bg-neutral-700">
-                    <i data-feather="check-circle" class="text-blue-600 dark:text-blue-400"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mejor Calificación -->
-        <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-yellow-500" data-aos="fade-up" data-aos-delay="200">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-neutral-500 dark:text-neutral-400 text-sm">Mejor Calificación</p>
-                    <h3 class="text-2xl font-bold mt-1">10.0</h3>
-                </div>
-                <div class="p-3 rounded-lg bg-yellow-50 dark:bg-neutral-700">
-                    <i data-feather="star" class="text-yellow-600 dark:text-yellow-400"></i>
+            <!-- Total Materias -->
+            <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-blue-500" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-neutral-500 dark:text-neutral-400 text-sm">Total Materias</p>
+                        <h3 class="text-2xl font-bold mt-1"><?= $stats['total'] ?></h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-blue-50 dark:bg-neutral-700">
+                        <i data-feather="book" class="text-blue-600 dark:text-blue-400"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Promedio Semestral -->
-        <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-purple-500" data-aos="fade-up" data-aos-delay="300">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-neutral-500 dark:text-neutral-400 text-sm">Promedio Semestral</p>
-                    <h3 class="text-2xl font-bold mt-1">9.5</h3>
-                </div>
-                <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700">
-                    <i data-feather="trending-up" class="text-purple-600 dark:text-purple-400"></i>
+        <?php elseif ($_SESSION['user_role'] === 'teacher'): ?>
+            <!-- Total Calificaciones -->
+            <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-emerald-500" data-aos="fade-up">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-neutral-500 dark:text-neutral-400 text-sm">Total Calificaciones</p>
+                        <h3 class="text-2xl font-bold mt-1"><?= $stats['total_grades'] ?></h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700">
+                        <i data-feather="bar-chart-2" class="text-emerald-600 dark:text-emerald-400"></i>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php elseif ($_SESSION['user_role'] === 'admin'): ?>
+            <!-- Total Calificaciones -->
+            <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-emerald-500" data-aos="fade-up">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-neutral-500 dark:text-neutral-400 text-sm">Total Calificaciones</p>
+                        <h3 class="text-2xl font-bold mt-1"><?= $stats['total_grades'] ?></h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700">
+                        <i data-feather="bar-chart-2" class="text-emerald-600 dark:text-emerald-400"></i>
+                    </div>
+                </div>
+            </div>
+        <?php elseif ($_SESSION['user_role'] === 'capturista'): ?>
+            <!-- Calificaciones Pendientes -->
+            <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-yellow-500" data-aos="fade-up">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-neutral-500 dark:text-neutral-400 text-sm">Calificaciones Pendientes</p>
+                        <h3 class="text-2xl font-bold mt-1"><?= $stats['pending_grades'] ?></h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-yellow-50 dark:bg-neutral-700">
+                        <i data-feather="clock" class="text-yellow-600 dark:text-yellow-400"></i>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 
     <!-- Tabla de Calificaciones -->
@@ -124,41 +140,56 @@ require_once __DIR__ . '/../layouts/' . $layout;
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div>
-                                    <div class="text-sm font-medium text-neutral-900 dark:text-white">
-                                        Cálculo Diferencial
+                    <?php if (!empty($grades)): ?>
+                        <?php foreach ($grades as $grade): ?>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <div class="text-sm font-medium text-neutral-900 dark:text-white">
+                                                <?= htmlspecialchars($grade->course_name) ?>
+                                            </div>
+                                            <div class="text-sm text-neutral-500 dark:text-neutral-400">
+                                                <?= htmlspecialchars($grade->course_code) ?>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="text-sm text-neutral-500 dark:text-neutral-400">
-                                        MAT-101
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-neutral-900 dark:text-white">
+                                        <?php if ($_SESSION['user_role'] === 'student'): ?>
+                                            <?= htmlspecialchars($grade->course_name) ?> <!-- For student, teacher not directly available, but course_name is shown -->
+                                        <?php else: ?>
+                                            <?= htmlspecialchars($grade->student_name) ?>
+                                        <?php endif; ?>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-neutral-900 dark:text-white">Dr. Juan Pérez</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="text-sm text-neutral-900 dark:text-white">8.5</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="text-sm text-neutral-900 dark:text-white">9.0</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="text-sm text-neutral-900 dark:text-white">9.5</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="text-sm font-medium text-neutral-900 dark:text-white">9.0</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
-                                Aprobado
-                            </span>
-                        </td>
-                    </tr>
-                    <!-- Más filas aquí -->
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-neutral-900 dark:text-white">-</span> <!-- Assuming no partial grades -->
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-neutral-900 dark:text-white">-</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-neutral-900 dark:text-white">-</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm font-medium text-neutral-900 dark:text-white"><?= number_format($grade->grade, 1) ?></span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $grade->grade >= 7 ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200' ?>">
+                                        <?= $grade->grade >= 7 ? 'Aprobado' : 'Reprobado' ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7" class="px-6 py-4 text-center text-neutral-500 dark:text-neutral-400">
+                                No hay calificaciones disponibles
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

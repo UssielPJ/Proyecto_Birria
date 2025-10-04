@@ -5,7 +5,7 @@ if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
   header('Location: /src/plataforma/'); exit;
 }
 
-require_once __DIR__ . '/../../../config/database.php';
+require_once dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/config/database.php';
 
 // Parámetros de búsqueda y filtrado
 $buscar = $_GET['q'] ?? '';
@@ -68,8 +68,6 @@ $inscripciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Obtener periodos únicos para el filtro
 $periodos = $conn->query("SELECT DISTINCT periodo FROM inscripciones ORDER BY periodo DESC")->fetchAll(PDO::FETCH_COLUMN);
 ?>
-
-<?php require __DIR__ . '/../layouts/capturista.php' ?>
 
 <main class="p-6">
     <div class="flex justify-between items-center mb-6">

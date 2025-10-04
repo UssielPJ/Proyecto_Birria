@@ -1,33 +1,63 @@
 <?php
 
+namespace App\Controllers;
+
+use App\Core\Gate;
+use App\Core\View;
+use App\Models\Course;
+use App\Models\Grade;
+use App\Models\Schedule;
+use App\Models\Setting;
+
 class StudentDashboardController {
   public function index(){
     // Solo estudiante (o admin si quieres ver también)
     Gate::allow(['student']);
 
     // Cargar modelos necesarios
-    require_once __DIR__ . '/../models/Course.php';
-    require_once __DIR__ . '/../models/Grade.php';
-    require_once __DIR__ . '/../models/Schedule.php';
-
-    $courseModel = new \App\Models\Course();
-    $gradeModel = new \App\Models\Grade();
-    $scheduleModel = new \App\Models\Schedule();
+    $courseModel = new Course();
+    $gradeModel = new Grade();
+    $scheduleModel = new Schedule();
+    $settingModel = new Setting(); // Instantiate Setting model
 
     $user = $_SESSION['user'];
 
     // Obtener datos del estudiante
-    $currentCourses = $courseModel->getCurrentByStudent($user['id']);
-    $recentGrades = $gradeModel->getRecentByStudent($user['id']);
-    $averageGrade = $gradeModel->getAverageByStudent($user['id']);
-    $weekSchedule = $scheduleModel->getWeekByStudent($user['id']);
+    try {
+        $currentCourses = $courseModel->getCurrentByStudent($user['id']);
+    } catch (\Exception $e) {
+        $currentCourses = [];
+    }
+    try {
+        $recentGrades = $gradeModel->getRecentByStudent($user['id']);
+    } catch (\Exception $e) {
+        $recentGrades = [];
+    }
+    try {
+        $averageGradeData = $gradeModel->getAverageByStudent($user['id']);
+        $averageGrade = $averageGradeData['average'] ?? 0;
+    } catch (\Exception $e) {
+        $averageGrade = 0;
+    }
+    try {
+        $weekSchedule = $scheduleModel->getWeekByStudent($user['id']);
+    } catch (\Exception $e) {
+        $weekSchedule = [];
+    }
 
     // Calcula el progreso del semestre basado en la fecha actual
-    $startDate = strtotime('2025-08-15'); // Fecha de inicio del semestre
-    $endDate = strtotime('2025-12-15');   // Fecha de fin del semestre
-    $currentDate = time();
-    $semesterProgress = min(100, max(0, (($currentDate - $startDate) / ($endDate - $startDate)) * 100));
+    $startDateStr = '2025-08-15'; // Default
+    $endDateStr = '2025-12-15';     // Default
 
+    $startDate = strtotime($startDateStr);
+    $endDate = strtotime($endDateStr);
+    $currentDate = time();
+
+    $semesterProgress = 0;
+    if ($endDate > $startDate) { // Avoid division by zero
+        $semesterProgress = min(100, max(0, (($currentDate - $startDate) / ($endDate - $startDate)) * 100));
+    }
+    
     View::render('student/dashboard', 'student', [
       'title' => 'UTEC · Estudiante',
       'user'  => $user,
@@ -35,6 +65,7 @@ class StudentDashboardController {
       'recentGrades' => $recentGrades,
       'averageGrade' => $averageGrade,
       'weekSchedule' => $weekSchedule,
+      'scheduleModel' => $scheduleModel,
       'semesterProgress' => $semesterProgress
     ]);
   }

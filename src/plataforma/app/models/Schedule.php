@@ -12,29 +12,43 @@ class Schedule {
         $this->db = new Database();
     }
 
-    public function getWeekByStudent($studentId) {
-        $this->db->query("
-            SELECT s.*, c.name as course_name, u.name as teacher_name, r.name as room_name
-            FROM schedules s
-            JOIN courses c ON s.course_id = c.id
-            JOIN users u ON c.teacher_id = u.id
-            JOIN rooms r ON s.room_id = r.id
-            JOIN enrollments e ON c.id = e.course_id
-            WHERE e.student_id = ?
-            ORDER BY s.day_of_week, s.start_time
-        ", [$studentId]);
-        return $this->db->fetchAll();
+    public function getWeekByStudent($studentId): array {
+        try {
+            // Get student's user_id from alumnos table
+            $this->db->query("SELECT u.id as user_id FROM users u JOIN alumnos a ON u.email = a.email WHERE a.id = ?", [$studentId]);
+            $studentUser = $this->db->fetch();
+
+            if (!$studentUser) {
+                return [];
+            }
+
+            // Get schedules from enrollments table
+            $this->db->query("
+                SELECT s.*, c.name as course_name, r.name as room_name
+                FROM schedules s
+                JOIN courses c ON s.course_id = c.id
+                JOIN enrollments e ON c.id = e.course_id
+                LEFT JOIN rooms r ON s.room_id = r.id
+                WHERE e.student_id = ? AND c.estado = 'activa'
+                ORDER BY s.day_of_week, s.start_time
+            ", [$studentUser['user_id']]);
+
+            return $this->db->fetchAll();
+        } catch (\Exception $e) {
+            error_log("Error getting schedule for student: " . $e->getMessage());
+            return [];
+        }
     }
 
     public function getWeekByTeacher($teacherId) {
+        // Note: enrollments table structure is different - using user_id instead of student_id
+        // and carrera_id instead of course_id. For now, return schedules without student count
         $this->db->query("
-            SELECT s.*, c.name as course_name, r.name as room_name, COUNT(e.student_id) as student_count
+            SELECT s.*, c.name as course_name, r.name as room_name, 0 as student_count
             FROM schedules s
             JOIN courses c ON s.course_id = c.id
             JOIN rooms r ON s.room_id = r.id
-            LEFT JOIN enrollments e ON c.id = e.course_id
             WHERE c.teacher_id = ?
-            GROUP BY s.id
             ORDER BY s.day_of_week, s.start_time
         ", [$teacherId]);
         return $this->db->fetchAll();
@@ -94,18 +108,46 @@ class Schedule {
     }
 
     public function update($id, $data) {
-        $fields = [];
-        $values = [];
+        try {
+            // Mapear los campos del formulario a los campos de la tabla
+            $scheduleData = [
+                'course_id' => $data['materia_id'] ?? null,
+                'room_id' => $data['aula_id'] ?? null,
+                'day_of_week' => $data['dia'] ?? null,
+                'start_time' => $data['hora_inicio'] ?? null,
+                'end_time' => $data['hora_fin'] ?? null
+            ];
 
-        foreach ($data as $key => $value) {
-            $fields[] = "$key = ?";
-            $values[] = $value;
+            // Actualizar el horario
+            $fields = [];
+            $values = [];
+
+            foreach ($scheduleData as $key => $value) {
+                if ($value !== null) {
+                    $fields[] = "$key = ?";
+                    $values[] = $value;
+                }
+            }
+
+            if (empty($fields)) {
+                return false;
+            }
+
+            $values[] = $id;
+            $query = "UPDATE schedules SET " . implode(', ', $fields) . " WHERE id = ?";
+            $this->db->query($query, $values);
+
+            // También necesitamos actualizar el curso si se cambia el profesor
+            if (isset($data['profesor_id'])) {
+                $this->db->query("UPDATE courses SET teacher_id = ? WHERE id = ?", 
+                    [$data['profesor_id'], $scheduleData['course_id']]);
+            }
+
+            return $this->db->rowCount() > 0;
+        } catch (\PDOException $e) {
+            error_log("Error updating schedule: " . $e->getMessage());
+            return false;
         }
-
-        $values[] = $id;
-        $query = "UPDATE schedules SET " . implode(', ', $fields) . " WHERE id = ?";
-        $this->db->query($query, $values);
-        return $this->db->rowCount() > 0;
     }
 
     public function delete($id) {
@@ -113,8 +155,45 @@ class Schedule {
         return $this->db->rowCount() > 0;
     }
 
+    public function getAll() {
+        $this->db->query("
+            SELECT s.*, c.name as course_name, u.name as teacher_name, r.name as room_name
+            FROM schedules s
+            JOIN courses c ON s.course_id = c.id
+            JOIN users u ON c.teacher_id = u.id
+            JOIN rooms r ON s.room_id = r.id
+            ORDER BY s.day_of_week, s.start_time
+        ");
+        return $this->db->fetchAll();
+    }
+
     public function findById($id) {
-        $this->db->query("SELECT * FROM schedules WHERE id = ?", [$id]);
+        $this->db->query("SELECT s.*,
+                                c.id as materia_id,
+                                c.name as materia_nombre,
+                                c.code as materia_codigo,
+                                c.teacher_id as profesor_id,
+                                u.name as profesor_nombre,
+                                r.id as aula_id,
+                                r.name as aula_nombre,
+                                r.type as aula_tipo,
+                                s.day_of_week as dia,
+                                s.start_time as hora_inicio,
+                                s.end_time as hora_fin,
+                                '2025-1' as periodo,
+                                'SIS-1A' as grupo_id,
+                                'presencial' as modalidad,
+                                'activa' as estado,
+                                'teorica' as tipo_clase,
+                                '2' as duracion,
+                                '' as observaciones,
+                                CURDATE() as fecha_inicio,
+                                DATE_ADD(CURDATE(), INTERVAL 4 MONTH) as fecha_fin
+                         FROM schedules s
+                         LEFT JOIN courses c ON s.course_id = c.id
+                         LEFT JOIN users u ON c.teacher_id = u.id
+                         LEFT JOIN rooms r ON s.room_id = r.id
+                         WHERE s.id = ?", [$id]);
         return $this->db->fetch();
     }
 }

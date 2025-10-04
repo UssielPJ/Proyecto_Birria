@@ -9,6 +9,8 @@ $dsn = sprintf(
   $config['db']['charset']
 );
 
+global $pdo;
+
 try {
   $pdo = new PDO($dsn, $config['db']['user'], $config['db']['pass'], [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

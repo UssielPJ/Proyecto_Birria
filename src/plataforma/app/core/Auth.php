@@ -58,6 +58,8 @@ class Auth {
         'role'  => $roleName,
         'role_id' => $user->role_id
     ];
+    $_SESSION['user_role'] = $roleName;
+    $_SESSION['roles'] = [$roleName];
     error_log("Auth::attempt - Login successful for user: " . $user->email);
     return true;
   }

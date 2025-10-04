@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Models;
+
+use PDO;
+use Exception;
+
 class Payment
 {
     private $db;
@@ -8,7 +13,7 @@ class Payment
 
     public function __construct()
     {
-        $this->db = db(); // Usar la función helper db()
+        $this->db = new \App\Core\Database(); // Usar la clase Database del framework
     }
 
     public static function all()
@@ -135,6 +140,20 @@ class Payment
             return $result ? $result->total : 0;
         } catch (Exception $e) {
             error_log("Error en Payment::getTotalByStatus(): " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public static function countPending()
+    {
+        try {
+            $pdo = db();
+            $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM payments WHERE estatus = 'en_revision'");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            return $result ? $result->count : 0;
+        } catch (Exception $e) {
+            error_log("Error en Payment::countPending(): " . $e->getMessage());
             return 0;
         }
     }

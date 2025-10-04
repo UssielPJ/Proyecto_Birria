@@ -10,6 +10,6 @@ $map('POST', '/src/plataforma/api/notifications/read',    [new \App\Controllers\
 $map('POST', '/src/plataforma/api/notifications/read-all',[new \App\Controllers\NotificationsController, 'markAllAsRead']);
 
 /* ========== Auth Routes ========== */
-$map('GET', '/src/plataforma/login',  [new \App\Controllers\AuthController, 'showLogin']);
-$map('POST', '/src/plataforma/login', [new \App\Controllers\AuthController, 'login']);
-$map('GET', '/src/plataforma/logout', [new \App\Controllers\AuthController, 'logout']);
+$map('GET', '/src/plataforma/login',  [new AuthController, 'showLogin']);
+$map('POST', '/src/plataforma/login', [new AuthController, 'login']);
+$map('GET', '/src/plataforma/logout', [new AuthController, 'logout']);

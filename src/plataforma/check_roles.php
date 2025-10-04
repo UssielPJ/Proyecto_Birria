@@ -1,94 +1,24 @@
 <?php
-// Script para verificar la tabla roles
+require_once '../../src/db.php';
 
-// Cargar configuración
-$config = require __DIR__ . '/../../config/config.php';
-
-// Conectar a la base de datos
 try {
-    $pdo = new PDO(
-        sprintf(
-            'mysql:host=%s;port=%d;dbname=%s;charset=%s',
-            $config['db']['host'],
-            $config['db']['port'],
-            $config['db']['name'],
-            $config['db']['charset']
-        ),
-        $config['db']['user'],
-        $config['db']['pass'],
-        [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ]
-    );
+    $stmt = $pdo->query("SELECT * FROM roles");
+    $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo "Roles:\n";
+    print_r($roles);
 
-    echo "Conexión a la base de datos exitosa.
-";
+    $stmt = $pdo->query("SELECT COUNT(*) as count FROM users WHERE role_id = 1");
+    $admins = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo "\nAdmins: " . $admins['count'] . "\n";
 
-    // Verificar si existe la tabla roles
-    $stmt = $pdo->query("SHOW TABLES LIKE 'roles'");
-    if ($stmt->rowCount() > 0) {
-        echo "
-=== Estructura de la tabla roles ===
-";
-        $stmt = $pdo->query("DESCRIBE roles");
-        $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->query("SELECT COUNT(*) as count FROM users WHERE role_id = 2");
+    $teachers = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo "Teachers: " . $teachers['count'] . "\n";
 
-        foreach ($columns as $column) {
-            echo "- " . $column['Field'] . " (" . $column['Type'] . ")
-";
-        }
+    $stmt = $pdo->query("SELECT COUNT(*) as count FROM users WHERE role_id = 3");
+    $students = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo "Students: " . $students['count'] . "\n";
 
-        // Verificar los datos de la tabla roles
-        echo "
-=== Datos de la tabla roles ===
-";
-        $stmt = $pdo->query("SELECT * FROM roles");
-        $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($roles as $role) {
-            echo "ID: " . $role['id'] . "
-";
-            echo "Nombre: " . $role['name'] . "
-";
-            echo "Slug: " . $role['slug'] . "
-";
-            echo "---
-";
-        }
-
-        // Verificar la relación entre users y roles
-        echo "
-=== Relación users-roles ===
-";
-        $stmt = $pdo->query("
-            SELECT u.id, u.name, u.email, r.slug as role
-            FROM users u
-            LEFT JOIN roles r ON u.role_id = r.id
-        ");
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($users as $user) {
-            echo "ID: " . $user['id'] . "
-";
-            echo "Nombre: " . $user['name'] . "
-";
-            echo "Email: " . $user['email'] . "
-";
-            echo "Rol: " . ($user['role'] ?? 'No definido') . "
-";
-            echo "---
-";
-        }
-    } else {
-        echo "
-La tabla 'roles' no existe.
-";
-    }
-
-} catch (PDOException $e) {
-    echo "Error de conexión a la base de datos: " . $e->getMessage() . "
-";
-    exit(1);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
 }

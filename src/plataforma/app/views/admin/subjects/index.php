@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../../layouts/admin.php';
 
+global $pdo;
+$conn = $pdo;
+
 // Obtener parámetros de búsqueda y filtrado
 $buscar = $_GET['q'] ?? '';
 $departamento = $_GET['departamento'] ?? '';
@@ -14,14 +17,14 @@ $where = [];
 $params = [];
 
 if ($buscar) {
-    $where[] = "(nombre LIKE :buscar OR codigo LIKE :buscar)";
+    $where[] = "(name LIKE :buscar OR code LIKE :buscar)";
     $params[':buscar'] = "%$buscar%";
 }
 
-if ($departamento) {
-    $where[] = "departamento = :departamento";
-    $params[':departamento'] = $departamento;
-}
+// if ($departamento) {
+//     $where[] = "departamento = :departamento";
+//     $params[':departamento'] = $departamento;
+// }
 
 if ($semestre) {
     $where[] = "semestre = :semestre";
@@ -31,7 +34,7 @@ if ($semestre) {
 $whereClause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
 
 // Consulta para obtener el total
-$queryTotal = "SELECT COUNT(*) as total FROM materias $whereClause";
+$queryTotal = "SELECT COUNT(*) as total FROM courses $whereClause";
 $stmt = $conn->prepare($queryTotal);
 $stmt->execute($params);
 $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
@@ -39,11 +42,10 @@ $totalPages = ceil($total / $limit);
 
 // Consulta para obtener las materias
 $query = "
-    SELECT m.*, p.nombre as profesor_nombre 
-    FROM materias m 
-    LEFT JOIN profesores p ON m.profesor_id = p.id 
-    $whereClause 
-    ORDER BY m.semestre ASC, m.nombre ASC 
+    SELECT c.*, 'Profesor Asignado' as profesor_nombre
+    FROM courses c
+    $whereClause
+    ORDER BY c.name ASC
     LIMIT $offset, $limit
 ";
 
@@ -52,17 +54,17 @@ $stmt->execute($params);
 $materias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Obtener lista de departamentos para el filtro
-$departamentos = $conn->query("SELECT DISTINCT departamento FROM materias WHERE departamento IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
+$departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses WHERE departamento IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
 ?>
 
 <main class="p-6">
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
             <h1 class="text-2xl font-bold mb-2">Materias</h1>
             <p class="text-neutral-500 dark:text-neutral-400">Administra las materias y sus asignaciones.</p>
         </div>
-        <a href="/src/plataforma/admin/subjects/create" 
-           class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2">
+        <a href="/src/plataforma/admin/subjects/create"
+           class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2 w-full sm:w-auto justify-center">
             <i data-feather="plus"></i>
             Nueva materia
         </a>
@@ -70,7 +72,7 @@ $departamentos = $conn->query("SELECT DISTINCT departamento FROM materias WHERE 
 
     <!-- Filtros y búsqueda -->
     <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-4 mb-6">
-        <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
                 <label for="q" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
                     Buscar
@@ -116,7 +118,7 @@ $departamentos = $conn->query("SELECT DISTINCT departamento FROM materias WHERE 
             </div>
 
             <div class="flex items-end">
-                <button type="submit" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2">
+                <button type="submit" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2 w-full sm:w-auto justify-center">
                     <i data-feather="filter"></i>
                     Filtrar
                 </button>
@@ -155,20 +157,20 @@ $departamentos = $conn->query("SELECT DISTINCT departamento FROM materias WHERE 
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                                    <?= htmlspecialchars($materia['nombre']) ?>
+                                    <?= htmlspecialchars($materia['name']) ?>
                                 </div>
                                 <div class="text-sm text-neutral-500 dark:text-neutral-400">
-                                    <?= $materia['creditos'] ?> créditos
+                                    <?= $materia['creditos'] ?? 0 ?> créditos
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($materia['codigo']) ?>
+                                <?= htmlspecialchars($materia['code'] ?? '') ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($materia['departamento']) ?>
+                                <?= htmlspecialchars($materia['departamento'] ?? '') ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= $materia['semestre'] ?>° Semestre
+                                <?= $materia['semestre'] ?? 1 ?>° Semestre
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <?php if ($materia['profesor_nombre']): ?>

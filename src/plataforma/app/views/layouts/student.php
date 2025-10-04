@@ -1,7 +1,7 @@
 <?php
 // Verificar sesión y obtener datos de usuario
-$userName  = $_SESSION['user']['name']  ?? 'Estudiante';
-$userEmail = $_SESSION['user']['email'] ?? 'usuario@utec.edu';
+$userName  = $_SESSION['user']['name']  ?? '';
+$userEmail = $_SESSION['user']['email'] ?? '';
 $role      = $_SESSION['user']['role']  ?? 'alumno';
 ?>
 <!DOCTYPE html>
@@ -27,15 +27,6 @@ $role      = $_SESSION['user']['role']  ?? 'alumno';
   <script src="https://unpkg.com/feather-icons"></script>
   <script src="/src/plataforma/app/js/theme.js" defer></script>
   <script src="/src/plataforma/app/js/notifications.js" defer></script>
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UTEC · Panel</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://unpkg.com/feather-icons"></script>
 
   <script>
     tailwind.config = {
@@ -66,7 +57,80 @@ $role      = $_SESSION['user']['role']  ?? 'alumno';
     .body--sb-collapsed .user-info,
     .body--sb-collapsed .nav-text{ display:none; }
 
-    .nav-item{ display:flex; align-items:center; gap:.75rem; padding:.75rem; border-radius:.5rem; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .75rem;
+      border-radius: .5rem;
+      font-weight: 500;
+      color: #4a5568;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav-item:hover::before {
+      left: 100%;
+    }
+
+    .nav-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15);
+      background: linear-gradient(135deg, rgba(209, 250, 229, 0.8), rgba(167, 243, 208, 0.8));
+      color: #047857;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #a7f3d0, #6ee7b7);
+      color: #064e3b;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60%;
+      background: #047857;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .dark .nav-item {
+      color: #a0aec0;
+    }
+
+    .dark .nav-item:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .dark .nav-item.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(52, 211, 153, 0.1));
+      color: #34d399;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+
+    .dark .nav-item.active::after {
+      background: #34d399;
+    }
+
     .body--sb-collapsed .nav-item{ justify-content:center; gap:0; }
 
     @media (max-width:768px){
@@ -110,21 +174,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno';
         </div>
       </div>
 
-      <nav class="p-4">
-        <ul class="space-y-2">
-          <li><a href="/src/plataforma/app" class="nav-item bg-primary-50 dark:bg-neutral-700/60 text-primary-700 dark:text-primary-300"><i data-feather="home"></i><span class="nav-text">Panel</span></a></li>
-          <li><a href="/src/plataforma/app/materias" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="book-open"></i><span class="nav-text">Materias</span></a></li>
-          <li><a href="/src/plataforma/app/horario" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="calendar"></i><span class="nav-text">Horario</span></a></li>
-          <li><a href="/src/plataforma/app/calificaciones" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="award"></i><span class="nav-text">Calificaciones</span></a></li>
-          <li><a href="/src/plataforma/app/encuestas" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="clipboard"></i><span class="nav-text">Encuestas</span></a></li>
-          <li><a href="/src/plataforma/app/becas" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="dollar-sign"></i><span class="nav-text">Becas</span></a></li>
-          <li><a href="/src/plataforma/app/anuncios" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="bell"></i><span class="nav-text">Anuncios</span></a></li>
-
-          <?php if ($role === 'admin'): ?>
-          <li><a href="/src/plataforma/app/admin" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="settings"></i><span class="nav-text">Admin</span></a></li>
-          <?php endif; ?>
-        </ul>
-      </nav>
+      <?php include __DIR__ . '/../partials/navbar.php'; ?>
 
       <div class="p-4 border-t border-neutral-200 dark:border-neutral-700 mt-auto">
         <a href="/src/plataforma/logout" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700 w-full">
@@ -174,191 +224,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno';
       </header>
 
       <main class="p-6">
-        <!-- Bienvenida -->
-        <div class="bg-gradient-to-r from-primary-500 to-primary-700 rounded-xl p-6 text-white mb-6" data-aos="fade-up">
-          <h2 class="text-2xl font-bold mb-1">¡Bienvenido de nuevo, <?= htmlspecialchars($userName) ?>!</h2>
-          <p class="opacity-90">Revisa tus materias, horario y calificaciones en un solo lugar.</p>
-        </div>
-
-        <!-- Tarjetas KPIs -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-primary-500" data-aos="fade-up">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-neutral-500 dark:text-neutral-400 text-sm">Materias inscritas</p>
-                <h3 class="text-2xl font-bold mt-1">5</h3>
-              </div>
-              <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700">
-                <i data-feather="book" class="text-primary-600"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-emerald-500" data-aos="fade-up" data-aos-delay="50">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-neutral-500 dark:text-neutral-400 text-sm">Promedio actual</p>
-                <h3 class="text-2xl font-bold mt-1">8.7</h3>
-              </div>
-              <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700">
-                <i data-feather="award" class="text-emerald-600"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-amber-500" data-aos="fade-up" data-aos-delay="100">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-neutral-500 dark:text-neutral-400 text-sm">Tareas pendientes</p>
-                <h3 class="text-2xl font-bold mt-1">3</h3>
-              </div>
-              <div class="p-3 rounded-lg bg-amber-50 dark:bg-neutral-700">
-                <i data-feather="clipboard" class="text-amber-600"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-purple-500" data-aos="fade-up" data-aos-delay="150">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-neutral-500 dark:text-neutral-400 text-sm">Próxima clase</p>
-                <h3 class="text-2xl font-bold mt-1">10:00 AM</h3>
-              </div>
-              <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700">
-                <i data-feather="clock" class="text-purple-600"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Anuncios -->
-        <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 mb-6" data-aos="fade-up">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-bold">Anuncios recientes</h2>
-            <a href="/src/plataforma/app/anuncios" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
-          </div>
-
-          <div class="space-y-4">
-            <div class="p-4 border border-neutral-100 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="flex items-start gap-3">
-                <div class="p-2 rounded-lg bg-primary-50 dark:bg-neutral-700">
-                  <i data-feather="info" class="text-primary-600"></i>
-                </div>
-                <div>
-                  <h3 class="font-medium">Cambio de aula - Matemáticas</h3>
-                  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1">La clase del viernes se impartirá en el aula 304 en lugar de la 201.</p>
-                  <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-2">Hace 2 horas</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="p-4 border border-neutral-100 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
-              <div class="flex items-start gap-3">
-                <div class="p-2 rounded-lg bg-emerald-50 dark:bg-neutral-700">
-                  <i data-feather="calendar" class="text-emerald-600"></i>
-                </div>
-                <div>
-                  <h3 class="font-medium">Fechas de exámenes finales</h3>
-                  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1">Ya puedes revisar las fechas de exámenes en Horario.</p>
-                  <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-2">Ayer, 15:30</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Próximas clases & Tareas -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-xl font-bold">Próximas clases</h2>
-              <a href="/src/plataforma/app/horario" class="text-primary-700 dark:text-primary-300 text-sm">Ver horario</a>
-            </div>
-
-            <div class="space-y-4">
-              <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-center gap-3">
-                  <div class="p-2 rounded-lg bg-rose-50 dark:bg-neutral-700">
-                    <i data-feather="book" class="text-rose-600"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Física Cuántica</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Aula 205 — 10:00–12:00</p>
-                  </div>
-                </div>
-                <a href="/src/plataforma/app/horario" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                  <i data-feather="chevron-right" class="text-neutral-400"></i>
-                </a>
-              </div>
-
-              <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-center gap-3">
-                  <div class="p-2 rounded-lg bg-purple-50 dark:bg-neutral-700">
-                    <i data-feather="book" class="text-purple-600"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Álgebra Lineal</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Aula 301 — 14:00–16:00</p>
-                  </div>
-                </div>
-                <a href="/src/plataforma/app/horario" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                  <i data-feather="chevron-right" class="text-neutral-400"></i>
-                </a>
-              </div>
-            </div>
-          </section>
-
-          <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-xl font-bold">Tareas pendientes</h2>
-              <a href="/src/plataforma/app/materias" class="text-primary-700 dark:text-primary-300 text-sm">Ver todas</a>
-            </div>
-
-            <div class="space-y-4">
-              <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-start gap-3">
-                  <div class="p-2 rounded-lg bg-amber-50 dark:bg-neutral-700 mt-1">
-                    <i data-feather="clipboard" class="text-amber-600"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Proyecto final — Historia</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Entrega: Viernes 15 de marzo</p>
-                    <div class="flex items-center gap-2 mt-2">
-                      <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-1.5">
-                        <div class="bg-amber-500 h-1.5 rounded-full" style="width:60%"></div>
-                      </div>
-                      <span class="text-xs text-neutral-500 dark:text-neutral-400">60%</span>
-                    </div>
-                  </div>
-                </div>
-                <a href="/src/plataforma/app/materias" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                  <i data-feather="chevron-right" class="text-neutral-400"></i>
-                </a>
-              </div>
-
-              <div class="flex items-start justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
-                <div class="flex items-start gap-3">
-                  <div class="p-2 rounded-lg bg-primary-50 dark:bg-neutral-700 mt-1">
-                    <i data-feather="clipboard" class="text-primary-600"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-medium">Ensayo literario</h3>
-                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Entrega: Lunes 18 de marzo</p>
-                    <div class="flex items-center gap-2 mt-2">
-                      <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-1.5">
-                        <div class="bg-primary-500 h-1.5 rounded-full" style="width:30%"></div>
-                      </div>
-                      <span class="text-xs text-neutral-500 dark:text-neutral-400">30%</span>
-                    </div>
-                  </div>
-                </div>
-                <a href="/src/plataforma/app/materias" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                  <i data-feather="chevron-right" class="text-neutral-400"></i>
-                </a>
-              </div>
-            </div>
-          </section>
-        </div>
+        <?= $content ?? '' ?>
       </main>
 
       <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">

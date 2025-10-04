@@ -1,4 +1,12 @@
-<?php require_once __DIR__ . '/../../layouts/admin.php'; ?>
+<?php
+require_once __DIR__ . '/../../layouts/admin.php';
+
+// Ensure $schedule is set and is an object
+if (!isset($schedule) || !is_object($schedule)) {
+    header('Location: /src/plataforma/');
+    exit;
+}
+?>
 
 <div class="container px-6 py-8">
     <div class="max-w-3xl mx-auto">
@@ -18,9 +26,9 @@
                             <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Periodo Académico</label>
                             <select name="periodo" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
                                 <option value="">Selecciona el periodo</option>
-                                <option value="2025-1" <?= $schedule->periodo === '2025-1' ? 'selected' : '' ?>>2025-1</option>
-                                <option value="2025-2" <?= $schedule->periodo === '2025-2' ? 'selected' : '' ?>>2025-2</option>
-                                <option value="2026-1" <?= $schedule->periodo === '2026-1' ? 'selected' : '' ?>>2026-1</option>
+                                <option value="2025-1" <?= ($schedule->periodo ?? '') === '2025-1' ? 'selected' : '' ?>>2025-1</option>
+                                <option value="2025-2" <?= ($schedule->periodo ?? '') === '2025-2' ? 'selected' : '' ?>>2025-2</option>
+                                <option value="2026-1" <?= ($schedule->periodo ?? '') === '2026-1' ? 'selected' : '' ?>>2026-1</option>
                             </select>
                         </div>
                         
@@ -39,17 +47,17 @@
                                 $carrera_actual = '';
                                 foreach ($grupos as $grupo):
                                     if ($grupo['carrera'] !== $carrera_actual):
-                                        if ($carrera_actual !== '') echo '</optgroup>';
-                                        echo '<optgroup label="' . htmlspecialchars($grupo['carrera']) . '">';
+                                        if ($carrera_actual !== '') { ?> </optgroup> <?php }
+                                        ?><optgroup label="<?= htmlspecialchars($grupo['carrera']) ?>"><?php
                                         $carrera_actual = $grupo['carrera'];
                                     endif;
                                 ?>
-                                    <option value="<?= $grupo['id'] ?>" <?= $schedule->grupo_id == $grupo['id'] ? 'selected' : '' ?>>
+                                    <option value="<?= $grupo['id'] ?>" <?= ($schedule->grupo_id ?? '') == $grupo['id'] ? 'selected' : '' ?>>
                                         <?= htmlspecialchars($grupo['nombre']) ?>
                                     </option>
-                                <?php 
+                                <?php
                                 endforeach;
-                                if ($carrera_actual !== '') echo '</optgroup>';
+                                if ($carrera_actual !== '') { ?> </optgroup> <?php }
                                 ?>
                             </select>
                         </div>
@@ -74,8 +82,8 @@
                                     ['id' => 4, 'nombre' => 'Inglés I', 'codigo' => 'ING101', 'creditos' => 3],
                                 ];
                                 foreach ($materias as $materia): ?>
-                                    <option value="<?= $materia['id'] ?>" <?= $schedule->materia_id == $materia['id'] ? 'selected' : '' ?> data-creditos="<?= $materia['creditos'] ?>">
-                                        <?= htmlspecialchars($materia['codigo']) ?> - <?= htmlspecialchars($materia['nombre']) ?> (<?= $materia['creditos'] ?> créditos)
+                                    <option value="<?= $materia['id'] ?>" <?= ($schedule->materia_id ?? '') == $materia['id'] ? 'selected' : '' ?> data-creditos="<?= $materia['creditos'] ?>">
+                                        <?= htmlspecialchars($materia['codigo']) ?> - <?= htmlspecialchars($materia['nombre']) ?> (<?= htmlspecialchars($materia['creditos']) ?> créditos)
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -93,7 +101,7 @@
                                     ['id' => 3, 'nombre' => 'M.C. Carlos Rodríguez', 'departamento' => 'Ing. Industrial'],
                                 ];
                                 foreach ($profesores as $profesor): ?>
-                                    <option value="<?= $profesor['id'] ?>" <?= $schedule->profesor_id == $profesor['id'] ? 'selected' : '' ?>>
+                                    <option value="<?= $profesor['id'] ?>" <?= ($schedule->profesor_id ?? '') == $profesor['id'] ? 'selected' : '' ?>>
                                         <?= htmlspecialchars($profesor['nombre']) ?> - <?= htmlspecialchars($profesor['departamento']) ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -111,11 +119,11 @@
                             <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Día de la Semana</label>
                             <select name="dia" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
                                 <option value="">Selecciona el día</option>
-                                <option value="1" <?= $schedule->dia == '1' ? 'selected' : '' ?>>Lunes</option>
-                                <option value="2" <?= $schedule->dia == '2' ? 'selected' : '' ?>>Martes</option>
-                                <option value="3" <?= $schedule->dia == '3' ? 'selected' : '' ?>>Miércoles</option>
-                                <option value="4" <?= $schedule->dia == '4' ? 'selected' : '' ?>>Jueves</option>
-                                <option value="5" <?= $schedule->dia == '5' ? 'selected' : '' ?>>Viernes</option>
+                                <option value="1" <?= ($schedule->dia ?? '') == '1' ? 'selected' : '' ?>>Lunes</option>
+                                <option value="2" <?= ($schedule->dia ?? '') == '2' ? 'selected' : '' ?>>Martes</option>
+                                <option value="3" <?= ($schedule->dia ?? '') == '3' ? 'selected' : '' ?>>Miércoles</option>
+                                <option value="4" <?= ($schedule->dia ?? '') == '4' ? 'selected' : '' ?>>Jueves</option>
+                                <option value="5" <?= ($schedule->dia ?? '') == '5' ? 'selected' : '' ?>>Viernes</option>
                             </select>
                         </div>
                         
@@ -123,10 +131,10 @@
                             <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Hora de Inicio</label>
                             <select name="hora_inicio" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
                                 <option value="">Selecciona la hora</option>
-                                <?php for ($i = 7; $i <= 21; $i++): 
+                                <?php for ($i = 7; $i <= 21; $i++):
                                     $hora = sprintf('%02d:00', $i);
                                 ?>
-                                    <option value="<?= $hora ?>" <?= $schedule->hora_inicio === $hora ? 'selected' : '' ?>><?= $hora ?></option>
+                                    <option value="<?= $hora ?>" <?= ($schedule->hora_inicio ?? '') === $hora ? 'selected' : '' ?>><?= $hora ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -135,10 +143,10 @@
                             <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Hora de Fin</label>
                             <select name="hora_fin" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
                                 <option value="">Selecciona la hora</option>
-                                <?php for ($i = 8; $i <= 22; $i++): 
+                                <?php for ($i = 8; $i <= 22; $i++):
                                     $hora = sprintf('%02d:00', $i);
                                 ?>
-                                    <option value="<?= $hora ?>" <?= $schedule->hora_fin === $hora ? 'selected' : '' ?>><?= $hora ?></option>
+                                    <option value="<?= $hora ?>" <?= ($schedule->hora_fin ?? '') === $hora ? 'selected' : '' ?>><?= $hora ?></option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -163,8 +171,8 @@
                                     ['id' => 4, 'nombre' => 'LAB-IND-1', 'capacidad' => 20, 'tipo' => 'Laboratorio'],
                                 ];
                                 foreach ($aulas as $aula): ?>
-                                    <option value="<?= $aula['id'] ?>" <?= $schedule->aula_id == $aula['id'] ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($aula['nombre']) ?> - <?= htmlspecialchars($aula['tipo']) ?> (<?= $aula['capacidad'] ?> personas)
+                                    <option value="<?= $aula['id'] ?>" <?= ($schedule->aula_id ?? '') == $aula['id'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($aula['nombre']) ?> - <?= htmlspecialchars($aula['tipo']) ?> (<?= htmlspecialchars($aula['capacidad']) ?> personas)
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -174,9 +182,9 @@
                             <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Modalidad</label>
                             <select name="modalidad" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
                                 <option value="">Selecciona la modalidad</option>
-                                <option value="presencial" <?= $schedule->modalidad === 'presencial' ? 'selected' : '' ?>>Presencial</option>
-                                <option value="virtual" <?= $schedule->modalidad === 'virtual' ? 'selected' : '' ?>>Virtual</option>
-                                <option value="hibrida" <?= $schedule->modalidad === 'hibrida' ? 'selected' : '' ?>>Híbrida</option>
+                                <option value="presencial" <?= ($schedule->modalidad ?? '') === 'presencial' ? 'selected' : '' ?>>Presencial</option>
+                                <option value="virtual" <?= ($schedule->modalidad ?? '') === 'virtual' ? 'selected' : '' ?>>Virtual</option>
+                                <option value="hibrida" <?= ($schedule->modalidad ?? '') === 'hibrida' ? 'selected' : '' ?>>Híbrida</option>
                             </select>
                         </div>
                     </div>
@@ -189,9 +197,9 @@
                     <div>
                         <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Estado</label>
                         <select name="estado" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
-                            <option value="activa" <?= $schedule->estado === 'activa' ? 'selected' : '' ?>>Activa</option>
-                            <option value="suspendida" <?= $schedule->estado === 'suspendida' ? 'selected' : '' ?>>Suspendida</option>
-                            <option value="cancelada" <?= $schedule->estado === 'cancelada' ? 'selected' : '' ?>>Cancelada</option>
+                            <option value="activa" <?= ($schedule->estado ?? '') === 'activa' ? 'selected' : '' ?>>Activa</option>
+                            <option value="suspendida" <?= ($schedule->estado ?? '') === 'suspendida' ? 'selected' : '' ?>>Suspendida</option>
+                            <option value="cancelada" <?= ($schedule->estado ?? '') === 'cancelada' ? 'selected' : '' ?>>Cancelada</option>
                         </select>
                     </div>
                 </div>
@@ -205,10 +213,10 @@
                             <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Tipo de Clase</label>
                             <select name="tipo_clase" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
                                 <option value="">Selecciona el tipo</option>
-                                <option value="teorica" <?= $schedule->tipo_clase === 'teorica' ? 'selected' : '' ?>>Teórica</option>
-                                <option value="practica" <?= $schedule->tipo_clase === 'practica' ? 'selected' : '' ?>>Práctica</option>
-                                <option value="laboratorio" <?= $schedule->tipo_clase === 'laboratorio' ? 'selected' : '' ?>>Laboratorio</option>
-                                <option value="taller" <?= $schedule->tipo_clase === 'taller' ? 'selected' : '' ?>>Taller</option>
+                                <option value="teorica" <?= ($schedule->tipo_clase ?? '') === 'teorica' ? 'selected' : '' ?>>Teórica</option>
+                                <option value="practica" <?= ($schedule->tipo_clase ?? '') === 'practica' ? 'selected' : '' ?>>Práctica</option>
+                                <option value="laboratorio" <?= ($schedule->tipo_clase ?? '') === 'laboratorio' ? 'selected' : '' ?>>Laboratorio</option>
+                                <option value="taller" <?= ($schedule->tipo_clase ?? '') === 'taller' ? 'selected' : '' ?>>Taller</option>
                             </select>
                         </div>
                         
@@ -216,10 +224,10 @@
                             <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Duración (horas)</label>
                             <select name="duracion" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
                                 <option value="">Selecciona la duración</option>
-                                <option value="1" <?= $schedule->duracion == '1' ? 'selected' : '' ?>>1 hora</option>
-                                <option value="2" <?= $schedule->duracion == '2' ? 'selected' : '' ?>>2 horas</option>
-                                <option value="3" <?= $schedule->duracion == '3' ? 'selected' : '' ?>>3 horas</option>
-                                <option value="4" <?= $schedule->duracion == '4' ? 'selected' : '' ?>>4 horas</option>
+                                <option value="1" <?= ($schedule->duracion ?? '') == '1' ? 'selected' : '' ?>>1 hora</option>
+                                <option value="2" <?= ($schedule->duracion ?? '') == '2' ? 'selected' : '' ?>>2 horas</option>
+                                <option value="3" <?= ($schedule->duracion ?? '') == '3' ? 'selected' : '' ?>>3 horas</option>
+                                <option value="4" <?= ($schedule->duracion ?? '') == '4' ? 'selected' : '' ?>>4 horas</option>
                             </select>
                         </div>
                     </div>

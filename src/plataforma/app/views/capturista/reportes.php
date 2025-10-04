@@ -5,7 +5,7 @@ if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
   header('Location: /src/plataforma/'); exit;
 }
 
-require_once __DIR__ . '/../../../config/database.php';
+require_once dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/config/database.php';
 
 // Obtener estadísticas generales
 $stats = [
@@ -61,8 +61,6 @@ $porcentajes_estados = array_map(function($total) use ($total_solicitudes) {
     return round(($total / $total_solicitudes) * 100, 1);
 }, $estados);
 ?>
-
-<?php require __DIR__ . '/../layouts/capturista.php' ?>
 
 <main class="p-6">
     <div class="mb-6">

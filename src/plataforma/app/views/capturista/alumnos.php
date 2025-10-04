@@ -5,7 +5,7 @@ if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
   header('Location: /src/plataforma/'); exit;
 }
 
-require_once __DIR__ . '/../../../config/database.php';
+// Database is already included in index.php
 
 // Parámetros de búsqueda y filtrado
 $buscar = $_GET['q'] ?? '';
@@ -51,8 +51,8 @@ $totalPages = ceil($total / $limit);
 // Consulta para obtener los alumnos
 $query = "
     SELECT a.*, 
-           s.estado as estado_solicitud,
-           s.fecha_creacion as fecha_solicitud,
+           MAX(s.estado) as estado_solicitud,
+           MAX(s.fecha_creacion) as fecha_solicitud,
            (SELECT COUNT(*) FROM solicitudes WHERE alumno_id = a.id) as total_solicitudes
     FROM alumnos a
     LEFT JOIN solicitudes s ON a.id = s.alumno_id 
@@ -69,8 +69,6 @@ $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Obtener lista de carreras para el filtro
 $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
 ?>
-
-<?php require __DIR__ . '/../layouts/capturista.php' ?>
 
 <main class="p-6">
     <div class="flex justify-between items-center mb-6">
@@ -205,7 +203,7 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
                                 <?php endif; ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="/src/plataforma/alumnos/editar?id=<?= $alumno['id'] ?>" class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                <a href="/src/plataforma/capturista/alumnos/editar/<?= $alumno['id'] ?>" class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
                                     Editar
                                 </a>
                                 <a href="/src/plataforma/solicitudes/nueva?alumno_id=<?= $alumno['id'] ?>" class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">

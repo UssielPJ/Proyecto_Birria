@@ -5,61 +5,14 @@ if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
   header('Location: /src/plataforma/'); exit;
 }
 
-require_once __DIR__ . '/../../../../config/database.php';
-
-// Procesar el formulario cuando se envía
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        $conn->beginTransaction();
-
-        // Insertar primero en la tabla alumnos
-        $stmtAlumno = $conn->prepare("
-            INSERT INTO alumnos (nombre, email, telefono, carrera) 
-            VALUES (:nombre, :email, :telefono, :carrera)
-        ");
-        
-        $stmtAlumno->execute([
-            ':nombre' => $_POST['nombre'],
-            ':email' => $_POST['email'],
-            ':telefono' => $_POST['telefono'],
-            ':carrera' => $_POST['carrera']
-        ]);
-        
-        $alumnoId = $conn->lastInsertId();
-
-        // Luego insertar la solicitud
-        $stmtSolicitud = $conn->prepare("
-            INSERT INTO solicitudes (alumno_id, periodo, estado, documentos_completos, observaciones) 
-            VALUES (:alumno_id, :periodo, :estado, :documentos_completos, :observaciones)
-        ");
-        
-        $stmtSolicitud->execute([
-            ':alumno_id' => $alumnoId,
-            ':periodo' => $_POST['periodo'],
-            ':estado' => 'pendiente',
-            ':documentos_completos' => isset($_POST['documentos_completos']) ? 1 : 0,
-            ':observaciones' => $_POST['observaciones']
-        ]);
-
-        $conn->commit();
-        header('Location: /src/plataforma/solicitudes?mensaje=success');
-        exit;
-    } catch (Exception $e) {
-        $conn->rollBack();
-        $error = "Error al guardar la solicitud: " . $e->getMessage();
-    }
-}
-
 // Obtener lista de carreras
-$carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
+$carreras = db()->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
 ?>
-
-<?php require __DIR__ . '/../../layouts/capturista.php' ?>
 
 <main class="p-6">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold mb-2">Nueva Solicitud</h1>
-        <p class="text-neutral-500 dark:text-neutral-400">Ingresa los datos del alumno y su solicitud.</p>
+        <h1 class="text-2xl font-bold mb-2"><?= isset($solicitud) ? 'Editar Solicitud' : 'Nueva Solicitud' ?></h1>
+        <p class="text-neutral-500 dark:text-neutral-400"><?= isset($solicitud) ? 'Modifica los datos del alumno y su solicitud.' : 'Ingresa los datos del alumno y su solicitud.' ?></p>
     </div>
 
     <?php if (isset($error)): ?>
@@ -69,7 +22,10 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
         </div>
     <?php endif; ?>
 
-    <form method="POST" class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6">
+    <form method="POST" action="/src/plataforma/solicitudes/guardar" class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6">
+        <?php if (isset($solicitud)): ?>
+            <input type="hidden" name="solicitud_id" value="<?= $solicitud['id'] ?>">
+        <?php endif; ?>
         <div class="space-y-6">
             <!-- Datos del alumno -->
             <div class="border-b border-neutral-200 dark:border-neutral-700 pb-6">
@@ -80,7 +36,8 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
                             Nombre completo
                         </label>
                         <input type="text" name="nombre" id="nombre" required
-                               class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+                                value="<?= htmlspecialchars($solicitud['nombre'] ?? '') ?>"
+                                class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
                     </div>
 
                     <div>
@@ -88,7 +45,8 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
                             Correo electrónico
                         </label>
                         <input type="email" name="email" id="email" required
-                               class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+                                value="<?= htmlspecialchars($solicitud['email'] ?? '') ?>"
+                                class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
                     </div>
 
                     <div>
@@ -96,7 +54,8 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
                             Teléfono
                         </label>
                         <input type="tel" name="telefono" id="telefono" required
-                               class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+                                value="<?= htmlspecialchars($solicitud['telefono'] ?? '') ?>"
+                                class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
                     </div>
 
                     <div>
@@ -107,7 +66,7 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
                                 class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
                             <option value="">Selecciona una carrera</option>
                             <?php foreach ($carreras as $carrera): ?>
-                                <option value="<?= htmlspecialchars($carrera) ?>"><?= htmlspecialchars($carrera) ?></option>
+                                <option value="<?= htmlspecialchars($carrera) ?>" <?= ($solicitud['carrera'] ?? '') === $carrera ? 'selected' : '' ?>><?= htmlspecialchars($carrera) ?></option>
                             <?php endforeach; ?>
                             <option value="otro">Otra carrera...</option>
                         </select>
@@ -126,9 +85,9 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
                         <select name="periodo" id="periodo" required
                                 class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
                             <option value="">Selecciona un periodo</option>
-                            <option value="2025-1">2025-1</option>
-                            <option value="2025-2">2025-2</option>
-                            <option value="2026-1">2026-1</option>
+                            <option value="2025-1" <?= ($solicitud['periodo'] ?? '') === '2025-1' ? 'selected' : '' ?>>2025-1</option>
+                            <option value="2025-2" <?= ($solicitud['periodo'] ?? '') === '2025-2' ? 'selected' : '' ?>>2025-2</option>
+                            <option value="2026-1" <?= ($solicitud['periodo'] ?? '') === '2026-1' ? 'selected' : '' ?>>2026-1</option>
                         </select>
                     </div>
 
@@ -138,7 +97,7 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
                         </label>
                         <div class="mt-2">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" name="documentos_completos" class="rounded border-neutral-300 dark:border-neutral-600 text-primary-600 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+                                <input type="checkbox" name="documentos_completos" <?= ($solicitud['documentos_completos'] ?? 0) ? 'checked' : '' ?> class="rounded border-neutral-300 dark:border-neutral-600 text-primary-600 shadow-sm focus:border-primary-500 focus:ring-primary-500">
                                 <span class="ml-2 text-sm text-neutral-700 dark:text-neutral-300">Documentación completa</span>
                             </label>
                         </div>
@@ -149,7 +108,7 @@ $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS 
                             Observaciones
                         </label>
                         <textarea name="observaciones" id="observaciones" rows="3"
-                                  class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500"></textarea>
+                                  class="mt-1 block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 shadow-sm focus:border-primary-500 focus:ring-primary-500"><?= htmlspecialchars($solicitud['observaciones'] ?? '') ?></textarea>
                     </div>
                 </div>
             </div>
