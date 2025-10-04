@@ -7,15 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="UTSC - Nuestra Historia: Más de 15 años formando profesionales en tecnología. Descubre nuestra misión, visión, valores, hitos, campus y logros educativos para 2025.">
-    <meta name="keywords" content="UTSC, historia universidad, misión visión, campus UTEC, logros educativos, innovación tecnológica">
+    <meta name="description" content="UTSC - Nuestra Historia: Fundada en 1998, más de 27 años formando profesionales en tecnología. Descubre nuestra misión, visión, valores, hitos, campus y logros educativos para 2025.">
+    <meta name="keywords" content="UTSC, historia universidad, misión visión, campus UTSC, logros educativos, innovación tecnológica">
     <meta property="og:title" content="UTSC - Nosotros | Historia y Valores Educativos">
-    <meta property="og:description" content="Descubre más de 15 años de excelencia en educación tecnológica. Misión, visión, campus y logros de UTSC.">
-    <meta property="og:image" content="/src/plataforma/app/img/UT.jpg">
-    <meta property="og:url" content="https://utsc.edu/src/nosotros.php">
+    <meta property="og:description" content="Descubre más de 27 años de excelencia en educación tecnológica inclusiva. Misión, visión, campus y logros de UTSC.">
+    <meta property="og:image" content="https://utsc.edu.mx/wp-content/uploads/2023/01/UTSC-Logo.png">
+    <meta property="og:url" content="https://utsc.edu.mx/src/nosotros.php">
     <title>UTSC - Nosotros | Historia, Valores y Logros Educativos 2025</title>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <link rel="canonical" href="https://utsc.edu/src/nosotros.php">
+    <link rel="canonical" href="https://utsc.edu.mx/src/nosotros.php">
     <!-- Prevenir flash de tema incorrecto -->
     <script>
         (function() {
@@ -218,10 +218,10 @@
     {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
-      "name": "UTSC",
-      "url": "https://utsc.edu",
-      "description": "Universidad Tecnológica con más de 15 años de experiencia en educación innovadora.",
-      "foundingDate": "2008",
+      "name": "Universidad Tecnológica Santa Catarina (UTSC)",
+      "url": "https://utsc.edu.mx",
+      "description": "Organismo Público descentralizado del Gobierno del Estado de Nuevo León, parte de la Red Nacional de Universidades Tecnológicas. Fundada en 1998 con enfoque en inclusión educativa.",
+      "foundingDate": "1998",
       "numberOfEmployees": {
         "@type": "QuantitativeValue",
         "minValue": 50,
@@ -229,7 +229,9 @@
       },
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "Carretera Saltillo-Monterrey Km. 61.5",
         "addressLocality": "Santa Catarina, N.L.",
+        "postalCode": "66359",
         "addressCountry": "MX"
       }
     }
@@ -248,7 +250,7 @@
     <div class="text-center animate-fade-in-up" data-aos="fade-up">
       <h1 class="text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">Nuestra Historia</h1>
       <p class="text-xl md:text-2xl text-emerald-100 max-w-3xl mx-auto leading-relaxed">
-        Más de 15 años formando profesionales que transforman el mundo a través de la tecnología y la innovación en 2025.
+        Fundada en 1998<grok-card data-id="fa38df" data-type="citation_card"></grok-card>, más de 27 años formando profesionales inclusivos que transforman el mundo a través de la tecnología y la innovación en 2025.
       </p>
     </div>
   </div>
@@ -259,20 +261,20 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up">
-        <div class="text-3xl md:text-4xl font-bold mb-2">15+</div>
+        <div class="text-3xl md:text-4xl font-bold mb-2">27</div>
         <div class="text-emerald-100 text-sm md:text-base">Años de Experiencia</div>
       </div>
       <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
-        <div class="text-3xl md:text-4xl font-bold mb-2">5,000+</div>
-        <div class="text-emerald-100 text-sm md:text-base">Estudiantes Graduados</div>
+        <div class="text-3xl md:text-4xl font-bold mb-2">4,600+</div>
+        <div class="text-emerald-100 text-sm md:text-base">Estudiantes Activos</div>
       </div>
       <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
-        <div class="text-3xl md:text-4xl font-bold mb-2">25+</div>
+        <div class="text-3xl md:text-4xl font-bold mb-2">6</div>
         <div class="text-emerald-100 text-sm md:text-base">Programas Académicos</div>
       </div>
       <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
-        <div class="text-3xl md:text-4xl font-bold mb-2">50+</div>
-        <div class="text-emerald-100 text-sm md:text-base">Convenios Internacionales</div>
+        <div class="text-3xl md:text-4xl font-bold mb-2">Múltiples</div>
+        <div class="text-emerald-100 text-sm md:text-base">Convenios de Colaboración</div>
       </div>
     </div>
   </div>
@@ -283,7 +285,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
       <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Nuestra Esencia</h2>
-      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Los pilares que nos definen y guían nuestro camino hacia la excelencia en 2025</p>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Los pilares que nos definen y guían nuestro camino hacia la excelencia inclusiva en 2025</p>
     </div>
     
     <div class="grid md:grid-cols-3 gap-8">
@@ -293,8 +295,7 @@
         </div>
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">Misión</h3>
         <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
-          Formar profesionales de excelencia en el ámbito tecnológico mediante programas educativos innovadores, 
-          fomentando el desarrollo integral y el compromiso con la sociedad en la era digital de 2025.
+          Creemos que la educación debe ser accesible para todos, eliminando barreras y ofreciendo oportunidades para que los estudiantes desarrollen su potencial sin importar su origen o circunstancias.<grok-card data-id="f63395" data-type="citation_card"></grok-card>
         </p>
       </div>
       
@@ -304,8 +305,7 @@
         </div>
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">Visión</h3>
         <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
-          Ser la institución líder en educación tecnológica, reconocida por nuestra innovación, 
-          calidad académica y contribución al desarrollo sostenible de nuestra región en 2025.
+          Ser una institución de educación superior de calidad que cumpla con las expectativas y necesidades cambiantes de sus estudiantes, capital humano y sociedad.<grok-card data-id="44e041" data-type="citation_card"></grok-card>
         </p>
       </div>
       
@@ -317,19 +317,19 @@
         <ul class="text-gray-600 dark:text-gray-300 space-y-2 text-center">
           <li class="flex items-center justify-center">
             <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
-            Excelencia académica
+            Inclusión<grok-card data-id="0d1b3a" data-type="citation_card"></grok-card>
           </li>
           <li class="flex items-center justify-center">
             <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
-            Innovación constante
+            Respeto
           </li>
           <li class="flex items-center justify-center">
             <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
-            Responsabilidad social
+            Empatía
           </li>
           <li class="flex items-center justify-center">
             <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
-            Integridad y ética
+            Colaboración<grok-card data-id="f8f2ce" data-type="citation_card"></grok-card>
           </li>
         </ul>
       </div>
@@ -344,15 +344,10 @@
       <div data-aos="fade-right">
         <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-8 animate-fade-in-up">Nuestra Historia</h2>
         <p class="text-gray-600 dark:text-gray-300 text-lg mb-6 leading-relaxed">
-          Fundada en 2008, la Universidad Tecnológica de Santa Catarina inició su trayecto con la visión 
-          de revolucionar la educación tecnológica en la región. Desde nuestros humildes comienzos con 
-          apenas 3 programas académicos, hemos crecido hasta convertirnos en una institución de referencia 
-          con presencia en múltiples campus y alianzas globales.
+          La Universidad Tecnológica Santa Catarina se creó a partir del decreto Número 98, publicado el 30 de septiembre de 1998<grok-card data-id="905cb3" data-type="citation_card"></grok-card>. Es un Organismo Público descentralizado del Gobierno del Estado de Nuevo León y forma parte de la Red Nacional de Universidades Tecnológicas y Politécnicas de la Secretaría de Educación Pública.
         </p>
         <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
-          Nuestro compromiso con la innovación y la excelencia nos ha permitido establecer alianzas 
-          estratégicas con empresas líderes en el sector tecnológico, garantizando que nuestros estudiantes 
-          reciban una educación de vanguardia que los prepare para los desafíos del futuro en 2025.
+          Nuestro compromiso con la innovación y la inclusión nos ha permitido establecer alianzas estratégicas con empresas y organizaciones líderes, garantizando que nuestros estudiantes reciban una educación de vanguardia que los prepare para los desafíos del futuro en 2025.<grok-card data-id="a6fb77" data-type="citation_card"></grok-card>
         </p>
       </div>
       
@@ -361,28 +356,28 @@
         <div class="space-y-6">
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2008 - Fundación</h4>
-            <p class="text-gray-600 dark:text-gray-300">Inauguración del primer campus con 3 programas de ingeniería</p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">1998 - Fundación</h4>
+            <p class="text-gray-600 dark:text-gray-300">Creación por decreto y inicio de construcción del campus en 20 hectáreas. Instalaciones provisionales en Blvd. Díaz Ordaz.<grok-card data-id="d734fb" data-type="citation_card"></grok-card></p>
           </div>
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2012 - Expansión</h4>
-            <p class="text-gray-600 dark:text-gray-300">Apertura del segundo campus y lanzamiento de 5 nuevos programas</p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Septiembre 1998 - Inicio Académico</h4>
+            <p class="text-gray-600 dark:text-gray-300">Actividades con 116 alumnos y 3 programas TSU: Mecánica, Electrónica y Automatización, Mantenimiento y Procesos.<grok-card data-id="7101e2" data-type="citation_card"></grok-card></p>
           </div>
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2016 - Internacionalización</h4>
-            <p class="text-gray-600 dark:text-gray-300">Establecimiento de los primeros convenios internacionales</p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2004 - Modelo de Inclusión</h4>
+            <p class="text-gray-600 dark:text-gray-300">Implementación del modelo de inclusión educativa y laboral.<grok-card data-id="b70f85" data-type="citation_card"></grok-card></p>
           </div>
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2020 - Transformación Digital</h4>
-            <p class="text-gray-600 dark:text-gray-300">Implementación completa de plataforma e-learning y laboratorios virtuales</p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2023 - Centro Microsoft</h4>
+            <p class="text-gray-600 dark:text-gray-300">Alianza con The Trust for the Americas como Centro Autorizado Certificador de Microsoft.<grok-card data-id="5430d7" data-type="citation_card"></grok-card></p>
           </div>
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="400">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2024 - Liderazgo</h4>
-            <p class="text-gray-600 dark:text-gray-300">Reconocimiento como la universidad tecnológica #1 en innovación educativa</p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2024 - Premios de Reconocimiento</h4>
+            <p class="text-gray-600 dark:text-gray-300">Premio por modelo de inclusión y Premio Congruencia en Inclusión Educativa.<grok-card data-id="d72252" data-type="citation_card"></grok-card><grok-card data-id="f34815" data-type="citation_card"></grok-card></p>
           </div>
         </div>
       </div>
@@ -394,43 +389,43 @@
 <section class="bg-gray-50 dark:bg-neutral-800 py-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
-      <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Participación en Ferias Educativas</h2>
-      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Mostrando innovación y talento en eventos nacionales e internacionales en 2025</p>
+      <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Participación en Eventos Educativos</h2>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Mostrando innovación y talento en eventos nacionales en 2024-2025</p>
     </div>
     
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
       <div class="campus-card rounded-xl shadow-lg overflow-hidden animate-fade-in-up" data-aos="fade-up">
-        <img src="./plataforma/app/img/IndustrialM.jpg" alt="Feria Internacional de Tecnología en UTEC" class="w-full h-48 object-cover" loading="lazy">
+        <img src="https://via.placeholder.com/400x300?text=Feria+Empleo+2025" alt="Feria del Empleo UTSC 2025" class="w-full h-48 object-cover" loading="lazy">
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Feria Internacional de Tecnología</h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">Participación anual con proyectos innovadores de robótica e inteligencia artificial desarrollados por nuestros estudiantes.</p>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Feria del Empleo UTSC 2025</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">Evento para conectar estudiantes con 56 empresas e instituciones, fomentando empleabilidad y emprendimiento.<grok-card data-id="09cefc" data-type="citation_card"></grok-card><grok-card data-id="e64b9a" data-type="citation_card"></grok-card></p>
           <div class="flex items-center text-sm text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">
-            <i data-feather="map-pin" class="w-4 h-4 mr-1"></i>
-            Ciudad de México
+            <i data-feather="calendar" class="w-4 h-4 mr-1"></i>
+            2025
           </div>
         </div>
       </div>
       
       <div class="campus-card rounded-xl shadow-lg overflow-hidden animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
-        <img src="./plataforma/app/img/Mecatronica.jpg" alt="Expo Ingeniería Latinoamericana en UTEC" class="w-full h-48 object-cover" loading="lazy">
+        <img src="https://via.placeholder.com/400x300?text=V+Foro+de+Inclusión" alt="V Foro de Inclusión 2024" class="w-full h-48 object-cover" loading="lazy">
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Expo Ingeniería Latinoamericana</h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">Showcase de proyectos de mecatrónica y automatización industrial que han recibido reconocimientos internacionales.</p>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">V Foro de Inclusión 2024</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">Inaugurado por el Secretario General de Gobierno, destacando el liderazgo de UTSC en inclusión educativa.<grok-card data-id="d12527" data-type="citation_card"></grok-card></p>
           <div class="flex items-center text-sm text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">
-            <i data-feather="map-pin" class="w-4 h-4 mr-1"></i>
-            Guadalajara, Jalisco
+            <i data-feather="calendar" class="w-4 h-4 mr-1"></i>
+            2024
           </div>
         </div>
       </div>
       
       <div class="campus-card rounded-xl shadow-lg overflow-hidden animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
-        <img src="./plataforma/app/img/Negocios.jpg" alt="Foro de Innovación Educativa en UTEC" class="w-full h-48 object-cover" loading="lazy">
+        <img src="https://via.placeholder.com/400x300?text=Encuentro+Regional+2024" alt="Encuentro Regional Deportivo y Cultural 2024" class="w-full h-48 object-cover" loading="lazy">
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Foro de Innovación Educativa</h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">Presentación de nuestras metodologías de enseñanza disruptivas y casos de éxito de egresados emprendedores.</p>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Encuentro Regional Deportivo y Cultural</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">Tercer lugar regional para nuestros Correcaminos en el ERDCUTyP 2024, destacando disciplina y talento.<grok-card data-id="352def" data-type="citation_card"></grok-card></p>
           <div class="flex items-center text-sm text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">
-            <i data-feather="map-pin" class="w-4 h-4 mr-1"></i>
-            Monterrey, N.L.
+            <i data-feather="calendar" class="w-4 h-4 mr-1"></i>
+            2024
           </div>
         </div>
       </div>
@@ -442,43 +437,19 @@
 <section class="bg-white dark:bg-neutral-900 py-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
-      <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Nuestros Planteles</h2>
-      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Infraestructura de vanguardia para una educación de excelencia en 2025</p>
+      <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Nuestro Campus Principal</h2>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Infraestructura de vanguardia en Santa Catarina, N.L., para una educación de excelencia en 2025</p>
     </div>
     
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-1 gap-8">
       <div class="campus-card rounded-xl shadow-lg overflow-hidden animate-fade-in-up" data-aos="fade-up">
-        <img src="./plataforma/app/img/PlantelUT.jpg" alt="Campus Central de UTSC con instalaciones modernas" class="w-full h-48 object-cover" loading="lazy">
+        <img src="https://via.placeholder.com/800x400?text=Campus+UTSC+Santa+Catarina" alt="Campus Principal de UTSC en Carretera Saltillo-Monterrey Km. 61.5" class="w-full h-64 object-cover" loading="lazy">
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Campus Central</h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">Sede principal con laboratorios especializados, biblioteca digital y áreas de innovación colaborativa.</p>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Campus UTSC - Santa Catarina</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">Ubicado en Carretera Saltillo-Monterrey Km. 61.5, C.P. 66359, con 20 hectáreas de terreno. Incluye laboratorios especializados, biblioteca digital y áreas de innovación colaborativa.<grok-card data-id="90f5c4" data-type="citation_card"></grok-card><grok-card data-id="c841ed" data-type="citation_card"></grok-card></p>
           <div class="flex items-center text-sm text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">
             <i data-feather="users" class="w-4 h-4 mr-1"></i>
-            2,500+ estudiantes
-          </div>
-        </div>
-      </div>
-      
-      <div class="campus-card rounded-xl shadow-lg overflow-hidden animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
-        <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Campus Tecnológico de UTSC enfocado en ingenierías" class="w-full h-48 object-cover" loading="lazy">
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Campus Tecnológico</h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">Especializado en ingenierías avanzadas con talleres de manufactura y prototipado rápido.</p>
-          <div class="flex items-center text-sm text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">
-            <i data-feather="users" class="w-4 h-4 mr-1"></i>
-            1,800+ estudiantes
-          </div>
-        </div>
-      </div>
-      
-      <div class="campus-card rounded-xl shadow-lg overflow-hidden animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
-        <img src="./plataforma/app/img/Mecatronica.jpg" alt="Campus de Innovación de UTSC para emprendimiento" class="w-full h-48 object-cover" loading="lazy">
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Campus de Innovación</h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-4">Enfoque en emprendimiento tecnológico y desarrollo de startups estudiantiles con aceleradoras.</p>
-          <div class="flex items-center text-sm text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">
-            <i data-feather="users" class="w-4 h-4 mr-1"></i>
-            1,200+ estudiantes
+            4,600+ estudiantes
           </div>
         </div>
       </div>
@@ -499,32 +470,32 @@
         <div class="icon-container w-16 h-16 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i data-feather="award" class="w-8 h-8 text-yellow-600 dark:text-yellow-400"></i>
         </div>
-        <h4 class="font-semibold text-gray-900 dark:text-white">Premio a la Innovación</h4>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Educativa 2023</p>
+        <h4 class="font-semibold text-gray-900 dark:text-white">Premio por Modelo de Inclusión</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">1er Lugar 2024<grok-card data-id="70494f" data-type="citation_card"></grok-card></p>
       </div>
       
       <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
         <div class="icon-container w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i data-feather="globe" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
         </div>
-        <h4 class="font-semibold text-gray-900 dark:text-white">Certificación ISO</h4>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">9001:2015</p>
+        <h4 class="font-semibold text-gray-900 dark:text-white">Centro Microsoft Certificado</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Reconocimiento 2023<grok-card data-id="5cc7cf" data-type="citation_card"></grok-card></p>
       </div>
       
       <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
         <div class="icon-container w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i data-feather="trending-up" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
         </div>
-        <h4 class="font-semibold text-gray-900 dark:text-white">Top 5 Nacional</h4>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">En empleabilidad</p>
+        <h4 class="font-semibold text-gray-900 dark:text-white">Premio Congruencia</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Inclusión Educativa 2024<grok-card data-id="cc6fe9" data-type="citation_card"></grok-card></p>
       </div>
       
       <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
         <div class="icon-container w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i data-feather="star" class="w-8 h-8 text-purple-600 dark:text-purple-400"></i>
         </div>
-        <h4 class="font-semibold text-gray-900 dark:text-white">+50 Patentes</h4>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Registradas</p>
+        <h4 class="font-semibold text-gray-900 dark:text-white">1,810 Egresados</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">En 2022<grok-card data-id="7bfb23" data-type="citation_card"></grok-card></p>
       </div>
     </div>
   </div>

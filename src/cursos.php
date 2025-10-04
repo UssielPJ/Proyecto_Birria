@@ -1,3 +1,6 @@
+<?php
+// cursos.php
+?>
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -8,7 +11,7 @@
     <meta name="keywords" content="cursos UTSC, educación en línea, ingeniería de software, IA, desarrollo web, mecatrónica">
     <meta property="og:title" content="Cursos - UTSC">
     <meta property="og:description" content="Descubre nuestra gama de cursos diseñados para impulsar tu carrera.">
-    <meta property="og:image" content="/src/plataforma/app/img/UT.jpg">
+    <meta property="og:image" content="https://utsc.edu.mx/wp-content/uploads/2023/01/UTSC-Logo.png">
     <meta property="og:url" content="https://utsc.edu.mx/src/cursos.php">
     <title>Cursos - UTSC | Formación Profesional en Línea</title>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
@@ -181,7 +184,7 @@
             <!-- Curso 1: Ingeniería en Tecnologías de la Información e Innovación Digital -->
             <article class="course-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden group" data-aos="fade-up" data-category="tecnologia">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&h=400&fit=crop" alt="Curso de Ingeniería en Tecnologías de la Información e Innovación Digital en UTSC" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop" alt="Curso de Ingeniería en Tecnologías de la Información e Innovación Digital en UTSC" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300" loading="lazy">
                     <div class="absolute top-4 right-4">
                         <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500/90 text-white backdrop-blur-sm">
                             Disponible
@@ -196,14 +199,14 @@
                         Ingeniería en Tecnologías de la Información e Innovación Digital
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
-                        Desarrolla soluciones tecnológicas multiplataforma de software web y móvil utilizando programación orientada a objetos, frameworks y bases de datos.<grok-card data-id="082424" data-type="citation_card"></grok-card>
+                        La ingeniería de software es una disciplina que se centra en la aplicación de principios y métodos de ingeniería al desarrollo, mantenimiento y evolución de software de calidad. Desarrollar soluciones tecnológicas multiplataforma de software web y móvil utilizando programación orientada a objetos, frameworks, bases de datos, estándares de calidad y diseño para resolver problemas del sector productivo, con un enfoque de inclusión, compromiso con la responsabilidad social, equidad social y de género, excelencia, vanguardia, innovación social e interculturalidad.
                     </p>
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
                             <div class="h-8 w-8 rounded-full bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center">
                                 <i data-feather="clock" class="w-4 h-4 text-neutral-600 dark:text-neutral-400"></i>
                             </div>
-                            <span class="text-sm text-neutral-600 dark:text-neutral-400">3 años 8 meses</span>
+                            <span class="text-sm text-neutral-600 dark:text-neutral-400">10 cuatrimestres (3 años 8 meses)</span>
                         </div>
                         <span class="text-sm font-medium text-green-600 dark:text-green-400">Gratis</span>
                     </div>
@@ -232,14 +235,14 @@
                         Ingeniería en Mecatrónica
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
-                        Combina elementos de la ingeniería mecánica, la electrónica, la informática y la automatización para diseñar, desarrollar y controlar sistemas inteligentes y automatizados.<grok-card data-id="85dc41" data-type="citation_card"></grok-card>
+                        La ingeniería mecatrónica es una disciplina interdisciplinaria que combina elementos de la ingeniería mecánica, la electrónica, la informática y la automatización para diseñar, desarrollar y controlar sistemas inteligentes y automatizados. Doble titulación: Primero se gradúa como técnico superior universitario (TSU) y luego, si así lo decide, obtiene el título de Ingeniero en Mecatrónica. El alumno realiza dos procesos de estadía, uno para obtener el título de TSU y otro para graduarse como Ingeniero en Mecatrónica, a través de convenios con empresas para aplicar conocimientos en un entorno laboral real.
                     </p>
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
                             <div class="h-8 w-8 rounded-full bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center">
                                 <i data-feather="clock" class="w-4 h-4 text-neutral-600 dark:text-neutral-400"></i>
                             </div>
-                            <span class="text-sm text-neutral-600 dark:text-neutral-400">3 años 8 meses</span>
+                            <span class="text-sm text-neutral-600 dark:text-neutral-400">TSU: 2 años (6 cuatrimestres); Ingeniería: 1 año 8 meses (5 cuatrimestres)</span>
                         </div>
                         <span class="text-sm font-medium text-green-600 dark:text-green-400">Gratis</span>
                     </div>
@@ -268,14 +271,14 @@
                         Ingeniería Industrial
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
-                        Administra procesos productivos mediante técnicas de planeación y administración de operaciones, cumpliendo estándares de calidad.<grok-card data-id="7091f9" data-type="citation_card"></grok-card>
+                        La universidad cuenta con doble titulación, primero te gradúas como técnico superior universitario y después, si así lo decides, obtener el título de Ingeniero Industrial. El alumno deberá realizar dos procesos de estadía: el primero para obtener el título de TSU, y el segundo para completar su formación y graduarse como Ingeniero Industrial. Las competencias profesionales incluyen administrar procesos de una organización, gestionar procesos productivos, y optimizar sistemas, procesos y proyectos industriales, entre otras, con un enfoque ético, económico, legal, tecnológico, sistémico, integral, humano y social.
                     </p>
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
                             <div class="h-8 w-8 rounded-full bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center">
                                 <i data-feather="clock" class="w-4 h-4 text-neutral-600 dark:text-neutral-400"></i>
                             </div>
-                            <span class="text-sm text-neutral-600 dark:text-neutral-400">3 años 8 meses</span>
+                            <span class="text-sm text-neutral-600 dark:text-neutral-400">TSU: 2 años (6 cuatrimestres); Ingeniería: 1 año 8 meses (5 cuatrimestres)</span>
                         </div>
                         <span class="text-sm font-medium text-green-600 dark:text-green-400">Gratis</span>
                     </div>
@@ -289,7 +292,7 @@
             <!-- Curso 4: Ingeniería en Mantenimiento Industrial -->
             <article class="course-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden group" data-aos="fade-up" data-category="ingenieria">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=400&fit=crop" alt="Curso de Ingeniería en Mantenimiento Industrial en UTSC" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=400&fit=crop" alt="Curso de Ingeniería en Mantenimiento Industrial en UTSC" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300" loading="lazy">
                     <div class="absolute top-4 right-4">
                         <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500/90 text-white backdrop-blur-sm">
                             Disponible
@@ -304,16 +307,16 @@
                         Ingeniería en Mantenimiento Industrial
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
-                        Optimiza procesos y diseña soluciones innovadoras para liderar el cambio en entornos empresariales, gestionando actividades de mantenimiento y supervisando sistemas electromecánicos.<grok-card data-id="5d4af2" data-type="citation_card"></grok-card>
+                        Si eres una mente inquisitiva con una pasión por la eficiencia y la mejora constante, la carrera de Ingeniería en Mantenimiento Industrial en la Universidad Tecnológica Santa Catarina podría ser tu camino hacia el éxito. El Técnico Superior Universitario en Mantenimiento Área Industrial busca elaborar y ejecutar programas de mantenimiento enfocados a maximizar la disponibilidad del equipo, reducir costos y prolongar la vida útil de los activos productivos. El egresado de Licenciatura en Ingeniería en Mantenimiento Industrial se distingue por poseer las competencias profesionales esenciales que respaldan su desempeño con éxito en el dinámico entorno laboral. Doble titulación: primero se gradúa como Técnico Superior Universitario (TSU) y luego, si así lo decide, obtiene el título de Ingeniero en Mantenimiento Industrial.
                     </p>
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
                             <div class="h-8 w-8 rounded-full bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center">
                                 <i data-feather="clock" class="w-4 h-4 text-neutral-600 dark:text-neutral-400"></i>
                             </div>
-                            <span class="text-sm text-neutral-600 dark:text-neutral-400">3 años 8 meses</span>
+                            <span class="text-sm text-neutral-600 dark:text-neutral-400">TSU: 2 años (6 cuatrimestres); Ingeniería: 1 año 8 meses (5 cuatrimestres)</span>
                         </div>
-                        <span class="text-sm font-medium text-blue-600 dark:text-blue-400">Gratis</span>
+                        <span class="text-sm font-medium text-green-600 dark:text-green-400">Gratis</span>
                     </div>
                     <a href="https://utsc.edu.mx/ingenieria-en-mantenimiento-industrial/" class="w-full inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105" aria-label="Ver detalles del curso de Ingeniería en Mantenimiento Industrial">
                         Ver detalles
@@ -325,7 +328,7 @@
             <!-- Curso 5: Ingeniería en Electromovilidad -->
             <article class="course-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden group" data-aos="fade-up" data-aos-delay="100" data-category="tecnologia">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1502877338535-766e3a6052c0?w=800&h=400&fit=crop" alt="Curso de Ingeniería en Electromovilidad en UTSC" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&h=400&fit=crop" alt="Curso de Ingeniería en Electromovilidad en UTSC" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300" loading="lazy">
                     <div class="absolute top-4 right-4">
                         <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500/90 text-white backdrop-blur-sm">
                             Disponible
@@ -340,14 +343,14 @@
                         Ingeniería en Electromovilidad
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
-                        Desarrolla sistemas de electromoción y gestiona proyectos de electromovilidad con tecnologías sustentables, integrando elementos considerando aspectos técnicos, económicos y normativos.<grok-card data-id="703a12" data-type="citation_card"></grok-card>
+                        La universidad cuenta con doble titulación, primero te gradúas como técnico superior universitario y después, si así lo decides, obtener el título de Ingeniero(a) en Electromovilidad. El alumno deberá realizar dos procesos de estadía: el primero para obtener el título de TSU, y el segundo para completar su formación y graduarse como Ingeniero(a) en Electromovilidad. Desarrolla sistemas de electromoción para asegurar el correcto funcionamiento de los vehículos alimentados por energía eléctrica, gestiona proyectos de electromovilidad a través de la integración y administración de nuevas tecnologías sustentables, y evalúa el ciclo de vida del sistema considerando el impacto en los sectores productivo, social y medio ambiente.
                     </p>
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
                             <div class="h-8 w-8 rounded-full bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center">
                                 <i data-feather="clock" class="w-4 h-4 text-neutral-600 dark:text-neutral-400"></i>
                             </div>
-                            <span class="text-sm text-neutral-600 dark:text-neutral-400">3 años 8 meses</span>
+                            <span class="text-sm text-neutral-600 dark:text-neutral-400">TSU: 2 años (6 cuatrimestres); Ingeniería: 1 año 8 meses (5 cuatrimestres)</span>
                         </div>
                         <span class="text-sm font-medium text-green-600 dark:text-green-400">Gratis</span>
                     </div>
@@ -358,13 +361,13 @@
                 </div>
             </article>
 
-            <!-- Curso 6: Licenciatura en Gestión Institucional Educativa y Curricular (as negocios placeholder) -->
+            <!-- Curso 6: Licenciatura en Gestión Institucional Educativa y Curricular -->
             <article class="course-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden group" data-aos="fade-up" data-aos-delay="200" data-category="negocios">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&h=400&fit=crop" alt="Curso de Licenciatura en Gestión Institucional Educativa y Curricular en UTSC" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=400&fit=crop" alt="Curso de Licenciatura en Gestión Institucional Educativa y Curricular en UTSC" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300" loading="lazy">
                     <div class="absolute top-4 right-4">
                         <span class="px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/90 text-white backdrop-blur-sm">
-                            Próximamente
+                            Disponible
                         </span>
                     </div>
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
@@ -376,18 +379,18 @@
                         Licenciatura en Gestión Institucional Educativa y Curricular
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
-                        Forma profesionales en la gestión educativa institucional y curricular, promoviendo la innovación en entornos educativos.
+                        La universidad cuenta con doble titulación, primero te gradúas como técnico superior universitario y después, si así lo decides, obtener el título de Licenciatura en Educación. El alumno(a) deberá realizar dos procesos de estadía: el primero para obtener el título de TSU, y el segundo para completar su formación y graduarse como Licenciado(a) en Educación. Las competencias profesionales incluyen desarrollar el proceso de enseñanza-aprendizaje, considerando las necesidades de los estudiantes, promoviendo habilidades integrales y el uso de nuevas tecnologías, así como administrar, gestionar y desarrollar procesos educativos, institucionales y escolares, con base en teorías pedagógicas y de la psicología de la educación.
                     </p>
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
                             <div class="h-8 w-8 rounded-full bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center">
                                 <i data-feather="clock" class="w-4 h-4 text-neutral-600 dark:text-neutral-400"></i>
                             </div>
-                            <span class="text-sm text-neutral-600 dark:text-neutral-400">3 años 8 meses</span>
+                            <span class="text-sm text-neutral-600 dark:text-neutral-400">TSU: 2 años (6 cuatrimestres); Licenciatura: 1 año 8 meses (5 cuatrimestres)</span>
                         </div>
-                        <span class="text-sm font-medium text-yellow-600 dark:text-yellow-400">$149</span>
+                        <span class="text-sm font-medium text-green-600 dark:text-green-400">Gratis</span>
                     </div>
-                    <a href="#" class="w-full inline-flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105" aria-label="Ver detalles del curso de Licenciatura en Gestión Institucional Educativa y Curricular">
+                    <a href="https://utsc.edu.mx/licenciatura-en-gestion-institucional-educativa-y-curricular/" class="w-full inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105" aria-label="Ver detalles del curso de Licenciatura en Gestión Institucional Educativa y Curricular">
                         Ver detalles
                         <i data-feather="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"></i>
                     </a>

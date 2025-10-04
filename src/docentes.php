@@ -12,7 +12,7 @@
     <meta name="keywords" content="docentes UTSC, profesores ingeniería, expertos mecatrónica, electromovilidad, mantenimiento industrial">
     <meta property="og:title" content="Docentes - UTSC">
     <meta property="og:description" content="Equipo de profesionales apasionados por la enseñanza y la innovación tecnológica.">
-    <meta property="og:image" content="/src/plataforma/app/img/UT.jpg">
+    <meta property="og:image" content="https://utsc.edu.mx/wp-content/uploads/2023/01/UTSC-Logo.png">
     <meta property="og:url" content="https://utsc.edu.mx/src/docentes.php">
     <title>Docentes - UTSC | Expertos en Educación Tecnológica 2025</title>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
@@ -175,13 +175,37 @@
     {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
-      "name": "UTSC",
+      "name": "Universidad Tecnológica Santa Catarina (UTSC)",
       "employee": [
         {
           "@type": "Person",
           "name": "MC. Laura Mónica Madrigal González",
-          "jobTitle": "Rectora",
+          "jobTitle": "Encargada del Despacho de la Rectoría",
           "description": "Líder académica en Universidad Tecnológica Santa Catarina"
+        },
+        {
+          "@type": "Person",
+          "name": "MDP. Beatriz Eugenia Luna Olvera",
+          "jobTitle": "Encargada de la Dirección Académica",
+          "description": "Directora Académica en UTSC"
+        },
+        {
+          "@type": "Person",
+          "name": "Yessica J. Martínez Iracheta",
+          "jobTitle": "Recepción de la Dirección Académica",
+          "description": "Apoyo administrativo en Dirección Académica de UTSC"
+        },
+        {
+          "@type": "Person",
+          "name": "Ing. Juan José Reyna Picón",
+          "jobTitle": "Coordinador de Transparencia",
+          "description": "Coordinador en Dirección Jurídica de UTSC"
+        },
+        {
+          "@type": "Person",
+          "name": "Lic. Jesús Ayala González",
+          "jobTitle": "Encargado de la Dirección de Administración y Finanzas",
+          "description": "Director de Administración y Finanzas en UTSC"
         }
       ]
     }
@@ -217,240 +241,292 @@
                 <button class="department-filter" data-filter="ingenieria">Ingeniería</button>
                 <button class="department-filter" data-filter="negocios">Negocios</button>
                 <button class="department-filter" data-filter="ciencias">Ciencias</button>
+                <button class="department-filter" data-filter="administracion">Administración</button>
             </div>
 
             <!-- Teachers Grid -->
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="teachers-grid">
-                <!-- Teacher 1: Tecnologías de la Información -->
-                <div class="docente-card teacher-card" data-aos="fade-up" data-category="tecnologia">
+                <!-- Teacher 1: Ing. Juan José Reyna Picón - Coordinador de Transparencia -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-category="administracion">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Ing. Juan Pérez, profesor de Tecnologías de la Información en UTSC" loading="lazy">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Ing. Juan José Reyna Picón, Coordinador de Transparencia en UTSC" loading="lazy">
                             <div class="ml-4 flex-1">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Ing. Juan Pérez</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Tecnologías de la Información</p>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Ing. Juan José Reyna Picón</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Coordinador de Transparencia</p>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de Ing. Juan Pérez"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="GitHub de Ing. Juan Pérez"><i data-feather="github"></i></a>
+                                <a href="#" class="social-icon" aria-label="LinkedIn de Ing. Juan José Reyna Picón"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Email de Ing. Juan José Reyna Picón"><i data-feather="mail"></i></a>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Ingeniero en sistemas con experiencia en desarrollo de software multiplataforma y bases de datos para innovación digital.<grok-card data-id="75ec9a" data-type="citation_card"></grok-card></p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Ingeniero enfocado en transparencia y gestión administrativa en el ámbito educativo.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Programación</span>
-                            <span class="specialty-chip bg-green-100 text-green-800">Bases de Datos</span>
-                            <span class="specialty-chip bg-purple-100 text-purple-800">Web Development</span>
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Transparencia</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Gestión Administrativa</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Ética</span>
                         </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver cursos de Ing. Juan Pérez">
-                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver cursos
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de Ing. Juan José Reyna Picón">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
                         </button>
                     </div>
                 </div>
 
-                <!-- Teacher 2: Mecatrónica -->
-                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="100" data-category="ingenieria">
+                <!-- Teacher 2: Lic. Jesús Ayala González - Dirección de Administración y Finanzas -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="100" data-category="administracion">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1581092160562-6486cd53181c?w=150&h=150&fit=crop&crop=face" alt="Ing. María López, profesora de Mecatrónica en UTSC" loading="lazy">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1581092160562-6486cd53181c?w=150&h=150&fit=crop&crop=face" alt="Lic. Jesús Ayala González, Encargado de Administración y Finanzas en UTSC" loading="lazy">
                             <div class="ml-4 flex-1">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Ing. María López</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Mecatrónica</p>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Lic. Jesús Ayala González</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Dirección de Administración y Finanzas</p>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de Ing. María López"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="Twitter de Ing. María López"><i data-feather="twitter"></i></a>
+                                <a href="#" class="social-icon" aria-label="LinkedIn de Lic. Jesús Ayala González"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Phone de Lic. Jesús Ayala González"><i data-feather="phone"></i></a>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Especialista en integración de mecánica, electrónica e informática para sistemas automatizados.<grok-card data-id="c57c4a" data-type="citation_card"></grok-card></p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Encargado de la gestión financiera y administrativa de la institución.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Automatización</span>
-                            <span class="specialty-chip bg-green-100 text-green-800">Robótica</span>
-                            <span class="specialty-chip bg-purple-100 text-purple-800">IoT</span>
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Finanzas</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Administración</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Presupuestos</span>
                         </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver cursos de Ing. María López">
-                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver cursos
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de Lic. Jesús Ayala González">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
                         </button>
                     </div>
                 </div>
 
-                <!-- Teacher 3: Ingeniería Industrial -->
-                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="200" data-category="ingenieria">
+                <!-- Teacher 3: MDIP. Marcela Denisse Leal Alanís - Dirección Jurídica -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="200" data-category="administracion">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=150&h=150&fit=crop&crop=face" alt="Ing. Carlos Ramírez, profesor de Ingeniería Industrial en UTSC" loading="lazy">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=150&h=150&fit=crop&crop=face" alt="MDIP. Marcela Denisse Leal Alanís, Dirección Jurídica en UTSC" loading="lazy">
                             <div class="ml-4 flex-1">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Ing. Carlos Ramírez</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Ingeniería Industrial</p>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">MDIP. Marcela Denisse Leal Alanís</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Dirección Jurídica</p>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de Ing. Carlos Ramírez"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="LinkedIn de Ing. Carlos Ramírez"><i data-feather="github"></i></a>
+                                <a href="#" class="social-icon" aria-label="LinkedIn de MDIP. Marcela Denisse Leal Alanís"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Mail de MDIP. Marcela Denisse Leal Alanís"><i data-feather="mail"></i></a>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Experto en planeación de operaciones y gestión de calidad en procesos productivos.<grok-card data-id="5fce10" data-type="citation_card"></grok-card></p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Encargada de la dirección jurídica, asegurando el cumplimiento normativo.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Gestión de Calidad</span>
-                            <span class="specialty-chip bg-green-100 text-green-800">Logística</span>
-                            <span class="specialty-chip bg-purple-100 text-purple-800">Lean Manufacturing</span>
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Derecho Educativo</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Normatividad</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Cumplimiento</span>
                         </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver cursos de Ing. Carlos Ramírez">
-                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver cursos
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de MDIP. Marcela Denisse Leal Alanís">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
                         </button>
                     </div>
                 </div>
 
-                <!-- Teacher 4: Mantenimiento Industrial -->
-                <div class="docente-card teacher-card" data-aos="fade-up" data-category="ingenieria">
+                <!-- Teacher 4: Lic. Mario Alberto Juarez Alanís - Contralor Interno -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-category="administracion">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=150&h=150&fit=crop&crop=face" alt="Ing. Ana García, profesora de Mantenimiento Industrial en UTSC" loading="lazy">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=150&h=150&fit=crop&crop=face" alt="Lic. Mario Alberto Juarez Alanís, Contralor Interno en UTSC" loading="lazy">
                             <div class="ml-4 flex-1">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Ing. Ana García</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Mantenimiento Industrial</p>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Lic. Mario Alberto Juarez Alanís</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Contralor Interno</p>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de Ing. Ana García"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="Twitter de Ing. Ana García"><i data-feather="twitter"></i></a>
+                                <a href="#" class="social-icon" aria-label="LinkedIn de Lic. Mario Alberto Juarez Alanís"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Twitter de Lic. Mario Alberto Juarez Alanís"><i data-feather="twitter"></i></a>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Especialista en optimización de sistemas electromecánicos y estrategias de mantenimiento predictivo.<grok-card data-id="35c611" data-type="citation_card"></grok-card></p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Responsable de la contraloría interna y auditorías en la institución.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Mantenimiento Predictivo</span>
-                            <span class="specialty-chip bg-green-100 text-green-800">Sistemas Electromecánicos</span>
-                            <span class="specialty-chip bg-purple-100 text-purple-800">Eficiencia Energética</span>
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Auditoría</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Control Interno</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Riesgos</span>
                         </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver cursos de Ing. Ana García">
-                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver cursos
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de Lic. Mario Alberto Juarez Alanís">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
                         </button>
                     </div>
                 </div>
 
-                <!-- Teacher 5: Electromovilidad -->
-                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="100" data-category="ingenieria">
+                <!-- Teacher 5: Lic. Julio Cesar Galván Salazar - Auxiliar Jurídico -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="100" data-category="administracion">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1502877338535-766e3a6052c0?w=150&h=150&fit=crop&crop=face" alt="Ing. Luis Hernández, profesor de Electromovilidad en UTSC" loading="lazy">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1502877338535-766e3a6052c0?w=150&h=150&fit=crop&crop=face" alt="Lic. Julio Cesar Galván Salazar, Auxiliar Jurídico en UTSC" loading="lazy">
                             <div class="ml-4 flex-1">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Ing. Luis Hernández</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Electromovilidad</p>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Lic. Julio Cesar Galván Salazar</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Auxiliar Jurídico</p>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de Ing. Luis Hernández"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="YouTube de Ing. Luis Hernández"><i data-feather="youtube"></i></a>
+                                <a href="#" class="social-icon" aria-label="LinkedIn de Lic. Julio Cesar Galván Salazar"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="YouTube de Lic. Julio Cesar Galván Salazar"><i data-feather="youtube"></i></a>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Ingeniero enfocado en sistemas de electromoción sustentable y gestión de proyectos en movilidad eléctrica.<grok-card data-id="dc1a08" data-type="citation_card"></grok-card></p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Apoyo en asuntos jurídicos y contratos institucionales.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Baterías Eléctricas</span>
-                            <span class="specialty-chip bg-green-100 text-green-800">Motores Eléctricos</span>
-                            <span class="specialty-chip bg-purple-100 text-purple-800">Sustentabilidad</span>
-                            <span class="specialty-chip bg-yellow-100 text-yellow-800">Proyectos PEI</span>
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Contratos</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Asesoría Legal</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Cumplimiento Normativo</span>
                         </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver cursos de Ing. Luis Hernández">
-                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver cursos
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de Lic. Julio Cesar Galván Salazar">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
                         </button>
                     </div>
                 </div>
 
-                <!-- Teacher 6: Gestión Institucional Educativa -->
-                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="200" data-category="negocios">
+                <!-- Teacher 6: Lic. Linda Nancy Orozco Castilleja - Coordinador de Archivo General -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="200" data-category="administracion">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=150&h=150&fit=crop&crop=face" alt="Lic. Beatriz Olvera, profesora de Gestión Educativa en UTSC" loading="lazy">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=150&h=150&fit=crop&crop=face" alt="Lic. Linda Nancy Orozco Castilleja, Coordinador de Archivo General en UTSC" loading="lazy">
                             <div class="ml-4 flex-1">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Lic. Beatriz Olvera</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Gestión Educativa</p>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Lic. Linda Nancy Orozco Castilleja</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Coordinador de Archivo General</p>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de Lic. Beatriz Olvera"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="Twitter de Lic. Beatriz Olvera"><i data-feather="twitter"></i></a>
+                                <a href="#" class="social-icon" aria-label="LinkedIn de Lic. Linda Nancy Orozco Castilleja"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Twitter de Lic. Linda Nancy Orozco Castilleja"><i data-feather="twitter"></i></a>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Experta en gestión curricular e institucional con enfoque en inclusión educativa.</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Gestión y organización de archivos institucionales.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Currículo</span>
-                            <span class="specialty-chip bg-green-100 text-green-800">Inclusión</span>
-                            <span class="specialty-chip bg-purple-100 text-purple-800">Educación Superior</span>
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Archivos</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Documentación</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Organización</span>
                         </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver cursos de Lic. Beatriz Olvera">
-                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver cursos
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de Lic. Linda Nancy Orozco Castilleja">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
                         </button>
                     </div>
                 </div>
 
-                <!-- Teacher 7: Rectora (from real info) -->
-                <div class="docente-card teacher-card" data-aos="fade-up" data-category="negocios">
+                <!-- Teacher 7: MC. Laura Mónica Madrigal González - Rectora -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-category="administracion">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="MC. Laura Madrigal, Rectora en UTSC" loading="lazy">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="MC. Laura Mónica Madrigal González, Encargada del Despacho de la Rectoría en UTSC" loading="lazy">
                             <div class="ml-4 flex-1">
                                 <h3 class="text-xl font-bold text-gray-900 dark:text-white">MC. Laura Mónica Madrigal González</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Rectora</p>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Encargada del Despacho de la Rectoría</p>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de MC. Laura Madrigal"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="Instagram de MC. Laura Madrigal"><i data-feather="instagram"></i></a>
+                                <a href="https://www.facebook.com/lauramadrigalMC/" target="_blank" class="social-icon" aria-label="Facebook de MC. Laura Mónica Madrigal González"><i data-feather="facebook"></i></a>
+                                <a href="#" class="social-icon" aria-label="Instagram de MC. Laura Mónica Madrigal González"><i data-feather="instagram"></i></a>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Líder académica dedicada a la formación profesional y la inclusión en la UTSC.<grok-card data-id="65d045" data-type="citation_card"></grok-card></p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Líder académica dedicada a la formación profesional y la inclusión en la UTSC.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Liderazgo Educativo</span>
                             <span class="specialty-chip bg-green-100 text-green-800">Innovación</span>
                             <span class="specialty-chip bg-purple-100 text-purple-800">Inclusión</span>
                         </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver información de MC. Laura Madrigal">
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de MC. Laura Mónica Madrigal González">
                             <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
                         </button>
                     </div>
                 </div>
 
-                <!-- Teacher 8: From directory, Dirección Académica -->
+                <!-- Teacher 8: MDP. Beatriz Eugenia Luna Olvera - Dirección Académica -->
                 <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="100" data-category="ciencias">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="MDP. Yessica Martínez, Encargada Académica en UTSC" loading="lazy">
-                            <div class="ml-4 flex-1">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">MDP. Yessica J. Martínez Iracheta</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Dirección Académica</p>
-                            </div>
-                            <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de MDP. Yessica Martínez"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="Email de MDP. Yessica Martínez"><i data-feather="mail"></i></a>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Encargada de la dirección académica, enfocada en el desarrollo curricular y la calidad educativa.<grok-card data-id="c6a6b0" data-type="citation_card"></grok-card></p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Currículo</span>
-                            <span class="specialty-chip bg-green-100 text-green-800">Calidad Educativa</span>
-                            <span class="specialty-chip bg-purple-100 text-purple-800">Evaluación</span>
-                        </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver información de MDP. Yessica Martínez">
-                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Teacher 9: Another from directory -->
-                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="200" data-category="ingenieria">
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face" alt="MDP. Beatriz Luna, Encargada Académica en UTSC" loading="lazy">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="MDP. Beatriz Eugenia Luna Olvera, Encargada de la Dirección Académica en UTSC" loading="lazy">
                             <div class="ml-4 flex-1">
                                 <h3 class="text-xl font-bold text-gray-900 dark:text-white">MDP. Beatriz Eugenia Luna Olvera</h3>
-                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Dirección Académica</p>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Encargada de la Dirección Académica</p>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="#" class="social-icon" aria-label="LinkedIn de MDP. Beatriz Luna"><i data-feather="linkedin"></i></a>
-                                <a href="#" class="social-icon" aria-label="Phone de MDP. Beatriz Luna"><i data-feather="phone"></i></a>
+                                <a href="https://mx.linkedin.com/in/beatriz-eugenia-luna-olvera-69963a146" target="_blank" class="social-icon" aria-label="LinkedIn de MDP. Beatriz Eugenia Luna Olvera"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Email de MDP. Beatriz Eugenia Luna Olvera"><i data-feather="mail"></i></a>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">Encargada de la dirección académica con énfasis en innovación pedagógica.<grok-card data-id="d15c34" data-type="citation_card"></grok-card></p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Encargada de la dirección académica con énfasis en innovación pedagógica.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Innovación Pedagógica</span>
                             <span class="specialty-chip bg-green-100 text-green-800">Formación Docente</span>
                             <span class="specialty-chip bg-purple-100 text-purple-800">Evaluación</span>
                         </div>
-                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver información de MDP. Beatriz Luna">
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de MDP. Beatriz Eugenia Luna Olvera">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Teacher 9: Yessica J. Martínez Iracheta - Recepción Dirección Académica -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="200" data-category="administracion">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face" alt="Yessica J. Martínez Iracheta, Recepción de la Dirección Académica en UTSC" loading="lazy">
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Yessica J. Martínez Iracheta</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Recepción de la Dirección Académica</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <a href="#" class="social-icon" aria-label="LinkedIn de Yessica J. Martínez Iracheta"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Phone de Yessica J. Martínez Iracheta"><i data-feather="phone"></i></a>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Apoyo administrativo en la dirección académica, facilitando el desarrollo curricular.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Currículo</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Calidad Educativa</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Apoyo Académico</span>
+                        </div>
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de Yessica J. Martínez Iracheta">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Teacher 10: Ing. Laura Patricia Álvarez Navarro - Recepción Rectoría -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-category="administracion">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Ing. Laura Patricia Álvarez Navarro, Recepción del Despacho de la Rectoría en UTSC" loading="lazy">
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Ing. Laura Patricia Álvarez Navarro</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Recepción del Despacho de la Rectoría</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <a href="#" class="social-icon" aria-label="LinkedIn de Ing. Laura Patricia Álvarez Navarro"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Mail de Ing. Laura Patricia Álvarez Navarro"><i data-feather="mail"></i></a>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Apoyo en recepción y coordinación en el despacho rectoral.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Coordinación</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Recepción</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Apoyo Ejecutivo</span>
+                        </div>
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de Ing. Laura Patricia Álvarez Navarro">
+                            <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Teacher 11: Magda Elena Ibarra Hernández - Recepción Dirección Jurídica -->
+                <div class="docente-card teacher-card" data-aos="fade-up" data-aos-delay="100" data-category="administracion">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <img class="w-16 h-16 rounded-full object-cover ring-2 ring-white/20 shadow-md" src="https://images.unsplash.com/photo-1581092160562-6486cd53181c?w=150&h=150&fit=crop&crop=face" alt="Magda Elena Ibarra Hernández, Recepción de la Dirección Jurídica en UTSC" loading="lazy">
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Magda Elena Ibarra Hernández</h3>
+                                <p class="text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">Recepción de la Dirección Jurídica</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <a href="#" class="social-icon" aria-label="LinkedIn de Magda Elena Ibarra Hernández"><i data-feather="linkedin"></i></a>
+                                <a href="#" class="social-icon" aria-label="Phone de Magda Elena Ibarra Hernández"><i data-feather="phone"></i></a>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Apoyo administrativo en la dirección jurídica.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)]">Apoyo Jurídico</span>
+                            <span class="specialty-chip bg-green-100 text-green-800">Recepción</span>
+                            <span class="specialty-chip bg-purple-100 text-purple-800">Coordinación</span>
+                        </div>
+                        <button class="w-full btn-docente py-2 px-4 flex items-center justify-center" aria-label="Ver perfil de Magda Elena Ibarra Hernández">
                             <i data-feather="book-open" class="w-4 h-4 mr-2"></i> Ver perfil
                         </button>
                     </div>
@@ -548,7 +624,7 @@
             // Buttons interactions
             document.querySelectorAll('.btn-docente').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    alert('Redirigiendo a cursos del docente...');
+                    alert('Redirigiendo a perfil del docente...');
                 });
             });
 

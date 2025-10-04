@@ -15,7 +15,7 @@ class SubjectsController {
             Gate::allow('teacher');
 
             // Para maestros, mostrar solo sus materias asignadas
-            $courseModel = new \App\Models\Course();
+            $courseModel = new Course();
             $userId = $_SESSION['user']['id'];
             $subjects = $courseModel->getByTeacher($userId);
 
@@ -27,7 +27,7 @@ class SubjectsController {
             Gate::allow('admin');
 
             // Obtener lista de todas las materias de la base de datos
-            $courseModel = new \App\Models\Course();
+            $courseModel = new Course();
             $subjects = $courseModel->getAll();
 
             // Cargar la vista de admin
@@ -57,7 +57,7 @@ class SubjectsController {
         // TODO: Implementar validación
 
         // Crear nueva materia
-        $courseModel = new \App\Models\Course();
+        $courseModel = new Course();
         $result = $courseModel->create([
             'nombre' => $data['nombre'],
             'codigo' => $data['codigo'],
@@ -82,7 +82,7 @@ class SubjectsController {
     public function edit($id) {
         if(empty($_SESSION['user'])){ header('Location:/src/plataforma/'); exit; }
 
-        $courseModel = new \App\Models\Course();
+        $courseModel = new Course();
         $subject = $courseModel->findById($id);
 
         // Si no se encuentra la materia, redirigir a la lista
@@ -102,7 +102,7 @@ class SubjectsController {
         $data = $_POST;
         // TODO: Implementar validación
 
-        $courseModel = new \App\Models\Course();
+        $courseModel = new Course();
         $result = $courseModel->update($id, [
             'nombre' => $data['nombre'],
             'codigo' => $data['codigo'],
@@ -126,7 +126,7 @@ class SubjectsController {
     public function delete($id) {
         if(empty($_SESSION['user'])){ header('Location:/src/plataforma/'); exit; }
 
-        $courseModel = new \App\Models\Course();
+        $courseModel = new Course();
         $result = $courseModel->delete($id);
 
         header('Location: /src/plataforma/app/admin/subjects');
