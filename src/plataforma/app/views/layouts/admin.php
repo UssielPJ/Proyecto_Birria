@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<html lang="es" class="light">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UTEC · Panel Administrativo</title>
+  <!-- Prevenir flash de tema incorrecto -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="/src/plataforma/assets/css/notifications.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
+  <script src="/src/plataforma/app/js/theme.js" defer></script>
+  <script src="/src/plataforma/app/js/notifications.js" defer></script>
 
   <script>
     tailwind.config = {
@@ -63,10 +76,10 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg">
       <div class="p-4 flex items-center space-x-3">
-        <div class="bg-primary-500 p-2 rounded-lg">
-          <i data-feather="book" class="text-white"></i>
+        <div class="flex items-center gap-2">
+          <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 w-auto rounded">
+          <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
         </div>
-        <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
       </div>
 
       <div class="px-4 pb-4 border-b border-neutral-200 dark:border-neutral-700">
@@ -89,8 +102,8 @@
           <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="book-open"></i><span class="nav-text">Materias</span></a></li>
           <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="calendar"></i><span class="nav-text">Horarios</span></a></li>
           <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="award"></i><span class="nav-text">Calificaciones</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="dollar-sign"></i><span class="nav-text">Pagos</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="settings"></i><span class="nav-text">Configuración</span></a></li>
+          <li><a href="/src/plataforma/payments" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="dollar-sign"></i><span class="nav-text">Pagos</span></a></li>
+          <li><a href="/src/plataforma/settings" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="settings"></i><span class="nav-text">Configuración</span></a></li>
           <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="bell"></i><span class="nav-text">Anuncios</span></a></li>
         </ul>
       </nav>
@@ -366,22 +379,18 @@
       if (!isMobile && saved) document.body.classList.add('body--sb-collapsed');
     })();
 
-    // Tema persistente
-    (function(){
-      const html = document.documentElement;
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      if(saved){ html.classList.toggle('dark', saved==='dark'); }
-      else { html.classList.toggle('dark', prefersDark); }
-
-      document.getElementById('theme-toggle')?.addEventListener('click', ()=>{
-        const toDark = !html.classList.contains('dark');
-        html.classList.toggle('dark', toDark);
-        localStorage.setItem('theme', toDark ? 'dark' : 'light');
-        feather.replace();
+    function loadJS(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
       });
-    })();
+    }
+    
+    // Cargar gestor de tema
+    loadJS('/src/plataforma/app/js/theme.js');
   </script>
 </body>
 </html>

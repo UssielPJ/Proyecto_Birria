@@ -92,10 +92,10 @@ $U = $_SESSION['user'] ?? ['name'=>'Capturista','email'=>'capturista@utec.edu'];
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar dark:bg-neutral-800 shadow-lg">
       <div class="p-4 flex items-center space-x-3">
-        <div class="bg-primary-500 p-2 rounded-lg">
-          <i data-feather="clipboard" class="text-white"></i>
+        <div class="flex items-center gap-2">
+          <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 w-auto rounded">
+          <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">Captura UTEC</span>
         </div>
-        <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">Captura UTEC</span>
       </div>
 
       <div class="px-4 pb-4 border-b border-neutral-200 dark:border-neutral-700">
@@ -340,22 +340,18 @@ $U = $_SESSION['user'] ?? ['name'=>'Capturista','email'=>'capturista@utec.edu'];
       if (!isMobile && saved) document.body.classList.add('body--sb-collapsed');
     })();
 
-    // Tema persistente
-    (function(){
-      const html = document.documentElement;
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      if(saved){ html.classList.toggle('dark', saved==='dark'); }
-      else { html.classList.toggle('dark', prefersDark); }
-
-      document.getElementById('theme-toggle')?.addEventListener('click', ()=>{
-        const toDark = !html.classList.contains('dark');
-        html.classList.toggle('dark', toDark);
-        localStorage.setItem('theme', toDark ? 'dark' : 'light');
-        feather.replace();
+    function loadJS(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
       });
-    })();
+    }
+    
+    // Cargar gestor de tema
+    loadJS('/src/plataforma/app/js/theme.js');
   </script>
 </body>
 </html>

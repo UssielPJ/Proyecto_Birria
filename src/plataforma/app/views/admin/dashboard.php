@@ -1,18 +1,73 @@
-<?php
-// $user y $title vienen del controlador
-$name  = htmlspecialchars($user['name'] ?? 'Administración');
-$email = htmlspecialchars($user['email'] ?? 'admin@utec.edu');
-?>
-<!DOCTYPE html>
-<html lang="es" class="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title><?= htmlspecialchars($title) ?> · UTEC</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://unpkg.com/feather-icons"></script>
+<?php require_once __DIR__ . '/../layouts/admin.php'; ?>
+
+<div class="container px-6 py-8">
+    <!-- Bienvenida -->
+    <div class="bg-gradient-to-r from-red-600 to-orange-600 rounded-xl p-6 text-white mb-8" data-aos="fade-up">
+        <div class="flex items-center gap-4">
+            <div class="p-3 bg-white/20 rounded-full">
+                <i data-feather="shield" class="w-8 h-8"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-1">Panel de Administración</h2>
+                <p class="opacity-90">Administra y supervisa todos los aspectos de la plataforma.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estadísticas Principales -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Total de Estudiantes -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500" data-aos="fade-up">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Total Estudiantes</p>
+                    <h3 class="text-2xl font-bold mt-1"><?= $stats['total_students'] ?></h3>
+                </div>
+                <div class="p-3 rounded-lg bg-blue-50">
+                    <i data-feather="users" class="w-6 h-6 text-blue-500"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total de Profesores -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Total Profesores</p>
+                    <h3 class="text-2xl font-bold mt-1"><?= $stats['total_teachers'] ?></h3>
+                </div>
+                <div class="p-3 rounded-lg bg-green-50">
+                    <i data-feather="book-open" class="w-6 h-6 text-green-500"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total de Cursos -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-purple-500" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Total Cursos</p>
+                    <h3 class="text-2xl font-bold mt-1"><?= $stats['total_courses'] ?></h3>
+                </div>
+                <div class="p-3 rounded-lg bg-purple-50">
+                    <i data-feather="book" class="w-6 h-6 text-purple-500"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cursos Activos -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-500" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Cursos Activos</p>
+                    <h3 class="text-2xl font-bold mt-1"><?= $stats['active_courses'] ?></h3>
+                </div>
+                <div class="p-3 rounded-lg bg-yellow-50">
+                    <i data-feather="activity" class="w-6 h-6 text-yellow-500"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 
   <script>
     tailwind.config = {
@@ -94,42 +149,42 @@ $email = htmlspecialchars($user['email'] ?? 'admin@utec.edu');
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
+            <a href="/src/plataforma/app/admin/students" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <i data-feather="users"></i><span class="nav-text">Estudiantes</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
+            <a href="/src/plataforma/app/admin/teachers" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <i data-feather="user-plus"></i><span class="nav-text">Profesores</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
+            <a href="/src/plataforma/app/admin/subjects" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <i data-feather="book-open"></i><span class="nav-text">Materias</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
+            <a href="/src/plataforma/app/admin/schedule" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <i data-feather="calendar"></i><span class="nav-text">Horarios</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
+            <a href="/src/plataforma/app/admin/grades" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <i data-feather="award"></i><span class="nav-text">Calificaciones</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
+            <a href="/src/plataforma/app/admin/payments" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <i data-feather="dollar-sign"></i><span class="nav-text">Pagos</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
+            <a href="/src/plataforma/app/admin/settings" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <i data-feather="settings"></i><span class="nav-text">Configuración</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
+            <a href="/src/plataforma/app/admin/announcements" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700">
               <i data-feather="bell"></i><span class="nav-text">Anuncios</span>
             </a>
           </li>

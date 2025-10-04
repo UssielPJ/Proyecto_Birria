@@ -1,11 +1,33 @@
 <?php
-// Opcional: si ya tienes sesión y usuario:
+// Verificar sesión y obtener datos de usuario
 $userName  = $_SESSION['user']['name']  ?? 'Estudiante';
 $userEmail = $_SESSION['user']['email'] ?? 'usuario@utec.edu';
-$role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | 'admin'
+$role      = $_SESSION['user']['role']  ?? 'alumno';
 ?>
 <!DOCTYPE html>
-<html lang="es" class="light">
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UTEC · Plataforma Estudiantil</title>
+  <!-- Prevenir flash de tema incorrecto -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="/src/plataforma/assets/css/notifications.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="/src/plataforma/app/js/theme.js" defer></script>
+  <script src="/src/plataforma/app/js/notifications.js" defer></script>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -70,10 +92,10 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg">
       <div class="p-4 flex items-center space-x-3">
-        <div class="bg-primary-500 p-2 rounded-lg">
-          <i data-feather="book" class="text-white"></i>
+        <div class="flex items-center gap-2">
+          <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 w-auto rounded">
+          <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
         </div>
-        <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
       </div>
 
       <div class="px-4 pb-4 border-b border-neutral-200 dark:border-neutral-700">
@@ -369,22 +391,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
       if (!isMobile && saved) document.body.classList.add('body--sb-collapsed');
     })();
 
-    // Tema persistente
-    (function(){
-      const html = document.documentElement;
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      if(saved){ html.classList.toggle('dark', saved==='dark'); }
-      else { html.classList.toggle('dark', prefersDark); }
-
-      document.getElementById('theme-toggle')?.addEventListener('click', ()=>{
-        const toDark = !html.classList.contains('dark');
-        html.classList.toggle('dark', toDark);
-        localStorage.setItem('theme', toDark ? 'dark' : 'light');
-        feather.replace();
-      });
-    })();
+    // El gestor de tema ya está cargado en el head
   </script>
 </body>
 </html>

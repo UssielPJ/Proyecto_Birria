@@ -1,15 +1,204 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UTEC Admin Dashboard</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<?php 
+require_once __DIR__ . '/../layouts/capturista.php';
+require_once __DIR__ . '/../../models/User.php';
+require_once __DIR__ . '/../../models/Course.php';
+require_once __DIR__ . '/../../models/Grade.php';
+
+$userModel = new User();
+$courseModel = new Course();
+$gradeModel = new Grade();
+
+$recentRegistrations = $userModel->getRecentUsers(5);
+$pendingGrades = $gradeModel->getPendingGrades();
+$totalStudents = $userModel->countByRole('student');
+$totalTeachers = $userModel->countByRole('teacher');
+
+// Estadísticas del día
+$todayStats = [
+    'new_registrations' => count($recentRegistrations),
+    'pending_grades' => count($pendingGrades),
+    'total_students' => $totalStudents,
+    'total_teachers' => $totalTeachers
+];
+
+?>
+
+<div class="container px-6 py-8">
+    <!-- Bienvenida -->
+    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl p-6 text-white mb-8" data-aos="fade-up">
+        <div class="flex items-center gap-4">
+            <div class="p-3 bg-white/20 rounded-full">
+                <i data-feather="database" class="w-8 h-8"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-1">Panel de Captura de Datos</h2>
+                <p class="opacity-90">Gestiona la información académica de manera eficiente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Registros del Día -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-purple-500" data-aos="fade-up">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Nuevos Registros</p>
+                    <h3 class="text-2xl font-bold mt-1"><?= $todayStats['new_registrations'] ?></h3>
+                </div>
+                <div class="p-3 rounded-lg bg-purple-50">
+                    <i data-feather="user-plus" class="w-6 h-6 text-purple-500"></i>
+                </div>
+            </div>
+            <a href="/register/new" class="text-purple-600 hover:text-purple-700 text-sm font-medium flex items-center mt-4">
+                Nuevo registro
+                <i data-feather="chevron-right" class="w-4 h-4 ml-1"></i>
+            </a>
+        </div>
+
+        <!-- Calificaciones Pendientes -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-500" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Calificaciones Pendientes</p>
+                    <h3 class="text-2xl font-bold mt-1"><?= $todayStats['pending_grades'] ?></h3>
+                </div>
+                <div class="p-3 rounded-lg bg-yellow-50">
+                    <i data-feather="clock" class="w-6 h-6 text-yellow-500"></i>
+                </div>
+            </div>
+            <a href="/grades/pending" class="text-yellow-600 hover:text-yellow-700 text-sm font-medium flex items-center mt-4">
+                Ver pendientes
+                <i data-feather="chevron-right" class="w-4 h-4 ml-1"></i>
+            </a>
+        </div>
+
+        <!-- Total Estudiantes -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Total Estudiantes</p>
+                    <h3 class="text-2xl font-bold mt-1"><?= $todayStats['total_students'] ?></h3>
+                </div>
+                <div class="p-3 rounded-lg bg-blue-50">
+                    <i data-feather="users" class="w-6 h-6 text-blue-500"></i>
+                </div>
+            </div>
+            <a href="/students" class="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center mt-4">
+                Ver estudiantes
+                <i data-feather="chevron-right" class="w-4 h-4 ml-1"></i>
+            </a>
+        </div>
+
+        <!-- Total Profesores -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Total Profesores</p>
+                    <h3 class="text-2xl font-bold mt-1"><?= $todayStats['total_teachers'] ?></h3>
+                </div>
+                <div class="p-3 rounded-lg bg-green-50">
+                    <i data-feather="book-open" class="w-6 h-6 text-green-500"></i>
+                </div>
+            </div>
+            <a href="/teachers" class="text-green-600 hover:text-green-700 text-sm font-medium flex items-center mt-4">
+                Ver profesores
+                <i data-feather="chevron-right" class="w-4 h-4 ml-1"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <i data-feather="edit-3" class="w-6 h-6 text-blue-500"></i>
+                </div>
+                <a href="/grades/update" class="btn btn-primary btn-sm">
+                    Actualizar
+                </a>
+            </div>
+            <h3 class="font-medium">Calificaciones</h3>
+            <p class="text-sm text-gray-500 mt-1">Actualizar calificaciones</p>
+        </div>
+
+        <!-- Gestión de Horarios -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-green-50">
+                    <i data-feather="calendar" class="w-6 h-6 text-green-500"></i>
+                </div>
+                <a href="/schedule" class="btn btn-primary btn-sm">
+                    Gestionar
+                </a>
+            </div>
+            <h3 class="font-medium">Horarios</h3>
+            <p class="text-sm text-gray-500 mt-1">Gestionar horarios de clases</p>
+        </div>
+
+        <!-- Reportes -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-500" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-yellow-50">
+                    <i data-feather="file-text" class="w-6 h-6 text-yellow-500"></i>
+                </div>
+                <a href="/reports" class="btn btn-primary btn-sm">
+                    Ver Reportes
+                </a>
+            </div>
+            <h3 class="font-medium">Reportes</h3>
+            <p class="text-sm text-gray-500 mt-1">Generar reportes académicos</p>
+        </div>
+    </div>
+
+    <!-- Tareas Pendientes -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+        <h3 class="text-lg font-semibold mb-4">Acciones Pendientes</h3>
+        <div class="grid gap-4">
+            <div class="flex items-center justify-between p-4 border rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-purple-100 rounded">
+                        <i data-feather="user" class="w-5 h-5 text-purple-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-medium">Nuevos Estudiantes por Procesar</h4>
+                        <p class="text-sm text-gray-500">Registros pendientes de revisión</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full">
+                    <?= $pendingActions['new_students'] ?>
+                </span>
+            </div>
+
+            <div class="flex items-center justify-between p-4 border rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-blue-100 rounded">
+                        <i data-feather="edit-2" class="w-5 h-5 text-blue-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-medium">Actualizaciones de Calificaciones</h4>
+                        <p class="text-sm text-gray-500">Calificaciones por actualizar</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full">
+                    <?= $pendingActions['grade_updates'] ?>
+                </span>
+            </div>
+
+            <div class="flex items-center justify-between p-4 border rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-green-100 rounded">
+                        <i data-feather="clock" class="w-5 h-5 text-green-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-medium">Cambios de Horario</h4>
+                        <p class="text-sm text-gray-500">Solicitudes de cambio pendientes</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full">
+                    <?= $pendingActions['schedule_changes'] ?>
+                </span>
+            </div>
+        </div>
+    </div>
     <script>
         tailwind.config = {
             theme: {
