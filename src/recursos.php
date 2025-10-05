@@ -20,13 +20,13 @@
   <link rel="canonical" href="https://utsc.edu.mx/src/recursos.php">
   <!-- Prevenir flash de tema incorrecto -->
   <script>
-    (function() {
-      const savedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.documentElement.classList.add('dark');
-      }
-    })();
+      (function() {
+          const savedTheme = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+              document.body.classList.add('dark');
+          }
+      })();
   </script>
   <script src="/src/js/theme.js" defer></script>
   <script src="https://cdn.tailwindcss.com"></script>

@@ -212,8 +212,8 @@
              <i data-feather="book" class="text-amber-600 dark:text-amber-400"></i>
            </div>
            <div>
-             <h3 class="font-medium"><?= htmlspecialchars($subject['name']) ?></h3>
-             <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= htmlspecialchars($subject['code'] ?? '') ?> · <?= $subject['creditos'] ?? 0 ?> créditos</p>
+             <h3 class="font-medium"><?= htmlspecialchars($subject->name) ?></h3>
+             <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= htmlspecialchars($subject->code ?? '') ?> · <?= $subject->creditos ?? 0 ?> créditos</p>
            </div>
          </div>
          <span class="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-1 rounded-full">Nueva</span>

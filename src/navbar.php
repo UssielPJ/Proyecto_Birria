@@ -83,13 +83,33 @@
         </button>
 
         <!-- Notificaciones -->
-        <button id="notificationToggle"
-                class="notification-toggle relative h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-black/10 dark:ring-white/10 hover:ring-primary-500 transition-all duration-300 bg-white/70 dark:bg-neutral-800/70 backdrop-blur transform hover:scale-105" 
-                aria-label="Ver notificaciones"
-                title="Notificaciones">
-          <i data-feather="bell" class="h-5 w-5 text-gray-600 dark:text-gray-300"></i>
-          <span id="notification-badge" class="notification-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" style="display: none;">0</span>
-        </button>
+        <div class="relative">
+          <button id="notificationToggle"
+                  class="notification-toggle relative h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-black/10 dark:ring-white/10 hover:ring-primary-500 transition-all duration-300 bg-white/70 dark:bg-neutral-800/70 backdrop-blur transform hover:scale-105"
+                  aria-label="Ver notificaciones"
+                  title="Notificaciones">
+            <i data-feather="bell" class="h-5 w-5 text-gray-600 dark:text-gray-300"></i>
+            <span id="notification-badge" class="notification-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" style="display: none;">0</span>
+          </button>
+
+          <!-- Dropdown de notificaciones -->
+          <div id="notificationDropdown" class="notification-dropdown absolute right-0 mt-2 w-80 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border border-gray-200 dark:border-neutral-700 z-50 transform scale-95 opacity-0 transition-all duration-200 pointer-events-none">
+            <div class="p-4 border-b border-gray-200 dark:border-neutral-700">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Notificaciones</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Tus últimas actualizaciones</p>
+            </div>
+            <div class="max-h-64 overflow-y-auto">
+              <div class="p-4 text-center text-gray-500 dark:text-gray-400">
+                <i data-feather="bell-off" class="w-8 h-8 mx-auto mb-2"></i>
+                <p>No hay notificaciones nuevas</p>
+                <p class="text-xs mt-1">Te notificaremos cuando haya actualizaciones importantes.</p>
+              </div>
+            </div>
+            <div class="p-3 border-t border-gray-200 dark:border-neutral-700">
+              <a href="#" class="text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline">Ver todas las notificaciones</a>
+            </div>
+          </div>
+        </div>
 
         <!-- Plataforma -->
         <a href="<?php echo htmlspecialchars($PLATAFORMA_URL); ?>"
@@ -336,12 +356,29 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
+/* Notification Dropdown */
+.notification-dropdown {
+  transform-origin: top right;
+}
+
+.notification-dropdown.opacity-100 {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.notification-dropdown.opacity-0 {
+  transform: scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .nav-link::after {
     display: none;
   }
-  
+
   .nav-shell {
     max-width: 100% !important;
     margin: 0 !important;
@@ -398,37 +435,6 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-// Theme Toggle
-const themeToggles = document.querySelectorAll('.theme-toggle');
-const html = document.documentElement;
-
-themeToggles.forEach(toggle => {
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      html.classList.toggle('dark');
-      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-      
-      // Animación suave de la transición
-      document.body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
-      setTimeout(() => {
-        document.body.style.transition = '';
-      }, 500);
-      
-      // Re-reemplazar íconos de Feather para actualizar colores
-      feather.replace();
-    });
-  }
-});
-
-// Inicializar el tema según la preferencia guardada
-const savedTheme = localStorage.getItem('theme');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-  html.classList.add('dark');
-} else {
-  html.classList.remove('dark');
-}
 
 // Animación suave al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
@@ -490,4 +496,37 @@ document.querySelectorAll('a[data-external="true"]').forEach(link => {
     }
   });
 });
+
+// Toggle del dropdown de notificaciones
+const notificationToggle = document.getElementById('notificationToggle');
+const notificationDropdown = document.getElementById('notificationDropdown');
+
+if (notificationToggle && notificationDropdown) {
+  notificationToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = notificationDropdown.classList.contains('opacity-100');
+
+    // Cerrar otros dropdowns si es necesario
+    document.querySelectorAll('.notification-dropdown').forEach(dropdown => {
+      dropdown.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+      dropdown.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+    });
+
+    if (isVisible) {
+      notificationDropdown.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+      notificationDropdown.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+    } else {
+      notificationDropdown.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+      notificationDropdown.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+    }
+  });
+
+  // Cerrar dropdown al hacer click fuera
+  document.addEventListener('click', (e) => {
+    if (!notificationDropdown.contains(e.target) && !notificationToggle.contains(e.target)) {
+      notificationDropdown.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+      notificationDropdown.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+    }
+  });
+}
 </script>
