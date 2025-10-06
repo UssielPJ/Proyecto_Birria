@@ -1,37 +1,152 @@
 <!-- Footer -->
-<footer class="bg-gray-900 text-white pt-16 pb-8">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-      <div>
-        <h3 class="text-lg font-semibold mb-4">UTEC</h3>
-        <p class="text-gray-400">Universidad Tecnológica comprometida con la excelencia académica y la innovación.</p>
+<footer class="bg-gray-900 dark:bg-neutral-900 text-white pt-16 pb-8 relative overflow-hidden">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[var(--ut-green-900)/0.1] to-transparent"></div>
+  </div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <!-- About UTSC -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <img src="/src/plataforma/app/img/UT.jpg" alt="UTSC Logo" class="h-10 w-10 rounded-lg object-cover ring-2 ring-white/20">
+          <div>
+            <h3 class="text-lg font-bold">UTSC</h3>
+            <p class="text-xs text-gray-400">Universidad Tecnológica Santa Catarina</p>
+          </div>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">Universidad Tecnológica Santa Catarina, comprometida con la excelencia académica y la innovación tecnológica en 2025.</p>
+        <!-- Social Links -->
+        <div class="flex space-x-4 pt-2">
+          <a href="https://www.facebook.com/UTSCNL/" class="social-link text-gray-400 hover:text-white transition-all duration-300 hover:scale-110" aria-label="Facebook de UTSC" target="_blank">
+            <i data-feather="facebook" class="w-5 h-5"></i>
+          </a>
+          <a href="https://twitter.com/UTSantaCatarina" class="social-link text-gray-400 hover:text-white transition-all duration-300 hover:scale-110" aria-label="Twitter de UTSC" target="_blank">
+            <i data-feather="twitter" class="w-5 h-5"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/utsc/" class="social-link text-gray-400 hover:text-white transition-all duration-300 hover:scale-110" aria-label="LinkedIn de UTSC" target="_blank">
+            <i data-feather="linkedin" class="w-5 h-5"></i>
+          </a>
+          <a href="https://www.youtube.com/user/UTSantaCatarina" class="social-link text-gray-400 hover:text-white transition-all duration-300 hover:scale-110" aria-label="YouTube de UTSC" target="_blank">
+            <i data-feather="youtube" class="w-5 h-5"></i>
+          </a>
+          <a href="https://www.instagram.com/utsantacatarina/" class="social-link text-gray-400 hover:text-white transition-all duration-300 hover:scale-110" aria-label="Instagram de UTSC" target="_blank">
+            <i data-feather="instagram" class="w-5 h-5"></i>
+          </a>
+        </div>
       </div>
+
+      <!-- Cursos -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Cursos</h3>
+        <h3 class="text-lg font-semibold mb-4">Carreras</h3>
         <ul class="space-y-2">
-          <li><a href="#" class="text-gray-400 hover:text-white">Tecnología</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">Ingenierías</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">Negocios</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">Certificaciones</a></li>
+          <li><a href="/src/cursos.php#tecnologia" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Tecnologías de la Información</a></li>
+          <li><a href="/src/cursos.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Mecatrónica</a></li>
+          <li><a href="/src/cursos.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Ingeniería Industrial</a></li>
+          <li><a href="/src/cursos.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Electromovilidad</a></li>
         </ul>
       </div>
+
+      <!-- Recursos -->
       <div>
         <h3 class="text-lg font-semibold mb-4">Recursos</h3>
         <ul class="space-y-2">
-          <li><a href="#" class="text-gray-400 hover:text-white">Biblioteca Digital</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">Webinars</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">Blog Académico</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">Preguntas Frecuentes</a></li>
+          <li><a href="/src/recursos.php#biblioteca" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Mediateca</a></li>
+          <li><a href="/src/recursos.php#webinars" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Webinars</a></li>
+          <li><a href="/src/recursos.php#blog" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Directorio</a></li>
+          <li><a href="/src/recursos.php#faq" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Transparencia</a></li>
         </ul>
       </div>
+
+      <!-- Contacto -->
       <div>
         <h3 class="text-lg font-semibold mb-4">Contacto</h3>
-        <ul class="space-y-2">
-          <li class="flex items-center text-gray-400"><i data-feather="mail" class="w-4 h-4 mr-2"></i> contacto@utec.edu</li>
-          <li class="flex items-center text-gray-400"><i data-feather="phone" class="w-4 h-4 mr-2"></i> +52 81 1234 5678</li>
+        <ul class="space-y-3">
+          <li class="flex items-center text-gray-400 hover:text-white transition-colors duration-200">
+            <i data-feather="mail" class="w-4 h-4 mr-2"></i>
+            <a href="mailto:contacto@utsc.edu.mx">contacto@utsc.edu.mx</a>
+          </li>
+          <li class="flex items-center text-gray-400 hover:text-white transition-colors duration-200">
+            <i data-feather="phone" class="w-4 h-4 mr-2"></i>
+            <a href="tel:+528181248400">+52 81 8124 8400</a>
+          </li>
+          <li class="flex items-center text-gray-400 hover:text-white transition-colors duration-200">
+            <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
+            Carretera Saltillo-Monterrey Km. 61.5 C.P. 66359, Santa Catarina, N.L., México
+          </li>
         </ul>
       </div>
     </div>
-    <p class="text-center text-gray-500 text-sm">© 2025 UTEC. Todos los derechos reservados.</p>
+
+    <!-- Newsletter Signup -->
+    <div class="border-t border-gray-800 dark:border-neutral-700 pt-8 mb-8">
+      <div class="lg:flex lg:justify-between lg:items-center">
+        <div class="mb-6 lg:mb-0">
+          <h4 class="text-lg font-semibold mb-2">Mantente actualizado</h4>
+          <p class="text-gray-400 text-sm">Suscríbete para recibir noticias y recursos exclusivos.</p>
+        </div>
+        <form class="flex flex-col sm:flex-row gap-3 max-w-md" id="newsletterForm">
+          <input type="email" placeholder="Tu correo electrónico" class="flex-1 px-4 py-2 rounded-md border border-gray-600 dark:border-neutral-600 bg-gray-800 dark:bg-neutral-800 text-white placeholder-gray-400 focus:ring-[var(--ut-green-600)] focus:border-[var(--ut-green-600)]" required aria-label="Correo para suscripción">
+          <button type="submit" class="px-6 py-2 bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white rounded-md font-semibold transition-all duration-200 shadow-md hover:shadow-lg" aria-label="Suscribirse al boletín">Suscribirse</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-gray-800 dark:border-neutral-700 pt-6">
+      <p class="text-center text-gray-500 text-sm">© 2025 UTSC. Todos los derechos reservados. | <a href="/src/privacidad.php" class="hover:text-white transition-colors duration-200">Política de Privacidad</a> | <a href="/src/terminos.php" class="hover:text-white transition-colors duration-200">Términos de Uso</a></p>
+    </div>
   </div>
 </footer>
+
+<style>
+/* Footer Styles */
+footer {
+  background: linear-gradient(to bottom, #111827, #0f172a);
+}
+.social-link {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.social-link:hover {
+  transform: translateY(-2px);
+}
+.download-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pagination-btn {
+  transition: all 0.2s ease;
+}
+.pagination-btn:hover {
+  transform: translateY(-1px);
+}
+/* Dark mode adjustments for footer */
+.dark footer {
+  background: linear-gradient(to bottom, #0f172a, #1e293b);
+}
+.dark .bg-gray-800 {
+  background-color: #1f2937 !important;
+}
+</style>
+
+<script>
+// Feather Icons
+feather.replace();
+
+// Newsletter Form
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('newsletterForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Simulate submission
+      alert('¡Gracias por suscribirte! Te enviaremos actualizaciones pronto.');
+      form.reset();
+    });
+  }
+
+  // Theme change listener
+  document.addEventListener('themechange', () => {
+    feather.replace();
+  });
+});
+</script>

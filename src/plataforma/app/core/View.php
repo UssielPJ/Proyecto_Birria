@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Core;
+
 /**
  * Renderizador minimalista de vistas con soporte opcional de layouts.
  * - Las vistas se buscan en:   app/views/<ruta>.php

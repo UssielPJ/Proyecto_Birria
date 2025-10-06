@@ -3,364 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UTSC - Plataforma de E-Learning</title>
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="UTSC - Plataforma de E-Learning: Educación tecnológica sin límites. Accede a carreras en línea, ingenierías destacadas y recursos educativos de vanguardia. Certificaciones oficiales y +4600 estudiantes activos.">
+    <meta name="keywords" content="UTSC, educación tecnológica, e-learning, carreras en línea, ingeniería mecatrónica, tecnologías información, mantenimiento industrial">
+    <meta property="og:title" content="UTSC - Plataforma de E-Learning">
+    <meta property="og:description" content="Educación tecnológica sin límites. Descubre carreras y programas innovadores.">
+    <meta property="og:image" content="/src/plataforma/app/img/UT.jpg">
+    <meta property="og:url" content="https://utsc.edu.mx">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>UTSC - Plataforma de E-Learning | Educación Tecnológica Innovadora</title>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="canonical" href="https://utsc.edu.mx/src/index.php">
+    <!-- Prevenir flash de tema incorrecto -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.body.classList.add('dark');
+            }
+        })();
+    </script>
+    <script src="/src/js/theme.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
     <!-- Vanta requiere three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
-    <style>
-        :root{
-          --ut-green-900:#0c4f2e;
-          --ut-green-800:#12663a;
-          --ut-green-700:#177a46;
-          --ut-green-600:#1e8c51;
-          --ut-green-500:#28a55f;
-          --ut-green-100:#e6f6ed;
-        }
-        .hero-gradient {
-            background: linear-gradient(135deg, var(--ut-green-900) 0%, var(--ut-green-800) 50%, var(--ut-green-700) 100%);
-        }
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-        }
-        .feature-icon {
-            width: 60px; height: 60px; display:flex; align-items:center; justify-content:center; border-radius:12px;
-        }
-        /* ==== navegación con anclas sin tocar tu navbar ==== */
-        html { scroll-behavior: smooth; }
-        /* Evita que la sección quede oculta por la navbar fija (ajusta 96px si tu navbar es más alta/baja) */
-        section[id] { scroll-margin-top: 96px; }
-        /* Offset también para el hero/anclas en div */
-        #inicio { scroll-margin-top: 96px; }
-        div[id] { scroll-margin-top: 96px; }
+    <!-- Tippy.js para tooltips -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <!-- Swiper para carruseles avanzados -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Google Fonts para tipografías mejoradas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/styles.css">
 
-        /* Modo oscuro base */
-        body.dark {
-          background-color: #111827; /* gris oscuro */
-          color: #f3f4f6;           /* texto claro */
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Universidad Tecnológica Santa Catarina (UTSC)",
+      "url": "https://utsc.edu.mx",
+      "logo": "/src/plataforma/app/img/UT.jpg",
+      "description": "Plataforma de E-Learning dedicada a la educación tecnológica innovadora.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Santa Catarina, Nuevo León",
+        "addressCountry": "MX"
+      },
+      "sameAs": [
+        "https://www.facebook.com/UTSCNL",
+        "https://twitter.com/UTSantaCatarina"
+      ],
+      "course": [
+        {
+          "@type": "Course",
+          "name": "Ingeniería en Tecnologías de la Información e Innovación Digital",
+          "description": "Desarrolla soluciones tecnológicas multiplataforma de software web y móvil.",
+          "courseMode": "online"
+        },
+        {
+          "@type": "Course",
+          "name": "Ingeniería en Mecatrónica",
+          "description": "Combina elementos de la ingeniería mecánica, electrónica, informática y automatización.",
+          "courseMode": "online"
         }
-        /* Ajustes para secciones claras */
-        body.dark .bg-white { background-color: #1f2937 !important; }   /* gris intermedio */
-        body.dark .bg-gray-50 { background-color: #111827 !important; } /* fondo más oscuro */
-        body.dark .text-gray-900 { color: #f3f4f6 !important; }
-        body.dark .text-gray-500 { color: #9ca3af !important; }
-        body.dark .text-gray-600 { color: #d1d5db !important; }
-
-        /* Tarjetas / elementos */
-        body.dark .course-card { background-color: #1f2937; }
-        body.dark .bg-gray-50.p-8 { background-color: #1f2937; }
-
-        /* Tarjetas de docentes */
-        .docente-card {
-          background-color: #ffffff;          /* Claro en modo light */
-          border-radius: 0.75rem;             /* Bordes redondeados */
-          padding: 1.5rem;
-          box-shadow: 0 6px 18px -6px rgba(0,0,0,0.15);
-          transition: transform .2s ease, box-shadow .2s ease;
-        }
-        .docente-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 22px -8px rgba(0,0,0,0.25);
-        }
-        /* Modo oscuro (más oscuro) */
-        body.dark .docente-card{
-          background-color:#0f172a !important;         /* slate-900 aprox. más oscuro */
-          border:1px solid rgba(255,255,255,.04) !important;
-          box-shadow: 0 10px 28px -14px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.02) inset !important;
-        }
-        body.dark .docente-card:hover{
-          background-color:#131c31 !important;         /* un tic más claro en hover */
-          border-color: rgba(255,255,255,.07) !important;
-          box-shadow: 0 18px 34px -12px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.04) inset !important;
-        }
-        /* Texto dentro de la card para que siga siendo legible */
-        body.dark .docente-card .text-gray-900 { color:#f3f4f6 !important; }
-        body.dark .docente-card .text-gray-600 { color:#cbd5e1 !important; }
-        /* Chips más oscuros */
-        body.dark .docente-card .specialty-chip.bg-\[var\(--ut-green-100\)\]{
-          background-color:#052e24 !important; color:#86efac !important;
-          border:1px solid rgba(134,239,172,.25);
-        }
-        body.dark .docente-card .specialty-chip.bg-green-100{
-          background-color:#064e3b !important; color:#86efac !important;
-          border:1px solid rgba(134,239,172,.25);
-        }
-        body.dark .docente-card .specialty-chip.bg-purple-100{
-          background-color:#1e1b4b !important; color:#c7d2fe !important;
-          border:1px solid rgba(199,210,254,.25);
-        }
-        body.dark .docente-card .specialty-chip.bg-yellow-100{
-          background-color:#451a03 !important; color:#fde68a !important;
-          border:1px solid rgba(253,230,138,.25);
-        }
-        /* Botón dentro de la card más oscuro */
-        body.dark .docente-card .btn-docente{
-          background:#0b1220 !important; 
-          color:#e5e7eb !important;
-          border:1px solid rgba(255,255,255,.06) !important;
-          box-shadow: 0 8px 18px -12px rgba(0,0,0,.75) !important;
-        }
-        body.dark .docente-card .btn-docente:hover{ background:#111a2a !important; }
-        
-        /* Nuevos estilos para el rediseño */
-        .news-card {
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        .campus-map-container {
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .career-selector {
-            transition: all 0.3s ease;
-        }
-        .career-selector:hover {
-            transform: translateY(-3px);
-        }
-        .video-container {
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-        .stats-card {
-            background: linear-gradient(135deg, var(--ut-green-700), var(--ut-green-800));
-            border-radius: 12px;
-            padding: 1.5rem;
-            color: white;
-        }
-        .testimonial-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .floating-element {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-         /* Estilos para el flip solo en la imagen */
-.image-flip-container {
-  perspective: 1000px;
-  cursor: pointer;
-}
-
-.image-flip-front,
-.image-flip-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  transition: transform 0.6s ease-in-out;
-  border-radius: 12px 12px 0 0;
-}
-
-.image-flip-back {
-  transform: rotateY(180deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-flip-container:hover .image-flip-front {
-  transform: rotateY(-180deg);
-}
-
-.image-flip-container:hover .image-flip-back {
-  transform: rotateY(0deg);
-}
-
-.career-card {
-  transition: all 0.3s ease;
-}
-
-.career-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-    </style>
+      ]
+    }
+    </script>
 </head>
 <body class="font-sans antialiased text-gray-800">
 
     <?php include 'navbar.php'; ?>
 
-    <!-- Hero Section con Carrusel -->
-<div id="inicio" class="hero-gradient text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-        <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
-            <div class="mb-12 lg:mb-0" data-aos="fade-right">
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-                    Educación Tecnológica <br> <span class="text-emerald-200">Sin Límites</span>
-                </h1>
-                <p class="text-lg md:text-xl text-emerald-100 mb-8">
-                    Accede a nuestros cursos en línea desde cualquier dispositivo y lleva tu formación profesional al siguiente nivel.
-                </p>
-                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                    <a href="cursos.php" class="bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-6 py-3 rounded-md text-lg font-semibold transition">Explorar Cursos</a>
-                    <a href="#" class="border-2 border-white text-white hover:bg-white hover:text-[var(--ut-green-800)] px-6 py-3 rounded-md text-lg font-semibold transition">Ver Video</a>
-                </div>
-            </div>
-            
-            <!-- Carrusel en el mismo espacio -->
-            <div data-aos="fade-left">
-                <div class="carousel-container relative rounded-lg shadow-xl overflow-hidden">
-                    <div class="carousel-slides flex transition-transform duration-500 ease-in-out">
-                        <!-- Imagen 1 -->
-                        <div class="carousel-slide w-full flex-shrink-0">
-                            <img src="./plataforma/app/img/PlantelUT.jpg" alt="Campus Principal UT" class="w-full h-auto object-cover rounded-lg">
+    <!-- Hero Section con Swiper Carousel Mejorado -->
+    <div id="inicio" class="hero-gradient text-white relative overflow-hidden">
+        <!-- Vanta background layer -->
+        <div id="vanta-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
+        <div class="relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+                <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
+                    <div class="mb-12 lg:mb-0" data-aos="fade-right">
+                        <div class="relative">
+                            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-fade-in-up">
+                                Educación Tecnológica <br> 
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 to-blue-200">Sin Límites</span>
+                            </h1>
+                            <div class="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full filter blur-xl opacity-30 animate-pulse"></div>
                         </div>
-                        <!-- Imagen 2 -->
-                        <div class="carousel-slide w-full flex-shrink-0">
-                            <img src="./plataforma/app/img/SeleccionUT.jpg" alt="Instalaciones Deportivas" class="w-full h-auto object-cover rounded-lg">
+                        <p class="text-lg md:text-xl text-emerald-100 mb-8 max-w-xl animate-fade-in">
+                            Accede a nuestras carreras en línea desde cualquier dispositivo y lleva tu formación profesional al siguiente nivel. Descubre un nuevo mundo de posibilidades educativas con certificaciones oficiales y soporte personalizado.
+                        </p>
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-up">
+                            <a href="cursos.php" class="group bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 hover:shadow-lg flex items-center" aria-label="Explorar carreras disponibles">
+                                <i data-feather="book-open" class="w-5 h-5 mr-2 transition-transform group-hover:rotate-12"></i>
+                                Explorar Carreras
+                            </a>
+                            <a href="#" class="group border-2 border-white text-white hover:bg-white hover:text-[var(--ut-green-800)] px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 hover:shadow-lg flex items-center" aria-label="Ver video introductorio">
+                                <i data-feather="play-circle" class="w-5 h-5 mr-2 transition-transform group-hover:rotate-12"></i>
+                                Ver Video
+                            </a>
                         </div>
-                        <!-- Imagen 3 -->
-                        <div class="carousel-slide w-full flex-shrink-0">
-                            <img src="./plataforma/app/img/SeleccionTocho.jpg" alt="Laboratorios Industriales" class="w-full h-auto object-cover rounded-lg">
-                        </div>
-                        <!-- Imagen 4 -->
-                        <div class="carousel-slide w-full flex-shrink-0">
-                            <img src="./plataforma/app/img/DocentesUT.jpg" alt="Tecnología Avanzada" class="w-full h-auto object-cover rounded-lg">
+                        <div class="mt-12 flex items-center space-x-4 text-sm text-emerald-100 animate-fade-in">
+                            <div class="flex items-center">
+                                <i data-feather="check-circle" class="w-5 h-5 mr-2 text-emerald-300"></i>
+                                Certificación oficial
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="users" class="w-5 h-5 mr-2 text-emerald-300"></i>
+                                +4600 estudiantes
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="award" class="w-5 h-5 mr-2 text-emerald-300"></i>
+                                27 años de experiencia
+                            </div>
                         </div>
                     </div>
                     
-                    <!-- Indicadores del carrusel -->
-                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                        <button class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors" data-slide="0"></button>
-                        <button class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors" data-slide="1"></button>
-                        <button class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors" data-slide="2"></button>
-                        <button class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors" data-slide="3"></button>
+                    <!-- Swiper Carousel mejorado -->
+                    <div data-aos="fade-left">
+                        <div class="swiper hero-swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="./plataforma/app/img/PlantelUT.jpg" alt="Campus Principal de UTSC con instalaciones modernas" class="w-full h-80 object-cover rounded-lg shadow-2xl" loading="lazy">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="./plataforma/app/img/SeleccionUT.jpg" alt="Instalaciones deportivas de UTSC para actividades recreativas" class="w-full h-80 object-cover rounded-lg shadow-2xl" loading="lazy">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="./plataforma/app/img/SeleccionTocho.jpg" alt="Laboratorios industriales equipados en UTSC" class="w-full h-80 object-cover rounded-lg shadow-2xl" loading="lazy">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="./plataforma/app/img/DocentesUT.jpg" alt="Docentes expertos en tecnología avanzada en UTSC" class="w-full h-80 object-cover rounded-lg shadow-2xl" loading="lazy">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
                     </div>
-                    
-                    <!-- Botones de navegación -->
-                    <button class="carousel-prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors">
-                        <i data-feather="chevron-left" class="w-6 h-6"></i>
-                    </button>
-                    <button class="carousel-next absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors">
-                        <i data-feather="chevron-right" class="w-6 h-6"></i>
-                    </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<style>
-.carousel-container {
-    /* Mantiene el mismo tamaño que la imagen original */
-    width: 100%;
-    max-width: 100%;
-}
-
-.carousel-slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.carousel-slide {
-    flex: 0 0 100%;
-}
-
-.carousel-indicator.active {
-    background-color: white;
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const carouselSlides = document.querySelector('.carousel-slides');
-    const indicators = document.querySelectorAll('.carousel-indicator');
-    const prevBtn = document.querySelector('.carousel-prev');
-    const nextBtn = document.querySelector('.carousel-next');
-    
-    let currentSlide = 0;
-    const totalSlides = 4; // 4 imágenes
-    const slideInterval = 3000; // 3 segundos
-    
-    // Función para mostrar slide específico
-    function showSlide(slideIndex) {
-        currentSlide = (slideIndex + totalSlides) % totalSlides;
-        carouselSlides.style.transform = `translateX(-${currentSlide * 100}%)`;
-        
-        // Actualizar indicadores
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentSlide);
-        });
-    }
-    
-    // Función para siguiente slide
-    function nextSlide() {
-        showSlide(currentSlide + 1);
-    }
-    
-    // Función para slide anterior
-    function prevSlide() {
-        showSlide(currentSlide - 1);
-    }
-    
-    // Event listeners para botones
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-    
-    // Event listeners para indicadores
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            showSlide(index);
-        });
-    });
-    
-    // Cambio automático cada 3 segundos
-    let autoSlide = setInterval(nextSlide, slideInterval);
-    
-    // Pausar carrusel cuando el mouse está encima
-    const carouselContainer = document.querySelector('.carousel-container');
-    carouselContainer.addEventListener('mouseenter', () => {
-        clearInterval(autoSlide);
-    });
-    
-    carouselContainer.addEventListener('mouseleave', () => {
-        autoSlide = setInterval(nextSlide, slideInterval);
-    });
-    
-    // Inicializar primer indicador como activo
-    indicators[0].classList.add('active');
-    
-    // Actualizar feather icons
-    feather.replace();
-});
-</script>
 
     <!-- Nuestra Comunidad en Cifras -->
     <div class="bg-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Nuestra Comunidad en Cifras</h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Miles de estudiantes transformando su futuro con nosotros</p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Miles de estudiantes transformando su futuro con nosotros, respaldados por datos reales y certificaciones globales.</p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-4xl font-bold mb-2">5,000+</div>
+                    <div class="text-4xl font-bold mb-2">4,600+</div>
                     <div class="text-emerald-100">Estudiantes Activos</div>
                 </div>
                 <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-4xl font-bold mb-2">120+</div>
+                    <div class="text-4xl font-bold mb-2">6</div>
                     <div class="text-emerald-100">Programas Académicos</div>
                 </div>
                 <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="300">
@@ -368,245 +173,281 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="text-emerald-100">Tasa de Satisfacción</div>
                 </div>
                 <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="400">
-                    <div class="text-4xl font-bold mb-2">15</div>
+                    <div class="text-4xl font-bold mb-2">27</div>
                     <div class="text-emerald-100">Años de Experiencia</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Carreras con Efecto Flip Solo en la Imagen -->
-<div class="bg-gray-50 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16" data-aos="fade-up">
-            <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Nuestras Carreras Destacadas</h2>
-            <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Descubre el futuro profesional que te espera</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Carrera 1: Negocios Internacionales -->
-            <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
-                <div class="image-flip-container h-48 relative">
-                    <!-- Frente de la imagen -->
-                    <div class="image-flip-front absolute inset-0">
-                        <img src="./plataforma/app/img/Negocios.jpg" alt="Negocios Internacionales" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                            <span class="text-white font-semibold">Ver detalles</span>
-                        </div>
+    <!-- Sección de Características Nuevas -->
+    <div class="bg-gray-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Por Qué Elegir UTSC</h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Descubre las características que nos hacen líderes en educación tecnológica.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="feature-card text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon bg-gradient-to-r from-emerald-500 to-teal-500 mb-4 mx-auto">
+                        <i data-feather="globe" class="w-8 h-8 text-white"></i>
                     </div>
-                    
-                    <!-- Parte trasera de la imagen -->
-                    <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 text-white p-4 flex items-center justify-center">
-                        <div class="text-center">
-                            <h4 class="font-bold mb-2">Especialidades:</h4>
-                            <ul class="text-sm text-blue-100 space-y-1">
-                                <li>• Comercio exterior</li>
-                                <li>• Marketing global</li>
-                                <li>• Finanzas internacionales</li>
-                                <li>• Logística</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Aprendizaje Global</h3>
+                    <p class="text-gray-600">Accede a contenido internacional y colabora con estudiantes de todo el mundo.</p>
                 </div>
-                
-                <div class="p-6">
-                    <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Marketing Global</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Negocios Internacionales</h3>
-                    <p class="text-gray-600">Formación en comercio global y estrategias de mercado internacional.</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Duración: 4 años</span>
-                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
-                            Más info ›
-                        </a>
+                <div class="feature-card text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon bg-gradient-to-r from-blue-500 to-indigo-500 mb-4 mx-auto">
+                        <i data-feather="shield" class="w-8 h-8 text-white"></i>
                     </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Seguridad Avanzada</h3>
+                    <p class="text-gray-600">Plataforma segura con encriptación de datos y protección de privacidad garantizada.</p>
+                </div>
+                <div class="feature-card text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon bg-gradient-to-r from-purple-500 to-pink-500 mb-4 mx-auto">
+                        <i data-feather="cpu" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Tecnología de Vanguardia</h3>
+                    <p class="text-gray-600">Herramientas de IA y VR para una experiencia inmersiva en el aprendizaje.</p>
+                </div>
+                <div class="feature-card text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon bg-gradient-to-r from-green-500 to-emerald-500 mb-4 mx-auto">
+                        <i data-feather="zap" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Soporte 24/7</h3>
+                    <p class="text-gray-600">Asesores disponibles en cualquier momento para guiarte en tu camino educativo.</p>
                 </div>
             </div>
-
-            <!-- Carrera 2: Desarrollo y Gestión de Software -->
-            <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-                <div class="image-flip-container h-48 relative">
-                    <!-- Frente de la imagen -->
-                    <div class="image-flip-front absolute inset-0">
-                        <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Desarrollo de Software" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                            <span class="text-white font-semibold">Ver detalles</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Parte trasera de la imagen -->
-                    <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-green-600 to-green-800 text-white p-4 flex items-center justify-center">
-                        <div class="text-center">
-                            <h4 class="font-bold mb-2">Especialidades:</h4>
-                            <ul class="text-sm text-green-100 space-y-1">
-                                <li>• Programación full-stack</li>
-                                <li>• Bases de datos</li>
-                                <li>• Inteligencia artificial</li>
-                                <li>• Ciberseguridad</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-6">
-                    <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Tecnología</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Desarrollo de Software</h3>
-                    <p class="text-gray-600">Crea soluciones tecnológicas que transformen el mundo digital.</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Duración: 4 años</span>
-                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
-                            Más info ›
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Carrera 3: Mantenimiento Industrial -->
-            <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-                <div class="image-flip-container h-48 relative">
-                    <!-- Frente de la imagen -->
-                    <div class="image-flip-front absolute inset-0">
-                        <img src="./plataforma/app/img/IndustrialM.jpg" alt="Mantenimiento Industrial" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                            <span class="text-white font-semibold">Ver detalles</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Parte trasera de la imagen -->
-                    <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-orange-600 to-orange-800 text-white p-4 flex items-center justify-center">
-                        <div class="text-center">
-                            <h4 class="font-bold mb-2">Especialidades:</h4>
-                            <ul class="text-sm text-orange-100 space-y-1">
-                                <li>• Gestión de mantenimiento</li>
-                                <li>• Automatización</li>
-                                <li>• Seguridad industrial</li>
-                                <li>• Control de calidad</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-6">
-                    <span class="inline-block bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Mantenimiento Industrial</h3>
-                    <p class="text-gray-600">Optimiza procesos productivos y garantiza la eficiencia operativa.</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Duración: 4 años</span>
-                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
-                            Más info ›
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Carrera 4: Mecatrónica -->
-            <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
-                <div class="image-flip-container h-48 relative">
-                    <!-- Frente de la imagen -->
-                    <div class="image-flip-front absolute inset-0">
-                        <img src="./plataforma/app/img/mecatronica7.jpg" alt="Mecatrónica" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                            <span class="text-white font-semibold">Ver detalles</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Parte trasera de la imagen -->
-                    <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-purple-600 to-purple-800 text-white p-4 flex items-center justify-center">
-                        <div class="text-center">
-                            <h4 class="font-bold mb-2">Especialidades:</h4>
-                            <ul class="text-sm text-purple-100 space-y-1">
-                                <li>• Robótica industrial</li>
-                                <li>• Control automático</li>
-                                <li>• Sensores y actuadores</li>
-                                <li>• IoT industrial</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-6">
-                    <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Robótica</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Mecatrónica</h3>
-                    <p class="text-gray-600">Integra mecánica, electrónica e informática para crear sistemas inteligentes.</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Duración: 4 años</span>
-                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
-                            Más info ›
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Carrera 5: Lengua Inglesa -->
-            <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
-                <div class="image-flip-container h-48 relative">
-                    <!-- Frente de la imagen -->
-                    <div class="image-flip-front absolute inset-0">
-                        <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Lengua Inglesa" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                            <span class="text-white font-semibold">Ver detalles</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Parte trasera de la imagen -->
-                    <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-red-600 to-red-800 text-white p-4 flex items-center justify-center">
-                        <div class="text-center">
-                            <h4 class="font-bold mb-2">Especialidades:</h4>
-                            <ul class="text-sm text-red-100 space-y-1">
-                                <li>• Inglés técnico</li>
-                                <li>• Traducción</li>
-                                <li>• Comunicación intercultural</li>
-                                <li>• Enseñanza del inglés</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-6">
-                    <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Idiomas</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Lengua Inglesa</h3>
-                    <p class="text-gray-600">Domina el idioma global para negocios, tecnología y comunicación internacional.</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Duración: 4 años</span>
-                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
-                            Más info ›
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-12">
-            <a href="nosotros.php" class="inline-flex items-center bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white px-8 py-4 rounded-lg font-semibold transition transform hover:scale-105 shadow-lg">
-                <i data-feather="book-open" class="mr-3 w-5 h-5"></i>
-                Conoce más de nosotros
-            </a>
         </div>
     </div>
-</div>
+
+    <!-- Carreras con Efecto Flip Solo en la Imagen -->
+    <div class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Nuestras Carreras Destacadas</h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Descubre el futuro profesional que te espera con programas actualizados al 2025.</p>
+            </div>
             
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Carrera 1: Ingeniería en Tecnologías de la Información e Innovación Digital -->
+                <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
+                    <div class="image-flip-container h-48 relative" role="img" aria-label="Vista de Tecnologías de la Información">
+                        <!-- Frente de la imagen -->
+                        <div class="image-flip-front absolute inset-0">
+                            <img src="./plataforma/app/img/Negocios.jpg" alt="Estudiantes en laboratorio de tecnologías de la información" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                <span class="text-white font-semibold">Ver detalles</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Parte trasera de la imagen -->
+                        <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 text-white p-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <h4 class="font-bold mb-2">Especialidades:</h4>
+                                <ul class="text-sm text-blue-100 space-y-1">
+                                    <li>• Programación orientada a objetos</li>
+                                    <li>• Frameworks y bases de datos</li>
+                                    <li>• Desarrollo web y móvil</li>
+                                    <li>• Innovación digital</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Tecnología</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Tecnologías de la Información e Innovación Digital</h3>
+                        <p class="text-gray-600">Desarrolla soluciones tecnológicas multiplataforma de software web y móvil utilizando programación orientada a objetos, frameworks y bases de datos.</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Duración: 3 años 8 meses</span>
+                            <a href="cursos.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
+                                Más info ›
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carrera 2: Ingeniería en Mecatrónica -->
+                <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="image-flip-container h-48 relative" role="img" aria-label="Vista de Mecatrónica">
+                        <!-- Frente de la imagen -->
+                        <div class="image-flip-front absolute inset-0">
+                            <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Estudiantes trabajando en robótica mecatrónica" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                <span class="text-white font-semibold">Ver detalles</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Parte trasera de la imagen -->
+                        <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-green-600 to-green-800 text-white p-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <h4 class="font-bold mb-2">Especialidades:</h4>
+                                <ul class="text-sm text-green-100 space-y-1">
+                                    <li>• Mecánica y electrónica</li>
+                                    <li>• Informática y automatización</li>
+                                    <li>• Sistemas inteligentes</li>
+                                    <li>• Control de sistemas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Mecatrónica</h3>
+                        <p class="text-gray-600">Combina elementos de la ingeniería mecánica, la electrónica, la informática y la automatización para diseñar, desarrollar y controlar sistemas inteligentes y automatizados.</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Duración: 3 años 8 meses</span>
+                            <a href="cursos.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
+                                Más info ›
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carrera 3: Ingeniería Industrial -->
+                <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="image-flip-container h-48 relative" role="img" aria-label="Vista de Ingeniería Industrial">
+                        <!-- Frente de la imagen -->
+                        <div class="image-flip-front absolute inset-0">
+                            <img src="./plataforma/app/img/IndustrialM.jpg" alt="Estudiantes en procesos industriales" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                <span class="text-white font-semibold">Ver detalles</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Parte trasera de la imagen -->
+                        <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-orange-600 to-orange-800 text-white p-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <h4 class="font-bold mb-2">Especialidades:</h4>
+                                <ul class="text-sm text-orange-100 space-y-1">
+                                    <li>• Planeación de operaciones</li>
+                                    <li>• Administración de calidad</li>
+                                    <li>• Gestión de procesos</li>
+                                    <li>• Logística</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <span class="inline-block bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería Industrial</h3>
+                        <p class="text-gray-600">Administra procesos productivos mediante técnicas de planeación y administración de operaciones, cumpliendo estándares de calidad.</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Duración: 3 años 8 meses</span>
+                            <a href="cursos.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
+                                Más info ›
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carrera 4: Ingeniería en Mantenimiento Industrial -->
+                <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <div class="image-flip-container h-48 relative" role="img" aria-label="Vista de Mantenimiento Industrial">
+                        <!-- Frente de la imagen -->
+                        <div class="image-flip-front absolute inset-0">
+                            <img src="./plataforma/app/img/mecatronica7.jpg" alt="Técnicos en mantenimiento de sistemas electromecánicos" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                <span class="text-white font-semibold">Ver detalles</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Parte trasera de la imagen -->
+                        <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-purple-600 to-purple-800 text-white p-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <h4 class="font-bold mb-2">Especialidades:</h4>
+                                <ul class="text-sm text-purple-100 space-y-1">
+                                    <li>• Mantenimiento predictivo</li>
+                                    <li>• Sistemas electromecánicos</li>
+                                    <li>• Optimización de procesos</li>
+                                    <li>• Eficiencia energética</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Mantenimiento Industrial</h3>
+                        <p class="text-gray-600">Optimiza procesos y diseña soluciones innovadoras para liderar el cambio en entornos empresariales, gestionando actividades de mantenimiento y supervisando sistemas electromecánicos.</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Duración: 3 años 8 meses</span>
+                            <a href="cursos.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
+                                Más info ›
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carrera 5: Ingeniería en Electromovilidad -->
+                <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                    <div class="image-flip-container h-48 relative" role="img" aria-label="Vista de Electromovilidad">
+                        <!-- Frente de la imagen -->
+                        <div class="image-flip-front absolute inset-0">
+                            <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Vehículos eléctricos en laboratorio de electromovilidad" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                <span class="text-white font-semibold">Ver detalles</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Parte trasera de la imagen -->
+                        <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-red-600 to-red-800 text-white p-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <h4 class="font-bold mb-2">Especialidades:</h4>
+                                <ul class="text-sm text-red-100 space-y-1">
+                                    <li>• Sistemas de electromoción</li>
+                                    <li>• Baterías y motores</li>
+                                    <li>• Proyectos sustentables</li>
+                                    <li>• Gestión PEI</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Electromovilidad</h3>
+                        <p class="text-gray-600">Desarrolla sistemas de electromoción y gestiona proyectos de electromovilidad con tecnologías sustentables, integrando elementos considerando aspectos técnicos, económicos y normativos.</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Duración: 3 años 8 meses</span>
+                            <a href="cursos.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
+                                Más info ›
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
+            <div class="text-center mt-12">
+                <a href="cursos.php" class="inline-flex items-center bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white px-8 py-4 rounded-lg font-semibold transition transform hover:scale-105 shadow-lg" aria-label="Conocer todas las carreras">
+                    <i data-feather="book-open" class="mr-3 w-5 h-5"></i>
+                    Conoce Todas Nuestras Carreras
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- Blog / Noticias Recientes -->
-    <div class="bg-white py-16">
+    <div class="bg-gray-50 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center mb-12">
                 <div data-aos="fade-right">
                     <h2 class="text-3xl font-extrabold text-gray-900">Noticias y Actualizaciones</h2>
-                    <p class="mt-2 text-lg text-gray-500">Mantente informado sobre lo último en UTSC</p>
+                    <p class="mt-2 text-lg text-gray-500">Mantente informado sobre lo último en UTSC con contenido fresco del 2025.</p>
                 </div>
-                <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium" data-aos="fade-left">Ver todas →</a>
+                <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium" data-aos="fade-left" aria-label="Ver todas las noticias">Ver todas →</a>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="news-card bg-white rounded-lg overflow-hidden shadow-md" data-aos="fade-up">
-                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/IndustrialM.jpg" alt="Nuevo programa">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/IndustrialM.jpg" alt="Bienvenidos al ciclo escolar 2025 en UTSC" loading="lazy">
                     <div class="p-6">
                         <span class="inline-block bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs font-semibold px-2.5 py-0.5 rounded mb-2">Novedad</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Lanzamos Nuevo Programa de IA</h3>
-                        <p class="text-gray-600 mb-4">Conoce nuestro nuevo programa especializado en Inteligencia Artificial con enfoque industrial.</p>
-                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Bienvenidos al Ciclo Escolar 2025</h3>
+                        <p class="text-gray-600 mb-4">En nombre de toda la comunidad UTSC, damos la bienvenida a los estudiantes al ciclo septiembre-diciembre 2025.</p>
+                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center" aria-label="Leer más sobre el ciclo escolar">
                             Leer más
                             <i data-feather="arrow-right" class="ml-1 w-4 h-4"></i>
                         </a>
@@ -614,12 +455,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 
                 <div class="news-card bg-white rounded-lg overflow-hidden shadow-md" data-aos="fade-up" data-aos-delay="100">
-                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/Negocios.jpg" alt="Evento académico">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/Negocios.jpg" alt="Graduación UTSC 2025" loading="lazy">
                     <div class="p-6">
                         <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded mb-2">Evento</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Congreso Internacional de Negocios</h3>
-                        <p class="text-gray-600 mb-4">Participa en nuestro congreso anual con expertos internacionales en negocios globales.</p>
-                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Backstage Graduación UTSC 2025</h3>
+                        <p class="text-gray-600 mb-4">Celebra con nosotros la graduación de septiembre 2025 y el cierre de un ciclo exitoso.</p>
+                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center" aria-label="Leer más sobre la graduación">
                             Leer más
                             <i data-feather="arrow-right" class="ml-1 w-4 h-4"></i>
                         </a>
@@ -627,12 +468,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 
                 <div class="news-card bg-white rounded-lg overflow-hidden shadow-md" data-aos="fade-up" data-aos-delay="200">
-                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/Mecatronica.jpg" alt="Logro estudiantil">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/Mecatronica.jpg" alt="Promoción de salud en UTSC" loading="lazy">
                     <div class="p-6">
-                        <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded mb-2">Logro</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Estudiantes Ganadores de Competencia</h3>
-                        <p class="text-gray-600 mb-4">Nuestro equipo de Mecatrónica gana primer lugar en competencia nacional de robótica.</p>
-                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center">
+                        <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded mb-2">Salud</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Promoviendo Salud y Bienestar</h3>
+                        <p class="text-gray-600 mb-4">En UTSC, promovemos la salud, el bienestar y la educación como pilares fundamentales de una comunidad informada y protegida.</p>
+                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center" aria-label="Leer más sobre promoción de salud">
                             Leer más
                             <i data-feather="arrow-right" class="ml-1 w-4 h-4"></i>
                         </a>
@@ -643,11 +484,11 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- Call to Action Interactivo -->
-    <div class="bg-gray-50 py-16">
+    <div class="bg-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Explora Nuestro Campus Virtual</h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Descubre todo lo que tenemos para ofrecerte</p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Descubre todo lo que tenemos para ofrecerte con tours interactivos y filtros avanzados.</p>
             </div>
             
             <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -658,8 +499,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="bg-gradient-to-br from-[var(--ut-green-100)] to-emerald-50 h-64 rounded-lg flex items-center justify-center">
                             <div class="text-center">
                                 <i data-feather="map" class="w-12 h-12 text-[var(--ut-green-600)] mx-auto mb-3"></i>
-                                <p class="text-gray-600">Haz clic para explorar nuestro campus virtual</p>
-                                <button class="mt-4 bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white px-4 py-2 rounded-md font-medium transition">
+                                <p class="text-gray-600">Haz clic para explorar nuestro campus virtual en 360°</p>
+                                <button class="mt-4 bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white px-4 py-2 rounded-md font-medium transition" aria-label="Iniciar recorrido virtual">
                                     Iniciar Recorrido
                                 </button>
                             </div>
@@ -667,43 +508,43 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
                 
-                <!-- Selector de Carreras -->
+                <!-- Selector de Carreras con Filtro -->
                 <div data-aos="fade-left">
                     <h3 class="text-xl font-bold text-gray-900 mb-6">Encuentra Tu Carrera Ideal</h3>
                     <div class="space-y-4">
-                        <div class="career-selector bg-white p-4 rounded-lg shadow-sm border border-gray-100 cursor-pointer flex items-center">
+                        <div class="career-selector bg-white p-4 rounded-lg shadow-sm border border-gray-100 cursor-pointer flex items-center transition-all" tabindex="0" role="button" aria-label="Seleccionar Tecnologías de la Información">
                             <div class="w-10 h-10 rounded-full bg-[var(--ut-green-100)] text-[var(--ut-green-700)] flex items-center justify-center mr-4">
                                 <i data-feather="cpu" class="w-5 h-5"></i>
                             </div>
                             <div>
                                 <h4 class="font-medium text-gray-900">Tecnologías de la Información</h4>
-                                <p class="text-sm text-gray-500">8 programas disponibles</p>
+                                <p class="text-sm text-gray-500">1 programa disponible</p>
                             </div>
                         </div>
                         
-                        <div class="career-selector bg-white p-4 rounded-lg shadow-sm border border-gray-100 cursor-pointer flex items-center">
+                        <div class="career-selector bg-white p-4 rounded-lg shadow-sm border border-gray-100 cursor-pointer flex items-center transition-all" tabindex="0" role="button" aria-label="Seleccionar Ingeniería">
                             <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mr-4">
-                                <i data-feather="briefcase" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-900">Negocios y Administración</h4>
-                                <p class="text-sm text-gray-500">6 programas disponibles</p>
-                            </div>
-                        </div>
-                        
-                        <div class="career-selector bg-white p-4 rounded-lg shadow-sm border border-gray-100 cursor-pointer flex items-center">
-                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mr-4">
                                 <i data-feather="settings" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-medium text-gray-900">Ingeniería y Manufactura</h4>
-                                <p class="text-sm text-gray-500">10 programas disponibles</p>
+                                <h4 class="font-medium text-gray-900">Ingeniería</h4>
+                                <p class="text-sm text-gray-500">5 programas disponibles</p>
+                            </div>
+                        </div>
+                        
+                        <div class="career-selector bg-white p-4 rounded-lg shadow-sm border border-gray-100 cursor-pointer flex items-center transition-all" tabindex="0" role="button" aria-label="Seleccionar Gestión Educativa">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mr-4">
+                                <i data-feather="book-open" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Gestión Educativa</h4>
+                                <p class="text-sm text-gray-500">1 programa disponible</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="mt-6 text-center">
-                        <a href="#" class="inline-flex items-center text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium">
+                        <a href="cursos.php" class="inline-flex items-center text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium" aria-label="Explorar todas las carreras">
                             Explorar todas las carreras
                             <i data-feather="arrow-right" class="ml-2 w-5 h-5"></i>
                         </a>
@@ -713,19 +554,19 @@ document.addEventListener('DOMContentLoaded', function() {
             
             <!-- Video Destacado -->
             <div class="mt-16" data-aos="fade-up">
-                <div class="video-container bg-gradient-to-r from-[var(--ut-green-800)] to-[var(--ut-green-900)] p-8 text-white">
+                <div class="video-container bg-gradient-to-r from-[var(--ut-green-800)] to-[var(--ut-green-900)] p-8 text-white rounded-2xl">
                     <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
                         <div>
                             <h3 class="text-2xl font-bold mb-4">Conoce Nuestra Historia</h3>
-                            <p class="text-emerald-100 mb-6">Descubre cómo hemos transformado la educación tecnológica durante más de 15 años.</p>
-                            <a href="registro.php" class="bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-6 py-3 rounded-md text-lg font-semibold transition inline-block">
+                            <p class="text-emerald-100 mb-6">Descubre cómo hemos transformado la educación tecnológica durante más de 27 años con innovaciones constantes.</p>
+                            <a href="registro.php" class="bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-6 py-3 rounded-md text-lg font-semibold transition inline-block" aria-label="Unirse a UTSC">
                                 Únete a Nosotros
                             </a>
                         </div>
                         <div class="mt-6 lg:mt-0 flex justify-center">
                             <div class="relative w-full max-w-md">
                                 <div class="bg-black/30 rounded-lg h-48 flex items-center justify-center">
-                                    <button class="bg-white/20 hover:bg-white/30 rounded-full p-4 transition">
+                                    <button class="bg-white/20 hover:bg-white/30 rounded-full p-4 transition" aria-label="Reproducir video de historia">
                                         <i data-feather="play" class="w-10 h-10 text-white"></i>
                                     </button>
                                 </div>
@@ -738,61 +579,61 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- Nuestro Equipo Docente -->
-    <div class="bg-white py-16">
+    <div class="bg-gray-50 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Conoce a Nuestros Expertos</h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Profesionales con experiencia que guiarán tu aprendizaje</p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Profesionales con experiencia que guiarán tu aprendizaje con mentorías personalizadas.</p>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="docente-card text-center" data-aos="fade-up">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">DR</div>
-                    <h3 class="text-lg font-bold text-gray-900">Dr. Roberto Silva</h3>
-                    <p class="text-gray-600 mb-3">Director de Ingeniería</p>
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl" aria-label="Foto de MC. Laura Madrigal">LM</div>
+                    <h3 class="text-lg font-bold text-gray-900">MC. Laura Mónica Madrigal González</h3>
+                    <p class="text-gray-600 mb-3">Rectora</p>
                     <div class="flex justify-center space-x-1 mb-4">
-                        <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs px-2 py-1 rounded">IA</span>
-                        <span class="specialty-chip bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Robótica</span>
+                        <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs px-2 py-1 rounded" data-tooltip="Liderazgo Educativo">Liderazgo</span>
+                        <span class="specialty-chip bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded" data-tooltip="Innovación">Innovación</span>
                     </div>
-                    <button class="btn-docente w-full py-2 rounded-md text-sm font-medium transition">Ver Perfil</button>
+                    <button class="btn-docente w-full py-2 rounded-md text-sm font-medium transition" aria-label="Ver perfil de MC. Laura Madrigal">Ver Perfil</button>
                 </div>
                 
                 <div class="docente-card text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">MG</div>
-                    <h3 class="text-lg font-bold text-gray-900">Mtra. Gabriela Ortega</h3>
-                    <p class="text-gray-600 mb-3">Coordinadora de Negocios</p>
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl" aria-label="Foto de MDP. Yessica Martínez">YM</div>
+                    <h3 class="text-lg font-bold text-gray-900">MDP. Yessica J. Martínez Iracheta</h3>
+                    <p class="text-gray-600 mb-3">Dirección Académica</p>
                     <div class="flex justify-center space-x-1 mb-4">
-                        <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs px-2 py-1 rounded">Marketing</span>
-                        <span class="specialty-chip bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Finanzas</span>
+                        <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs px-2 py-1 rounded" data-tooltip="Currículo">Currículo</span>
+                        <span class="specialty-chip bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded" data-tooltip="Calidad">Calidad</span>
                     </div>
-                    <button class="btn-docente w-full py-2 rounded-md text-sm font-medium transition">Ver Perfil</button>
+                    <button class="btn-docente w-full py-2 rounded-md text-sm font-medium transition" aria-label="Ver perfil de MDP. Yessica Martínez">Ver Perfil</button>
                 </div>
                 
                 <div class="docente-card text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">JC</div>
-                    <h3 class="text-lg font-bold text-gray-900">Ing. Javier Cortés</h3>
-                    <p class="text-gray-600 mb-3">Especialista en Mecatrónica</p>
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl" aria-label="Foto de MDP. Beatriz Luna">BL</div>
+                    <h3 class="text-lg font-bold text-gray-900">MDP. Beatriz Eugenia Luna Olvera</h3>
+                    <p class="text-gray-600 mb-3">Dirección Académica</p>
                     <div class="flex justify-center space-x-1 mb-4">
-                        <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs px-2 py-1 rounded">Automatización</span>
-                        <span class="specialty-chip bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">IoT</span>
+                        <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs px-2 py-1 rounded" data-tooltip="Innovación Pedagógica">Pedagogía</span>
+                        <span class="specialty-chip bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded" data-tooltip="Formación">Formación</span>
                     </div>
-                    <button class="btn-docente w-full py-2 rounded-md text-sm font-medium transition">Ver Perfil</button>
+                    <button class="btn-docente w-full py-2 rounded-md text-sm font-medium transition" aria-label="Ver perfil de MDP. Beatriz Luna">Ver Perfil</button>
                 </div>
                 
                 <div class="docente-card text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-green-400 to-cyan-400 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">AP</div>
-                    <h3 class="text-lg font-bold text-gray-900">Dra. Ana Pérez</h3>
-                    <p class="text-gray-600 mb-3">Investigadora en Biotecnología</p>
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-green-400 to-cyan-400 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl" aria-label="Foto de Ing. Felipe">IF</div>
+                    <h3 class="text-lg font-bold text-gray-900">Ing. Felipe</h3>
+                    <p class="text-gray-600 mb-3">Docente de Tecnologías</p>
                     <div class="flex justify-center space-x-1 mb-4">
-                        <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs px-2 py-1 rounded">Bioingeniería</span>
-                        <span class="specialty-chip bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Nanotecnología</span>
+                        <span class="specialty-chip bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs px-2 py-1 rounded" data-tooltip="Python">Python</span>
+                        <span class="specialty-chip bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded" data-tooltip="Google Colab">Colab</span>
                     </div>
-                    <button class="btn-docente w-full py-2 rounded-md text-sm font-medium transition">Ver Perfil</button>
+                    <button class="btn-docente w-full py-2 rounded-md text-sm font-medium transition" aria-label="Ver perfil de Ing. Felipe">Ver Perfil</button>
                 </div>
             </div>
             
             <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium">
+                <a href="docentes.php" class="inline-flex items-center text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium" aria-label="Conocer todo el equipo académico">
                     Conocer todo el equipo académico
                     <i data-feather="arrow-right" class="ml-2 w-5 h-5"></i>
                 </a>
@@ -800,15 +641,96 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 
+    <!-- Sección de Testimonios Nueva con Swiper -->
+    <div class="bg-white py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Lo Que Dicen Nuestros Estudiantes</h2>
+                <p class="mt-4 text-xl text-gray-500">Historias reales de éxito y transformación educativa.</p>
+            </div>
+            <div class="swiper testimonial-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-card text-center mx-4">
+                            <div class="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i data-feather="quote" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <p class="text-gray-700 mb-4 italic">"UTSC cambió mi carrera. Los programas son flexibles y los profesores increíbles."</p>
+                            <div class="flex items-center justify-center">
+                                <div class="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Estudiante de Mecatrónica</h4>
+                                    <p class="text-sm text-gray-500">Egresado 2025</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-center mt-4 space-x-1">
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card text-center mx-4">
+                            <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i data-feather="quote" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <p class="text-gray-700 mb-4 italic">"Excelente plataforma. Obtuve mi certificación y ahora trabajo en una gran empresa tech."</p>
+                            <div class="flex items-center justify-center">
+                                <div class="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Egresado de TI</h4>
+                                    <p class="text-sm text-gray-500">2024</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-center mt-4 space-x-1">
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card text-center mx-4">
+                            <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i data-feather="quote" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <p class="text-gray-700 mb-4 italic">"El soporte es inigualable. Recomiendo UTSC a todos mis colegas."</p>
+                            <div class="flex items-center justify-center">
+                                <div class="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Estudiante de Industrial</h4>
+                                    <p class="text-sm text-gray-500">Actual</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-center mt-4 space-x-1">
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- CTA Section -->
-    <div style="background:linear-gradient(180deg,var(--ut-green-800),var(--ut-green-900));" class="text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div style="background:linear-gradient(180deg,var(--ut-green-800),var(--ut-green-900));" class="text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
                 <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl mb-4">¿Listo para Transformar Tu Futuro?</h2>
-                <p class="text-lg text-emerald-100 mb-8 max-w-2xl mx-auto">Únete a nuestra comunidad de más de 5,000 estudiantes que están construyendo el futuro de la tecnología</p>
+                <p class="text-lg text-emerald-100 mb-8 max-w-2xl mx-auto">Únete a nuestra comunidad de más de 4,600 estudiantes que están construyendo el futuro de la tecnología en 2025.<grok-card data-id="5ff4a3" data-type="citation_card"></grok-card></p>
                 <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                    <a href="registro.php" class="bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-6 py-3 rounded-md text-lg font-semibold transition">Crear Cuenta Gratuita</a>
-                    <a href="mailto:contacto@utec.edu" class="border-2 border-white text-white hover:bg-white hover:text-[var(--ut-green-800)] px-6 py-3 rounded-md text-lg font-semibold transition">Contactar Asesor</a>
+                    <a href="registro.php" class="bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-6 py-3 rounded-md text-lg font-semibold transition" aria-label="Crear cuenta gratuita">Crear Cuenta Gratuita</a>
+                    <a href="mailto:contacto@utsc.edu.mx" class="border-2 border-white text-white hover:bg-white hover:text-[var(--ut-green-800)] px-6 py-3 rounded-md text-lg font-semibold transition" aria-label="Contactar asesor">Contactar Asesor</a>
                 </div>
             </div>
         </div>
@@ -817,33 +739,101 @@ document.addEventListener('DOMContentLoaded', function() {
     <?php include 'footer.php'; ?>
 
     <script>
-        // AOS + Feather
-        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+        // AOS + Feather con configuración mejorada
+        AOS.init({ 
+            duration: 800, 
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50,
+            delay: 50,
+            mirror: true,
+            disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        });
         feather.replace();
 
-        // Vanta.js background (ahora sobre #inicio)
-        VANTA.GLOBE({
-            el: "#inicio",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x28a55f,
-            backgroundColor: 0x0c4f2e,
-            size: 0.7
+        // Inicializar tooltips
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tooltips para botones y cards
+            tippy('[data-tooltip]', {
+                placement: 'top',
+                arrow: true,
+                theme: 'custom',
+                animation: 'shift-away',
+                duration: [200, 150]
+            });
         });
 
-        // Navegación por anclas
+        // Vanta.js background (ahora sobre #inicio)
+        if (typeof VANTA !== 'undefined') {
+            VANTA.GLOBE({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x28a55f,
+                backgroundColor: 0x0c4f2e,
+                size: 0.7
+            });
+        }
+
+        // Inicializar Swiper para Hero Carousel
+        new Swiper('.hero-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            effect: 'fade',
+            speed: 800,
+            grabCursor: true,
+        });
+
+        // Inicializar Swiper para Testimonios
+        new Swiper('.testimonial-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+            spaceBetween: 20,
+            speed: 600,
+        });
+
+        // Navegación por anclas corregida
         (function () {
-          // Mapa archivo -> ancla
           const map = {
             'index.php':   '#inicio',
             'docentes.php':'#docentes',
             'cursos.php':  '#cursos',
-            'recursos.php':'#recursos'
+            'recursos.php':'#recursos',
+            'nosotros.php':'#nosotros'
           };
 
           document.addEventListener('click', function (e) {
@@ -853,77 +843,171 @@ document.addEventListener('DOMContentLoaded', function() {
             const href = a.getAttribute('href');
             if (!href) return;
 
-            // 1) Respeta anchors directos y enlaces marcados como externos
+            // Ignorar enlaces que ya son anclas o externos
             if (href.startsWith('#') || a.hasAttribute('data-external')) return;
 
             try {
               const url = new URL(href, window.location.href);
 
-              // 2) Sólo mismo origen
+              // Ignorar enlaces a otros dominios
               if (url.origin !== window.location.origin) return;
 
-              // 3) No interceptar nada de la plataforma (ajusta el prefijo si cambiaste la ruta)
+              // Ignorar enlaces a la plataforma
               if (url.pathname.startsWith('/src/plataforma')) return;
 
-              // 4) Detectar archivo de destino
-              const file = url.pathname.split('/').pop().toLowerCase();
+              // Extraer el nombre del archivo
+              const pathSegments = url.pathname.split('/');
+              const file = pathSegments[pathSegments.length - 1].toLowerCase();
 
-              // Caso “raíz” con / o sin archivo -> #inicio (sólo si navega a la misma página base)
-              const isRootToSelf =
-                (file === '' && (url.pathname === '/' || url.pathname === window.location.pathname));
+              // Determinar si es la página actual
+              const currentPage = window.location.pathname.split('/').pop().toLowerCase();
+              const isCurrentPage = file === currentPage || (file === '' && currentPage === '');
 
-              const targetSel = isRootToSelf ? '#inicio' : map[file];
+              // Obtener el selector de destino
+              const targetSel = isCurrentPage ? '#inicio' : map[file];
               if (!targetSel) return;
 
-              // 5) Interceptar y hacer scroll suave
-              e.preventDefault();
-              const target = document.querySelector(targetSel);
-              if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                history.pushState(null, '', targetSel);
+              // Si estamos en la misma página, hacer scroll a la sección
+              if (isCurrentPage) {
+                e.preventDefault();
+                const target = document.querySelector(targetSel);
+                if (target) {
+                  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  history.pushState(null, '', targetSel);
+                }
               }
-            } catch (err) { /* noop */ }
+              // Si no, navegar a la página correspondiente
+              else {
+                // No prevenir el comportamiento por defecto, dejar que navegue
+              }
+            } catch (err) { 
+              console.error('Error en navegación:', err);
+            }
           }, true);
         })();
 
-        // Botón modo oscuro (si está en navbar como #toggleDark)
+        // Sistema mejorado de modo oscuro
         (function(){
-          const toggle = document.getElementById("toggleDark");
-          const body = document.body;
-
-          // Cargar preferencia guardada
-          if(localStorage.getItem("theme") === "dark"){
-            body.classList.add("dark");
-            if (toggle) toggle.innerHTML = "☀️";
-          }
-
-          if(toggle){
-            toggle.addEventListener("click", () => {
-              body.classList.toggle("dark");
-              if(body.classList.contains("dark")){
-                localStorage.setItem("theme","dark");
-                toggle.innerHTML = "☀️";
-              } else {
-                localStorage.setItem("theme","light");
-                toggle.innerHTML = "🌙";
-              }
-              feather.replace(); // refrescar íconos si usas feather
+            const themeToggle = document.getElementById("themeToggle");
+            const themeToggleSm = document.getElementById("themeToggleSm");
+            const body = document.body;
+            const root = document.documentElement;
+            
+            function applyTheme(isDark) {
+                body.classList.toggle('dark', isDark);
+                
+                const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+                if (metaThemeColor) {
+                    metaThemeColor.setAttribute('content', isDark ? '#0f172a' : '#ffffff');
+                }
+                
+                const updateButton = (button) => {
+                    if (button) {
+                        const sunIcon = button.querySelector('.icon-sun');
+                        const moonIcon = button.querySelector('.icon-moon');
+                        if (sunIcon && moonIcon) {
+                            sunIcon.style.transform = isDark ? 'translateY(-100%)' : 'translateY(0)';
+                            sunIcon.style.opacity = isDark ? '0' : '1';
+                            moonIcon.style.transform = isDark ? 'translateY(0)' : 'translateY(100%)';
+                            moonIcon.style.opacity = isDark ? '1' : '0';
+                        }
+                    }
+                };
+                
+                updateButton(themeToggle);
+                updateButton(themeToggleSm);
+                
+                if (typeof feather !== 'undefined') {
+                    feather.replace();
+                }
+                
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                
+                window.dispatchEvent(new CustomEvent('themechange', { detail: { isDark } }));
+            }
+            
+            function initializeTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+                
+                applyTheme(shouldBeDark);
+            }
+            
+            [themeToggle, themeToggleSm].forEach(button => {
+                if (button) {
+                    button.addEventListener('click', () => {
+                        applyTheme(!body.classList.contains('dark'));
+                    });
+                }
             });
-          }
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    applyTheme(e.matches);
+                }
+            });
+            
+            initializeTheme();
+            
+            window.themeController = {
+                toggle: () => applyTheme(!body.classList.contains('dark')),
+                setDark: () => applyTheme(true),
+                setLight: () => applyTheme(false),
+                isDark: () => body.classList.contains('dark')
+            };
         })();
         
         // Interactividad para el selector de carreras
         document.querySelectorAll('.career-selector').forEach(item => {
-            item.addEventListener('click', function() {
-                // Remover clase activa de todos
+            const handleSelect = function() {
                 document.querySelectorAll('.career-selector').forEach(el => {
-                    el.classList.remove('border-[var(--ut-green-500)]', 'bg-[var(--ut-green-50)]');
+                    el.classList.remove('border-[var(--ut-green-500)]', 'bg-[var(--ut-green-50)]', 'ring-2', 'ring-[var(--ut-green-500)]');
                 });
-                
-                // Agregar clase activa al seleccionado
-                this.classList.add('border-[var(--ut-green-500)]', 'bg-[var(--ut-green-50)]');
+                this.classList.add('border-[var(--ut-green-500)]', 'bg-[var(--ut-green-50)]', 'ring-2', 'ring-[var(--ut-green-500)]');
+            };
+            
+            item.addEventListener('click', handleSelect);
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleSelect.call(item);
+                }
             });
         });
+
+        // Lazy loading para imágenes mejorado
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        img.classList.remove('opacity-0');
+                        img.classList.add('animate-fade-in');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                img.dataset.src = img.src;
+                img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRUVFRUVFIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgaGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5OTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+TGFkaW5nPC90ZXh0Pjwvc3ZnPg==';
+                img.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                imageObserver.observe(img);
+            });
+        }
+
+        // Service Worker para PWA (básico)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(reg => {
+                    console.log('SW registered');
+                }).catch(err => {
+                    console.log('SW registration failed');
+                });
+            });
+        }
     </script>
 </body>
 </html>
