@@ -381,51 +381,55 @@
                     </div>
                 </div>
 
-                <!-- Carrera 5: Ingeniería en Electromovilidad -->
-                <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
-                    <div class="image-flip-container h-48 relative" role="img" aria-label="Vista de Electromovilidad">
-                        <!-- Frente de la imagen -->
-                        <div class="image-flip-front absolute inset-0">
-                            <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Vehículos eléctricos en laboratorio de electromovilidad" class="w-full h-full object-cover" loading="lazy">
-                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                                <span class="text-white font-semibold">Ver detalles</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Parte trasera de la imagen -->
-                        <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-red-600 to-red-800 text-white p-4 flex items-center justify-center">
-                            <div class="text-center">
-                                <h4 class="font-bold mb-2">Especialidades:</h4>
-                                <ul class="text-sm text-red-100 space-y-1">
-                                    <li>• Sistemas de electromoción</li>
-                                    <li>• Baterías y motores</li>
-                                    <li>• Proyectos sustentables</li>
-                                    <li>• Gestión PEI</li>
-                                </ul>
-                            </div>
+            <!-- Carrera 5: Lengua Inglesa -->
+            <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                <div class="image-flip-container h-48 relative">
+                    <!-- Frente de la imagen -->
+                    <div class="image-flip-front absolute inset-0">
+                        <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Lengua Inglesa" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                            <span class="text-white font-semibold">Ver detalles</span>
                         </div>
                     </div>
                     
-                    <div class="p-6">
-                        <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Electromovilidad</h3>
-                        <p class="text-gray-600">Desarrolla sistemas de electromoción y gestiona proyectos de electromovilidad con tecnologías sustentables, integrando elementos considerando aspectos técnicos, económicos y normativos.</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Duración: 3 años 8 meses</span>
-                            <a href="cursos.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
-                                Más info ›
-                            </a>
+                    <!-- Parte trasera de la imagen -->
+                    <div class="image-flip-back absolute inset-0 bg-gradient-to-br from-red-600 to-red-800 text-white p-4 flex items-center justify-center">
+                        <div class="text-center">
+                            <h4 class="font-bold mb-2">Especialidades:</h4>
+                            <ul class="text-sm text-red-100 space-y-1">
+                                <li>• Inglés técnico</li>
+                                <li>• Traducción</li>
+                                <li>• Comunicación intercultural</li>
+                                <li>• Enseñanza del inglés</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+                
+                <div class="p-6">
+                    <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Idiomas</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Lengua Inglesa</h3>
+                    <p class="text-gray-600">Domina el idioma global para negocios, tecnología y comunicación internacional.</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Duración: 4 años</span>
+                        <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
+                            Más info ›
+                        </a>
+                    </div>
+                </div>
             </div>
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="nosotros.php" class="inline-flex items-center bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white px-8 py-4 rounded-lg font-semibold transition transform hover:scale-105 shadow-lg">
+                <i data-feather="book-open" class="mr-3 w-5 h-5"></i>
+                Conoce Todas Nuestras Carreras
+            </a>
+        </div>
+    </div>
+</div>
             
-            <div class="text-center mt-12">
-                <a href="cursos.php" class="inline-flex items-center bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white px-8 py-4 rounded-lg font-semibold transition transform hover:scale-105 shadow-lg" aria-label="Conocer todas las carreras">
-                    <i data-feather="book-open" class="mr-3 w-5 h-5"></i>
-                    Conoce Todas Nuestras Carreras
-                </a>
-            </div>
+            
         </div>
     </div>
 
