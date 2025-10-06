@@ -381,11 +381,21 @@ body.dark .stats-card {
 >>>>>>> 3ac172b6db056b2918dcc372299bfbc057cba132
 </head>
 <body class="font-sans antialiased text-gray-800 dark:text-white">
+<body class="font-sans antialiased text-gray-800 dark:text-white">
 
 <?php include 'navbar.php'; ?>
 
 
 <!-- Hero Section -->
+<section class="hero-nosotros text-white relative overflow-hidden py-20">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center animate-fade-in-up" data-aos="fade-up">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">Nuestra Historia</h1>
+      <p class="text-xl md:text-2xl text-emerald-100 max-w-3xl mx-auto leading-relaxed">
+        Fundada en 1998<grok-card data-id="fa38df" data-type="citation_card"></grok-card>, más de 27 años formando profesionales inclusivos que transforman el mundo a través de la tecnología y la innovación en 2025.
 <section class="hero-nosotros text-white relative overflow-hidden py-20">
   <div class="absolute inset-0 opacity-10">
     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
@@ -402,8 +412,12 @@ body.dark .stats-card {
 
 <!-- Estadísticas -->
 <section class="bg-white dark:bg-neutral-900 py-16">
+<section class="bg-white dark:bg-neutral-900 py-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up">
+        <div class="text-3xl md:text-4xl font-bold mb-2">27</div>
+        <div class="text-emerald-100 text-sm md:text-base">Años de Experiencia</div>
       <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up">
         <div class="text-3xl md:text-4xl font-bold mb-2">27</div>
         <div class="text-emerald-100 text-sm md:text-base">Años de Experiencia</div>
@@ -411,11 +425,20 @@ body.dark .stats-card {
       <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
         <div class="text-3xl md:text-4xl font-bold mb-2">4,600+</div>
         <div class="text-emerald-100 text-sm md:text-base">Estudiantes Activos</div>
+      <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
+        <div class="text-3xl md:text-4xl font-bold mb-2">4,600+</div>
+        <div class="text-emerald-100 text-sm md:text-base">Estudiantes Activos</div>
       </div>
       <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
         <div class="text-3xl md:text-4xl font-bold mb-2">6</div>
         <div class="text-emerald-100 text-sm md:text-base">Programas Académicos</div>
+      <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-3xl md:text-4xl font-bold mb-2">6</div>
+        <div class="text-emerald-100 text-sm md:text-base">Programas Académicos</div>
       </div>
+      <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
+        <div class="text-3xl md:text-4xl font-bold mb-2">Múltiples</div>
+        <div class="text-emerald-100 text-sm md:text-base">Convenios de Colaboración</div>
       <div class="stats-card text-center animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
         <div class="text-3xl md:text-4xl font-bold mb-2">Múltiples</div>
         <div class="text-emerald-100 text-sm md:text-base">Convenios de Colaboración</div>
@@ -426,7 +449,11 @@ body.dark .stats-card {
 
 <!-- Misión, Visión y Valores -->
 <section class="bg-gray-50 dark:bg-neutral-800 py-16">
+<section class="bg-gray-50 dark:bg-neutral-800 py-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
+      <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Nuestra Esencia</h2>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Los pilares que nos definen y guían nuestro camino hacia la excelencia inclusiva en 2025</p>
     <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
       <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Nuestra Esencia</h2>
       <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Los pilares que nos definen y guían nuestro camino hacia la excelencia inclusiva en 2025</p>
@@ -436,7 +463,13 @@ body.dark .stats-card {
       <div class="value-card p-8 rounded-xl shadow-lg animate-fade-in-up" data-aos="fade-up">
         <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-6 mx-auto">
           <i data-feather="target" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
+      <div class="value-card p-8 rounded-xl shadow-lg animate-fade-in-up" data-aos="fade-up">
+        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <i data-feather="target" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
         </div>
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">Misión</h3>
+        <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
+          Creemos que la educación debe ser accesible para todos, eliminando barreras y ofreciendo oportunidades para que los estudiantes desarrollen su potencial sin importar su origen o circunstancias.<grok-card data-id="f63395" data-type="citation_card"></grok-card>
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">Misión</h3>
         <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
           Creemos que la educación debe ser accesible para todos, eliminando barreras y ofreciendo oportunidades para que los estudiantes desarrollen su potencial sin importar su origen o circunstancias.<grok-card data-id="f63395" data-type="citation_card"></grok-card>
@@ -446,7 +479,13 @@ body.dark .stats-card {
       <div class="value-card p-8 rounded-xl shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
         <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-6 mx-auto">
           <i data-feather="eye" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
+      <div class="value-card p-8 rounded-xl shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
+        <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <i data-feather="eye" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
         </div>
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">Visión</h3>
+        <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
+          Ser una institución de educación superior de calidad que cumpla con las expectativas y necesidades cambiantes de sus estudiantes, capital humano y sociedad.<grok-card data-id="44e041" data-type="citation_card"></grok-card>
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">Visión</h3>
         <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
           Ser una institución de educación superior de calidad que cumpla con las expectativas y necesidades cambiantes de sus estudiantes, capital humano y sociedad.<grok-card data-id="44e041" data-type="citation_card"></grok-card>
@@ -456,7 +495,15 @@ body.dark .stats-card {
       <div class="value-card p-8 rounded-xl shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
         <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mb-6 mx-auto">
           <i data-feather="heart" class="w-8 h-8 text-purple-600 dark:text-purple-400"></i>
+      <div class="value-card p-8 rounded-xl shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
+        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <i data-feather="heart" class="w-8 h-8 text-purple-600 dark:text-purple-400"></i>
         </div>
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">Valores</h3>
+        <ul class="text-gray-600 dark:text-gray-300 space-y-2 text-center">
+          <li class="flex items-center justify-center">
+            <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
+            Inclusión<grok-card data-id="0d1b3a" data-type="citation_card"></grok-card>
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">Valores</h3>
         <ul class="text-gray-600 dark:text-gray-300 space-y-2 text-center">
           <li class="flex items-center justify-center">
@@ -466,11 +513,20 @@ body.dark .stats-card {
           <li class="flex items-center justify-center">
             <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
             Respeto
+          <li class="flex items-center justify-center">
+            <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
+            Respeto
           </li>
           <li class="flex items-center justify-center">
             <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
             Empatía
+          <li class="flex items-center justify-center">
+            <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
+            Empatía
           </li>
+          <li class="flex items-center justify-center">
+            <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
+            Colaboración<grok-card data-id="f8f2ce" data-type="citation_card"></grok-card>
           <li class="flex items-center justify-center">
             <i data-feather="check" class="w-4 h-4 text-green-500 dark:text-green-400 mr-2"></i>
             Colaboración<grok-card data-id="f8f2ce" data-type="citation_card"></grok-card>
@@ -483,13 +539,19 @@ body.dark .stats-card {
 
 <!-- Historia y Línea de Tiempo -->
 <section class="bg-white dark:bg-neutral-900 py-16">
+<section class="bg-white dark:bg-neutral-900 py-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-12 items-start">
       <div data-aos="fade-right">
         <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-8 animate-fade-in-up">Nuestra Historia</h2>
         <p class="text-gray-600 dark:text-gray-300 text-lg mb-6 leading-relaxed">
           La Universidad Tecnológica Santa Catarina se creó a partir del decreto Número 98, publicado el 30 de septiembre de 1998<grok-card data-id="905cb3" data-type="citation_card"></grok-card>. Es un Organismo Público descentralizado del Gobierno del Estado de Nuevo León y forma parte de la Red Nacional de Universidades Tecnológicas y Politécnicas de la Secretaría de Educación Pública.
+        <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-8 animate-fade-in-up">Nuestra Historia</h2>
+        <p class="text-gray-600 dark:text-gray-300 text-lg mb-6 leading-relaxed">
+          La Universidad Tecnológica Santa Catarina se creó a partir del decreto Número 98, publicado el 30 de septiembre de 1998<grok-card data-id="905cb3" data-type="citation_card"></grok-card>. Es un Organismo Público descentralizado del Gobierno del Estado de Nuevo León y forma parte de la Red Nacional de Universidades Tecnológicas y Politécnicas de la Secretaría de Educación Pública.
         </p>
+        <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+          Nuestro compromiso con la innovación y la inclusión nos ha permitido establecer alianzas estratégicas con empresas y organizaciones líderes, garantizando que nuestros estudiantes reciban una educación de vanguardia que los prepare para los desafíos del futuro en 2025.<grok-card data-id="a6fb77" data-type="citation_card"></grok-card>
         <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
           Nuestro compromiso con la innovación y la inclusión nos ha permitido establecer alianzas estratégicas con empresas y organizaciones líderes, garantizando que nuestros estudiantes reciban una educación de vanguardia que los prepare para los desafíos del futuro en 2025.<grok-card data-id="a6fb77" data-type="citation_card"></grok-card>
         </p>
@@ -497,29 +559,45 @@ body.dark .stats-card {
       
       <div data-aos="fade-left">
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 animate-fade-in-up">Hitos Importantes</h3>
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 animate-fade-in-up">Hitos Importantes</h3>
         <div class="space-y-6">
+          <div class="timeline-item animate-fade-in-up" data-aos="fade-up">
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up">
             <div class="timeline-dot"></div>
             <h4 class="text-lg font-semibold text-gray-900 dark:text-white">1998 - Fundación</h4>
             <p class="text-gray-600 dark:text-gray-300">Creación por decreto y inicio de construcción del campus en 20 hectáreas. Instalaciones provisionales en Blvd. Díaz Ordaz.<grok-card data-id="d734fb" data-type="citation_card"></grok-card></p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">1998 - Fundación</h4>
+            <p class="text-gray-600 dark:text-gray-300">Creación por decreto y inicio de construcción del campus en 20 hectáreas. Instalaciones provisionales en Blvd. Díaz Ordaz.<grok-card data-id="d734fb" data-type="citation_card"></grok-card></p>
           </div>
+          <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
             <div class="timeline-dot"></div>
             <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Septiembre 1998 - Inicio Académico</h4>
             <p class="text-gray-600 dark:text-gray-300">Actividades con 116 alumnos y 3 programas TSU: Mecánica, Electrónica y Automatización, Mantenimiento y Procesos.<grok-card data-id="7101e2" data-type="citation_card"></grok-card></p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Septiembre 1998 - Inicio Académico</h4>
+            <p class="text-gray-600 dark:text-gray-300">Actividades con 116 alumnos y 3 programas TSU: Mecánica, Electrónica y Automatización, Mantenimiento y Procesos.<grok-card data-id="7101e2" data-type="citation_card"></grok-card></p>
           </div>
+          <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
             <div class="timeline-dot"></div>
             <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2004 - Modelo de Inclusión</h4>
             <p class="text-gray-600 dark:text-gray-300">Implementación del modelo de inclusión educativa y laboral.<grok-card data-id="b70f85" data-type="citation_card"></grok-card></p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2004 - Modelo de Inclusión</h4>
+            <p class="text-gray-600 dark:text-gray-300">Implementación del modelo de inclusión educativa y laboral.<grok-card data-id="b70f85" data-type="citation_card"></grok-card></p>
           </div>
+          <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
             <div class="timeline-dot"></div>
             <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2023 - Centro Microsoft</h4>
             <p class="text-gray-600 dark:text-gray-300">Alianza con The Trust for the Americas como Centro Autorizado Certificador de Microsoft.<grok-card data-id="5430d7" data-type="citation_card"></grok-card></p>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2023 - Centro Microsoft</h4>
+            <p class="text-gray-600 dark:text-gray-300">Alianza con The Trust for the Americas como Centro Autorizado Certificador de Microsoft.<grok-card data-id="5430d7" data-type="citation_card"></grok-card></p>
           </div>
           <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="400">
+          <div class="timeline-item animate-fade-in-up" data-aos="fade-up" data-aos-delay="400">
             <div class="timeline-dot"></div>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2024 - Premios de Reconocimiento</h4>
+            <p class="text-gray-600 dark:text-gray-300">Premio por modelo de inclusión y Premio Congruencia en Inclusión Educativa.<grok-card data-id="d72252" data-type="citation_card"></grok-card><grok-card data-id="f34815" data-type="citation_card"></grok-card></p>
             <h4 class="text-lg font-semibold text-gray-900 dark:text-white">2024 - Premios de Reconocimiento</h4>
             <p class="text-gray-600 dark:text-gray-300">Premio por modelo de inclusión y Premio Congruencia en Inclusión Educativa.<grok-card data-id="d72252" data-type="citation_card"></grok-card><grok-card data-id="f34815" data-type="citation_card"></grok-card></p>
           </div>
@@ -702,17 +780,11 @@ body.dark .stats-card {
           </div>
         </div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">Innovación Empresarial</h3>
-          <p class="text-gray-600 mb-4">Startups y modelos de negocio disruptivos desarrollados por futuros empresarios.</p>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center text-sm text-gray-500">
-              <i data-feather="trending-up" class="w-4 h-4 mr-1"></i>
-              Negocios
-            </div>
-            <button class="text-green-600 hover:text-green-700 font-medium text-sm flex items-center gap-1">
-              Ver Proyecto
-              <i data-feather="arrow-right" class="w-4 h-4"></i>
-            </button>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Encuentro Regional Deportivo y Cultural</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">Tercer lugar regional para nuestros Correcaminos en el ERDCUTyP 2024, destacando disciplina y talento.<grok-card data-id="352def" data-type="citation_card"></grok-card></p>
+          <div class="flex items-center text-sm text-[var(--ut-green-700)] dark:text-[var(--ut-green-400)]">
+            <i data-feather="calendar" class="w-4 h-4 mr-1"></i>
+            2024
           </div>
         </div>
       </div>
@@ -805,7 +877,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Campus y Planteles -->
 <section class="bg-white dark:bg-neutral-900 py-16">
+<section class="bg-white dark:bg-neutral-900 py-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
+      <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Nuestro Campus Principal</h2>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Infraestructura de vanguardia en Santa Catarina, N.L., para una educación de excelencia en 2025</p>
     <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
       <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Nuestro Campus Principal</h2>
       <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">Infraestructura de vanguardia en Santa Catarina, N.L., para una educación de excelencia en 2025</p>
@@ -1222,7 +1298,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Galería de Logros -->
 <section class="bg-gray-50 dark:bg-neutral-800 py-16">
+<section class="bg-gray-50 dark:bg-neutral-800 py-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
+      <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Logros y Reconocimientos</h2>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">El esfuerzo de nuestra comunidad académica reflejado en premios y distinciones en 2025</p>
     <div class="text-center mb-16 animate-fade-in-up" data-aos="fade-up">
       <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Logros y Reconocimientos</h2>
       <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">El esfuerzo de nuestra comunidad académica reflejado en premios y distinciones en 2025</p>
@@ -1232,7 +1312,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up">
         <div class="icon-container w-16 h-16 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i data-feather="award" class="w-8 h-8 text-yellow-600 dark:text-yellow-400"></i>
+      <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up">
+        <div class="icon-container w-16 h-16 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i data-feather="award" class="w-8 h-8 text-yellow-600 dark:text-yellow-400"></i>
         </div>
+        <h4 class="font-semibold text-gray-900 dark:text-white">Premio por Modelo de Inclusión</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">1er Lugar 2024<grok-card data-id="70494f" data-type="citation_card"></grok-card></p>
         <h4 class="font-semibold text-gray-900 dark:text-white">Premio por Modelo de Inclusión</h4>
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">1er Lugar 2024<grok-card data-id="70494f" data-type="citation_card"></grok-card></p>
       </div>
@@ -1240,7 +1325,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
         <div class="icon-container w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i data-feather="globe" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
+      <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="100">
+        <div class="icon-container w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i data-feather="globe" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
         </div>
+        <h4 class="font-semibold text-gray-900 dark:text-white">Centro Microsoft Certificado</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Reconocimiento 2023<grok-card data-id="5cc7cf" data-type="citation_card"></grok-card></p>
         <h4 class="font-semibold text-gray-900 dark:text-white">Centro Microsoft Certificado</h4>
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Reconocimiento 2023<grok-card data-id="5cc7cf" data-type="citation_card"></grok-card></p>
       </div>
@@ -1248,7 +1338,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
         <div class="icon-container w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i data-feather="trending-up" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
+      <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="200">
+        <div class="icon-container w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i data-feather="trending-up" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
         </div>
+        <h4 class="font-semibold text-gray-900 dark:text-white">Premio Congruencia</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Inclusión Educativa 2024<grok-card data-id="cc6fe9" data-type="citation_card"></grok-card></p>
         <h4 class="font-semibold text-gray-900 dark:text-white">Premio Congruencia</h4>
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Inclusión Educativa 2024<grok-card data-id="cc6fe9" data-type="citation_card"></grok-card></p>
       </div>
@@ -1256,7 +1351,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
         <div class="icon-container w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i data-feather="star" class="w-8 h-8 text-purple-600 dark:text-purple-400"></i>
+      <div class="gallery-item p-6 rounded-lg text-center shadow-lg animate-fade-in-up" data-aos="fade-up" data-aos-delay="300">
+        <div class="icon-container w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i data-feather="star" class="w-8 h-8 text-purple-600 dark:text-purple-400"></i>
         </div>
+        <h4 class="font-semibold text-gray-900 dark:text-white">1,810 Egresados</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">En 2022<grok-card data-id="7bfb23" data-type="citation_card"></grok-card></p>
         <h4 class="font-semibold text-gray-900 dark:text-white">1,810 Egresados</h4>
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">En 2022<grok-card data-id="7bfb23" data-type="citation_card"></grok-card></p>
       </div>
@@ -1265,6 +1365,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <script>
+AOS.init({ 
+    duration: 1000, 
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 50,
+    disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+});
 AOS.init({ 
     duration: 1000, 
     easing: 'ease-out-cubic',

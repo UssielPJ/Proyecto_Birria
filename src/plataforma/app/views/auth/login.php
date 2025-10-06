@@ -750,76 +750,181 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
             Ingrese un correo válido
           </p>
         </div>
+      </div>
 
-        <!-- Campo Contraseña -->
-        <div>
-          <label for="password" class="block text-sm font-medium text-gray-700 mb-3">Contraseña</label>
-          <div class="relative">
-            <input id="password" name="password" type="password" required minlength="6"
-                   class="elegant-input w-full rounded-xl px-4 py-4 pr-12 focus:outline-none"
-                   placeholder="••••••••"/>
-            <button type="button" id="togglePwd" class="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700 transition-colors">
-              <i data-feather="eye"></i>
-            </button>
+      <div class="relative">
+        <label for="password" class="block text-sm font-medium text-white/90 mb-2 sr-only">Contraseña</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i data-feather="lock" class="w-5 h-5 text-white/60 group-focus-within:text-white/80 transition-colors duration-200"></i>
           </div>
-          <p id="passError" class="mt-2 text-red-600 text-sm hidden flex items-center gap-2">
-            <i data-feather="alert-circle" class="w-4 h-4"></i>
-            Mínimo 6 caracteres
-          </p>
-        </div>
-
-        <!-- Opciones adicionales -->
-        <div class="flex items-center justify-between">
-          <label class="inline-flex items-center gap-3 text-sm text-gray-600 select-none cursor-pointer group">
-            <div class="relative">
-              <input type="checkbox" name="remember" class="sr-only peer">
-              <div class="w-5 h-5 border-2 border-gray-300 rounded-lg peer-checked:bg-green-500 peer-checked:border-green-500 transition-colors group-hover:border-green-400"></div>
-              <i data-feather="check" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity"></i>
-            </div>
-            <span class="group-hover:text-gray-700 transition-colors">Recordar acceso</span>
-          </label>
-          <a href="#" class="text-sm font-medium text-green-600 hover:text-green-700 transition-colors">
-            ¿Olvidó contraseña?
-          </a>
-        </div>
-
-        <!-- Botón de Acceso -->
-<button type="submit" class="prestige-btn w-full rounded-xl px-4 py-4 font-semibold mt-2 flex items-center justify-center gap-3">
-  <i data-feather="log-in" class="w-5 h-5"></i>
-  Acceder al Sistema
-</button>
-
-<!-- Botón para regresar al inicio - Estilo ghost -->
-<a href="<?php echo htmlspecialchars($HOME_URL); ?>" 
-   class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold text-green-600 hover:text-green-700 transition-all duration-200 border-2 border-green-200 hover:border-green-300 hover:bg-green-50 mt-4">
-  <i data-feather="home" class="w-4 h-4"></i>
-  Regresar al Inicio
-  <a href="./index.php"></a>
-</a>
-
-        <!-- Badge de seguridad -->
-        <div class="security-badge rounded-xl p-4 text-center">
-          <div class="flex items-center justify-center gap-2 mb-2">
-            <div class="pulse-dot"></div>
-            <span class="text-sm font-medium text-green-700">Conexión Segura</span>
-          </div>
-          <p class="text-xs text-gray-600">Sus datos están protegidos con encriptación SSL</p>
-        </div>
-      </form>
-
-      <!-- Footer minimalista -->
-      <div class="mt-6 pt-4 border-t border-gray-100">
-        <div class="text-center">
-          <p class="text-xs text-gray-500">
-            UTSC © 2024 • 
-            <a href="#" class="text-green-600 hover:text-green-700 transition-colors">Soporte Técnico</a>
-          </p>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            autocomplete="current-password"
+            class="input-field w-full pr-12"
+            placeholder="Contraseña: 12345"
+            value="<?php echo htmlspecialchars($_COOKIE['user_password'] ?? ''); ?>"
+            aria-describedby="password-error">
+          <button type="button"
+                  id="togglePassword"
+                  aria-label="Mostrar/ocultar contraseña"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-white/60 hover:text-white transition-colors duration-200"
+                  tabindex="-1">
+            <i data-feather="eye" class="w-5 h-5" id="eyeIcon"></i>
+          </button>
+          <div id="password-error" class="hidden absolute -bottom-6 left-0 text-red-200 text-xs mt-1">Contraseña requerida</div>
         </div>
       </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <label class="flex items-center gap-2 cursor-pointer group">
+          <input id="remember" name="remember" type="checkbox" class="h-4 w-4 rounded border-white/30 bg-white/10 text-emerald-500 focus:ring-2 focus:ring-emerald-500/30 transition-colors duration-200" <?php echo isset($_COOKIE['user_email']) ? 'checked' : ''; ?>>
+          <span class="text-sm text-white/80 group-hover:text-white transition-colors">Recordarme</span>
+        </label>
+        <a href="#" class="text-sm font-medium text-white/80 hover:text-white transition-all duration-200 hover:underline focus:outline-none focus:ring-2 focus:ring-white/30">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit" 
+              class="btn-login w-full flex justify-center items-center gap-2 py-4 px-6 rounded-xl text-base font-medium text-white mt-4 relative overflow-hidden"
+              id="submitBtn"
+              aria-label="Iniciar sesión">
+        <span class="relative z-10 flex items-center gap-2">
+          <i data-feather="log-in" class="w-5 h-5"></i>
+          Iniciar Sesión
+        </span>
+        <div class="loading-spinner hidden absolute inset-0 flex items-center justify-center">
+          <div class="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+        </div>
+      </button>
+
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-white/10"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-4 text-white/60 bg-white/5 rounded-full backdrop-blur-sm">o</span>
+        </div>
+      </div>
+
+      <!-- Botón: Volver al inicio -->
+      <a href="<?php echo htmlspecialchars($HOME_URL); ?>"
+         class="btn-ghost w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-sm font-medium text-white/80 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+         aria-label="Volver a la página principal">
+        <i data-feather="arrow-left" class="w-4 h-4"></i>
+        Volver al inicio
+      </a>
     </div>
+  </form>
+</div>
+
+<!-- Footer -->
+<div class="bg-white/5 px-6 py-4 text-center border-t border-white/10 backdrop-blur-sm">
+  <p class="text-sm text-white/60">
+    © <?php echo date('Y'); ?> Universidad Tecnológica | 
+    <a href="#" class="hover:text-white/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/30">Ayuda</a> | 
+    <a href="#" class="hover:text-white/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/30">Privacidad</a>
+  </p>
+</div>
   </div>
 
   <script>
+    // AOS Init
+    AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });
+
+    // Feather Icons
+    feather.replace();
+
+    // Password Toggle
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    if (togglePassword && passwordField && eyeIcon) {
+      togglePassword.addEventListener('click', function() {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        eyeIcon.setAttribute('data-feather', type === 'password' ? 'eye' : 'eye-off');
+        feather.replace({icons: {eyeIcon: {}}});
+      });
+    }
+
+    // Form Validation
+    const form = document.getElementById('loginForm');
+    const emailField = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+    const passwordError = document.getElementById('password-error');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function validateForm() {
+      const email = emailField.value.trim();
+      const password = passwordField.value;
+      let isValid = true;
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        emailError.classList.remove('hidden');
+        emailError.textContent = 'Por favor ingresa un correo válido';
+        isValid = false;
+      } else {
+        emailError.classList.add('hidden');
+      }
+
+      // Password validation
+      if (password.length < 5) {
+        passwordError.classList.remove('hidden');
+        passwordError.textContent = 'La contraseña debe tener al menos 5 caracteres';
+        isValid = false;
+      } else {
+        passwordError.classList.add('hidden');
+      }
+
+      if (isValid) {
+        // Loading state
+        submitBtn.disabled = true;
+        const spinner = submitBtn.querySelector('.loading-spinner');
+        const text = submitBtn.querySelector('span');
+        spinner.classList.remove('hidden');
+        text.style.opacity = '0.5';
+      }
+
+      return isValid;
+    }
+
+    // Real-time validation
+    form.addEventListener('submit', function(e) {
+      if (!validateForm()) {
+        e.preventDefault();
+      }
+    });
+
+    // Real-time validation
+    emailField.addEventListener('blur', function() {
+      const email = this.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email && !emailRegex.test(email)) {
+        emailError.classList.remove('hidden');
+      } else {
+        emailError.classList.add('hidden');
+      }
+    });
+
+    passwordField.addEventListener('blur', function() {
+      if (this.value.length < 5) {
+        passwordError.classList.remove('hidden');
+      } else {
+        passwordError.classList.add('hidden');
+      }
+    });
+
+    // Theme integration
+    document.addEventListener('themechange', () => {
+      feather.replace();
+    });
+  </script>
+
     feather.replace();
     
     // Toggle password visibility
