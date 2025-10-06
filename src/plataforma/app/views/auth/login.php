@@ -17,331 +17,238 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#28a55f">
-  <meta name="description" content="Accede a la Plataforma Estudiantil de UTSC. Inicia sesión con tu correo institucional para continuar tu aprendizaje en 2025.">
-  <meta name="keywords" content="login UTSC, plataforma estudiantil, acceso universidad tecnológica">
-  <meta property="og:title" content="Login - Plataforma Estudiantil UTSC">
-  <meta property="og:description" content="Inicia sesión en tu cuenta de estudiante UTSC.">
-  <meta property="og:image" content="/static/images/logo.png">
-  <meta property="og:url" content="https://utsc.edu/src/plataforma/login">
-  <title>Login - Plataforma Estudiantil UTSC</title>
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-  <!-- Prevenir flash de tema incorrecto -->
-  <script>
-    (function() {
-      const savedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.documentElement.classList.add('dark');
-      }
-    })();
-  </script>
-  <script src="/src/js/theme.js" defer></script>
+  <title>Acceso Académico — UTSC</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/feather-icons"></script>
   <style>
-    :root {
-      --ut-green-800: #1e5e3eff;
-      --ut-green-700: #2e7d47ff;
-      --ut-green-600: #389e5fff;
-      --ut-green-500: #43a047ff;
-      --ut-green-400: #66bb6aff;
-      --ut-green-100: #c8e6c9ff;
+    :root{
+      --ut-green-900:#0c4f2e; --ut-green-800:#12663a; --ut-green-700:#177a46;
+      --ut-green-600:#1e8c51; --ut-green-500:#28a55f; --ut-green-100:#e6f6ed;
+      --ut-green-50:#f0faf4;
+      --accent-gold: #d4af37; --light-gold: #f4e4a6;
     }
+    
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, var(--ut-green-800) 0%, var(--ut-green-700) 50%, var(--ut-green-600) 100%);
+      background: linear-gradient(135deg, #0c4f2e 0%, #12663a 50%, #177a46 100%);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
       position: relative;
-      overflow-x: hidden;
-      animation: gradientAnimation 15s ease infinite;
-      background-size: 400% 400%;
+      overflow: hidden;
     }
-    @keyframes gradientAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    body::before {
+    
+    .login-container::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      background: url('/src/plataforma/app/img/PlantelUT.jpg') center/cover fixed;
-      opacity: 0.15;
-      z-index: -1;
-      filter: none;
-      animation: slowZoom 30s ease-in-out infinite alternate;
+      height: 4px;
+      background: linear-gradient(90deg, var(--ut-green-600), var(--accent-gold), var(--ut-green-600));
     }
-    @keyframes slowZoom {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); }
-    }
-    body::after {
+    
+    .login-container::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                          radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
-      pointer-events: none;
-      animation: shimmer 5s ease-in-out infinite alternate;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(40, 165, 95, 0.1),
+        rgba(212, 175, 55, 0.05),
+        transparent
+      );
+      animation: rotate 10s linear infinite;
+      z-index: 0;
     }
-    @keyframes shimmer {
-      0% { opacity: 0.5; }
-      100% { opacity: 1; }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .login-card {
-      backdrop-filter: blur(25px) saturate(200%);
-      background: rgba(255,255,255,0.25);
-      border: 1px solid rgba(255,255,255,0.4);
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35),
-                  0 0 40px rgba(34,197,94,0.3);
+    
+    .form-content {
       position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .login-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.3),
-                  0 0 40px rgba(34,197,94,0.3);
-    }
-    .login-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      animation: borderGlow 2s ease-in-out infinite;
-    }
-    @keyframes borderGlow {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-    .input-field {
-      background: rgba(255,255,255,0.25);
-      border: 2px solid rgba(255,255,255,0.4);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      padding: 1rem 1rem 1rem 3rem;
-      border-radius: 0.75rem;
-      color: white;
-      font-size: 0.95rem;
-      font-weight: 500;
-      backdrop-filter: blur(10px);
-      letter-spacing: 0.5px;
-    }
-    .input-field::placeholder {
-      color: rgba(255,255,255,0.6);
-      transition: all 0.3s ease;
-    }
-    .input-field:focus {
-      background: rgba(255,255,255,0.35);
-      border-color: var(--ut-green-400);
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(102,187,106,0.4),
-                  0 0 25px rgba(102,187,106,0.5);
-      transform: scale(1.02);
-      letter-spacing: 1px;
-    }
-    .input-field:focus::placeholder {
-      opacity: 0.7;
-      transform: translateX(10px);
-    }
-    .input-group {
-      position: relative;
-      overflow: hidden;
-    }
-    .input-group::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--ut-green-500), var(--ut-green-400));
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-    .input-group:focus-within::after {
-      transform: scaleX(1);
-    }
-    .btn-login {
-      background: linear-gradient(135deg, var(--ut-green-600), var(--ut-green-500));
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      border-radius: 0.75rem;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      border: none;
       z-index: 1;
     }
-    .btn-login::before {
+    
+    .elegant-input {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 15px;
+    }
+    
+    .elegant-input:focus {
+      border-color: var(--ut-green-500);
+      box-shadow: 
+        0 0 0 3px rgba(40, 165, 95, 0.15),
+        0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-1px);
+    }
+    
+    .prestige-btn {
+      background: linear-gradient(135deg, var(--ut-green-600), var(--ut-green-700));
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .prestige-btn::before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.6s;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+      transition: left 0.6s ease;
     }
-    .btn-login:hover {
-      background: linear-gradient(135deg, var(--ut-green-500), var(--ut-green-400));
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(102,187,106,0.4);
-      cursor: pointer;
-    }
-    .btn-login:hover::before {
+    
+    .prestige-btn:hover::before {
       left: 100%;
     }
-    .btn-login:active {
-      transform: translateY(0);
-      box-shadow: 0 5px 15px rgba(102,187,106,0.3);
-      cursor: pointer;
+    
+    .prestige-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 12px 25px -8px rgba(12, 79, 46, 0.4),
+        0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    .btn-ghost {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.05);
-      border-radius: 0.75rem;
-      font-weight: 500;
+    
+    .university-logo {
+      transition: all 0.3s ease;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
     }
-    .btn-ghost:hover {
-      background: rgba(255,255,255,0.15);
-      border-color: rgba(255,255,255,0.5);
-      transform: translateY(-1px);
+    
+    .university-logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.15));
     }
-    .flash-message {
-      animation: slideDown 0.3s ease-out;
+    
+    .feature-icon {
+      background: linear-gradient(135deg, var(--ut-green-100), var(--ut-green-50));
+      border: 1px solid rgba(40, 165, 95, 0.2);
+      transition: all 0.3s ease;
     }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    
+    .feature-icon:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40, 165, 95, 0.15);
     }
-    .logo-spin {
-      transition: transform 0.6s ease;
+    
+    .floating-shapes {
+      animation: float 6s ease-in-out infinite;
     }
-    .logo-spin:hover {
-      transform: rotate(360deg);
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
     }
-    /* Dark mode */
-    body.dark {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    
+    .security-badge {
+      background: linear-gradient(135deg, var(--ut-green-50), white);
+      border: 1px solid rgba(40, 165, 95, 0.2);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     }
-    body.dark .login-card {
-      background: rgba(30,41,59,0.4);
-      border-color: rgba(255,255,255,0.1);
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--ut-green-500);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
     }
-    body.dark .input-field {
-      background: rgba(30,41,59,0.6);
-      border-color: rgba(255,255,255,0.1);
-      color: #f8fafc;
+    
+    @keyframes pulse {
+      0%, 100% { 
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(40, 165, 95, 0.7);
+      }
+      50% { 
+        opacity: 0.8;
+        box-shadow: 0 0 0 6px rgba(40, 165, 55, 0);
+      }
     }
-    body.dark .input-field::placeholder {
-      color: rgba(248,250,252,0.6);
+    
+    .divider {
+      background: linear-gradient(90deg, transparent, var(--ut-green-300), transparent);
+      height: 1px;
     }
-    body.dark .input-field:focus {
-      background: rgba(30,41,59,0.8);
-      border-color: var(--ut-green-500);
-      box-shadow: 0 0 0 4px rgba(34,197,94,0.2);
-    }
-    body.dark .btn-ghost {
-      border-color: rgba(255,255,255,0.2);
-      background: rgba(30,41,59,0.3);
-    }
-    body.dark .btn-ghost:hover {
-      background: rgba(30,41,59,0.5);
-      border-color: rgba(255,255,255,0.4);
-    }
-    body.dark .flash-message.error {
-      background: rgba(239,68,68,0.2);
-      border-color: rgba(239,68,68,0.3);
-    }
-    body.dark .flash-message.success {
-      background: rgba(34,197,94,0.2);
-      border-color: rgba(34,197,94,0.3);
-    }
-    /* Responsive */
-    @media (max-width: 640px) {
-      .login-card { margin: 1rem; }
-      .input-field { padding-left: 2.5rem; }
+    
+    .accent-text {
+      background: linear-gradient(135deg, var(--ut-green-600), var(--accent-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
   </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 relative">
-  <!-- Floating particles -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden">
-    <div class="absolute top-20 left-10 w-2 h-2 bg-white/20 rounded-full animate-bounce" style="animation-delay: 0s;"></div>
-    <div class="absolute top-40 right-20 w-1 h-1 bg-white/10 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
-    <div class="absolute bottom-32 left-1/2 w-3 h-3 bg-white/15 rounded-full animate-bounce slow" style="animation-delay: 2s;"></div>
+<body class="p-4">
+  <!-- Elementos decorativos de fondo -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-20 h-20 bg-green-400/10 rounded-full floating-shapes"></div>
+    <div class="absolute bottom-20 right-20 w-16 h-16 bg-green-300/10 rounded-full floating-shapes" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/3 right-1/4 w-12 h-12 bg-green-500/10 rounded-full floating-shapes" style="animation-delay: 4s;"></div>
   </div>
 
-  <div class="login-card rounded-3xl w-full max-w-md relative animate-fade-in-up" data-aos="fade-up">
-    <!-- Header -->
-    <div class="bg-white/5 backdrop-blur-sm p-8 relative">
-      <div class="text-center mb-8">
-        <div class="logo-spin inline-block mb-6">
-          <img src="/src/plataforma/app/img/UT.jpg" 
-               alt="UTSC Logo" 
-               class="w-28 h-28 mx-auto rounded-full object-cover border-4 border-white/20 shadow-xl ring-2 ring-white/10"
-               onerror="this.src='/src/plataforma/app/img/CorrecaminosUT.jpg'">
+  <div class="login-container rounded-3xl w-full max-w-md mx-auto">
+    <div class="form-content p-8">
+      <!-- Header con logo discreto -->
+      <div class="flex items-center gap-3 mb-8">
+        <div class="university-logo w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-500 rounded-xl flex items-center justify-center">
+          <i data-feather="book-open" class="w-6 h-6 text-white"></i>
         </div>
-        <h1 class="text-3xl font-bold text-white mt-2 tracking-tight bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">Plataforma Estudiantil</h1>
-        <p class="text-white/80 mt-3 text-lg leading-relaxed">Inicia sesión para continuar tu aprendizaje</p>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">UTSC</h1>
+          <p class="text-gray-600 text-sm">Portal Académico</p>
+        </div>
       </div>
 
-
-<!-- Flash messages -->
-  <?php if ($error): ?>
-    <div class="flash-message error mb-6 rounded-xl border border-red-500/30 bg-red-500/10 text-red-100 px-4 py-3 text-sm backdrop-blur-sm" role="alert" aria-live="polite">
-      <div class="flex items-center">
-        <i data-feather="alert-triangle" class="w-4 h-4 mr-2"></i>
-        <?php echo htmlspecialchars($error); ?>
+      <!-- Encabezado del formulario -->
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Bienvenido</h2>
+        <p class="text-gray-600">Ingrese sus credenciales de acceso</p>
       </div>
-    </div>
-  <?php endif; ?>
-  <?php if ($success): ?>
-    <div class="flash-message success mb-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-100 px-4 py-3 text-sm backdrop-blur-sm" role="alert" aria-live="polite">
-      <div class="flex items-center">
-        <i data-feather="check-circle" class="w-4 h-4 mr-2"></i>
-        <?php echo htmlspecialchars($success); ?>
-      </div>
-    </div>
-  <?php endif; ?>
 
-  <!-- Form -->
-  <form class="space-y-6" method="post" action="/src/plataforma/login" autocomplete="on" id="loginForm" onsubmit="return validateForm()">
-    <div class="space-y-6">
-      <div class="relative">
-        <label for="email" class="block text-sm font-medium text-white/90 mb-2 sr-only">Correo Institucional</label>
-        <div class="relative group">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <i data-feather="mail" class="w-5 h-5 text-white/60 group-focus-within:text-white/80 transition-colors duration-200"></i>
+      <form id="loginForm" action="/auth/login" method="post" novalidate class="space-y-6">
+        <!-- Campo Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-3">Correo Institucional</label>
+          <div class="relative">
+            <input id="email" name="email" type="email" required
+                   class="elegant-input w-full rounded-xl px-4 py-4 pr-12 focus:outline-none"
+                   placeholder="usuario@utsc.edu.mx"/>
+            <div class="absolute right-4 top-1/2 -translate-y-1/2">
+              <i data-feather="mail" class="w-5 h-5 text-gray-400"></i>
+            </div>
           </div>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            inputmode="email"
-            autocomplete="email"
-            placeholder="admin|maestro|alumno|capturista@utec.edu"
-            class="input-field w-full pr-12"
-            value="<?php echo htmlspecialchars($_POST['email'] ?? $_COOKIE['user_email'] ?? ''); ?>"
-            aria-describedby="email-error">
-          <div id="email-error" class="hidden absolute -bottom-6 left-0 text-red-200 text-xs mt-1">Correo inválido</div>
+          <p id="emailError" class="mt-2 text-red-600 text-sm hidden flex items-center gap-2">
+            <i data-feather="alert-circle" class="w-4 h-4"></i>
+            Ingrese un correo válido
+          </p>
         </div>
       </div>
 
@@ -518,5 +425,78 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
     });
   </script>
 
+    feather.replace();
+    
+    // Toggle password visibility
+    const toggle = document.getElementById('togglePwd');
+    const pwd = document.getElementById('password');
+    
+    toggle.addEventListener('click', ()=>{
+      const isText = pwd.type === 'text';
+      pwd.type = isText ? 'password' : 'text';
+      toggle.innerHTML = isText ? feather.icons['eye'].toSvg() : feather.icons['eye-off'].toSvg();
+    });
+
+    // Form validation
+    const form = document.getElementById('loginForm');
+    const email = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const passError = document.getElementById('passError');
+    
+    form.addEventListener('submit', (e)=>{
+      emailError.classList.add('hidden'); 
+      passError.classList.add('hidden');
+      let ok = true;
+      
+      if(!email.value || !/^\S+@\S+\.\S+$/.test(email.value)){ 
+        emailError.classList.remove('hidden'); 
+        ok = false; 
+      }
+      
+      if(!pwd.value || pwd.value.length < 6){ 
+        passError.classList.remove('hidden'); 
+        ok = false; 
+      }
+      
+      if(!ok) {
+        e.preventDefault();
+        feather.replace();
+      }
+    });
+    
+    // Real-time validation
+    email.addEventListener('blur', () => {
+      if(email.value && !/^\S+@\S+\.\S+$/.test(email.value)) {
+        emailError.classList.remove('hidden');
+        email.parentElement.classList.add('ring-2', 'ring-red-200');
+        feather.replace();
+      } else {
+        emailError.classList.add('hidden');
+        email.parentElement.classList.remove('ring-2', 'ring-red-200');
+      }
+    });
+    
+    pwd.addEventListener('blur', () => {
+      if(pwd.value && pwd.value.length < 6) {
+        passError.classList.remove('hidden');
+        pwd.parentElement.classList.add('ring-2', 'ring-red-200');
+        feather.replace();
+      } else {
+        passError.classList.add('hidden');
+        pwd.parentElement.classList.remove('ring-2', 'ring-red-200');
+      }
+    });
+
+    // Efectos de focus mejorados
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.classList.add('ring-2', 'ring-green-100');
+      });
+      
+      input.addEventListener('blur', () => {
+        input.parentElement.classList.remove('ring-2', 'ring-green-100');
+      });
+    });
+  </script>
 </body>
 </html>
