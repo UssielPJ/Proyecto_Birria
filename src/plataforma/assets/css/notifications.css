@@ -1,0 +1,81 @@
+/* Estilos para el dropdown de notificaciones */
+.notifications-dropdown {
+    top: 100%;
+    z-index: 50;
+    transform-origin: top right;
+    animation: dropdown-in 0.2s ease-out;
+}
+
+.notification-badge {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes dropdown-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Estilos para el scrollbar del dropdown */
+.notifications-dropdown .notifications-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notifications-dropdown .notifications-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.notifications-dropdown .notifications-list::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 20px;
+}
+
+/* Dark mode */
+.dark .notifications-dropdown .notifications-list::-webkit-scrollbar-thumb {
+    background-color: rgba(75, 85, 99, 0.5);
+}
+
+/* Hover effects */
+.notification-item {
+    transition: all 0.2s ease;
+}
+
+.notification-item:hover button {
+    opacity: 1;
+}
+
+.notification-item button {
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+/* Animación para notificaciones nuevas */
+@keyframes highlight {
+    0% {
+        background-color: rgba(16, 185, 129, 0.1); /* primary-500 con opacidad */
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.notification-item.new {
+    animation: highlight 2s ease-out;
+}
