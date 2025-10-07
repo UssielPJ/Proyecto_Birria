@@ -26,7 +26,6 @@
 .hero-nosotros {
   background: linear-gradient(135deg, var(--ut-green-900) 0%, var(--ut-green-800) 50%, var(--ut-green-700) 100%);
 }
-
 .stats-card {
   background: linear-gradient(135deg, var(--ut-green-700), var(--ut-green-800));
   border-radius: 12px;

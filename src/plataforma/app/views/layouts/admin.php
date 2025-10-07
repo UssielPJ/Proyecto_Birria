@@ -144,7 +144,7 @@
       <main class="p-6">
         <!-- Bienvenida -->
         <div class="bg-gradient-to-r from-primary-500 to-primary-700 rounded-xl p-6 text-white mb-6" data-aos="fade-up">
-          <h2 class="text-2xl font-bold mb-1">¡Bienvenida, Administradora!</h2>
+          <h2 class="text-2xl font-bold mb-1">¡Bienvenida, Administrador Ejemplo!</h2>
           <p class="opacity-90">Gestiona toda la institución desde este panel centralizado.</p>
         </div>
 
