@@ -82,34 +82,7 @@
           </span>
         </button>
 
-        <!-- Notificaciones -->
-        <div class="relative">
-          <button id="notificationToggle"
-                  class="notification-toggle relative h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-black/10 dark:ring-white/10 hover:ring-primary-500 transition-all duration-300 bg-white/70 dark:bg-neutral-800/70 backdrop-blur transform hover:scale-105"
-                  aria-label="Ver notificaciones"
-                  title="Notificaciones">
-            <i data-feather="bell" class="h-5 w-5 text-gray-600 dark:text-gray-300"></i>
-            <span id="notification-badge" class="notification-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" style="display: none;">0</span>
-          </button>
-
-          <!-- Dropdown de notificaciones -->
-          <div id="notificationDropdown" class="notification-dropdown absolute right-0 mt-2 w-80 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border border-gray-200 dark:border-neutral-700 z-50 transform scale-95 opacity-0 transition-all duration-200 pointer-events-none">
-            <div class="p-4 border-b border-gray-200 dark:border-neutral-700">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Notificaciones</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Tus últimas actualizaciones</p>
-            </div>
-            <div class="max-h-64 overflow-y-auto">
-              <div class="p-4 text-center text-gray-500 dark:text-gray-400">
-                <i data-feather="bell-off" class="w-8 h-8 mx-auto mb-2"></i>
-                <p>No hay notificaciones nuevas</p>
-                <p class="text-xs mt-1">Te notificaremos cuando haya actualizaciones importantes.</p>
-              </div>
-            </div>
-            <div class="p-3 border-t border-gray-200 dark:border-neutral-700">
-              <a href="#" class="text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline">Ver todas las notificaciones</a>
-            </div>
-          </div>
-        </div>
+        
 
         <!-- Plataforma -->
         <a href="<?php echo htmlspecialchars($PLATAFORMA_URL); ?>"
