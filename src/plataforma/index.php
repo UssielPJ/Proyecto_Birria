@@ -2,12 +2,34 @@
 session_start();
 
 // Reusar tu conexión y config
-require __DIR__ . '/../db.php';
 require __DIR__ . '/app/config/app.php';
 
+// Incluir db.php para inicializar $pdo global
+require_once __DIR__ . '/../db.php';
+
 // cargar core y controladores
-foreach (glob(__DIR__ . '/app/core/*.php') as $f) require $f;
-foreach (glob(__DIR__ . '/app/controllers/*.php') as $f) require $f;
+foreach (glob(__DIR__ . '/app/core/*.php') as $f) require_once $f;
+foreach (glob(__DIR__ . '/app/controllers/*.php') as $f) require_once $f;
+foreach (glob(__DIR__ . '/app/models/*.php') as $f) require_once $f;
+
+use App\Controllers\AuthController;
+use App\Controllers\NotificationsController;
+use App\Controllers\PaymentsController;
+use App\Controllers\CoursesController;
+use App\Controllers\ScheduleController;
+use App\Controllers\GradesController;
+use App\Controllers\SurveysController;
+use App\Controllers\ScholarshipsController;
+use App\Controllers\AnnouncementsController;
+use App\Controllers\StudentsController;
+use App\Controllers\TeachersController;
+use App\Controllers\SubjectsController;
+use App\Controllers\SettingsController;
+use App\Controllers\CapturistaImportarController;
+use App\Controllers\CapturistaAlumnosController;
+use App\Controllers\CapturistaInscripcionesController;
+use App\Controllers\CapturistaReportesController;
+use App\Controllers\SolicitudesController;
 
 $router = new Router();
 
@@ -29,7 +51,7 @@ $map('POST', '/src/plataforma/login',   [new AuthController, 'login']);
 $map('GET',  '/src/plataforma/logout',  [new AuthController, 'logout']);
 
 /* ========== Panel ALUMNO (requiere login) ========== */
-$map('GET', '/src/plataforma/app',                [new StudentDashboardController,'index']);
+$map('GET', '/src/plataforma/app',                [new \App\Controllers\StudentDashboardController,'index']);
 $map('GET', '/src/plataforma/app/materias',       [new CoursesController,        'index']);
 $map('GET', '/src/plataforma/app/horario',        [new ScheduleController,       'index']);
 $map('GET', '/src/plataforma/app/calificaciones', [new GradesController,         'index']);
@@ -37,14 +59,159 @@ $map('GET', '/src/plataforma/app/encuestas',      [new SurveysController,       
 $map('GET', '/src/plataforma/app/becas',          [new ScholarshipsController,   'index']);
 $map('GET', '/src/plataforma/app/anuncios',       [new AnnouncementsController,  'index']);
 
+/* ========== Student Profile Routes ========== */
+$map('GET',  '/src/plataforma/app/student/profile',          [new StudentsController, 'profile']);
+$map('GET',  '/src/plataforma/app/student/profile/edit',     [new StudentsController, 'editProfile']);
+$map('POST', '/src/plataforma/app/student/profile/update',   [new StudentsController, 'updateProfile']);
+
+/* ========== Student Scholarships Routes ========== */
+$map('GET',  '/src/plataforma/app/scholarships',             [new ScholarshipsController, 'index']);
+$map('GET',  '/src/plataforma/app/scholarships/apply/{id}',  [new ScholarshipsController, 'apply']);
+$map('POST', '/src/plataforma/app/scholarships/apply/{id}',  [new ScholarshipsController, 'submitApplication']);
+
+/* ========== Student Surveys Routes ========== */
+$map('GET',  '/src/plataforma/app/surveys',                  [new SurveysController, 'index']);
+$map('GET',  '/src/plataforma/app/surveys/take/{id}',        [new SurveysController, 'take']);
+$map('POST', '/src/plataforma/app/surveys/submit/{id}',      [new SurveysController, 'submit']);
+
 /* ========== Panel MAESTRO ========== */
-$map('GET', '/src/plataforma/teacher',            [new TeacherDashboardController,'index']);
+$map('GET', '/src/plataforma/app/teacher',            [new \App\Controllers\TeacherDashboardController,'index']);
+$map('GET', '/src/plataforma/app/teacher/courses',    [new CoursesController, 'index']);
+$map('GET', '/src/plataforma/app/teacher/horario',    [new ScheduleController, 'index']);
+$map('GET', '/src/plataforma/app/teacher/grades',     [new GradesController, 'index']);
+$map('GET', '/src/plataforma/app/teacher/students',   [new StudentsController, 'index']);
+$map('GET', '/src/plataforma/app/teacher/attendance', [new GradesController, 'index']);
+$map('GET', '/src/plataforma/app/teacher/announcements', [new AnnouncementsController, 'index']);
+
+/* ========== Teacher Subjects Routes ========== */
+$map('GET',  '/src/plataforma/app/teacher/subjects',          [new SubjectsController, 'index']);
+$map('GET',  '/src/plataforma/app/teacher/subjects/create',   [new SubjectsController, 'create']);
+$map('POST', '/src/plataforma/app/teacher/subjects/store',    [new SubjectsController, 'store']);
+$map('GET',  '/src/plataforma/app/teacher/subjects/edit/{id}',[new SubjectsController, 'edit']);
+$map('POST', '/src/plataforma/app/teacher/subjects/update/{id}',[new SubjectsController, 'update']);
+$map('POST', '/src/plataforma/app/teacher/subjects/delete/{id}',[new SubjectsController, 'delete']);
+
+/* ========== Teacher Grades Routes ========== */
+$map('GET',  '/src/plataforma/app/teacher/grades/create',   [new GradesController, 'create']);
+$map('POST', '/src/plataforma/app/teacher/grades/store',    [new GradesController, 'store']);
+$map('GET',  '/src/plataforma/app/teacher/grades/edit/{id}',[new GradesController, 'edit']);
+$map('POST', '/src/plataforma/app/teacher/grades/update/{id}',[new GradesController, 'update']);
+
+/* ========== Teacher Surveys Routes ========== */
+$map('GET',  '/src/plataforma/app/teacher/surveys',          [new SurveysController, 'index']);
+$map('GET',  '/src/plataforma/app/teacher/surveys/create',   [new SurveysController, 'create']);
+$map('POST', '/src/plataforma/app/teacher/surveys/store',    [new SurveysController, 'store']);
+$map('GET',  '/src/plataforma/app/teacher/surveys/edit/{id}',[new SurveysController, 'edit']);
+$map('POST', '/src/plataforma/app/teacher/surveys/update/{id}',[new SurveysController, 'update']);
+$map('POST', '/src/plataforma/app/teacher/surveys/delete/{id}',[new SurveysController, 'delete']);
 
 /* ========== Panel ADMIN ========== */
-$map('GET', '/src/plataforma/admin',              [new AdminDashboardController,'index']);
+$map('GET', '/src/plataforma/admin',              [new \App\Controllers\AdminDashboardController,'index']);
+$map('GET', '/src/plataforma/app/admin',          [new \App\Controllers\AdminDashboardController,'index']);
+$map('GET', '/src/plataforma/app/admin/students', [new StudentsController, 'index']);
+$map('GET', '/src/plataforma/app/admin/teachers', [new TeachersController, 'index']);
+$map('GET', '/src/plataforma/app/admin/teachers/export', [new TeachersController, 'export']);
+$map('GET', '/src/plataforma/app/admin/teachers/create', [new TeachersController, 'create']);
+$map('POST', '/src/plataforma/app/admin/teachers/store', [new TeachersController, 'store']);
+$map('GET', '/src/plataforma/app/admin/teachers/edit/{id}', [new TeachersController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/teachers/update/{id}', [new TeachersController, 'update']);
+$map('POST', '/src/plataforma/app/admin/teachers/delete/{id}', [new TeachersController, 'delete']);
+$map('GET', '/src/plataforma/app/admin/schedule', [new ScheduleController, 'index']);
 
+/* ========== Subjects Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/subjects',          [new SubjectsController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/subjects/create',   [new SubjectsController, 'create']);
+$map('POST', '/src/plataforma/app/admin/subjects/store',    [new SubjectsController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/subjects/edit/{id}',[new SubjectsController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/subjects/update/{id}',[new SubjectsController, 'update']);
+$map('POST', '/src/plataforma/app/admin/subjects/delete/{id}',[new SubjectsController, 'delete']);
+
+/* ========== Admin Payments Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/payments',          [new PaymentsController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/payments/create',   [new PaymentsController, 'create']);
+$map('POST', '/src/plataforma/app/admin/payments/store',    [new PaymentsController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/payments/edit/{id}',[new PaymentsController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/payments/update/{id}',[new PaymentsController, 'update']);
+$map('POST', '/src/plataforma/app/admin/payments/delete/{id}',[new PaymentsController, 'delete']);
+
+/* ========== Admin Settings Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/settings',          [new SettingsController, 'index']);
+$map('POST', '/src/plataforma/app/admin/settings/update-general', [new SettingsController, 'updateGeneral']);
+$map('POST', '/src/plataforma/app/admin/settings/update-academic', [new SettingsController, 'updateAcademic']);
+$map('POST', '/src/plataforma/app/admin/settings/update-notifications', [new SettingsController, 'updateNotifications']);
+
+/* ========== Admin Grades Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/grades',          [new GradesController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/grades/create',   [new GradesController, 'create']);
+$map('POST', '/src/plataforma/app/admin/grades/store',    [new GradesController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/grades/edit/{id}',[new GradesController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/grades/update/{id}',[new GradesController, 'update']);
+
+/* ========== Admin Scholarships Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/scholarships',          [new ScholarshipsController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/scholarships/create',   [new ScholarshipsController, 'create']);
+$map('POST', '/src/plataforma/app/admin/scholarships/store',    [new ScholarshipsController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/scholarships/edit/{id}',[new ScholarshipsController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/scholarships/update/{id}',[new ScholarshipsController, 'update']);
+$map('POST', '/src/plataforma/app/admin/scholarships/delete/{id}',[new ScholarshipsController, 'delete']);
+
+/* ========== Admin Surveys Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/surveys',          [new SurveysController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/surveys/create',   [new SurveysController, 'create']);
+$map('POST', '/src/plataforma/app/admin/surveys/store',    [new SurveysController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/surveys/edit/{id}',[new SurveysController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/surveys/update/{id}',[new SurveysController, 'update']);
+$map('POST', '/src/plataforma/app/admin/surveys/delete/{id}',[new SurveysController, 'delete']);
+
+/* ========== Admin Announcements Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/announcements',          [new AnnouncementsController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/announcements/create',   [new AnnouncementsController, 'create']);
+$map('POST', '/src/plataforma/app/admin/announcements/store',    [new AnnouncementsController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/announcements/edit/{id}',[new AnnouncementsController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/announcements/update/{id}',[new AnnouncementsController, 'update']);
+$map('POST', '/src/plataforma/app/admin/announcements/delete/{id}',[new AnnouncementsController, 'delete']);
+
+/* ========== Notifications Routes ========== */
+$map('GET',  '/src/plataforma/api/notifications',          [new NotificationsController, 'getUnread']);
+$map('POST', '/src/plataforma/api/notifications/read',     [new NotificationsController, 'markAsRead']);
+$map('POST', '/src/plataforma/api/notifications/read-all', [new NotificationsController, 'markAllAsRead']);
 
 /* ========== Panel CAPTURISTA ========== */
-$map('GET', '/src/plataforma/capturista', [new CapturistaDashboardController,'index']);
+$map('GET', '/src/plataforma/capturista', [new \App\Controllers\CapturistaDashboardController,'index']);
+
+/* ========== Funcionalidades del Capturista ========== */
+// Importar
+$map('GET', '/src/plataforma/capturista/importar', [new CapturistaImportarController,'index']);
+$map('GET', '/src/plataforma/capturista/importar/historial', [new CapturistaImportarController,'historial']);
+$map('GET', '/src/plataforma/capturista/importar/estado', [new CapturistaImportarController,'estado']);
+$map('POST', '/src/plataforma/capturista/importar/procesar', [new CapturistaImportarController,'procesar']);
+
+// Alumnos
+$map('GET', '/src/plataforma/capturista/alumnos', [new CapturistaAlumnosController,'index']);
+$map('GET', '/src/plataforma/capturista/alumnos/crear', [new CapturistaAlumnosController,'crear']);
+$map('GET', '/src/plataforma/capturista/alumnos/editar/{id}', [new CapturistaAlumnosController,'editar']);
+$map('POST', '/src/plataforma/capturista/alumnos/guardar', [new CapturistaAlumnosController,'guardar']);
+$map('POST', '/src/plataforma/capturista/alumnos/eliminar/{id}', [new CapturistaAlumnosController,'eliminar']);
+
+// Inscripciones
+$map('GET', '/src/plataforma/capturista/inscripciones', [new CapturistaInscripcionesController,'index']);
+$map('GET', '/src/plataforma/capturista/inscripciones/crear', [new CapturistaInscripcionesController,'crear']);
+$map('POST', '/src/plataforma/capturista/inscripciones/guardar', [new CapturistaInscripcionesController,'guardar']);
+$map('POST', '/src/plataforma/capturista/inscripciones/eliminar/{id}', [new CapturistaInscripcionesController,'eliminar']);
+
+// Reportes
+$map('GET', '/src/plataforma/capturista/reportes', [new CapturistaReportesController,'index']);
+$map('GET', '/src/plataforma/capturista/reportes/estudiantes', [new CapturistaReportesController,'estudiantes']);
+$map('GET', '/src/plataforma/capturista/reportes/profesores', [new CapturistaReportesController,'profesores']);
+$map('GET', '/src/plataforma/capturista/reportes/cursos', [new CapturistaReportesController,'cursos']);
+$map('GET', '/src/plataforma/capturista/reportes/calificaciones', [new CapturistaReportesController,'calificaciones']);
+$map('POST', '/src/plataforma/capturista/reportes/generar', [new CapturistaReportesController,'generar']);
+
+// Solicitudes
+$map('GET', '/src/plataforma/solicitudes', [new SolicitudesController,'index']);
+$map('GET', '/src/plataforma/solicitudes/nueva', [new SolicitudesController,'nueva']);
+$map('POST', '/src/plataforma/solicitudes/guardar', [new SolicitudesController,'guardar']);
+$map('GET', '/src/plataforma/solicitudes/editar/{id}', [new SolicitudesController,'editar']);
+$map('POST', '/src/plataforma/solicitudes/eliminar/{id}', [new SolicitudesController,'eliminar']);
 
 $router->dispatch();

@@ -1,13 +1,35 @@
+<?php
+// Guard de acceso
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (!in_array('admin', $_SESSION['roles'] ?? [], true)) {
+  header('Location: /src/plataforma/'); exit;
+}
+$user = $_SESSION['user'] ?? [];
+?>
 <!DOCTYPE html>
-<html lang="es" class="light">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UTEC · Panel Administrativo</title>
+  <!-- Prevenir flash de tema incorrecto -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="/src/plataforma/assets/css/notifications.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="/src/plataforma/app/js/theme.js" defer></script>
+  <script src="/src/plataforma/app/js/notifications.js" defer></script>
 
   <script>
     tailwind.config = {
@@ -15,7 +37,7 @@
       theme: {
         extend: {
           colors: {
-            primary: {50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b'},
+            primary: {50:'#fff7ed',100:'#ffedd5',200:'#fed7aa',300:'#fdba74',400:'#fb923c',500:'#f97316',600:'#ea580c',700:'#c2410c',800:'#9a3412',900:'#7c2d12'},
             neutral: {50:'#f8fafc',100:'#f1f5f9',200:'#e2e8f0',300:'#cbd5e1',400:'#94a3b8',500:'#64748b',600:'#475569',700:'#334155',800:'#1e293b',900:'#0f172a'}
           }
         }
@@ -24,29 +46,6 @@
   </script>
 
   <style>
-    /* ====== FIX de colapso consistente ====== */
-    :root{ --sb-expanded:16rem; --sb-collapsed:5rem; }
-    .sidebar{
-      position:fixed; inset:0 auto 0 0; width:var(--sb-expanded);
-      z-index:50; overflow-x:hidden; overflow-y:auto; transition:width .25s ease;
-    }
-    .content-area{ margin-left:var(--sb-expanded); transition:margin-left .25s ease; position:relative; z-index:40; }
-
-    .body--sb-collapsed .sidebar{ width:var(--sb-collapsed); }
-    .body--sb-collapsed .content-area{ margin-left:var(--sb-collapsed); }
-    .body--sb-collapsed .logo-text,
-    .body--sb-collapsed .user-info,
-    .body--sb-collapsed .nav-text{ display:none; }
-
-    .nav-item{ display:flex; align-items:center; gap:.75rem; padding:.75rem; border-radius:.5rem; }
-    .body--sb-collapsed .nav-item{ justify-content:center; gap:0; }
-
-    @media (max-width:768px){
-      .sidebar{ transform:translateX(-100%); }
-      .sidebar.sidebar-mobile{ transform:translateX(0); }
-      .content-area{ margin-left:0 !important; }
-    }
-
     .nav-toggle{ position:relative; }
     .nav-toggle .icon-sun,.nav-toggle .icon-moon{
       position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
@@ -55,45 +54,98 @@
     .nav-toggle .icon-moon{ opacity:0; transform:scale(.5) rotate(-90deg); }
     html.dark .nav-toggle .icon-sun{ opacity:0; transform:scale(.5) rotate(90deg); }
     html.dark .nav-toggle .icon-moon{ opacity:1; transform:scale(1) rotate(0deg); }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-weight: 500;
+      color: #4a5568;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav-item:hover::before {
+      left: 100%;
+    }
+
+    .nav-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(249, 115, 22, 0.15);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #fed7aa, #fdba74);
+      color: #c2410c;
+      box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60%;
+      background: #ea580c;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .dark .nav-item {
+      color: #a0aec0;
+    }
+
+    .dark .nav-item:hover {
+      box-shadow: 0 10px 25px rgba(249, 115, 22, 0.2);
+    }
+
+    .dark .nav-item.active {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(251, 146, 60, 0.1));
+      color: #fb923c;
+      box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+    }
+
+    .dark .nav-item.active::after {
+      background: #fb923c;
+    }
   </style>
 </head>
 
 <body class="bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 min-h-screen">
   <div class="flex">
-    <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg">
-      <div class="p-4 flex items-center space-x-3">
-        <div class="bg-primary-500 p-2 rounded-lg">
-          <i data-feather="book" class="text-white"></i>
-        </div>
-        <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
+    <!-- Sidenav -->
+    <aside class="w-64 shrink-0 p-4 space-y-1 bg-white dark:bg-neutral-800">
+      <div class="flex items-center mb-4">
+        <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 mr-3 rounded">
+        <span class="text-xl font-bold text-neutral-800 dark:text-white">UTEC</span>
       </div>
-
-      <div class="px-4 pb-4 border-b border-neutral-200 dark:border-neutral-700">
-        <div class="user-info flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-            <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
-          </div>
-          <div>
-            <p class="font-medium leading-tight">Admin. María Gómez</p>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-tight">mgomez@utec.edu</p>
-          </div>
+      <!-- User Info -->
+      <div class="flex items-center mb-6">
+        <div class="w-12 h-12 rounded-full bg-orange-200 dark:bg-orange-900 flex items-center justify-center mr-3">
+          <i class="fas fa-user text-2xl text-orange-600 dark:text-orange-400"></i>
+        </div>
+        <div>
+          <p class="font-bold text-neutral-800 dark:text-white"><?= htmlspecialchars($user['name'] ?? 'Administrador') ?></p>
+          <p class="text-sm text-gray-500 dark:text-neutral-400"><?= htmlspecialchars($user['email'] ?? 'admin@utec.edu') ?></p>
         </div>
       </div>
 
-      <nav class="p-4">
-        <ul class="space-y-2">
-          <li><a href="#" class="nav-item bg-primary-50 dark:bg-neutral-700/60 text-primary-700 dark:text-primary-300"><i data-feather="home"></i><span class="nav-text">Panel</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="users"></i><span class="nav-text">Estudiantes</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="user-plus"></i><span class="nav-text">Profesores</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="book-open"></i><span class="nav-text">Materias</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="calendar"></i><span class="nav-text">Horarios</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="award"></i><span class="nav-text">Calificaciones</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="dollar-sign"></i><span class="nav-text">Pagos</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="settings"></i><span class="nav-text">Configuración</span></a></li>
-          <li><a href="#" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700"><i data-feather="bell"></i><span class="nav-text">Anuncios</span></a></li>
-        </ul>
-      </nav>
+      <?php include __DIR__ . '/../partials/navbar.php'; ?>
 
       <div class="p-4 border-t border-neutral-200 dark:border-neutral-700 mt-auto">
         <a href="/src/plataforma/logout" class="nav-item hover:bg-neutral-100 dark:hover:bg-neutral-700 w-full">
@@ -137,14 +189,19 @@
             <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
               <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
             </div>
+
+            <a href="/src/plataforma/logout" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-400 hover:text-red-500 dark:hover:text-red-400 transition-colors" title="Cerrar Sesión">
+              <i data-feather="log-out"></i>
+            </a>
           </div>
         </div>
       </header>
 
       <main class="p-6">
+<<<<<<< HEAD
         <!-- Bienvenida -->
         <div class="bg-gradient-to-r from-primary-500 to-primary-700 rounded-xl p-6 text-white mb-6" data-aos="fade-up">
-          <h2 class="text-2xl font-bold mb-1">¡Bienvenida, Administradora!</h2>
+          <h2 class="text-2xl font-bold mb-1">¡Bienvenida, Administrador Ejemplo!</h2>
           <p class="opacity-90">Gestiona toda la institución desde este panel centralizado.</p>
         </div>
 
@@ -334,6 +391,9 @@
             </div>
           </section>
         </div>
+=======
+        <?= $content ?? '' ?>
+>>>>>>> b07d26e2a3fcc4aa17601767acf6e3a0bab44af4
       </main>
 
       <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
@@ -345,43 +405,18 @@
   <script>
     AOS.init(); feather.replace();
 
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-
-    // Colapso desktop (clase en body) y drawer mobile
-    sidebarToggle.addEventListener('click', () => {
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      if (isMobile) {
-        sidebar.classList.toggle('sidebar-mobile');
-      } else {
-        document.body.classList.toggle('body--sb-collapsed');
-        localStorage.setItem('sbCollapsed', document.body.classList.contains('body--sb-collapsed') ? '1' : '0');
-      }
+    // Sidenav functionality
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    menuItems.forEach(item => {
+      item.addEventListener('click', function() {
+        // Remove active class from all items
+        menuItems.forEach(i => i.classList.remove('active'));
+        // Add active class to clicked item
+        this.classList.add('active');
+      });
     });
 
-    // Restaurar estado en desktop
-    (function(){
-      const saved = localStorage.getItem('sbCollapsed') === '1';
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      if (!isMobile && saved) document.body.classList.add('body--sb-collapsed');
-    })();
-
-    // Tema persistente
-    (function(){
-      const html = document.documentElement;
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      if(saved){ html.classList.toggle('dark', saved==='dark'); }
-      else { html.classList.toggle('dark', prefersDark); }
-
-      document.getElementById('theme-toggle')?.addEventListener('click', ()=>{
-        const toDark = !html.classList.contains('dark');
-        html.classList.toggle('dark', toDark);
-        localStorage.setItem('theme', toDark ? 'dark' : 'light');
-        feather.replace();
-      });
-    })();
   </script>
 </body>
 </html>

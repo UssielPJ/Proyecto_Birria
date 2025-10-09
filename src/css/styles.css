@@ -1,0 +1,515 @@
+:root{
+ --ut-green-900:#0c4f2e;
+ --ut-green-800:#12663a;
+ --ut-green-700:#177a46;
+ --ut-green-600:#1e8c51;
+ --ut-green-500:#28a55f;
+ --ut-green-400:#4ade80;
+ --ut-green-100:#e6f6ed;
+ --ut-accent-blue: #3b82f6;
+ --ut-accent-indigo: #6366f1;
+ --ut-accent-purple: #8b5cf6;
+ }
+ body { font-family: 'Inter', sans-serif; }
+ .hero-gradient {
+     background: linear-gradient(135deg, var(--ut-green-900) 0%, var(--ut-green-800) 50%, var(--ut-green-700) 100%);
+     position: relative;
+     overflow: hidden;
+ }
+ .course-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+ }
+ .feature-icon {
+     width: 60px;
+     height: 60px;
+     display:flex;
+     align-items:center;
+     justify-content:center;
+     border-radius:12px;
+ }
+ /* ==== navegación con anclas sin tocar tu navbar ==== */
+ html {
+     scroll-behavior: smooth;
+ }
+ /* Evita que la sección quede oculta por la navbar fija (ajusta 96px si tu navbar es más alta/baja) */
+ section[id] {
+     scroll-margin-top: 96px;
+ }
+ /* Offset también para el hero/anclas en div */
+ #inicio {
+     scroll-margin-top: 96px;
+ }
+ div[id] {
+     scroll-margin-top: 96px;
+ }
+
+ /* Sistema de modo oscuro mejorado */
+ body.dark {
+     background-color: #0f172a; /* Slate 900 - fondo más oscuro */
+     color: #f8fafc;           /* Slate 50 - texto muy claro */
+ }
+
+ /* Ajustes generales para modo oscuro */
+ body.dark .bg-white {
+     background-color: #1e293b !important; /* Slate 800 */
+     border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+ body.dark .bg-gray-50 {
+     background-color: #0f172a !important; /* Slate 900 */
+ }
+
+ /* Mejoras de texto para modo oscuro */
+ body.dark .text-gray-900 { color: #f8fafc !important; } /* Slate 50 */
+ body.dark .text-gray-800 { color: #f1f5f9 !important; } /* Slate 100 */
+ body.dark .text-gray-700 { color: #e2e8f0 !important; } /* Slate 200 */
+ body.dark .text-gray-600 { color: #cbd5e1 !important; } /* Slate 300 */
+ body.dark .text-gray-500 { color: #94a3b8 !important; } /* Slate 400 */
+
+ /* Ajustes de color para elementos específicos en modo oscuro */
+ body.dark .stats-card {
+     background: linear-gradient(135deg, #065f46, #047857); /* Verde oscuro */
+     border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+
+ /* Ajuste de sombras para modo oscuro */
+ body.dark .shadow-lg {
+     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6),
+                0 4px 6px -4px rgba(0, 0, 0, 0.4) !important;
+ }
+
+ /* Cards en modo oscuro */
+ body.dark .course-card,
+ body.dark .news-card,
+ body.dark .career-card,
+ body.dark .testimonial-card,
+ body.dark .feature-card {
+     background-color: #1e293b; /* Slate 800 */
+     border: 1px solid rgba(255, 255, 255, 0.1);
+     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+ }
+
+ /* Botones en modo oscuro */
+ body.dark .btn-primary {
+     background: linear-gradient(135deg, #059669, #047857);
+     border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+
+ /* Hero section en modo oscuro */
+ body.dark .hero-gradient {
+     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+ }
+
+ /* Mejoras de contraste para badges en modo oscuro */
+ body.dark .bg-green-100 {
+     background-color: #064e3b !important;
+     color: #6ee7b7 !important;
+ }
+ body.dark .bg-blue-100 {
+     background-color: #1e3a8a !important;
+     color: #93c5fd !important;
+ }
+ body.dark .bg-purple-100 {
+     background-color: #4c1d95 !important;
+     color: #ddd6fe !important;
+ }
+ body.dark .bg-red-100 {
+     background-color: #7f1d1d !important;
+     color: #fecaca !important;
+ }
+ body.dark .bg-yellow-100 {
+     background-color: #713f12 !important;
+     color: #fef08a !important;
+ }
+
+ /* Tarjetas / elementos */
+ body.dark .course-card { background-color: #1f2937; }
+ body.dark .bg-gray-50.p-8 { background-color: #1f2937; }
+
+ /* Tarjetas de docentes */
+ .docente-card {
+   background-color: #ffffff;          /* Claro en modo light */
+   border-radius: 0.75rem;             /* Bordes redondeados */
+   padding: 1.5rem;
+   box-shadow: 0 6px 18px -6px rgba(0,0,0,0.15);
+   transition: transform .2s ease, box-shadow .2s ease;
+ }
+ .docente-card:hover {
+   transform: translateY(-4px);
+   box-shadow: 0 12px 22px -8px rgba(0,0,0,0.25);
+ }
+ /* Modo oscuro (más oscuro) */
+ body.dark .docente-card{
+   background-color:#0f172a !important;         /* slate-900 aprox. más oscuro */
+   border:1px solid rgba(255,255,255,.04) !important;
+   box-shadow: 0 10px 28px -14px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.02) inset !important;
+ }
+
+ /* Estilos para el botón de tema */
+ #themeToggle, #themeToggleSm {
+     position: relative;
+     overflow: hidden;
+ }
+
+ .icon-sun, .icon-moon {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     transition: transform 0.3s ease, opacity 0.3s ease;
+ }
+
+ .icon-sun {
+     transform: translate(-50%, -50%);
+     opacity: 1;
+ }
+
+ .icon-moon {
+     transform: translate(-50%, 50%);
+     opacity: 0;
+ }
+
+ body.dark .icon-sun {
+     transform: translate(-50%, -150%);
+     opacity: 0;
+ }
+
+ body.dark .icon-moon {
+     transform: translate(-50%, -50%);
+     opacity: 1;
+ }
+
+ body.dark .docente-card:hover{
+   background-color:#131c31 !important;         /* un tic más claro en hover */
+   border-color: rgba(255,255,255,.07) !important;
+   box-shadow: 0 18px 34px -12px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.04) inset !important;
+ }
+ /* Texto dentro de la card para que siga siendo legible */
+ body.dark .docente-card .text-gray-900 { color:#f3f4f6 !important; }
+ body.dark .docente-card .text-gray-600 { color:#cbd5e1 !important; }
+ /* Chips más oscuros */
+ body.dark .docente-card .specialty-chip.bg-\[var\(--ut-green-100\)\]{
+   background-color:#052e24 !important; color:#86efac !important;
+   border:1px solid rgba(134,239,172,.25);
+ }
+ body.dark .docente-card .specialty-chip.bg-green-100{
+   background-color:#064e3b !important; color:#86efac !important;
+   border:1px solid rgba(134,239,172,.25);
+ }
+ body.dark .docente-card .specialty-chip.bg-purple-100{
+   background-color:#1e1b4b !important; color:#c7d2fe !important;
+   border:1px solid rgba(199,210,254,.25);
+ }
+ body.dark .docente-card .specialty-chip.bg-yellow-100{
+   background-color:#451a03 !important; color:#fde68a !important;
+   border:1px solid rgba(253,230,138,.25);
+ }
+ /* Botón dentro de la card más oscuro */
+ body.dark .docente-card .btn-docente{
+   background:#0b1220 !important;
+   color:#e5e7eb !important;
+   border:1px solid rgba(255,255,255,.06) !important;
+   box-shadow: 0 8px 18px -12px rgba(0,0,0,.75) !important;
+ }
+ body.dark .docente-card .btn-docente:hover{ background:#111a2a !important; }
+
+ /* Nuevos estilos para el rediseño */
+ .news-card {
+     transition: all 0.3s ease;
+     border-radius: 12px;
+     overflow: hidden;
+ }
+ .news-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+ }
+ .campus-map-container {
+     border-radius: 16px;
+     overflow: hidden;
+     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+ }
+ .career-selector {
+     transition: all 0.3s ease;
+ }
+ .career-selector:hover {
+     transform: translateY(-3px);
+ }
+ .video-container {
+     border-radius: 16px;
+     overflow: hidden;
+     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+ }
+ .stats-card {
+     background: linear-gradient(135deg, var(--ut-green-700), var(--ut-green-800));
+     border-radius: 12px;
+     padding: 1.5rem;
+     color: white;
+ }
+ .testimonial-card {
+     background: rgba(255,255,255,0.05);
+     backdrop-filter: blur(10px);
+     border-radius: 16px;
+     padding: 2rem;
+     border: 1px solid rgba(255,255,255,0.1);
+     transition: all 0.3s ease;
+ }
+ .testimonial-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+ }
+ .feature-card {
+     background: white;
+     border-radius: 12px;
+     padding: 2rem;
+     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+     transition: all 0.3s ease;
+ }
+ .feature-card:hover {
+     transform: translateY(-8px);
+     box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+ }
+ .floating-element {
+     animation: float 6s ease-in-out infinite;
+ }
+ @keyframes float {
+     0% { transform: translateY(0px); }
+     50% { transform: translateY(-10px); }
+     100% { transform: translateY(0px); }
+ }
+
+ /* Nuevas animaciones */
+ .animate-fade-in {
+     animation: fadeIn 0.8s ease-out forwards;
+ }
+ .animate-fade-in-up {
+     animation: fadeInUp 1s ease-out forwards;
+ }
+ .animate-scale-in {
+     animation: scaleIn 0.5s ease-out forwards;
+ }
+
+ @keyframes fadeIn {
+     from { opacity: 0; }
+     to { opacity: 1; }
+ }
+ @keyframes fadeInUp {
+     from {
+         opacity: 0;
+         transform: translateY(20px);
+     }
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+ @keyframes scaleIn {
+     from {
+         opacity: 0;
+         transform: scale(0.9);
+     }
+     to {
+         opacity: 1;
+         transform: scale(1);
+     }
+ }
+
+ /* Mejoras en las cards */
+ .news-card, .career-card, .docente-card, .feature-card, .testimonial-card {
+     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+     backface-visibility: hidden;
+     will-change: transform, box-shadow;
+ }
+
+ .news-card:hover, .career-card:hover, .docente-card:hover, .feature-card:hover, .testimonial-card:hover {
+     transform: translateY(-8px) scale(1.01);
+     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+ }
+
+ /* Efecto de hover en botones */
+ .btn-primary {
+     background: linear-gradient(135deg, var(--ut-green-600), var(--ut-accent-blue));
+     background-size: 200% 100%;
+     transition: all 0.3s ease;
+ }
+
+ .btn-primary:hover {
+     background-position: 100% 0;
+     transform: translateY(-2px);
+     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+ }
+
+ /* Transiciones suaves para cambios de tema */
+ body {
+     transition: background-color 0.3s ease, color 0.3s ease;
+ }
+
+ /* Transiciones para elementos que cambian con el tema */
+ .bg-white,
+ .bg-gray-50,
+ .course-card,
+ .news-card,
+ .career-card,
+ .stats-card,
+ .btn-primary,
+ .hero-gradient,
+ .nav-shell,
+ .feature-card,
+ .testimonial-card {
+     transition: all 0.3s ease !important;
+ }
+
+ /* Animación suave para cambio de tema en textos */
+ [class^="text-"] {
+     transition: color 0.3s ease;
+ }
+
+ /* Transición suave para sombras */
+ [class*="shadow"] {
+     transition: box-shadow 0.3s ease;
+ }
+
+ /* Transiciones para badges y elementos de acento */
+ [class*="bg-"] {
+     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+ }
+
+ /* Efectos de scroll suave */
+ .smooth-scroll {
+     scroll-behavior: smooth;
+     scroll-padding-top: 80px;
+ }
+
+ /* Tooltips personalizados */
+ .tippy-box {
+     background-color: var(--ut-green-800);
+     color: white;
+     border-radius: 8px;
+     font-size: 0.875rem;
+ }
+
+ .tippy-arrow {
+     color: var(--ut-green-800);
+ }
+
+ /* Efectos de gradiente */
+ .gradient-text {
+     background: linear-gradient(135deg, var(--ut-green-500), var(--ut-accent-blue));
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;
+ }
+
+ /* Mejoras en el dark mode */
+ .dark .gradient-text {
+     background: linear-gradient(135deg, var(--ut-green-400), var(--ut-accent-indigo));
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;
+ }
+
+ .dark .btn-primary {
+     background: linear-gradient(135deg, var(--ut-green-700), var(--ut-accent-purple));
+ }
+
+  /* Estilos para el flip solo en la imagen */
+ .image-flip-container {
+   perspective: 1000px;
+   cursor: pointer;
+ }
+
+ .image-flip-front,
+ .image-flip-back {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   backface-visibility: hidden;
+   transition: transform 0.6s ease-in-out;
+   border-radius: 12px 12px 0 0;
+ }
+
+ .image-flip-back {
+   transform: rotateY(180deg);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .image-flip-container:hover .image-flip-front {
+   transform: rotateY(-180deg);
+ }
+
+ .image-flip-container:hover .image-flip-back {
+   transform: rotateY(0deg);
+ }
+
+ .career-card {
+   transition: all 0.3s ease;
+ }
+
+ .career-card:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+ }
+
+ /* Swiper overrides */
+ .swiper {
+     width: 100%;
+     padding-bottom: 50px;
+ }
+ .swiper-slide {
+     display: flex;
+     justify-content: center;
+ }
+ .swiper-pagination-bullet {
+     background: rgba(255, 255, 255, 0.5);
+     opacity: 1;
+     transition: all 0.3s ease;
+ }
+ .swiper-pagination-bullet-active {
+     background: white;
+     transform: scale(1.2);
+ }
+ .swiper-button-next, .swiper-button-prev {
+     color: white;
+     background: rgba(255, 255, 255, 0.2);
+     border-radius: 50%;
+     width: 40px;
+     height: 40px;
+ }
+ .swiper-button-next:hover, .swiper-button-prev:hover {
+     background: rgba(255, 255, 255, 0.3);
+ }
+
+ /* Accessibility improvements */
+ @media (prefers-reduced-motion: reduce) {
+     *, *::before, *::after {
+         animation-duration: 0.01ms !important;
+         animation-iteration-count: 1 !important;
+         transition-duration: 0.01ms !important;
+     }
+     .swiper-wrapper {
+         transition: none;
+     }
+ }
+
+ /* Print styles */
+ @media print {
+     .hero-gradient, .bg-white, .bg-gray-50 {
+         background: white !important;
+         color: black !important;
+     }
+     body.dark {
+         background: white !important;
+         color: black !important;
+     }
+ }
+
+ /* Mejoras para PWA */
+ @media (display-mode: standalone) {
+     body {
+         padding-top: 0;
+     }
+     #mainNav {
+         position: relative;
+     }
+ }

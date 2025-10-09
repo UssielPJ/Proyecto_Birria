@@ -71,9 +71,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg h-screen fixed top-0 left-0 w-64 overflow-y-auto">
       <div class="p-4 flex items-center space-x-3">
-        <div class="bg-primary-500 p-2 rounded-lg">
-          <i data-feather="book" class="text-white"></i>
-        </div>
+        <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 w-auto rounded">
         <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
       </div>
 
@@ -186,59 +184,73 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
 
       <main class="p-6">
         <!-- Bienvenida -->
-        <div class="bg-gradient-to-r from-primary-500 to-primary-700 rounded-xl p-6 text-white mb-6" data-aos="fade-up">
-          <h2 class="text-2xl font-bold mb-1">¡Bienvenido de nuevo, <?= htmlspecialchars($userName) ?>!</h2>
-          <p class="opacity-90">Revisa tus materias, horario y calificaciones en un solo lugar.</p>
+        <div class="bg-gradient-to-r from-primary-500 via-emerald-500 to-teal-500 rounded-xl p-6 text-white mb-6 shadow-2xl relative overflow-hidden" data-aos="fade-up">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
+          <div class="relative">
+            <h2 class="text-2xl font-bold mb-1 animate-fade-in">¡Bienvenido de nuevo, <?= htmlspecialchars($userName) ?>!</h2>
+            <p class="opacity-90 animate-fade-in animation-delay-200">Revisa tus materias, horario y calificaciones en un solo lugar.</p>
+          </div>
+          <div class="absolute top-4 right-4 opacity-20">
+            <i data-feather="book-open" class="w-16 h-16 animate-spin-slow"></i>
+          </div>
         </div>
 
         <!-- Tarjetas KPIs -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-primary-500" data-aos="fade-up">
-            <div class="flex items-center justify-between">
+          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6 border-l-4 border-primary-500 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-tooltip="Ver todas tus materias">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative flex items-center justify-between">
               <div>
                 <p class="text-neutral-500 dark:text-neutral-400 text-sm">Materias inscritas</p>
-                <h3 class="text-2xl font-bold mt-1">5</h3>
+                <h3 class="text-2xl font-bold mt-1 counter" data-target="5">0</h3>
               </div>
-              <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700">
+              <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700 group-hover:bg-primary-100 group-hover:rotate-12 transition-all duration-300">
                 <i data-feather="book" class="text-primary-600"></i>
               </div>
             </div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary-400 to-emerald-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
           </div>
 
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-emerald-500" data-aos="fade-up" data-aos-delay="50">
-            <div class="flex items-center justify-between">
+          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6 border-l-4 border-emerald-500 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-aos-delay="50" data-tooltip="Ver tu rendimiento académico">
+            <div class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-teal-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative flex items-center justify-between">
               <div>
                 <p class="text-neutral-500 dark:text-neutral-400 text-sm">Promedio actual</p>
-                <h3 class="text-2xl font-bold mt-1">8.7</h3>
+                <h3 class="text-2xl font-bold mt-1 counter" data-target="87">0</h3>
               </div>
-              <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700">
+              <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700 group-hover:bg-emerald-100 group-hover:rotate-12 transition-all duration-300">
                 <i data-feather="award" class="text-emerald-600"></i>
               </div>
             </div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
           </div>
 
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-amber-500" data-aos="fade-up" data-aos-delay="100">
-            <div class="flex items-center justify-between">
+          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6 border-l-4 border-amber-500 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-aos-delay="100" data-tooltip="Gestionar tus tareas">
+            <div class="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-orange-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative flex items-center justify-between">
               <div>
                 <p class="text-neutral-500 dark:text-neutral-400 text-sm">Tareas pendientes</p>
-                <h3 class="text-2xl font-bold mt-1">3</h3>
+                <h3 class="text-2xl font-bold mt-1 counter" data-target="3">0</h3>
               </div>
-              <div class="p-3 rounded-lg bg-amber-50 dark:bg-neutral-700">
+              <div class="p-3 rounded-lg bg-amber-50 dark:bg-neutral-700 group-hover:bg-amber-100 group-hover:rotate-12 transition-all duration-300">
                 <i data-feather="clipboard" class="text-amber-600"></i>
               </div>
             </div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
           </div>
 
-          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 border-l-4 border-purple-500" data-aos="fade-up" data-aos-delay="150">
-            <div class="flex items-center justify-between">
+          <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6 border-l-4 border-purple-500 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-aos-delay="150" data-tooltip="Ver tu horario de clases">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-indigo-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative flex items-center justify-between">
               <div>
                 <p class="text-neutral-500 dark:text-neutral-400 text-sm">Próxima clase</p>
                 <h3 class="text-2xl font-bold mt-1">10:00 AM</h3>
               </div>
-              <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700">
+              <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700 group-hover:bg-purple-100 group-hover:rotate-12 transition-all duration-300">
                 <i data-feather="clock" class="text-purple-600"></i>
               </div>
             </div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-indigo-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
           </div>
         </div>
 
@@ -382,6 +394,72 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
     AOS.init();
     feather.replace();
 
+    // Counter animation
+    function animateCounters() {
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    // Special handling for grades (divide by 10)
+                    if (counter.nextElementSibling && counter.nextElementSibling.textContent.includes('Promedio')) {
+                        counter.textContent = (target / 10).toFixed(1);
+                    } else {
+                        counter.textContent = target;
+                    }
+                    clearInterval(timer);
+                } else {
+                    if (counter.nextElementSibling && counter.nextElementSibling.textContent.includes('Promedio')) {
+                        counter.textContent = (current / 10).toFixed(1);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }
+            }, 16);
+        });
+    }
+
+    // Tooltip functionality
+    function initTooltips() {
+        const cards = document.querySelectorAll('[data-tooltip]');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function(e) {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'absolute bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg z-50 pointer-events-none';
+                tooltip.textContent = this.getAttribute('data-tooltip');
+                tooltip.style.top = e.clientY - 30 + 'px';
+                tooltip.style.left = e.clientX + 10 + 'px';
+                document.body.appendChild(tooltip);
+
+                this.addEventListener('mousemove', function(e) {
+                    tooltip.style.top = e.clientY - 30 + 'px';
+                    tooltip.style.left = e.clientX + 10 + 'px';
+                });
+
+                this.addEventListener('mouseleave', function() {
+                    tooltip.remove();
+                });
+            });
+        });
+    }
+
+    // Enhanced hover effects with emerald glow
+    document.querySelectorAll('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-4 > div').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.05)';
+            this.style.boxShadow = '0 25px 50px rgba(0,0,0,0.15), 0 0 30px rgba(16, 185, 129, 0.4)';
+        });
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '';
+        });
+    });
+
     // Sidebar
     const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
@@ -420,6 +498,35 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
         feather.replace();
       });
     })();
+
+    // Add custom animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-out forwards;
+        }
+        .animation-delay-200 {
+            animation-delay: 0.2s;
+        }
+        .animate-spin-slow {
+            animation: spin-slow 3s linear infinite;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize on load
+    window.addEventListener('load', function() {
+        animateCounters();
+        initTooltips();
+    });
   </script>
 </body>
 </html>
