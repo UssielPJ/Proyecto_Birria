@@ -162,29 +162,137 @@ body.dark .stats-card {
   </div>
 </section>
 
-<!-- Estadísticas -->
-<section class="bg-white py-16">
+<!-- Estadísticas Mejoradas -->
+<section class="bg-white py-20">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="stats-card text-center" data-aos="fade-up">
-        <div class="text-3xl font-bold mb-2">15+</div>
-        <div class="text-emerald-100">Años de Experiencia</div>
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl mb-4">
+        Nuestra Trayectoria en 
+        <span class="text-[var(--ut-green-600)]">Cifras</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Resultados tangibles que respaldan nuestra excelencia educativa
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Años de Experiencia -->
+      <div class="text-center" data-aos="fade-up">
+        <div class="relative bg-gradient-to-br from-[var(--ut-green-50)] to-white rounded-2xl p-8 border border-[var(--ut-green-100)] shadow-lg transition-all duration-300">
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <div class="w-12 h-12 bg-gradient-to-r from-[var(--ut-green-500)] to-[var(--ut-green-600)] rounded-full flex items-center justify-center shadow-lg">
+              <i data-feather="award" class="w-6 h-6 text-white"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-4xl font-bold text-[var(--ut-green-700)] mb-2 count-up" data-target="15">0</div>
+            <div class="text-[var(--ut-green-600)] font-semibold">Años de Experiencia</div>
+            <p class="text-gray-600 text-sm mt-3">
+              Formando profesionales desde 2009
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="100">
-        <div class="text-3xl font-bold mb-2">5,000+</div>
-        <div class="text-emerald-100">Estudiantes Graduados</div>
+      
+      <!-- Estudiantes Graduados -->
+      <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="relative bg-gradient-to-br from-[var(--ut-green-50)] to-white rounded-2xl p-8 border border-[var(--ut-green-100)] shadow-lg transition-all duration-300">
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <div class="w-12 h-12 bg-gradient-to-r from-[var(--ut-green-500)] to-[var(--ut-green-600)] rounded-full flex items-center justify-center shadow-lg">
+              <i data-feather="users" class="w-6 h-6 text-white"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-4xl font-bold text-[var(--ut-green-700)] mb-2 count-up" data-target="5000">0</div>
+            <div class="text-[var(--ut-green-600)] font-semibold">Estudiantes Graduados</div>
+            <p class="text-gray-600 text-sm mt-3">
+              Profesionales exitosos en el mercado laboral
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="200">
-        <div class="text-3xl font-bold mb-2">25+</div>
-        <div class="text-emerald-100">Programas Académicos</div>
+      
+      <!-- Programas Académicos -->
+      <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+        <div class="relative bg-gradient-to-br from-[var(--ut-green-50)] to-white rounded-2xl p-8 border border-[var(--ut-green-100)] shadow-lg transition-all duration-300">
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <div class="w-12 h-12 bg-gradient-to-r from-[var(--ut-green-500)] to-[var(--ut-green-600)] rounded-full flex items-center justify-center shadow-lg">
+              <i data-feather="book-open" class="w-6 h-6 text-white"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-4xl font-bold text-[var(--ut-green-700)] mb-2 count-up" data-target="25">0</div>
+            <div class="text-[var(--ut-green-600)] font-semibold">Programas Académicos</div>
+            <p class="text-gray-600 text-sm mt-3">
+              Carreras de vanguardia y alta demanda
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="300">
-        <div class="text-3xl font-bold mb-2">50+</div>
-        <div class="text-emerald-100">Convenios Internacionales</div>
+      
+      <!-- Convenios Internacionales -->
+      <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+        <div class="relative bg-gradient-to-br from-[var(--ut-green-50)] to-white rounded-2xl p-8 border border-[var(--ut-green-100)] shadow-lg transition-all duration-300">
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <div class="w-12 h-12 bg-gradient-to-r from-[var(--ut-green-500)] to-[var(--ut-green-600)] rounded-full flex items-center justify-center shadow-lg">
+              <i data-feather="globe" class="w-6 h-6 text-white"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-4xl font-bold text-[var(--ut-green-700)] mb-2 count-up" data-target="50">0</div>
+            <div class="text-[var(--ut-green-600)] font-semibold">Convenios Internacionales</div>
+            <p class="text-gray-600 text-sm mt-3">
+              Alianzas estratégicas globales
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Línea decorativa -->
+    <div class="text-center mt-12" data-aos="fade-up">
+      <div class="inline-flex items-center gap-3 text-[var(--ut-green-600)] bg-[var(--ut-green-50)] px-6 py-3 rounded-full border border-[var(--ut-green-200)]">
+        <i data-feather="trending-up" class="w-5 h-5"></i>
+        <span class="font-semibold">Creciendo contigo hacia el futuro</span>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+// Animación de conteo
+document.addEventListener('DOMContentLoaded', function() {
+  const countUpElements = document.querySelectorAll('.count-up');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const element = entry.target;
+        const target = parseInt(element.getAttribute('data-target'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            element.textContent = target + '+';
+            clearInterval(timer);
+          } else {
+            element.textContent = Math.floor(current);
+          }
+        }, 16);
+        
+        observer.unobserve(element);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  countUpElements.forEach(element => {
+    observer.observe(element);
+  });
+});
+</script>
 
 <!-- Misión, Visión y Valores -->
 <section class="bg-gray-50 py-16">
@@ -543,12 +651,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="campus-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
         <img src="./plataforma/app/img/PlantelUT.jpg" alt="Campus Central" class="w-full h-48 object-cover">
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Campus Central</h3>
-          <p class="text-gray-600 mb-4">Sede principal con laboratorios especializados, biblioteca digital y áreas de innovación.</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Campus Montemorelos</h3>
+          <p class="text-gray-600 mb-4">Extensión de la Universidad Tecnologica Santa Catarina, con laboratorios especializados, biblioteca digital y áreas de innovación.</p>
           <div class="flex items-center justify-between">
             <div class="flex items-center text-sm text-[var(--ut-green-700)]">
               <i data-feather="users" class="w-4 h-4 mr-1"></i>
-              2,500+ estudiantes
+              250+ estudiantes
             </div>
             <button class="conocer-mas-btn bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-campus="central">
               Conocer más
@@ -561,8 +669,8 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="campus-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
         <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Campus Norte" class="w-full h-48 object-cover">
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Campus Tecnológico</h3>
-          <p class="text-gray-600 mb-4">Especializado en ingenierías avanzadas con talleres de manufactura y prototipado.</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Campus Santa Catarina</h3>
+          <p class="text-gray-600 mb-4">Campus principal, ingenierías avanzadas con talleres de manufactura y prototipado.</p>
           <div class="flex items-center justify-between">
             <div class="flex items-center text-sm text-[var(--ut-green-700)]">
               <i data-feather="users" class="w-4 h-4 mr-1"></i>
@@ -579,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="campus-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
         <img src="./plataforma/app/img/Mecatronica.jpg" alt="Campus Sur" class="w-full h-48 object-cover">
         <div class="p-6">
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Campus de Innovación</h3>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Campus de Linares</h3>
           <p class="text-gray-600 mb-4">Enfoque en emprendimiento tecnológico y desarrollo de startups estudiantiles.</p>
           <div class="flex items-center justify-between">
             <div class="flex items-center text-sm text-[var(--ut-green-700)]">
@@ -807,7 +915,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         
         <div class="grid lg:grid-cols-2 gap-12 mb-16">
-           <!-- Selección de Fútbol -->
+     <!-- Selección de Fútbol -->
 <div class="sports-card bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-right">
     <div class="relative h-64">
         <img src="./plataforma/app/img/SeleccionUT.jpg" alt="Selección de Fútbol" class="w-full h-64 object-cover">
@@ -848,13 +956,179 @@ document.addEventListener('DOMContentLoaded', function() {
                 <i data-feather="calendar" class="w-4 h-4 text-green-600"></i>
                 <span class="text-sm text-gray-600">Entrenamientos: Lunes y Miércoles</span>
             </div>
-            <button class="text-green-600 hover:text-green-700 font-medium text-sm flex items-center gap-1">
+            <button class="ver-galeria-btn text-green-600 hover:text-green-700 font-medium text-sm flex items-center gap-1" data-equipo="futbol">
                 Ver Galería
                 <i data-feather="arrow-right" class="w-4 h-4"></i>
             </button>
         </div>
     </div>
 </div>
+
+<!-- Modal para Galería de Fútbol -->
+<div id="galeriaModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden">
+        <!-- Header del modal -->
+        <div class="flex justify-between items-center p-6 border-b border-gray-200">
+            <h3 id="galeriaTitle" class="text-2xl font-bold text-gray-900">Galería - Selección de Fútbol</h3>
+            <button id="closeGaleriaModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        
+        <!-- Carrusel de fotos -->
+        <div class="relative">
+            <div id="galeriaSlides" class="flex transition-transform duration-500 ease-in-out">
+                <!-- Las imágenes se cargarán dinámicamente -->
+            </div>
+            
+            <!-- Controles del carrusel -->
+            <button id="galeriaPrev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all">
+                <i data-feather="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <button id="galeriaNext" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all">
+                <i data-feather="chevron-right" class="w-6 h-6"></i>
+            </button>
+            
+            <!-- Indicadores -->
+            <div id="galeriaIndicators" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <!-- Los indicadores se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <!-- Información adicional -->
+        <div class="p-6 bg-gray-50">
+            <p id="galeriaDescription" class="text-gray-600 mb-4">Galería fotográfica de la Selección de Fútbol UTSC</p>
+            <div class="flex items-center text-sm text-gray-500">
+                <i data-feather="info" class="w-4 h-4 mr-2"></i>
+                <span>Desliza para ver más fotos del equipo</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const galeriaModal = document.getElementById('galeriaModal');
+    const closeGaleriaModal = document.getElementById('closeGaleriaModal');
+    const verGaleriaBtns = document.querySelectorAll('.ver-galeria-btn');
+    const galeriaTitle = document.getElementById('galeriaTitle');
+    const galeriaDescription = document.getElementById('galeriaDescription');
+    const galeriaSlides = document.getElementById('galeriaSlides');
+    const galeriaIndicators = document.getElementById('galeriaIndicators');
+    const galeriaPrev = document.getElementById('galeriaPrev');
+    const galeriaNext = document.getElementById('galeriaNext');
+    
+    let currentGaleriaSlide = 0;
+    let currentEquipo = '';
+    
+    // Datos de la galería de fútbol
+    const equipoData = {
+        futbol: {
+            title: 'Selección de Fútbol',
+            description: 'Galería fotográfica de la Selección de Fútbol UTSC - Representación Masculina',
+            images: [
+                './plataforma/app/img/futbol1.jpg',
+                './plataforma/app/img/futbol2.jpg',
+                './plataforma/app/img/futbol3.jpg',
+                './plataforma/app/img/futbol4.jpg'
+            ]
+        }
+    };
+    
+    // Abrir modal de galería
+    verGaleriaBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentEquipo = this.getAttribute('data-equipo');
+            openGaleriaModal(currentEquipo);
+        });
+    });
+    
+    // Cerrar modal
+    closeGaleriaModal.addEventListener('click', closeGaleriaModalFunc);
+    
+    // Cerrar modal al hacer clic fuera
+    galeriaModal.addEventListener('click', function(e) {
+        if (e.target === galeriaModal) {
+            closeGaleriaModalFunc();
+        }
+    });
+    
+    // Controles del carrusel
+    galeriaPrev.addEventListener('click', showPrevGaleriaSlide);
+    galeriaNext.addEventListener('click', showNextGaleriaSlide);
+    
+    function openGaleriaModal(equipo) {
+        const data = equipoData[equipo];
+        galeriaTitle.textContent = `Galería - ${data.title}`;
+        galeriaDescription.textContent = data.description;
+        
+        // Limpiar carrusel anterior
+        galeriaSlides.innerHTML = '';
+        galeriaIndicators.innerHTML = '';
+        
+        // Cargar nuevas imágenes
+        data.images.forEach((image, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'galeria-slide min-w-full';
+            slide.innerHTML = `<img src="${image}" alt="${data.title} - Foto ${index + 1}" class="w-full h-96 object-cover">`;
+            galeriaSlides.appendChild(slide);
+            
+            const indicator = document.createElement('div');
+            indicator.className = `galeria-indicator w-3 h-3 bg-white/50 rounded-full cursor-pointer transition-all ${index === 0 ? '!bg-white scale-125' : ''}`;
+            indicator.addEventListener('click', () => showGaleriaSlide(index));
+            galeriaIndicators.appendChild(indicator);
+        });
+        
+        currentGaleriaSlide = 0;
+        updateGaleriaCarousel();
+        galeriaModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeGaleriaModalFunc() {
+        galeriaModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+    
+    function showPrevGaleriaSlide() {
+        const totalSlides = equipoData[currentEquipo].images.length;
+        currentGaleriaSlide = (currentGaleriaSlide - 1 + totalSlides) % totalSlides;
+        updateGaleriaCarousel();
+    }
+    
+    function showNextGaleriaSlide() {
+        const totalSlides = equipoData[currentEquipo].images.length;
+        currentGaleriaSlide = (currentGaleriaSlide + 1) % totalSlides;
+        updateGaleriaCarousel();
+    }
+    
+    function showGaleriaSlide(index) {
+        currentGaleriaSlide = index;
+        updateGaleriaCarousel();
+    }
+    
+    function updateGaleriaCarousel() {
+        galeriaSlides.style.transform = `translateX(-${currentGaleriaSlide * 100}%)`;
+        
+        // Actualizar indicadores
+        const indicators = galeriaIndicators.querySelectorAll('.galeria-indicator');
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('!bg-white', index === currentGaleriaSlide);
+            indicator.classList.toggle('scale-125', index === currentGaleriaSlide);
+            indicator.classList.toggle('bg-white/50', index !== currentGaleriaSlide);
+        });
+    }
+    
+    // Cerrar con ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !galeriaModal.classList.contains('hidden')) {
+            closeGaleriaModalFunc();
+        }
+    });
+});
+</script>
+
+<!-- FIN DEL CÓDIGO DE SELECCIÓN DE FÚTBOL -->
 
 <!-- Equipo de Tochito Femenino -->
 <div class="sports-card bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-left">
@@ -897,13 +1171,179 @@ document.addEventListener('DOMContentLoaded', function() {
                 <i data-feather="calendar" class="w-4 h-4 text-purple-600"></i>
                 <span class="text-sm text-gray-600">Entrenamientos: Martes y Jueves</span>
             </div>
-            <button class="text-purple-600 hover:text-purple-700 font-medium text-sm flex items-center gap-1">
+            <button class="ver-galeria-btn text-purple-600 hover:text-purple-700 font-medium text-sm flex items-center gap-1" data-equipo="tochito">
                 Ver Galería
                 <i data-feather="arrow-right" class="w-4 h-4"></i>
             </button>
         </div>
     </div>
 </div>
+
+<!-- Modal para Galería de Tochito Femenino -->
+<div id="galeriaModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden">
+        <!-- Header del modal -->
+        <div class="flex justify-between items-center p-6 border-b border-gray-200">
+            <h3 id="galeriaTitle" class="text-2xl font-bold text-gray-900">Galería - Tochito Femenino</h3>
+            <button id="closeGaleriaModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        
+        <!-- Carrusel de fotos -->
+        <div class="relative">
+            <div id="galeriaSlides" class="flex transition-transform duration-500 ease-in-out">
+                <!-- Las imágenes se cargarán dinámicamente -->
+            </div>
+            
+            <!-- Controles del carrusel -->
+            <button id="galeriaPrev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all">
+                <i data-feather="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <button id="galeriaNext" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all">
+                <i data-feather="chevron-right" class="w-6 h-6"></i>
+            </button>
+            
+            <!-- Indicadores -->
+            <div id="galeriaIndicators" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <!-- Los indicadores se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <!-- Información adicional -->
+        <div class="p-6 bg-gray-50">
+            <p id="galeriaDescription" class="text-gray-600 mb-4">Galería fotográfica del equipo de Tochito Femenino UTSC</p>
+            <div class="flex items-center text-sm text-gray-500">
+                <i data-feather="info" class="w-4 h-4 mr-2"></i>
+                <span>Desliza para ver más fotos del equipo</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const galeriaModal = document.getElementById('galeriaModal');
+    const closeGaleriaModal = document.getElementById('closeGaleriaModal');
+    const verGaleriaBtns = document.querySelectorAll('.ver-galeria-btn');
+    const galeriaTitle = document.getElementById('galeriaTitle');
+    const galeriaDescription = document.getElementById('galeriaDescription');
+    const galeriaSlides = document.getElementById('galeriaSlides');
+    const galeriaIndicators = document.getElementById('galeriaIndicators');
+    const galeriaPrev = document.getElementById('galeriaPrev');
+    const galeriaNext = document.getElementById('galeriaNext');
+    
+    let currentGaleriaSlide = 0;
+    let currentEquipo = '';
+    
+    // Datos de la galería de tochito
+    const equipoData = {
+        tochito: {
+            title: 'Tochito Femenino',
+            description: 'Galería fotográfica del equipo de Tochito Femenino UTSC - Representación Femenina',
+            images: [
+                './plataforma/app/img/tochito1.jpg',
+                './plataforma/app/img/tochito2.jpg',
+                './plataforma/app/img/tochito3.jpg',
+                './plataforma/app/img/tochito4.jpg'
+            ]
+        }
+    };
+    
+    // Abrir modal de galería
+    verGaleriaBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentEquipo = this.getAttribute('data-equipo');
+            openGaleriaModal(currentEquipo);
+        });
+    });
+    
+    // Cerrar modal
+    closeGaleriaModal.addEventListener('click', closeGaleriaModalFunc);
+    
+    // Cerrar modal al hacer clic fuera
+    galeriaModal.addEventListener('click', function(e) {
+        if (e.target === galeriaModal) {
+            closeGaleriaModalFunc();
+        }
+    });
+    
+    // Controles del carrusel
+    galeriaPrev.addEventListener('click', showPrevGaleriaSlide);
+    galeriaNext.addEventListener('click', showNextGaleriaSlide);
+    
+    function openGaleriaModal(equipo) {
+        const data = equipoData[equipo];
+        galeriaTitle.textContent = `Galería - ${data.title}`;
+        galeriaDescription.textContent = data.description;
+        
+        // Limpiar carrusel anterior
+        galeriaSlides.innerHTML = '';
+        galeriaIndicators.innerHTML = '';
+        
+        // Cargar nuevas imágenes
+        data.images.forEach((image, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'galeria-slide min-w-full';
+            slide.innerHTML = `<img src="${image}" alt="${data.title} - Foto ${index + 1}" class="w-full h-96 object-cover">`;
+            galeriaSlides.appendChild(slide);
+            
+            const indicator = document.createElement('div');
+            indicator.className = `galeria-indicator w-3 h-3 bg-white/50 rounded-full cursor-pointer transition-all ${index === 0 ? '!bg-white scale-125' : ''}`;
+            indicator.addEventListener('click', () => showGaleriaSlide(index));
+            galeriaIndicators.appendChild(indicator);
+        });
+        
+        currentGaleriaSlide = 0;
+        updateGaleriaCarousel();
+        galeriaModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeGaleriaModalFunc() {
+        galeriaModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+    
+    function showPrevGaleriaSlide() {
+        const totalSlides = equipoData[currentEquipo].images.length;
+        currentGaleriaSlide = (currentGaleriaSlide - 1 + totalSlides) % totalSlides;
+        updateGaleriaCarousel();
+    }
+    
+    function showNextGaleriaSlide() {
+        const totalSlides = equipoData[currentEquipo].images.length;
+        currentGaleriaSlide = (currentGaleriaSlide + 1) % totalSlides;
+        updateGaleriaCarousel();
+    }
+    
+    function showGaleriaSlide(index) {
+        currentGaleriaSlide = index;
+        updateGaleriaCarousel();
+    }
+    
+    function updateGaleriaCarousel() {
+        galeriaSlides.style.transform = `translateX(-${currentGaleriaSlide * 100}%)`;
+        
+        // Actualizar indicadores
+        const indicators = galeriaIndicators.querySelectorAll('.galeria-indicator');
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('!bg-white', index === currentGaleriaSlide);
+            indicator.classList.toggle('scale-125', index === currentGaleriaSlide);
+            indicator.classList.toggle('bg-white/50', index !== currentGaleriaSlide);
+        });
+    }
+    
+    // Cerrar con ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !galeriaModal.classList.contains('hidden')) {
+            closeGaleriaModalFunc();
+        }
+    });
+});
+</script>
+
+<!-- FIN DEL CÓDIGO DE TOCHITO FEMENINO -->
 
         <!-- Logros Deportivos -->
         <div class="bg-white rounded-2xl shadow-lg p-8" data-aos="fade-up">
