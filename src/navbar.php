@@ -47,11 +47,10 @@
       <!-- Desktop menu -->
       <div class="hidden lg:flex items-center gap-8">
         <a href="#inicio"    class="nav-link">Inicio</a>
-        <a href="#cursos"    class="nav-link">Cursos</a>
+        <a href="carreras.php"    class="nav-link">Carreras</a>
         <a href="#docentes"  class="nav-link">Docentes</a>
         <a href="#recursos"  class="nav-link">Recursos</a>
         <a href="nosotros.php" class="nav-link">Nosotros</a>
-
       </div>
 
       <!-- Actions -->
@@ -74,8 +73,6 @@
           </span>
         </button>
 
-        
-
         <!-- Plataforma -->
         <a href="<?php echo htmlspecialchars($PLATAFORMA_URL); ?>"
            class="group relative inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 px-6 py-2.5 font-semibold text-white transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg hover:shadow-green-500/30 border-2 border-white shadow-xl animate-pulse"
@@ -92,8 +89,17 @@
                 class="theme-toggle h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-black/10 dark:ring-white/10 hover:ring-primary-500 transition-all duration-300 bg-white/70 dark:bg-neutral-800/70 backdrop-blur"
                 aria-label="Cambiar tema"
                 title="Cambiar entre modo claro y oscuro">
-          <span class="icon-sun"></span>
-          <span class="icon-moon"></span>
+          <span class="icon-sun pointer-events-none transition-all duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
+          </span>
+          <span class="icon-moon pointer-events-none transition-all duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+            </svg>
+          </span>
         </button>
         <button id="menuToggle"
                 class="h-10 w-10 rounded-xl flex items-center justify-center ring-1 ring-black/10 dark:ring-white/10 hover:ring-primary-500 transition-all duration-300 bg-white/70 dark:bg-neutral-800/70 backdrop-blur"
@@ -358,6 +364,65 @@
 // Inicializar Feather Icons
 feather.replace();
 
+// Manejo del tema oscuro/claro
+(function(){
+  const themeToggle = document.getElementById("themeToggle");
+  const themeToggleSm = document.getElementById("themeToggleSm");
+  const body = document.body;
+
+  // Función para aplicar el tema
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      body.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      body.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+    feather.replace(); // Refrescar íconos
+  }
+
+  // Cargar preferencia guardada al inicio
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    applyTheme("dark");
+  } else if (savedTheme === "light") {
+    applyTheme("light");
+  } else {
+    // Si no hay preferencia guardada, usar la preferencia del sistema
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      applyTheme("dark");
+    } else {
+      applyTheme("light");
+    }
+  }
+
+  // Manejar el botón de tema desktop
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const isDark = body.classList.contains("dark");
+      applyTheme(isDark ? "light" : "dark");
+    });
+  }
+
+  // Manejar el botón de tema móvil
+  if (themeToggleSm) {
+    themeToggleSm.addEventListener("click", () => {
+      const isDark = body.classList.contains("dark");
+      applyTheme(isDark ? "light" : "dark");
+    });
+  }
+
+  // Escuchar cambios en la preferencia del sistema
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!localStorage.getItem("theme")) {
+        applyTheme(e.matches ? "dark" : "light");
+      }
+    });
+  }
+})();
+
 // Manejo del scroll
 const nav = document.getElementById('mainNav');
 let lastScroll = 0;
@@ -399,7 +464,6 @@ if (menuToggle && mobileMenu) {
     feather.replace();
   });
 }
-
 
 // Animación suave al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
