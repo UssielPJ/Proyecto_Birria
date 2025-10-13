@@ -596,7 +596,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h2 class="text-3xl font-extrabold text-gray-900">Noticias y Actualizaciones</h2>
                     <p class="mt-2 text-lg text-gray-500">Mantente informado sobre lo último en UTSC</p>
                 </div>
-                <a href="#" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium" data-aos="fade-left">Ver todas →</a>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -710,30 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             </div>
-            
-            <!-- Video Destacado -->
-            <div class="mt-16" data-aos="fade-up">
-                <div class="video-container bg-gradient-to-r from-[var(--ut-green-800)] to-[var(--ut-green-900)] p-8 text-white">
-                    <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
-                        <div>
-                            <h3 class="text-2xl font-bold mb-4">Conoce Nuestra Historia</h3>
-                            <p class="text-emerald-100 mb-6">Descubre cómo hemos transformado la educación tecnológica durante más de 15 años.</p>
-                            <a href="registro.php" class="bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-6 py-3 rounded-md text-lg font-semibold transition inline-block">
-                                Únete a Nosotros
-                            </a>
-                        </div>
-                        <div class="mt-6 lg:mt-0 flex justify-center">
-                            <div class="relative w-full max-w-md">
-                                <div class="bg-black/30 rounded-lg h-48 flex items-center justify-center">
-                                    <button class="bg-white/20 hover:bg-white/30 rounded-full p-4 transition">
-                                        <i data-feather="play" class="w-10 h-10 text-white"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        
         </div>
     </div>
 
