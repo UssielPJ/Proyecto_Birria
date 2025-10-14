@@ -3,9 +3,10 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Core\Database;
-use App\Models\User;
 use PDO;
+
 class CapturistaAlumnosController {
+    /** ----------- LISTAR ALUMNOS (student_profiles) ----------- */
     public function index() {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
@@ -15,130 +16,194 @@ class CapturistaAlumnosController {
         $db = new Database();
         $conn = $db->getPdo();
 
-        // Parámetros de búsqueda y filtrado
-        $buscar = $_GET['q'] ?? '';
+        // Filtros
+        $buscar  = $_GET['q'] ?? '';
         $carrera = $_GET['carrera'] ?? '';
-        $estado = $_GET['estado'] ?? '';
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = 10;
-        $offset = ($page - 1) * $limit;
+        $tipo    = $_GET['tipo_ingreso'] ?? '';
+        $page    = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit   = 10;
+        $offset  = ($page - 1) * $limit;
 
-        // Construir la consulta
+        // Construir WHERE
         $where = [];
         $params = [];
 
         if ($buscar) {
-            $where[] = "(a.nombre LIKE :buscar OR a.email LIKE :buscar)";
+            $where[] = "(sp.matricula LIKE :buscar OR sp.curp LIKE :buscar)";
             $params[':buscar'] = "%$buscar%";
         }
-
         if ($carrera) {
-            $where[] = "a.carrera = :carrera";
+            $where[] = "sp.carrera_id = :carrera";
             $params[':carrera'] = $carrera;
         }
-
-        if ($estado) {
-            $where[] = "s.estado = :estado";
-            $params[':estado'] = $estado;
+        if ($tipo) {
+            $where[] = "sp.tipo_ingreso = :tipo";
+            $params[':tipo'] = $tipo;
         }
 
         $whereClause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
 
-        // Consulta para obtener el total
-        $queryTotal = "
-            SELECT COUNT(DISTINCT a.id) as total
-            FROM alumnos a
-            LEFT JOIN solicitudes s ON a.id = s.alumno_id
-            $whereClause
-        ";
+        // Total de registros
+        $queryTotal = "SELECT COUNT(*) AS total FROM student_profiles sp $whereClause";
         $stmt = $conn->prepare($queryTotal);
         $stmt->execute($params);
-        $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-        $totalPages = ceil($total / $limit);
+        $total = (int)$stmt->fetch(PDO::FETCH_ASSOC)['total'];
+        $totalPages = $total > 0 ? ceil($total / $limit) : 1;
 
-        // Consulta para obtener los alumnos
+        // Datos paginados
         $query = "
-            SELECT a.*,
-                   MAX(s.estado) as estado_solicitud,
-                   MAX(s.fecha_creacion) as fecha_solicitud,
-                   (SELECT COUNT(*) FROM solicitudes WHERE alumno_id = a.id) as total_solicitudes
-            FROM alumnos a
-            LEFT JOIN solicitudes s ON a.id = s.alumno_id
+            SELECT 
+                sp.user_id,
+                sp.matricula,
+                sp.curp,
+                sp.carrera_id,
+                sp.semestre,
+                sp.grupo,
+                sp.tipo_ingreso,
+                sp.beca_activa,
+                sp.promedio_general,
+                sp.creditos_aprobados,
+                sp.direccion,
+                sp.contacto_emergencia_nombre,
+                sp.contacto_emergencia_telefono,
+                sp.parentesco_emergencia,
+                sp.created_at,
+                sp.updated_at,
+                u.nombre AS nombre_usuario,
+                u.email AS email_usuario
+            FROM student_profiles sp
+            LEFT JOIN users u ON u.id = sp.user_id
             $whereClause
-            GROUP BY a.id
-            ORDER BY a.nombre ASC
-            LIMIT $offset, $limit
+            ORDER BY sp.matricula ASC
+            LIMIT :offset, :limit
         ";
-
         $stmt = $conn->prepare($query);
-        $stmt->execute($params);
-        $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($params as $key => $val) $stmt->bindValue($key, $val);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $alumnos = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-        // Obtener lista de carreras para el filtro
-        $carreras = $conn->query("SELECT DISTINCT carrera FROM alumnos WHERE carrera IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
+        // Carreras distintas
+        $carreras = [];
+        try {
+            $carreras = $conn->query("SELECT DISTINCT carrera_id FROM student_profiles WHERE carrera_id IS NOT NULL ORDER BY carrera_id")->fetchAll(PDO::FETCH_COLUMN);
+        } catch (\Throwable $e) {}
 
         $data = [
-            'buscar' => $buscar,
-            'carrera' => $carrera,
-            'estado' => $estado,
-            'page' => $page,
-            'totalPages' => $totalPages,
-            'total' => $total,
-            'offset' => $offset,
-            'limit' => $limit,
-            'alumnos' => $alumnos,
-            'carreras' => $carreras
+            'buscar'      => $buscar,
+            'carrera'     => $carrera,
+            'tipo_ingreso'=> $tipo,
+            'page'        => $page,
+            'totalPages'  => $totalPages,
+            'total'       => $total,
+            'offset'      => $offset,
+            'limit'       => $limit,
+            'alumnos'     => $alumnos,
+            'carreras'    => $carreras
         ];
 
-        // Cargar vista
-        View::render('capturista/alumnos', 'capturista', $data);
+        View::render('capturista/alumnos/index', 'capturista', $data);
     }
 
+    /** ----------- NUEVO / FORMULARIO ----------- */
     public function crear() {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
             header('Location: /src/plataforma/'); exit;
         }
 
-        // Cargar vista
-        View::render('capturista/alumnos', 'capturista');
+        View::render('capturista/alumnos/nueva', 'capturista');
     }
 
+    /** ----------- EDITAR ----------- */
     public function editar($id) {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
             header('Location: /src/plataforma/'); exit;
         }
 
-        // Cargar vista
-        View::render('capturista/alumnos', 'capturista');
+        $db = new Database();
+        $conn = $db->getPdo();
+        $stmt = $conn->prepare("SELECT * FROM student_profiles WHERE user_id = ?");
+        $stmt->execute([$id]);
+        $alumno = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if (!$alumno) {
+            header('Location: /src/plataforma/app/capturista/alumnos');
+            exit;
+        }
+
+        View::render('capturista/alumnos/nueva', 'capturista', ['alumno' => $alumno]);
     }
 
+    /** ----------- GUARDAR / ACTUALIZAR ----------- */
     public function guardar() {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
             header('Location: /src/plataforma/'); exit;
         }
 
-        // Procesar datos del formulario
-        // Redireccionar a la lista de alumnos
-        header('Location: /src/plataforma/capturista/alumnos');
+        $db = new Database();
+        $conn = $db->getPdo();
+
+        $data = $_POST;
+        $isEdit = !empty($data['user_id']);
+
+        $sql = $isEdit
+            ? "UPDATE student_profiles
+               SET matricula=:matricula, curp=:curp, carrera_id=:carrera_id, semestre=:semestre,
+                   grupo=:grupo, tipo_ingreso=:tipo_ingreso, beca_activa=:beca_activa,
+                   promedio_general=:promedio_general, creditos_aprobados=:creditos_aprobados,
+                   direccion=:direccion, contacto_emergencia_nombre=:contacto_emergencia_nombre,
+                   contacto_emergencia_telefono=:contacto_emergencia_telefono,
+                   parentesco_emergencia=:parentesco_emergencia,
+                   updated_at=NOW()
+               WHERE user_id=:user_id"
+            : "INSERT INTO student_profiles
+               (user_id, matricula, curp, carrera_id, semestre, grupo, tipo_ingreso, beca_activa,
+                promedio_general, creditos_aprobados, direccion, contacto_emergencia_nombre,
+                contacto_emergencia_telefono, parentesco_emergencia, created_at)
+               VALUES
+               (:user_id, :matricula, :curp, :carrera_id, :semestre, :grupo, :tipo_ingreso,
+                :beca_activa, :promedio_general, :creditos_aprobados, :direccion,
+                :contacto_emergencia_nombre, :contacto_emergencia_telefono, :parentesco_emergencia, NOW())";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            ':user_id'                    => $data['user_id'] ?? null,
+            ':matricula'                  => $data['matricula'] ?? '',
+            ':curp'                       => $data['curp'] ?? '',
+            ':carrera_id'                 => $data['carrera_id'] ?? null,
+            ':semestre'                   => $data['semestre'] ?? 1,
+            ':grupo'                      => $data['grupo'] ?? '',
+            ':tipo_ingreso'               => $data['tipo_ingreso'] ?? 'nuevo',
+            ':beca_activa'                => isset($data['beca_activa']) ? 1 : 0,
+            ':promedio_general'           => $data['promedio_general'] ?? 0,
+            ':creditos_aprobados'         => $data['creditos_aprobados'] ?? 0,
+            ':direccion'                  => $data['direccion'] ?? '',
+            ':contacto_emergencia_nombre' => $data['contacto_emergencia_nombre'] ?? '',
+            ':contacto_emergencia_telefono'=> $data['contacto_emergencia_telefono'] ?? '',
+            ':parentesco_emergencia'      => $data['parentesco_emergencia'] ?? ''
+        ]);
+
+        header('Location: /src/plataforma/app/capturista/alumnos');
+        exit;
     }
 
+    /** ----------- ELIMINAR ----------- */
     public function eliminar($id) {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
             header('Location: /src/plataforma/'); exit;
         }
 
-        // Cargar modelos necesarios
-        require_once __DIR__ . '/../models/User.php';
-        $userModel = new User();
+        $db = new Database();
+        $conn = $db->getPdo();
+        $stmt = $conn->prepare("DELETE FROM student_profiles WHERE user_id = ?");
+        $stmt->execute([$id]);
 
-        // Eliminar alumno
-        $userModel->delete($id);
-
-        // Redireccionar a la lista de alumnos
-        header('Location: /src/plataforma/capturista/alumnos');
+        header('Location: /src/plataforma/app/capturista/alumnos');
+        exit;
     }
 }

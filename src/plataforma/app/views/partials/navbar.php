@@ -1,9 +1,13 @@
 <?php
-$role = $_SESSION['roles'][0] ?? 'student';
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+// Tomamos el primer rol desde $_SESSION['user']['roles']
+$role = $_SESSION['user']['roles'][0] ?? 'student';
 $menu = [];
+
 if ($role === 'admin') {
     $menu = [
-        ['href' => '/src/plataforma/app/admin', 'icon' => 'home', 'text' => 'Panel'],
+        ['href' => '/src/plataforma/admin', 'icon' => 'home', 'text' => 'Panel'],
         ['href' => '/src/plataforma/app/admin/students', 'icon' => 'users', 'text' => 'Estudiantes'],
         ['href' => '/src/plataforma/app/admin/teachers', 'icon' => 'user-plus', 'text' => 'Profesores'],
         ['href' => '/src/plataforma/app/admin/subjects', 'icon' => 'book-open', 'text' => 'Materias'],
@@ -42,22 +46,26 @@ if ($role === 'admin') {
     $menu = [
         ['href' => '/src/plataforma/capturista', 'icon' => 'home', 'text' => 'Panel'],
         ['href' => '/src/plataforma/solicitudes', 'icon' => 'file-text', 'text' => 'Solicitudes'],
-        ['href' => '/src/plataforma/solicitudes/nueva', 'icon' => 'edit-3', 'text' => 'Capturar solicitud'],
+        ['href' => '/src/plataforma/app/capturista/solicitudes/nueva', 'icon' => 'edit-3', 'text' => 'Capturar solicitud'],
         ['href' => '/src/plataforma/capturista/importar', 'icon' => 'upload-cloud', 'text' => 'Importar CSV/Excel'],
         ['href' => '/src/plataforma/capturista/alumnos', 'icon' => 'users', 'text' => 'Alumnos'],
         ['href' => '/src/plataforma/capturista/inscripciones', 'icon' => 'check-circle', 'text' => 'Inscripciones'],
         ['href' => '/src/plataforma/capturista/reportes', 'icon' => 'bar-chart-2', 'text' => 'Reportes'],
     ];
 }
+
 $currentUri = $_SERVER['REQUEST_URI'];
 ?>
 <nav class="p-4">
-    <ul class="space-y-1">
+    <!-- 👇 list-none quita los bullets -->
+    <ul class="space-y-1 list-none">
         <?php foreach ($menu as $item): ?>
         <li>
-            <a href="<?= $item['href'] ?>" class="nav-item group relative flex items-center px-4 py-3 rounded-xl font-medium text-neutral-600 dark:text-neutral-300 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-primary-50 hover:to-primary-100 dark:hover:from-neutral-700 dark:hover:to-neutral-600 hover:text-primary-700 dark:hover:text-primary-300 hover:shadow-lg hover:scale-105 <?= strpos($currentUri, $item['href']) === 0 ? 'active bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/50 dark:to-primary-800/50 text-primary-800 dark:text-primary-200 shadow-md' : '' ?>">
-                <i data-feather="<?= $item['icon'] ?>" class="w-5 h-5 mr-3 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"></i>
-                <span class="nav-text transition-all duration-300 group-hover:translate-x-1"><?= $item['text'] ?></span>
+            <a href="<?= htmlspecialchars($item['href']) ?>"
+               class="nav-item group relative flex items-center px-4 py-3 rounded-xl font-medium text-neutral-600 dark:text-neutral-300 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-primary-50 hover:to-primary-100 dark:hover:from-neutral-700 dark:hover:to-neutral-600 hover:text-primary-700 dark:hover:text-primary-300 hover:shadow-lg hover:scale-105 <?= strpos($currentUri, $item['href']) === 0 ? 'active bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/50 dark:to-primary-800/50 text-primary-800 dark:text-primary-200 shadow-md' : '' ?>">
+                <!-- 👇 shrink-0 evita que el ícono se aplaste -->
+                <i data-feather="<?= htmlspecialchars($item['icon']) ?>" class="w-5 h-5 mr-3 shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"></i>
+                <span class="nav-text transition-all duration-300 group-hover:translate-x-1"><?= htmlspecialchars($item['text']) ?></span>
                 <?php if (strpos($currentUri, $item['href']) === 0): ?>
                     <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-primary-500 rounded-r-full"></div>
                 <?php endif; ?>
@@ -66,3 +74,36 @@ $currentUri = $_SERVER['REQUEST_URI'];
         <?php endforeach; ?>
     </ul>
 </nav>
+
+<!-- Solo estilos: NO cambia tu JS ni tu layout abierto -->
+<style>
+/* Soporta cualquiera de estas banderas de colapso: 
+   - Añade data-collapsed="true" al contenedor del sidebar
+   - O añade class="sidebar-collapsed" al <body> o al contenedor
+   Usa la que ya tengas: basta con que se cumpla UNA.
+*/
+
+/* Oculta el texto cuando está colapsado */
+#sidebar[data-collapsed="true"] .nav-text,
+body.sidebar-collapsed .nav-text,
+.sidebar-collapsed .nav-text {
+  display: none !important;
+}
+
+/* Centra los íconos y elimina el gap cuando está colapsado */
+#sidebar[data-collapsed="true"] .nav-item,
+body.sidebar-collapsed .nav-item,
+.sidebar-collapsed .nav-item {
+  justify-content: center;
+  padding-left: .75rem;
+  padding-right: .75rem;
+}
+#sidebar[data-collapsed="true"] .nav-item i,
+body.sidebar-collapsed .nav-item i,
+.sidebar-collapsed .nav-item i {
+  margin-right: 0 !important;
+}
+
+/* Evita bullets por si se inyecta otro markup */
+nav ul { list-style: none; padding-left: 0; }
+</style>

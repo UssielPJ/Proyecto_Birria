@@ -1,6 +1,4 @@
-<?php
-require_once __DIR__ . '/../../layouts/teacher.php';
-?>
+
 
 <main class="p-6">
     <!-- Header Section -->
@@ -27,7 +25,7 @@ require_once __DIR__ . '/../../layouts/teacher.php';
                 </div>
                 <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-3">No hay anuncios publicados</h3>
                 <p class="text-neutral-500 dark:text-neutral-400 mb-6 max-w-md mx-auto">Sé el primero en crear un anuncio para mantener informada a tu comunidad educativa.</p>
-                <a href="/src/plataforma/app/admin/announcements/create"
+                <a href="/src/plataforma/app/teacher/announcements/create"
                    class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm">
                     <i data-feather="plus" class="w-5 h-5 mr-2"></i>
                     Crear el primer anuncio
@@ -79,12 +77,12 @@ require_once __DIR__ . '/../../layouts/teacher.php';
 
                             <!-- Action Buttons -->
                             <div class="flex items-center gap-1 ml-4 flex-shrink-0">
-                                <a href="/src/plataforma/app/admin/announcements/edit/<?= $announcement->id ?>"
+                                <a href="/src/plataforma/app/teacher/announcements/edit/<?= $announcement->id ?>"
                                    class="inline-flex items-center justify-center w-10 h-10 text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-200"
                                    title="Editar anuncio">
                                     <i data-feather="edit-2" class="w-4 h-4"></i>
                                 </a>
-                                <form action="/src/plataforma/app/admin/announcements/delete/<?= $announcement->id ?>" method="POST"
+                                <form action="/src/plataforma/app/teacher/announcements/delete/<?= $announcement->id ?>" method="POST"
                                       class="inline"
                                       onsubmit="return confirm('¿Estás seguro de que quieres eliminar este anuncio? Esta acción no se puede deshacer.')">
                                     <button type="submit"

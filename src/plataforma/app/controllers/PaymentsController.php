@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Controllers;
 
-use App\Core\Auth;
-use App\Core\Gate;
 use App\Core\View;
 use App\Models\Payment;
 use Exception;
@@ -11,123 +8,105 @@ use PDO;
 
 class PaymentsController
 {
-    public function index()
-    {
-        // Iniciar sesión si no está iniciada
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Verificar autenticación
+    /* ------------ Guards compatibles con la nueva sesión ------------ */
+    private function requireLogin() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
         if (empty($_SESSION['user'])) {
-            header('Location: /src/plataforma/');
-            exit;
-        }
-
-        try {
-            $payments = Payment::all();
-            
-            // Renderizar la vista usando el patrón del proyecto
-            View::render('admin/payments/index', 'admin', [
-                'payments' => $payments
-            ]);
-        } catch (Exception $e) {
-            error_log("Error al cargar pagos: " . $e->getMessage());
-            $_SESSION['error'] = 'Error al cargar los pagos';
-            $payments = [];
-            
-            View::render('admin/payments/index', 'admin', [
-                'payments' => $payments
-            ]);
+            header('Location: /src/plataforma/login'); exit;
         }
     }
 
-    public function create()
-    {
-        // Iniciar sesión si no está iniciada
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+    private function requireRole(array $roles) {
+        $this->requireLogin();
+        $userRoles = $_SESSION['user']['roles'] ?? [];
+        foreach ($roles as $r) {
+            if (in_array($r, $userRoles, true)) return;
         }
+        header('Location: /src/plataforma/login'); exit;
+    }
 
-        // Verificar autenticación
-        if (empty($_SESSION['user'])) {
-            header('Location: /src/plataforma/');
-            exit;
-        }
+    /* ===================== Listado ===================== */
+    public function index()
+    {
+        $this->requireRole(['admin']);
 
         try {
-            // Obtener estudiantes usando consulta directa
+            $payments = Payment::all();
+            View::render('admin/payments/index', 'admin', ['payments' => $payments]);
+        } catch (Exception $e) {
+            error_log("Error al cargar pagos: ".$e->getMessage());
+            $_SESSION['error'] = 'Error al cargar los pagos';
+            View::render('admin/payments/index', 'admin', ['payments' => []]);
+        }
+    }
+
+    /* ===================== Crear ===================== */
+    public function create()
+    {
+        $this->requireRole(['admin']);
+
+        try {
             $pdo = db();
-            $stmt = $pdo->prepare("SELECT u.id, u.name, u.email FROM users u JOIN roles r ON u.role_id = r.id WHERE r.slug = 'alumno' ORDER BY u.name");
+
+            // Ajusta esta consulta a tu esquema actual.
+            // Opción A (esquema viejo con tabla roles + role_id en users):
+            // $sql = "SELECT u.id, u.name, u.email
+            //         FROM users u
+            //         JOIN roles r ON u.role_id = r.id
+            //         WHERE r.slug = 'alumno'
+            //         ORDER BY u.name";
+
+            // Opción B (esquema nuevo con student_profiles):
+            // $sql = "SELECT u.id, u.name, u.email
+            //         FROM users u
+            //         JOIN student_profiles sp ON sp.user_id = u.id
+            //         ORDER BY u.name";
+
+            // Elige UNA de las 2 según tu DB actual:
+            $sql = "SELECT u.id, u.name, u.email
+                    FROM users u
+                    JOIN student_profiles sp ON sp.user_id = u.id
+                    ORDER BY u.name";
+
+            $stmt = $pdo->prepare($sql);
             $stmt->execute();
             $students = $stmt->fetchAll(PDO::FETCH_OBJ);
-            
-            View::render('admin/payments/create', 'admin', [
-                'students' => $students
-            ]);
+
+            View::render('admin/payments/create', 'admin', ['students' => $students]);
         } catch (Exception $e) {
-            error_log("Error al cargar formulario de pagos: " . $e->getMessage());
+            error_log("Error al cargar formulario de pagos: ".$e->getMessage());
             $_SESSION['error'] = 'Error al cargar el formulario';
-            header('Location: /src/plataforma/app/admin/payments');
-            exit;
+            header('Location: /src/plataforma/app/admin/payments'); exit;
         }
     }
 
     public function store()
     {
-        // Iniciar sesión si no está iniciada
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->requireRole(['admin']);
 
-        // Verificar autenticación
-        if (empty($_SESSION['user'])) {
-            header('Location: /src/plataforma/');
-            exit;
-        }
-
-        // Validar datos de entrada
         $data = [
-            'student_id' => intval($_POST['student_id'] ?? 0),
-            'concept' => trim($_POST['concept'] ?? ''),
-            'amount' => floatval($_POST['amount'] ?? 0),
-            'payment_date' => $_POST['payment_date'] ?? date('Y-m-d'),
-            'payment_method' => $_POST['payment_method'] ?? 'cash',
-            'status' => $_POST['status'] ?? 'pending',
-            'notes' => trim($_POST['notes'] ?? '') ?: null
+            'student_id'    => (int)($_POST['student_id'] ?? 0),
+            'concept'       => trim($_POST['concept'] ?? ''),
+            'amount'        => (float)($_POST['amount'] ?? 0),
+            'payment_date'  => $_POST['payment_date'] ?? date('Y-m-d'),
+            'payment_method'=> $_POST['payment_method'] ?? 'cash',
+            'status'        => $_POST['status'] ?? 'pending',
+            'notes'         => (trim($_POST['notes'] ?? '') ?: null),
         ];
 
-        // Validaciones básicas
-        if ($data['student_id'] <= 0) {
-            $_SESSION['error'] = 'Debe seleccionar un estudiante válido';
-            header('Location: /src/plataforma/app/admin/payments/create');
-            exit;
+        // Validaciones
+        if ($data['student_id'] <= 0) { $_SESSION['error']='Debe seleccionar un estudiante válido'; header('Location: /src/plataforma/app/admin/payments/create'); exit; }
+        if ($data['concept'] === '') { $_SESSION['error']='El concepto del pago es requerido'; header('Location: /src/plataforma/app/admin/payments/create'); exit; }
+        if ($data['amount'] <= 0)     { $_SESSION['error']='El monto debe ser mayor a 0'; header('Location: /src/plataforma/app/admin/payments/create'); exit; }
+
+        $validMethods = ['cash','transfer','card'];
+        if (!in_array($data['payment_method'], $validMethods, true)) {
+            $_SESSION['error'] = 'Método de pago no válido'; header('Location: /src/plataforma/app/admin/payments/create'); exit;
         }
 
-        if (empty($data['concept'])) {
-            $_SESSION['error'] = 'El concepto del pago es requerido';
-            header('Location: /src/plataforma/app/admin/payments/create');
-            exit;
-        }
-
-        if ($data['amount'] <= 0) {
-            $_SESSION['error'] = 'El monto debe ser mayor a 0';
-            header('Location: /src/plataforma/app/admin/payments/create');
-            exit;
-        }
-
-        $validMethods = ['cash', 'transfer', 'card'];
-        if (!in_array($data['payment_method'], $validMethods)) {
-            $_SESSION['error'] = 'Método de pago no válido';
-            header('Location: /src/plataforma/app/admin/payments/create');
-            exit;
-        }
-
-        $validStatuses = ['paid', 'pending'];
-        if (!in_array($data['status'], $validStatuses)) {
-            $_SESSION['error'] = 'Estado de pago no válido';
-            header('Location: /src/plataforma/app/admin/payments/create');
-            exit;
+        $validStatuses = ['paid','pending'];
+        if (!in_array($data['status'], $validStatuses, true)) {
+            $_SESSION['error'] = 'Estado de pago no válido'; header('Location: /src/plataforma/app/admin/payments/create'); exit;
         }
 
         if (Payment::create($data)) {
@@ -136,101 +115,74 @@ class PaymentsController
             $_SESSION['error'] = 'Error al registrar el pago';
         }
 
-        header('Location: /src/plataforma/app/admin/payments');
-        exit;
+        header('Location: /src/plataforma/app/admin/payments'); exit;
     }
 
+    /* ===================== Editar ===================== */
     public function edit($id)
     {
-        // Iniciar sesión si no está iniciada
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Verificar autenticación
-        if (empty($_SESSION['user'])) {
-            header('Location: /src/plataforma/');
-            exit;
-        }
+        $this->requireRole(['admin']);
 
         try {
             $payment = Payment::find($id);
-
             if (!$payment) {
                 $_SESSION['error'] = 'Pago no encontrado';
-                header('Location: /src/plataforma/app/admin/payments');
-                exit;
+                header('Location: /src/plataforma/app/admin/payments'); exit;
             }
 
-            // Obtener estudiantes usando consulta directa
             $pdo = db();
-            $stmt = $pdo->prepare("SELECT u.id, u.name, u.email FROM users u JOIN roles r ON u.role_id = r.id WHERE r.slug = 'alumno' ORDER BY u.name");
+
+            // Mismo comentario que en create(): elige la consulta que corresponda a tu esquema.
+            // $sql = "SELECT u.id, u.name, u.email
+            //         FROM users u
+            //         JOIN roles r ON u.role_id = r.id
+            //         WHERE r.slug = 'alumno'
+            //         ORDER BY u.name";
+
+            $sql = "SELECT u.id, u.name, u.email
+                    FROM users u
+                    JOIN student_profiles sp ON sp.user_id = u.id
+                    ORDER BY u.name";
+
+            $stmt = $pdo->prepare($sql);
             $stmt->execute();
             $students = $stmt->fetchAll(PDO::FETCH_OBJ);
 
             View::render('admin/payments/edit', 'admin', [
-                'payment' => $payment,
+                'payment'  => $payment,
                 'students' => $students
             ]);
         } catch (Exception $e) {
-            error_log("Error al cargar pago para edición: " . $e->getMessage());
+            error_log("Error al cargar pago para edición: ".$e->getMessage());
             $_SESSION['error'] = 'Error al cargar el pago';
-            header('Location: /src/plataforma/app/admin/payments');
-            exit;
+            header('Location: /src/plataforma/app/admin/payments'); exit;
         }
     }
 
     public function update($id)
     {
-        // Iniciar sesión si no está iniciada
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Verificar autenticación
-        if (empty($_SESSION['user'])) {
-            header('Location: /src/plataforma/');
-            exit;
-        }
+        $this->requireRole(['admin']);
 
         try {
             $payment = Payment::find($id);
-
             if (!$payment) {
                 $_SESSION['error'] = 'Pago no encontrado';
-                header('Location: /src/plataforma/app/admin/payments');
-                exit;
+                header('Location: /src/plataforma/app/admin/payments'); exit;
             }
 
-            // Validar datos de entrada
             $data = [
-                'student_id' => intval($_POST['student_id'] ?? 0),
-                'concept' => trim($_POST['concept'] ?? ''),
-                'amount' => floatval($_POST['amount'] ?? 0),
-                'payment_date' => $_POST['payment_date'] ?? date('Y-m-d'),
-                'payment_method' => $_POST['payment_method'] ?? 'cash',
-                'status' => $_POST['status'] ?? 'pending',
-                'notes' => trim($_POST['notes'] ?? '') ?: null
+                'student_id'    => (int)($_POST['student_id'] ?? 0),
+                'concept'       => trim($_POST['concept'] ?? ''),
+                'amount'        => (float)($_POST['amount'] ?? 0),
+                'payment_date'  => $_POST['payment_date'] ?? date('Y-m-d'),
+                'payment_method'=> $_POST['payment_method'] ?? 'cash',
+                'status'        => $_POST['status'] ?? 'pending',
+                'notes'         => (trim($_POST['notes'] ?? '') ?: null)
             ];
 
-            // Validaciones básicas
-            if ($data['student_id'] <= 0) {
-                $_SESSION['error'] = 'Debe seleccionar un estudiante válido';
-                header('Location: /src/plataforma/app/admin/payments/edit/' . $id);
-                exit;
-            }
-
-            if (empty($data['concept'])) {
-                $_SESSION['error'] = 'El concepto del pago es requerido';
-                header('Location: /src/plataforma/app/admin/payments/edit/' . $id);
-                exit;
-            }
-
-            if ($data['amount'] <= 0) {
-                $_SESSION['error'] = 'El monto debe ser mayor a 0';
-                header('Location: /src/plataforma/app/admin/payments/edit/' . $id);
-                exit;
-            }
+            if ($data['student_id'] <= 0) { $_SESSION['error']='Debe seleccionar un estudiante válido'; header('Location: /src/plataforma/app/admin/payments/edit/'.$id); exit; }
+            if ($data['concept'] === '') { $_SESSION['error']='El concepto del pago es requerido'; header('Location: /src/plataforma/app/admin/payments/edit/'.$id); exit; }
+            if ($data['amount'] <= 0)     { $_SESSION['error']='El monto debe ser mayor a 0'; header('Location: /src/plataforma/app/admin/payments/edit/'.$id); exit; }
 
             if ($payment->update($data)) {
                 $_SESSION['success'] = 'Pago actualizado correctamente';
@@ -238,36 +190,24 @@ class PaymentsController
                 $_SESSION['error'] = 'Error al actualizar el pago';
             }
 
-            header('Location: /src/plataforma/app/admin/payments');
-            exit;
+            header('Location: /src/plataforma/app/admin/payments'); exit;
         } catch (Exception $e) {
-            error_log("Error al actualizar pago: " . $e->getMessage());
+            error_log("Error al actualizar pago: ".$e->getMessage());
             $_SESSION['error'] = 'Error al actualizar el pago';
-            header('Location: /src/plataforma/app/admin/payments');
-            exit;
+            header('Location: /src/plataforma/app/admin/payments'); exit;
         }
     }
 
+    /* ===================== Eliminar ===================== */
     public function delete($id)
     {
-        // Iniciar sesión si no está iniciada
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Verificar autenticación
-        if (empty($_SESSION['user'])) {
-            header('Location: /src/plataforma/');
-            exit;
-        }
+        $this->requireRole(['admin']);
 
         try {
             $payment = Payment::find($id);
-
             if (!$payment) {
                 $_SESSION['error'] = 'Pago no encontrado';
-                header('Location: /src/plataforma/app/admin/payments');
-                exit;
+                header('Location: /src/plataforma/app/admin/payments'); exit;
             }
 
             if ($payment->delete()) {
@@ -276,13 +216,11 @@ class PaymentsController
                 $_SESSION['error'] = 'Error al eliminar el pago';
             }
 
-            header('Location: /src/plataforma/app/admin/payments');
-            exit;
+            header('Location: /src/plataforma/app/admin/payments'); exit;
         } catch (Exception $e) {
-            error_log("Error al eliminar pago: " . $e->getMessage());
+            error_log("Error al eliminar pago: ".$e->getMessage());
             $_SESSION['error'] = 'Error al eliminar el pago';
-            header('Location: /src/plataforma/app/admin/payments');
-            exit;
+            header('Location: /src/plataforma/app/admin/payments'); exit;
         }
     }
 }

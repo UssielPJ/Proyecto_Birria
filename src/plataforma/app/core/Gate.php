@@ -2,39 +2,70 @@
 
 namespace App\Core;
 
-/** Comprobaciones de rol basadas en la sesión */
+/**
+ * Comprobaciones de rol basadas en la sesión
+ * Compatible con:
+ *  - $_SESSION['user']['roles'] = ['admin','teacher',...]
+ *  - $_SESSION['roles'] (legacy)
+ *  - $_SESSION['user']['role'] o $_SESSION['role'] (string)
+ */
 class Gate
 {
-  /** Devuelve el slug de rol actual: 'alumno', 'maestro' o 'admin' */
-  public static function role(): string {
-    return $_SESSION['user']['role'] ?? '';
+  /** Normaliza un slug de rol a los usados internamente */
+  private static function normalizeRole(string $r): string {
+    $r = strtolower(trim($r));
+    return match ($r) {
+      'alumno'     => 'student',
+      'maestro'    => 'teacher',
+      'profesor'   => 'teacher',
+      'capturista' => 'capturista',
+      'admin', 'administrator' => 'admin',
+      default => $r
+    };
   }
 
-  /** ¿Coincide exactamente con un rol? o alguno si pasas array */
-  public static function is($roles): bool {
-    $current = self::role();
-    if (is_array($roles)) {
-      return in_array($current, $roles, true);
+  /** Obtiene TODOS los roles de la sesión (array, normalizados) */
+  public static function roles(): array {
+    // Preferir arreglo en user.roles
+    $roles = [];
+    if (!empty($_SESSION['user']['roles']) && is_array($_SESSION['user']['roles'])) {
+      $roles = $_SESSION['user']['roles'];
     }
-    return $current === $roles;
+
+    // Compat: arreglo plano en $_SESSION['roles']
+    if (empty($roles) && !empty($_SESSION['roles']) && is_array($_SESSION['roles'])) {
+      $roles = $_SESSION['roles'];
+    }
+
+    // Compat: string único en user.role o $_SESSION['role']
+    if (empty($roles)) {
+      $one = $_SESSION['user']['role'] ?? ($_SESSION['role'] ?? '');
+      if ($one !== '') $roles = [$one];
+    }
+
+    // Normalizar + deduplicar
+    $roles = array_map([self::class,'normalizeRole'], $roles);
+    $roles = array_values(array_unique($roles));
+
+    return $roles;
   }
 
-  /** ¿Pertenece a cualquiera de estos roles? */
+  /** ¿Tiene exactamente alguno de los roles solicitados? */
   public static function any(array $roles): bool {
-    return self::is($roles);
+    $current = self::roles();                  // p.ej. ['admin','teacher']
+    $wanted  = array_map([self::class,'normalizeRole'], $roles);
+    return (bool) array_intersect($current, $wanted);
   }
 
-  /** Si no tiene el/los roles, redirige fuera (al login por simplicidad) */
+  /** Atajo: is('admin') o is(['admin','capturista']) */
+  public static function is($roles): bool {
+    return self::any((array)$roles);
+  }
+
+  /** Si no tiene alguno de los roles, redirige (al login por simplicidad) */
   public static function allow($roles): void {
-    $mapped_roles = array_map(function($role) {
-      return match($role) {
-        'alumno' => 'student',
-        'maestro' => 'teacher',
-        default => $role
-      };
-    }, (array)$roles);
-    if (!self::any($mapped_roles)) {
-      header('Location: /src/plataforma/'); exit;
+    if (!self::any((array)$roles)) {
+      header('Location: /src/plataforma/login'); exit;
     }
   }
 }

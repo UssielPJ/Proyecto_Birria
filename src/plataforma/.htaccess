@@ -1,11 +1,12 @@
+# /src/plataforma/.htaccess
 RewriteEngine On
 RewriteBase /src/plataforma/
 
-# No mostrar listado de carpetas
 Options -Indexes
 
-# Deja pasar sólo archivos reales (no directorios)
-RewriteCond %{REQUEST_FILENAME} -f
+# Si es un archivo físico o un directorio, NO reescribas
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
 # Todo lo demás al front controller

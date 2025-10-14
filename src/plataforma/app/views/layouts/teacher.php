@@ -35,13 +35,21 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
   </script>
 
   <style>
-    /* ====== FIX de colapso consistente (igual que en admin/student/capturista) ====== */
+    /* ====== Sidebar fijo + contenido desplazado ====== */
     :root{ --sb-expanded:16rem; --sb-collapsed:5rem; }
     .sidebar{
       position:fixed; inset:0 auto 0 0; width:var(--sb-expanded);
       z-index:50; overflow-x:hidden; overflow-y:auto; transition:width .25s ease;
     }
-    .content-area{ margin-left:var(--sb-expanded); transition:margin-left .25s ease; position:relative; z-index:40; }
+    .content-area{
+      margin-left:var(--sb-expanded);
+      transition:margin-left .25s ease;
+      position:relative; z-index:40;
+      /* 👇 Asegura que main ocupe el alto y el contenido quede arriba */
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
 
     .body--sb-collapsed .sidebar{ width:var(--sb-collapsed); }
     .body--sb-collapsed .content-area{ margin-left:var(--sb-collapsed); }
@@ -61,7 +69,6 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
       position: relative;
       overflow: hidden;
     }
-
     .nav-item::before {
       content: '';
       position: absolute;
@@ -72,56 +79,39 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
       background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
       transition: left 0.5s ease;
     }
-
-    .nav-item:hover::before {
-      left: 100%;
-    }
-
+    .nav-item:hover::before { left: 100%; }
     .nav-item:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
       background: linear-gradient(135deg, rgba(219, 234, 254, 0.8), rgba(191, 219, 254, 0.8));
       color: #1d4ed8;
     }
-
     .nav-item.active {
       background: linear-gradient(135deg, #bfdbfe, #93c5fd);
       color: #1e3a8a;
       box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
       transform: translateY(-1px);
     }
-
     .nav-item.active::after {
       content: '';
       position: absolute;
-      left: 0;
-      top: 50%;
+      left: 0; top: 50%;
       transform: translateY(-50%);
-      width: 4px;
-      height: 60%;
-      background: #1d4ed8;
-      border-radius: 0 2px 2px 0;
+      width: 4px; height: 60%;
+      background: #1d4ed8; border-radius: 0 2px 2px 0;
     }
-
-    .dark .nav-item {
-      color: #a0aec0;
-    }
-
+    .dark .nav-item { color: #a0aec0; }
     .dark .nav-item:hover {
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
       box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
       color: #60a5fa;
     }
-
     .dark .nav-item.active {
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(96, 165, 250, 0.1));
       color: #60a5fa;
       box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     }
-
-    .dark .nav-item.active::after {
-      background: #60a5fa;
-    }
+    .dark .nav-item.active::after { background: #60a5fa; }
 
     @media (max-width:768px){
       .sidebar{ transform:translateX(-100%); }
@@ -141,7 +131,7 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
   </style>
 </head>
 
-<body class="bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 min-h-screen">
+<body class="bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 min-h-screen overflow-x-hidden">
   <div class="flex">
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg">
@@ -174,7 +164,8 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
     </aside>
 
     <!-- Topbar + Contenido -->
-    <div id="content" class="content-area flex-1 min-h-screen">
+    <div id="content" class="content-area flex-1">
+      <!-- Header fijo -->
       <header class="bg-white dark:bg-neutral-800 shadow-sm sticky top-0 z-40">
         <div class="flex items-center justify-between p-4">
           <div class="flex items-center gap-4">
@@ -211,8 +202,12 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
         </div>
       </header>
 
-      <main class="p-6">
-        <?= $content ?? '' /* <- aquí entra la vista hija */ ?>
+      <!-- Contenido: ARRIBA y CENTRADO -->
+      <main id="page" class="flex-1">
+        <!-- Ajusta 64px si cambia la altura del header -->
+        <section class="mx-auto w-full max-w-7xl px-6 py-8 min-h-[calc(100vh-64px)]">
+          <?= $content ?? '' /* <- aquí entra la vista hija */ ?>
+        </section>
       </main>
 
       <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
@@ -244,7 +239,6 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
       const isMobile = window.matchMedia('(max-width: 768px)').matches;
       if(!isMobile && saved) document.body.classList.add('body--sb-collapsed');
     })();
-
   </script>
 </body>
 </html>

@@ -1,60 +1,66 @@
 <?php
-require_once __DIR__ . '/../../layouts/admin.php';
-
 global $pdo;
 $conn = $pdo;
 
-// Obtener parámetros de búsqueda y filtrado
-$buscar = $_GET['q'] ?? '';
-$departamento = $_GET['departamento'] ?? '';
-$semestre = $_GET['semestre'] ?? '';
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = 10;
-$offset = ($page - 1) * $limit;
+/* ===== Parámetros ===== */
+$buscar       = $_GET['q'] ?? '';
+$departamento = $_GET['departamento'] ?? ''; // lo mapeamos a area_conocimiento
+$semestre     = $_GET['semestre'] ?? '';
+$page         = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit        = 10;
+$offset       = ($page - 1) * $limit;
 
-// Construir la consulta
-$where = [];
+/* ===== WHERE dinámico ===== */
+$where  = [];
 $params = [];
 
-if ($buscar) {
-    $where[] = "(name LIKE :buscar OR code LIKE :buscar)";
-    $params[':buscar'] = "%$buscar%";
+if ($buscar !== '') {
+    // nombre/clave/área
+    $where[] = "(nombre LIKE :buscar OR clave LIKE :buscar OR area_conocimiento LIKE :buscar)";
+    $params[':buscar'] = "%{$buscar}%";
 }
 
-// if ($departamento) {
-//     $where[] = "departamento = :departamento";
-//     $params[':departamento'] = $departamento;
-// }
-
-if ($semestre) {
-    $where[] = "semestre = :semestre";
-    $params[':semestre'] = $semestre;
+if ($departamento !== '') {
+    $where[] = "area_conocimiento = :area";
+    $params[':area'] = $departamento;
 }
 
-$whereClause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+if ($semestre !== '') {
+    $where[] = "semestre_sugerido = :sem";
+    $params[':sem'] = (int)$semestre;
+}
 
-// Consulta para obtener el total
-$queryTotal = "SELECT COUNT(*) as total FROM courses $whereClause";
+$whereClause = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
+
+/* ===== Total ===== */
+$queryTotal = "SELECT COUNT(*) AS total FROM materias {$whereClause}";
 $stmt = $conn->prepare($queryTotal);
 $stmt->execute($params);
-$total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-$totalPages = ceil($total / $limit);
+$total = (int)$stmt->fetch(PDO::FETCH_ASSOC)['total'];
+$totalPages = max(1, (int)ceil($total / $limit));
 
-// Consulta para obtener las materias
+/* ===== Listado ===== */
 $query = "
-    SELECT c.*, 'Profesor Asignado' as profesor_nombre
-    FROM courses c
-    $whereClause
-    ORDER BY c.name ASC
-    LIMIT $offset, $limit
+    SELECT 
+        id, clave, nombre, descripcion, creditos, horas_semana,
+        semestre_sugerido, tipo, area_conocimiento, carrera_id, status, created_at, updated_at,
+        NULL AS profesor_nombre -- placeholder
+    FROM materias
+    {$whereClause}
+    ORDER BY nombre ASC
+    LIMIT {$offset}, {$limit}
 ";
-
 $stmt = $conn->prepare($query);
 $stmt->execute($params);
 $materias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Obtener lista de departamentos para el filtro
-$departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses WHERE departamento IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
+/* ===== Filtro de 'departamento' (área de conocimiento) ===== */
+$departamentos = $conn
+    ->query("SELECT DISTINCT area_conocimiento 
+             FROM materias 
+             WHERE area_conocimiento IS NOT NULL AND area_conocimiento <> ''
+             ORDER BY area_conocimiento ASC")
+    ->fetchAll(PDO::FETCH_COLUMN);
 ?>
 
 <main class="p-6">
@@ -63,7 +69,7 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
             <h1 class="text-2xl font-bold mb-2">Materias</h1>
             <p class="text-neutral-500 dark:text-neutral-400">Administra las materias y sus asignaciones.</p>
         </div>
-        <a href="/src/plataforma/admin/subjects/create"
+        <a href="/src/plataforma/app/admin/subjects/create"
            class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2 w-full sm:w-auto justify-center">
             <i data-feather="plus"></i>
             Nueva materia
@@ -74,12 +80,10 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
     <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-4 mb-6">
         <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-                <label for="q" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
-                    Buscar
-                </label>
+                <label for="q" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Buscar</label>
                 <div class="relative">
                     <input type="text" name="q" id="q" value="<?= htmlspecialchars($buscar) ?>"
-                           placeholder="Nombre o código..."
+                           placeholder="Nombre, clave o área…"
                            class="block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 pr-10 focus:border-primary-500 focus:ring-primary-500">
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                         <i data-feather="search" class="h-5 w-5 text-neutral-400"></i>
@@ -89,11 +93,11 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
 
             <div>
                 <label for="departamento" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
-                    Departamento
+                    Área de conocimiento
                 </label>
                 <select name="departamento" id="departamento"
                         class="block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 focus:border-primary-500 focus:ring-primary-500">
-                    <option value="">Todos los departamentos</option>
+                    <option value="">Todas las áreas</option>
                     <?php foreach ($departamentos as $d): ?>
                         <option value="<?= htmlspecialchars($d) ?>" <?= $departamento === $d ? 'selected' : '' ?>>
                             <?= htmlspecialchars($d) ?>
@@ -103,14 +107,12 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
             </div>
 
             <div>
-                <label for="semestre" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
-                    Semestre
-                </label>
+                <label for="semestre" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Semestre sugerido</label>
                 <select name="semestre" id="semestre"
                         class="block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 focus:border-primary-500 focus:ring-primary-500">
-                    <option value="">Todos los semestres</option>
+                    <option value="">Todos</option>
                     <?php for ($i = 1; $i <= 10; $i++): ?>
-                        <option value="<?= $i ?>" <?= $semestre == $i ? 'selected' : '' ?>>
+                        <option value="<?= $i ?>" <?= ($semestre !== '' && (int)$semestre === $i) ? 'selected' : '' ?>>
                             <?= $i ?>° Semestre
                         </option>
                     <?php endfor; ?>
@@ -132,24 +134,12 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
             <table class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
                 <thead class="bg-neutral-50 dark:bg-neutral-800">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                            Materia
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                            Código
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                            Departamento
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                            Semestre
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                            Profesor
-                        </th>
-                        <th scope="col" class="relative px-6 py-3">
-                            <span class="sr-only">Acciones</span>
-                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Materia</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Clave</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Área</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Semestre sugerido</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Profesor</th>
+                        <th class="relative px-6 py-3"><span class="sr-only">Acciones</span></th>
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700">
@@ -157,23 +147,23 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                                    <?= htmlspecialchars($materia['name']) ?>
+                                    <?= htmlspecialchars($materia['nombre']) ?>
                                 </div>
                                 <div class="text-sm text-neutral-500 dark:text-neutral-400">
-                                    <?= $materia['creditos'] ?? 0 ?> créditos
+                                    <?= (int)($materia['creditos'] ?? 0) ?> créditos
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($materia['code'] ?? '') ?>
+                                <?= htmlspecialchars($materia['clave'] ?? '') ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($materia['departamento'] ?? '') ?>
+                                <?= htmlspecialchars($materia['area_conocimiento'] ?? '') ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= $materia['semestre'] ?? 1 ?>° Semestre
+                                <?= (int)($materia['semestre_sugerido'] ?? 1) ?>° Semestre
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <?php if ($materia['profesor_nombre']): ?>
+                                <?php if (!empty($materia['profesor_nombre'])): ?>
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-8 w-8">
                                             <div class="h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
@@ -192,22 +182,14 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end gap-3">
-                                    <a href="/src/plataforma/admin/subjects/<?= $materia['id'] ?>/schedule" 
-                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
-                                        Horario
-                                    </a>
-                                    <a href="/src/plataforma/admin/subjects/<?= $materia['id'] ?>" 
-                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
-                                        Ver
-                                    </a>
-                                    <a href="/src/plataforma/admin/subjects/<?= $materia['id'] ?>/edit" 
-                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
-                                        Editar
-                                    </a>
-                                    <button onclick="confirmDelete(<?= $materia['id'] ?>)" 
-                                            class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
-                                        Eliminar
-                                    </button>
+                                    <a href="/src/plataforma/app/admin/subjects/<?= (int)$materia['id'] ?>/schedule" 
+                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">Horario</a>
+                                    <a href="/src/plataforma/app/admin/subjects/<?= (int)$materia['id'] ?>" 
+                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">Ver</a>
+                                    <a href="/src/plataforma/app/admin/subjects/<?= (int)$materia['id'] ?>/edit" 
+                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">Editar</a>
+                                    <button onclick="confirmDelete(<?= (int)$materia['id'] ?>)" 
+                                            class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Eliminar</button>
                                 </div>
                             </td>
                         </tr>
@@ -245,7 +227,7 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
                 <div>
                     <p class="text-sm text-neutral-700 dark:text-neutral-400">
                         Mostrando 
-                        <span class="font-medium"><?= $offset + 1 ?></span>
+                        <span class="font-medium"><?= $total ? ($offset + 1) : 0 ?></span>
                         a 
                         <span class="font-medium"><?= min($offset + $limit, $total) ?></span>
                         de 
@@ -286,20 +268,17 @@ $departamentos = []; // $conn->query("SELECT DISTINCT departamento FROM courses 
 </main>
 
 <script>
-    // Inicializar los íconos
     feather.replace();
 
-    // Enviar formulario automáticamente al cambiar filtros
     document.querySelectorAll('select[name="departamento"], select[name="semestre"]').forEach(select => {
         select.addEventListener('change', () => {
             select.closest('form').submit();
         });
     });
 
-    // Función para confirmar eliminación
     function confirmDelete(id) {
         if (confirm('¿Estás seguro de que deseas eliminar esta materia? Esta acción no se puede deshacer.')) {
-            window.location.href = `/src/plataforma/admin/subjects/${id}/delete`;
+            window.location.href = `/src/plataforma/app/admin/subjects/${id}/delete`;
         }
     }
 </script>

@@ -1,5 +1,22 @@
 <?php
-session_start();
+
+if (session_status() === PHP_SESSION_NONE) {
+  session_set_cookie_params([
+    'path'     => '/',          // ¡clave! aplica a todo birria.local
+    'httponly' => true,
+    'samesite' => 'Lax'
+    // 'domain' => 'birria.local', // normalmente no hace falta, úsalo solo si lo requieres
+  ]);
+  session_start();
+  // --- Compat: normaliza sesión para código viejo ---
+if (!empty($_SESSION['user']['roles']) && is_array($_SESSION['user']['roles'])) {
+  // Copias para código que aún usa las claves antiguas
+  $_SESSION['roles'] = $_SESSION['user']['roles'];      // array de slugs
+  $_SESSION['role']  = $_SESSION['user']['roles'][0];   // primer rol
+}
+
+}
+
 
 // Reusar tu conexión y config
 require __DIR__ . '/app/config/app.php';
@@ -43,12 +60,22 @@ $map = function($method, $path, $handler) use ($router) {
     if ($method === 'POST') { $router->post($path.'/', $handler); }
   }
 };
+$map('GET', '/src/plataforma/debug/session', function () {
+  if (session_status()===PHP_SESSION_NONE) session_start();
+  header('Content-Type:text/plain; charset=utf-8');
+  var_dump($_SESSION);
+  exit;
+});
 
 /* ========== Auth ========== */
 $map('GET',  '/src/plataforma',         [new AuthController, 'showLogin']); // sin slash
 $map('GET',  '/src/plataforma/',        [new AuthController, 'showLogin']); // con slash (por claridad)
 $map('POST', '/src/plataforma/login',   [new AuthController, 'login']);
+
+// Mantén tu ruta existente:
 $map('GET',  '/src/plataforma/logout',  [new AuthController, 'logout']);
+// (Opcional, más seguro) también aceptar POST:
+$map('POST', '/src/plataforma/logout',  [new AuthController, 'logout']);
 
 /* ========== Panel ALUMNO (requiere login) ========== */
 $map('GET', '/src/plataforma/app',                [new \App\Controllers\StudentDashboardController,'index']);
@@ -105,10 +132,26 @@ $map('GET',  '/src/plataforma/app/teacher/surveys/edit/{id}',[new SurveysControl
 $map('POST', '/src/plataforma/app/teacher/surveys/update/{id}',[new SurveysController, 'update']);
 $map('POST', '/src/plataforma/app/teacher/surveys/delete/{id}',[new SurveysController, 'delete']);
 
+/* ========== Teacher Announcements Routes ========== */
+$map('GET',  '/src/plataforma/app/teacher/announcements',             [new \App\Controllers\AnnouncementsController, 'index']);
+$map('GET',  '/src/plataforma/app/teacher/announcements/create',      [new \App\Controllers\AnnouncementsController, 'create']);
+$map('POST', '/src/plataforma/app/teacher/announcements/store',       [new \App\Controllers\AnnouncementsController, 'store']);
+$map('GET',  '/src/plataforma/app/teacher/announcements/edit/{id}',   [new \App\Controllers\AnnouncementsController, 'edit']);
+$map('POST', '/src/plataforma/app/teacher/announcements/update/{id}', [new \App\Controllers\AnnouncementsController, 'update']);
+$map('POST', '/src/plataforma/app/teacher/announcements/delete/{id}', [new \App\Controllers\AnnouncementsController, 'delete']);
+
+
 /* ========== Panel ADMIN ========== */
+
 $map('GET', '/src/plataforma/admin',              [new \App\Controllers\AdminDashboardController,'index']);
 $map('GET', '/src/plataforma/app/admin',          [new \App\Controllers\AdminDashboardController,'index']);
 $map('GET', '/src/plataforma/app/admin/students', [new StudentsController, 'index']);
+// --- Admin Students (faltaban) ---
+$map('GET',  '/src/plataforma/app/admin/students/create',   [new StudentsController, 'create']);
+$map('POST', '/src/plataforma/app/admin/students/store',    [new StudentsController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/students/edit/{id}',[new StudentsController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/students/update/{id}',[new StudentsController, 'update']);
+$map('POST', '/src/plataforma/app/admin/students/delete/{id}',[new StudentsController, 'delete']);
 $map('GET', '/src/plataforma/app/admin/teachers', [new TeachersController, 'index']);
 $map('GET', '/src/plataforma/app/admin/teachers/export', [new TeachersController, 'export']);
 $map('GET', '/src/plataforma/app/admin/teachers/create', [new TeachersController, 'create']);
@@ -117,6 +160,16 @@ $map('GET', '/src/plataforma/app/admin/teachers/edit/{id}', [new TeachersControl
 $map('POST', '/src/plataforma/app/admin/teachers/update/{id}', [new TeachersController, 'update']);
 $map('POST', '/src/plataforma/app/admin/teachers/delete/{id}', [new TeachersController, 'delete']);
 $map('GET', '/src/plataforma/app/admin/schedule', [new ScheduleController, 'index']);
+
+/* ========== Admin Schedule Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/schedule',            [new \App\Controllers\ScheduleController,'index']);
+$map('GET',  '/src/plataforma/app/admin/schedule/add',        [new \App\Controllers\ScheduleController,'add']);
+$map('POST', '/src/plataforma/app/admin/schedule/store',      [new \App\Controllers\ScheduleController,'store']);
+$map('GET',  '/src/plataforma/app/admin/schedule/edit/{id}',  [new \App\Controllers\ScheduleController,'edit']);
+$map('POST', '/src/plataforma/app/admin/schedule/update/{id}',[new \App\Controllers\ScheduleController,'update']);
+$map('POST', '/src/plataforma/app/admin/schedule/{id}/delete',[new \App\Controllers\ScheduleController,'delete']);
+
+
 
 /* ========== Subjects Routes ========== */
 $map('GET',  '/src/plataforma/app/admin/subjects',          [new SubjectsController, 'index']);
@@ -200,7 +253,7 @@ $map('POST', '/src/plataforma/capturista/inscripciones/guardar', [new Capturista
 $map('POST', '/src/plataforma/capturista/inscripciones/eliminar/{id}', [new CapturistaInscripcionesController,'eliminar']);
 
 // Reportes
-$map('GET', '/src/plataforma/capturista/reportes', [new CapturistaReportesController,'index']);
+$map('GET', '/src/plataforma/app/capturista/reportes', [new CapturistaReportesController,'index']);
 $map('GET', '/src/plataforma/capturista/reportes/estudiantes', [new CapturistaReportesController,'estudiantes']);
 $map('GET', '/src/plataforma/capturista/reportes/profesores', [new CapturistaReportesController,'profesores']);
 $map('GET', '/src/plataforma/capturista/reportes/cursos', [new CapturistaReportesController,'cursos']);
@@ -209,9 +262,17 @@ $map('POST', '/src/plataforma/capturista/reportes/generar', [new CapturistaRepor
 
 // Solicitudes
 $map('GET', '/src/plataforma/solicitudes', [new SolicitudesController,'index']);
-$map('GET', '/src/plataforma/solicitudes/nueva', [new SolicitudesController,'nueva']);
-$map('POST', '/src/plataforma/solicitudes/guardar', [new SolicitudesController,'guardar']);
-$map('GET', '/src/plataforma/solicitudes/editar/{id}', [new SolicitudesController,'editar']);
-$map('POST', '/src/plataforma/solicitudes/eliminar/{id}', [new SolicitudesController,'eliminar']);
+$map('GET', '/src/plataforma/app/capturista/solicitudes/nueva', [new SolicitudesController,'nueva']);
+$map('POST', '/src/plataforma/app/capturista/solicitudes/guardar', [new SolicitudesController,'guardar']);
+$map('GET', '/src/plataforma/app/capturista/solicitudes/editar/{id}', [new SolicitudesController,'editar']);
+$map('POST', '/src/plataforma/app/capturista/solicitudes/eliminar/{id}', [new SolicitudesController,'eliminar']);
+
+// Capturista · Inscripciones
+$map('GET',  '/src/plataforma/app/capturista/inscripciones',                [new \App\Controllers\CapturistaInscripcionesController, 'index']);
+$map('GET',  '/src/plataforma/app/capturista/inscripciones/nueva',          [new \App\Controllers\CapturistaInscripcionesController, 'nueva']);
+$map('POST', '/src/plataforma/app/capturista/inscripciones/guardar',        [new \App\Controllers\CapturistaInscripcionesController, 'guardar']);
+$map('GET',  '/src/plataforma/app/capturista/inscripciones/editar/{id}',    [new \App\Controllers\CapturistaInscripcionesController, 'editar']);
+$map('POST', '/src/plataforma/app/capturista/inscripciones/eliminar/{id}',  [new \App\Controllers\CapturistaInscripcionesController, 'eliminar']);
+
 
 $router->dispatch();

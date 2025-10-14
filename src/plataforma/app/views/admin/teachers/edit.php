@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../../layouts/admin.php'; ?>
+
 
 <?php $teacher = $teacher ?? (object)[]; ?>
 

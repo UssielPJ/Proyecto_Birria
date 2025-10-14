@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../../layouts/admin.php'; ?>
+
 
 <div class="container px-6 py-8">
     <div class="max-w-3xl mx-auto">

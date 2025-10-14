@@ -1,104 +1,91 @@
 <?php
-
 namespace App\Controllers;
 
-use App\Models\User;
-use App\Models\Course;
-use App\Models\Payment;
-use App\Models\Subject;
+use App\Core\Database;
+use PDO;
+use Throwable;
 
 class AdminDashboardController {
   public function index(){
-    \App\Core\Gate::allow(['admin']);
-
-    // Cargar modelos necesarios
-    $userModel = new User();
-    $courseModel = new Course();
-    $paymentModel = new Payment();
-
-    // Obtener estadísticas
-    try {
-        $total_students = $userModel->countByRole('alumno');
-    } catch (\Exception $e) {
-        $total_students = 0;
-    }
-    try {
-        $total_teachers = $userModel->countByRole('maestro');
-    } catch (\Exception $e) {
-        $total_teachers = 0;
-    }
-    try {
-        $total_courses = $courseModel->count();
-    } catch (\Exception $e) {
-        $total_courses = 0;
-    }
-    try {
-        $active_courses = $courseModel->countActive();
-    } catch (\Exception $e) {
-        $active_courses = 0;
-    }
-    try {
-        $total_subjects = $courseModel->count();
-    } catch (\Exception $e) {
-        $total_subjects = 0;
-    }
-    try {
-        $recent_subjects = $courseModel->getRecent(5);
-    } catch (\Exception $e) {
-        $recent_subjects = [];
-    }
-    try {
-        $monthly_registrations = $userModel->getMonthlyRegistrations();
-    } catch (\Exception $e) {
-        $monthly_registrations = [];
-    }
-    try {
-        $role_distribution = $userModel->getRoleDistribution();
-    } catch (\Exception $e) {
-        $role_distribution = [];
-    }
-    try {
-        $recent_users = $userModel->getRecentUsers(5);
-    } catch (\Exception $e) {
-        $recent_users = [];
-    }
-    try {
-        $pending_payments = $paymentModel::countPending();
-    } catch (\Exception $e) {
-        $pending_payments = 0;
-    }
-    try {
-        $pending_solicitudes = $userModel->countPendingSolicitudes();
-    } catch (\Exception $e) {
-        $pending_solicitudes = 0;
-    }
-    try {
-        $incomplete_documents = $userModel->countIncompleteDocuments();
-    } catch (\Exception $e) {
-        $incomplete_documents = 0;
+    // sesión + guard
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (empty($_SESSION['user']['roles']) || !in_array('admin', $_SESSION['user']['roles'], true)) {
+      header('Location: /src/plataforma/login'); exit;
     }
 
-    $stats = [
-      'total_students' => $total_students,
-      'total_teachers' => $total_teachers,
-      'total_courses' => $total_courses,
-      'active_courses' => $active_courses,
-      'total_subjects' => $total_subjects,
-      'recent_subjects' => $recent_subjects,
-      'monthly_registrations' => $monthly_registrations,
-      'role_distribution' => $role_distribution,
-      'recent_users' => $recent_users,
-      'pending_payments' => $pending_payments,
-      'pending_solicitudes' => $pending_solicitudes,
-      'incomplete_documents' => $incomplete_documents
-    ];
+    // Modo debug por querystring: /src/plataforma/admin?debug=1
+    $debug = isset($_GET['debug']);
 
-    \App\Core\View::render('admin/dashboard', 'admin', [
-      'title' => 'UTEC · Administración',
-      'user'  => $_SESSION['user'] ?? null,
-      'name'  => $_SESSION['user']['name'] ?? '',
-      'email' => $_SESSION['user']['email'] ?? '',
-      'stats' => $stats
-    ]);
+    try {
+      $db = new Database();
+
+      // === KPIs (ajusta nombres si tu schema difiere) ===
+      $total_students = (int)$db->query("SELECT COUNT(*) FROM student_profiles")->fetchColumn();
+      $total_teachers = (int)$db->query("SELECT COUNT(*) FROM teacher_profiles")->fetchColumn();
+      $total_subjects = (int)$db->query("SELECT COUNT(*) FROM materias WHERE status='activa'")->fetchColumn();
+      $active_groups  = (int)$db->query("SELECT COUNT(*) FROM grupos WHERE status='activo'")->fetchColumn();
+
+      $asp_reg  = (int)$db->query("SELECT COUNT(*) FROM aspirantes WHERE status='registrado'")->fetchColumn();
+      $asp_docs = (int)$db->query("SELECT COUNT(*) FROM aspirantes WHERE status='documentacion'")->fetchColumn();
+
+      $becas_rev = (int)$db->query("SELECT COUNT(*) FROM solicitudes_becas WHERE status='en_revision'")->fetchColumn();
+
+      $incomplete_documents = (int)$db->query("
+        SELECT COUNT(*) FROM aspirantes WHERE documentos_entregados IS NULL
+      ")->fetchColumn();
+
+      $recent_users = $db->query("
+        SELECT id, email, nombre, created_at
+        FROM users ORDER BY created_at DESC LIMIT 5
+      ")->fetchAll(PDO::FETCH_ASSOC);
+
+      $recent_subjects = $db->query("
+        SELECT id, clave, nombre, status, created_at
+        FROM materias ORDER BY created_at DESC LIMIT 5
+      ")->fetchAll(PDO::FETCH_ASSOC);
+
+      $stats = [
+        'total_students' => $total_students,
+        'total_teachers' => $total_teachers,
+        'total_subjects' => $total_subjects,
+        'active_groups'  => $active_groups,
+        'aspirantes_registrados'   => $asp_reg,
+        'aspirantes_documentacion' => $asp_docs,
+        'becas_en_revision'        => $becas_rev,
+        'incomplete_documents' => $incomplete_documents,
+        'recent_users'        => $recent_users,
+        'recent_subjects'     => $recent_subjects,
+      ];
+
+      if ($debug) {
+        header('Content-Type: text/plain; charset=utf-8');
+        echo "AdminDashboardController@index (DEBUG)\n";
+        echo "Usuario: " . ($_SESSION['user']['email'] ?? '???') . "\n\n";
+        print_r($stats);
+        exit;
+      }
+
+      // ===== Render real =====
+      // SI falla aquí, el problema es la vista o la clase View.
+      \App\Core\View::render('admin/dashboard', 'admin', [
+        'title' => 'UTEC · Administración',
+        'user'  => $_SESSION['user'] ?? null,
+        'name'  => $_SESSION['user']['name'] ?? '',
+        'email' => $_SESSION['user']['email'] ?? '',
+        'stats' => $stats,
+      ]);
+
+    } catch (Throwable $e) {
+      // No permitas que el router lo convierta en 404 silencioso
+      http_response_code(500);
+      header('Content-Type: text/plain; charset=utf-8');
+      echo "Error en AdminDashboardController@index\n\n";
+      echo $e->getMessage() . "\n";
+      // En debug, muestra traza para ubicar tabla/campo/vista
+      if ($debug) {
+        echo "\n--- TRACE ---\n" . $e->getTraceAsString();
+      }
+      exit;
+    }
   }
 }
