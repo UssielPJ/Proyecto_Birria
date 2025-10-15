@@ -45,7 +45,7 @@ $user = $_SESSION['user'] ?? [];
     /* ====== Misma mecánica que CAPTURISTA ====== */
     :root{
       --sb-expanded: 16rem;   /* 256px */
-      --sb-collapsed: 5rem;   /* 80px  */
+      --sb-collapsed: 5.5rem; /* 88px — un poco más ancho para que el icono respire */
     }
     .sidebar{
       position: fixed; inset: 0 auto 0 0;
@@ -76,10 +76,10 @@ $user = $_SESSION['user'] ?? [];
     .body--sb-collapsed .nav-item{ justify-content:center; gap:0; }
     .body--sb-collapsed .nav-item i{ margin-right:0 !important; }
 
-    /* Nav items (igual estilo que ya tenías) */
+    /* ---- Nav items (aire extra para que no se vean “aplastados”) ---- */
     .nav-item {
-      display:flex; align-items:center; gap:.75rem;
-      padding:.75rem 1rem;
+      display:flex; align-items:center; gap:.8rem;          /* antes .75rem */
+      padding:.85rem 1rem;                                  /* antes .75rem 1rem */
       border-radius:.75rem; font-weight:500;
       color:#4a5568; position:relative; overflow:hidden;
       transition:all .3s ease-in-out;
@@ -105,6 +105,27 @@ $user = $_SESSION['user'] ?? [];
       background:linear-gradient(135deg,rgba(249,115,22,.2),rgba(251,146,60,.1));
       color:#fb923c; box-shadow:0 4px 15px rgba(249,115,22,.4);
     }
+
+/* Tamaño consistente para TODOS los iconos del sidebar */
+.sidebar .nav-item i,
+.sidebar .nav-item svg {
+  width: 1.5rem;   /* 24px */
+  height: 1.5rem;  /* 24px */
+  flex: 0 0 1.5rem;
+}
+
+/* Al colapsar, mantenlos del MISMO tamaño */
+.body--sb-collapsed .nav-item i,
+.body--sb-collapsed .nav-item svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Botón de logout centrado cuando está colapsado */
+.sidebar .logout { min-height: 44px; }
+.body--sb-collapsed .logout { justify-content: center; }
+
+
 
     /* Botón tema animado */
     .nav-toggle{ position:relative; }
@@ -231,7 +252,7 @@ $user = $_SESSION['user'] ?? [];
         document.body.classList.toggle('body--sb-collapsed');
         localStorage.setItem('adminSbCollapsed', document.body.classList.contains('body--sb-collapsed') ? '1' : '0');
       }
-      if (window.feather) feather.replace();
+      if (window.feather) feather.replace(); // re-render íconos
     });
 
     // Marcar activo al hacer click (opc.)
