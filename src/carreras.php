@@ -687,11 +687,9 @@ body {
 
                 <!-- Desktop menu -->
                 <div class="hidden lg:flex items-center gap-8">
-                    <a href="#inicio" class="nav-link">Inicio</a>
-                    <a href="#carreras" class="nav-link active">Carreras</a>
-                    <a href="#docentes" class="nav-link">Docentes</a>
-                    <a href="#recursos" class="nav-link">Recursos</a>
-                    <a href="#nosotros" class="nav-link">Nosotros</a>
+                    <a href="index.php" class="nav-link">Inicio</a>
+                    <a href="carreras.php" class="nav-link active">Carreras</a>
+                    <a href="nosotros.php" class="nav-link">Nosotros</a>
                 </div>
 
                 <!-- Actions -->

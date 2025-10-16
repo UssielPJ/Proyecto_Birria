@@ -185,7 +185,7 @@
           </div>
           <div>
             <h3 class="font-medium">Solicitudes pendientes</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $stats['pending_solicitudes'] ?> solicitudes requieren atención</p>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $metrics['pending_solicitudes'] ?? 0 ?>solicitudes requieren atención</p>
           </div>
         </div>
         <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">

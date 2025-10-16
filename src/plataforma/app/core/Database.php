@@ -68,4 +68,24 @@ class Database {
     public function lastInsertId() {
         return $this->pdo->lastInsertId();
     }
+
+    // 👇 Pega esto dentro de la clase Database
+public function beginTransaction(): bool {
+    return $this->pdo->beginTransaction();
+}
+
+public function commit(): bool {
+    return $this->pdo->commit();
+}
+
+public function rollBack(): bool {
+    // Ojo: en PDO es rollBack (B mayúscula)
+    return $this->pdo->rollBack();
+}
+
+/** Alias útil si quieres el PDO crudo en otros lados */
+public function pdo(): PDO {
+    return $this->pdo;
+}
+
 }
