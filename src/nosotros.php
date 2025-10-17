@@ -917,7 +917,14 @@ document.addEventListener('DOMContentLoaded', function() {
       images: [
         './plataforma/app/img/central1.jpg',
         './plataforma/app/img/central2.jpg',
-        './plataforma/app/img/central3.jpg'
+        './plataforma/app/img/central3.jpg',
+        './plataforma/app/img/central4.jpg',
+        './plataforma/app/img/central5.jpg',
+        './plataforma/app/img/central6.jpg',
+        './plataforma/app/img/central7.jpg',
+        './plataforma/app/img/central8.jpg',
+        './plataforma/app/img/central9.jpg',
+        './plataforma/app/img/central10.jpg'
       ]
     },
     tecnologico: {
@@ -926,7 +933,14 @@ document.addEventListener('DOMContentLoaded', function() {
       images: [
         './plataforma/app/img/tecnologico1.jpg',
         './plataforma/app/img/tecnologico2.jpg',
-        './plataforma/app/img/tecnologico3.jpg'
+        './plataforma/app/img/tecnologico3.jpg',
+        './plataforma/app/img/tecnologico4.jpg',
+        './plataforma/app/img/tecnologico5.jpg',
+        './plataforma/app/img/tecnologico6.jpg',
+        './plataforma/app/img/tecnologico7.jpg',
+        './plataforma/app/img/tecnologico8.jpg',
+        './plataforma/app/img/tecnologico9.jpg',
+        './plataforma/app/img/tecnologico10.jpg'
       ]
     },
     innovacion: {
@@ -935,7 +949,14 @@ document.addEventListener('DOMContentLoaded', function() {
       images: [
         './plataforma/app/img/innovacion1.jpg',
         './plataforma/app/img/innovacion2.jpg',
-        './plataforma/app/img/innovacion3.jpg'
+        './plataforma/app/img/innovacion3.jpg',
+        './plataforma/app/img/innovacion4.jpg',
+        './plataforma/app/img/innovacion5.jpg',
+        './plataforma/app/img/innovacion6.jpg',
+        './plataforma/app/img/innovacion7.jpg',
+        './plataforma/app/img/innovacion8.jpg',
+        './plataforma/app/img/innovacion9.jpg',
+        './plataforma/app/img/innovacion10.jpg'
       ]
     }
   };
@@ -1150,10 +1171,12 @@ document.addEventListener('DOMContentLoaded', function() {
             title: 'Selección de Fútbol',
             description: 'Galería fotográfica de la Selección de Fútbol UTSC - Representación Masculina',
             images: [
-                './plataforma/app/img/futbol1.jpg',
-                './plataforma/app/img/futbol2.jpg',
-                './plataforma/app/img/futbol3.jpg',
-                './plataforma/app/img/futbol4.jpg'
+                './plataforma/app/img/1-IMG_2145.jpg',
+                './plataforma/app/img/97-IMG_3440.jpg',
+                './plataforma/app/img/96-IMG_3429.jpg',
+                './plataforma/app/img/95-IMG_3364.jpg',
+                './plataforma/app/img/103-IMG_3680.jpg',
+                './plataforma/app/img/129-03990da8-238f-4839-9fc0-dfbb8905671e.jpg'
             ]
         }
     };
@@ -1365,10 +1388,10 @@ document.addEventListener('DOMContentLoaded', function() {
             title: 'Tochito Femenino',
             description: 'Galería fotográfica del equipo de Tochito Femenino UTSC - Representación Femenina',
             images: [
-                './plataforma/app/img/tochito1.jpg',
-                './plataforma/app/img/tochito2.jpg',
-                './plataforma/app/img/tochito3.jpg',
-                './plataforma/app/img/tochito4.jpg'
+                './plataforma/app/img/2-IMG_2663.jpg',
+                './plataforma/app/img/123-IMG_7641.jpg',
+                './plataforma/app/img/101-IMG_4617.jpg',
+                './plataforma/app/img/99-IMG_3636.jpg'
             ]
         }
     };
