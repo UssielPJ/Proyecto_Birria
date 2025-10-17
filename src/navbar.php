@@ -19,8 +19,6 @@
   $menu_items = [
     'inicio' => ['url' => '/src/', 'name' => 'Inicio', 'icon' => 'home'],
     'cursos' => ['url' => '/src/cursos.php', 'name' => 'Carreras', 'icon' => 'book'],
-    'docentes' => ['url' => '/src/docentes.php', 'name' => 'Docentes', 'icon' => 'users'],
-    'recursos' => ['url' => '/src/recursos.php', 'name' => 'Recursos', 'icon' => 'folder'],
     'nosotros' => ['url' => '/src/nosotros.php', 'name' => 'Nosotros', 'icon' => 'info']
   ];
 ?>
