@@ -34,30 +34,133 @@
   color: white;
 }
 
-.timeline-item {
+.timeline-container {
   position: relative;
-  padding-left: 2rem;
-  margin-bottom: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.timeline-item::before {
-  content: '';
+.timeline-line {
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 0;
-  width: 3px;
-  height: 100%;
-  background: var(--ut-green-500);
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--ut-green-500), var(--ut-green-600));
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 3rem;
+  width: 50%;
+  padding: 0 2rem;
+}
+
+.timeline-item:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+  left: 50%;
+  text-align: left;
 }
 
 .timeline-dot {
   position: absolute;
-  left: -6px;
-  top: 0;
-  width: 15px;
-  height: 15px;
+  top: 1.5rem;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: var(--ut-green-500);
+  border: 4px solid white;
+  box-shadow: 0 0 0 4px var(--ut-green-100);
+  z-index: 2;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+  right: -12px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+  left: -12px;
+}
+
+.timeline-content {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--ut-green-100);
+  transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.timeline-year {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: var(--ut-green-700);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-year i {
+  color: var(--ut-green-500);
+}
+
+.timeline-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-description {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 30px;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding-left: 4rem;
+    padding-right: 1rem;
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) {
+    left: 0;
+  }
+
+  .timeline-dot {
+    left: 15px;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-dot,
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: 15px;
+    right: auto;
+  }
+
+  .timeline-content {
+    padding: 1rem;
+  }
 }
 
 .value-card {
@@ -142,8 +245,14 @@ body.dark .value-card .text-green-600 { color: #34d399; }
 body.dark .value-card .text-purple-600 { color: #a78bfa; }
 
 /* Timeline */
-body.dark .timeline-item h4 { color: white; }
-body.dark .timeline-item p { color: #cbd5e1; }
+body.dark .timeline-content {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+}
+
+body.dark .timeline-title { color: white; }
+body.dark .timeline-description { color: #cbd5e1; }
+body.dark .timeline-year { color: #22c55e; }
 
 /* Stats card */
 body.dark .stats-card {
@@ -497,31 +606,67 @@ document.addEventListener('DOMContentLoaded', function() {
       
       <div data-aos="fade-left">
         <h3 class="text-2xl font-bold text-gray-900 mb-6">Hitos Importantes</h3>
-        <div class="space-y-6">
+        <div class="timeline-container">
+          <div class="timeline-line"></div>
+
           <div class="timeline-item">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900">2008 - Fundación</h4>
-            <p class="text-gray-600">Inauguración del primer campus con 3 programas de ingeniería</p>
+            <div class="timeline-content">
+              <div class="timeline-year">
+                <i data-feather="calendar"></i>
+                2008
+              </div>
+              <div class="timeline-title">Fundación</div>
+              <div class="timeline-description">Inauguración del primer campus con 3 programas de ingeniería</div>
+            </div>
           </div>
+
           <div class="timeline-item">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900">2012 - Expansión</h4>
-            <p class="text-gray-600">Apertura del segundo campus y lanzamiento de 5 nuevos programas</p>
+            <div class="timeline-content">
+              <div class="timeline-year">
+                <i data-feather="map-pin"></i>
+                2012
+              </div>
+              <div class="timeline-title">Expansión</div>
+              <div class="timeline-description">Apertura del segundo campus y lanzamiento de 5 nuevos programas</div>
+            </div>
           </div>
+
           <div class="timeline-item">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900">2016 - Internacionalización</h4>
-            <p class="text-gray-600">Establecimiento de los primeros convenios internacionales</p>
+            <div class="timeline-content">
+              <div class="timeline-year">
+                <i data-feather="globe"></i>
+                2016
+              </div>
+              <div class="timeline-title">Internacionalización</div>
+              <div class="timeline-description">Establecimiento de los primeros convenios internacionales</div>
+            </div>
           </div>
+
           <div class="timeline-item">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900">2020 - Transformación Digital</h4>
-            <p class="text-gray-600">Implementación completa de plataforma e-learning y laboratorios virtuales</p>
+            <div class="timeline-content">
+              <div class="timeline-year">
+                <i data-feather="monitor"></i>
+                2020
+              </div>
+              <div class="timeline-title">Transformación Digital</div>
+              <div class="timeline-description">Implementación completa de plataforma e-learning y laboratorios virtuales</div>
+            </div>
           </div>
+
           <div class="timeline-item">
             <div class="timeline-dot"></div>
-            <h4 class="text-lg font-semibold text-gray-900">2024 - Liderazgo</h4>
-            <p class="text-gray-600">Reconocimiento como la universidad tecnológica #1 en innovación educativa</p>
+            <div class="timeline-content">
+              <div class="timeline-year">
+                <i data-feather="award"></i>
+                2024
+              </div>
+              <div class="timeline-title">Liderazgo</div>
+              <div class="timeline-description">Reconocimiento como la universidad tecnológica #1 en innovación educativa</div>
+            </div>
           </div>
         </div>
       </div>
