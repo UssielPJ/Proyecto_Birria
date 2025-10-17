@@ -608,7 +608,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
       <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-300" data-aos="fade-up">
         <div class="relative">
-          <img src="./plataforma/app/img/IndustrialM.jpg" alt="Feria Tecnológica" class="w-full h-48 object-cover">
+          <img src="./plataforma/app/img/14-IMG_2845.jpg" alt="Feria Tecnológica" class="w-full h-48 object-cover">
           <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
             Innovación
           </div>
@@ -790,7 +790,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       <!-- Campus Tecnológico -->
       <div class="campus-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-        <img src="./plataforma/app/img/CorrecaminosUT.jpg" alt="Campus Norte" class="w-full h-48 object-cover">
+        <img src="./plataforma/app/img/Universidad Tecnologia Santa Catarina.jpg" alt="Campus Norte" class="w-full h-48 object-cover">
         <div class="p-6">
           <h3 class="text-xl font-bold text-gray-900 mb-2">Campus Santa Catarina</h3>
           <p class="text-gray-600 mb-4">Campus principal, ingenierías avanzadas con talleres de manufactura y prototipado.</p>
@@ -808,7 +808,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       <!-- Campus de Innovación -->
       <div class="campus-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-        <img src="./plataforma/app/img/Mecatronica.jpg" alt="Campus Sur" class="w-full h-48 object-cover">
+        <img src="./plataforma/app/img/Campus Linares.jpg" alt="Campus Sur" class="w-full h-48 object-cover">
         <div class="p-6">
           <h3 class="text-xl font-bold text-gray-900 mb-2">Campus de Linares</h3>
           <p class="text-gray-600 mb-4">Enfoque en emprendimiento tecnológico y desarrollo de startups estudiantiles.</p>
@@ -915,16 +915,16 @@ document.addEventListener('DOMContentLoaded', function() {
       title: 'Campus Central',
       description: 'Sede principal con laboratorios especializados, biblioteca digital y áreas de innovación. Más de 2,500 estudiantes.',
       images: [
-        './plataforma/app/img/central1.jpg',
-        './plataforma/app/img/central2.jpg',
-        './plataforma/app/img/central3.jpg',
-        './plataforma/app/img/central4.jpg',
-        './plataforma/app/img/central5.jpg',
-        './plataforma/app/img/central6.jpg',
-        './plataforma/app/img/central7.jpg',
-        './plataforma/app/img/central8.jpg',
-        './plataforma/app/img/central9.jpg',
-        './plataforma/app/img/central10.jpg'
+        './plataforma/app/img/125-IMG_4241.jpg',
+        './plataforma/app/img/122-IMG_3871.jpg',
+        './plataforma/app/img/121-IMG_3861.jpg',
+        './plataforma/app/img/120-IMG_3842.jpg',
+        './plataforma/app/img/119-IMG_3836.jpg',
+        './plataforma/app/img/118-IMG_3825.jpg',
+        './plataforma/app/img/117-IMG_3822.jpg',
+        './plataforma/app/img/116-IMG_3819.jpg',
+        './plataforma/app/img/115-IMG_3808.jpg',
+        './plataforma/app/img/114-IMG_3800.jpg'
       ]
     },
     tecnologico: {
