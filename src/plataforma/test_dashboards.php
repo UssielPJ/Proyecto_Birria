@@ -73,7 +73,7 @@ echo "\nTesting Student Dashboard data...\n";
 $_SESSION['user'] = [
     'id' => 4,
     'name' => 'Estudiante',
-    'email' => 'estudiante@utec.edu',
+    'email' => 'estudiante@UTSC.edu',
     'role' => 'student'
 ];
 

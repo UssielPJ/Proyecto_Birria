@@ -1,6 +1,6 @@
 <?php
 // Probar las contraseñas comunes
-$passwords = ['password', '123456', 'admin', 'test', 'utec2025'];
+$passwords = ['password', '123456', 'admin', 'test', 'UTSC2025'];
 $hash = '$2a$12$HE2nILaoVjrBKXUoqhynVu.6N5tPz0QnGYgl.uZIH/Qp2.5CJgpzq';
 
 echo 'Probando contraseñas contra el hash:' . PHP_EOL;

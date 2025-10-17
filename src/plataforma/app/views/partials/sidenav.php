@@ -1,7 +1,7 @@
 <aside class="w-64 shrink-0 p-4 space-y-1 bg-white">
   <div class="flex items-center mb-4">
-    <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 mr-3 rounded">
-    <span class="text-xl font-bold">UTEC</span>
+    <img src="/src/plataforma/app/img/UT.jpg" alt="UTSC Logo" class="h-10 mr-3 rounded">
+    <span class="text-xl font-bold">UTSC</span>
   </div>
   <!-- User Info -->
   <div class="flex items-center mb-6">
@@ -10,7 +10,7 @@
     </div>
     <div>
       <p class="font-bold">Administrador</p>
-      <p class="text-sm text-gray-500">admin@utec.edu</p>
+      <p class="text-sm text-gray-500">admin@UTSC.edu</p>
     </div>
   </div>
 

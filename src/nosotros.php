@@ -110,39 +110,162 @@ body.dark {
   color: #f3f4f6;
 }
 
-/* Ajustes para secciones claras en modo oscuro */
-body.dark .bg-white { 
-  background-color: #1f2937 !important; 
+/* Hero section */
+body.dark .hero-nosotros {
+  background: linear-gradient(135deg, var(--ut-green-900) 0%, var(--ut-green-800) 50%, var(--ut-green-700) 100%);
+}
+body.dark .hero-nosotros h1 { color: white; }
+body.dark .hero-nosotros p { color: #e2e8f0; }
+
+/* Stats cards */
+body.dark .bg-gradient-to-br.from-\[var\(--ut-green-50\)\].to-white {
+  background: linear-gradient(135deg, #052e24, #1f2937);
+}
+body.dark .bg-gradient-to-br.from-\[var\(--ut-green-50\)\].to-white .text-\[var\(--ut-green-700\)\] { color: #4ade80; }
+body.dark .bg-gradient-to-br.from-\[var\(--ut-green-50\)\].to-white .text-\[var\(--ut-green-600\)\] { color: #22c55e; }
+body.dark .bg-gradient-to-br.from-\[var\(--ut-green-50\)\].to-white .text-gray-600 { color: #cbd5e1; }
+
+/* Section titles */
+body.dark .text-gray-900 { color: #f3f4f6 !important; }
+body.dark .text-gray-500 { color: #9ca3af !important; }
+body.dark .text-gray-600 { color: #d1d5db !important; }
+
+/* Value cards */
+body.dark .value-card {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+}
+body.dark .value-card h3 { color: white; }
+body.dark .value-card p { color: #cbd5e1; }
+body.dark .value-card .text-blue-600 { color: #60a5fa; }
+body.dark .value-card .text-green-600 { color: #34d399; }
+body.dark .value-card .text-purple-600 { color: #a78bfa; }
+
+/* Timeline */
+body.dark .timeline-item h4 { color: white; }
+body.dark .timeline-item p { color: #cbd5e1; }
+
+/* Stats card */
+body.dark .stats-card {
+  background: linear-gradient(135deg, var(--ut-green-800), var(--ut-green-900));
 }
 
-body.dark .bg-gray-50 { 
-  background-color: #111827 !important; 
+/* Project cards */
+body.dark .bg-white.rounded-2xl {
+  background-color: #1f2937;
+  border: 1px solid #374151;
 }
+body.dark .bg-white.rounded-2xl h3 { color: white; }
+body.dark .bg-white.rounded-2xl p { color: #cbd5e1; }
+body.dark .bg-white.rounded-2xl .text-gray-600 { color: #d1d5db; }
+body.dark .bg-white.rounded-2xl .text-gray-500 { color: #9ca3af; }
 
-body.dark .text-gray-900 { 
-  color: #f3f4f6 !important; 
+/* Badge backgrounds */
+body.dark .bg-green-500 { background-color: #16a34a; }
+body.dark .bg-blue-500 { background-color: #2563eb; }
+body.dark .bg-purple-500 { background-color: #7c3aed; }
+
+/* Campus cards */
+body.dark .campus-card {
+  background-color: #1f2937;
+  border: 1px solid #374151;
 }
+body.dark .campus-card h3 { color: white; }
+body.dark .campus-card p { color: #cbd5e1; }
+body.dark .campus-card .text-\[var\(--ut-green-700\)\] { color: #22c55e; }
 
-body.dark .text-gray-500 { 
-  color: #9ca3af !important; 
-}
+/* Modal backgrounds */
+body.dark .bg-black.bg-opacity-75 { background-color: rgba(0, 0, 0, 0.9); }
+body.dark .bg-white.rounded-2xl.shadow-2xl { background-color: #1f2937; }
+body.dark .border-gray-200 { border-color: #374151; }
+body.dark .bg-gray-50 { background-color: #111827; }
+body.dark .text-gray-900 { color: #f3f4f6; }
+body.dark .text-gray-600 { color: #d1d5db; }
 
-body.dark .text-gray-600 { 
-  color: #d1d5db !important; 
-}
-
-/* Tarjetas en modo oscuro */
-body.dark .value-card,
-body.dark .campus-card,
-body.dark .gallery-item,
+/* Sports cards */
 body.dark .sports-card {
   background-color: #1f2937;
   border: 1px solid #374151;
 }
+body.dark .sports-card h3 { color: white; }
+body.dark .sports-card p { color: #cbd5e1; }
+body.dark .sports-card .text-gray-600 { color: #d1d5db; }
+body.dark .sports-card .text-green-600 { color: #34d399; }
+body.dark .sports-card .text-purple-600 { color: #a78bfa; }
 
-body.dark .stats-card {
-  background: linear-gradient(135deg, var(--ut-green-800), var(--ut-green-900));
+/* Gallery items */
+body.dark .gallery-item {
+  background-color: #1f2937;
+  border: 1px solid #374151;
 }
+body.dark .gallery-item h4 { color: white; }
+body.dark .gallery-item p { color: #d1d5db; }
+
+/* Achievement backgrounds */
+body.dark .bg-yellow-100 { background-color: #451a03; }
+body.dark .bg-yellow-100 .text-yellow-600 { color: #fbbf24; }
+body.dark .bg-blue-100 { background-color: #1e3a8a; }
+body.dark .bg-blue-100 .text-blue-600 { color: #60a5fa; }
+body.dark .bg-green-100 { background-color: #064e3b; }
+body.dark .bg-green-100 .text-green-600 { color: #34d399; }
+body.dark .bg-purple-100 { background-color: #581c87; }
+body.dark .bg-purple-100 .text-purple-600 { color: #a78bfa; }
+
+/* CTA sections */
+body.dark .bg-gradient-to-br.from-green-50.to-emerald-100 { background: linear-gradient(135deg, #0f172a, #1e293b); }
+body.dark .bg-gradient-to-r.from-green-600.to-emerald-700 { background: linear-gradient(135deg, var(--ut-green-700), var(--ut-green-800)); }
+body.dark .bg-white.rounded-2xl.shadow-lg { background-color: #1f2937; border: 1px solid #374151; }
+body.dark .bg-white.rounded-2xl.shadow-lg h3 { color: white; }
+body.dark .bg-white.rounded-2xl.shadow-lg p { color: #cbd5e1; }
+body.dark .bg-green-600 { background-color: #16a34a; }
+body.dark .bg-green-600:hover { background-color: #15803d; }
+
+/* Additional text colors for better visibility */
+body.dark h1, body.dark h2, body.dark h3, body.dark h4, body.dark h5, body.dark h6 {
+  color: #f3f4f6;
+}
+
+body.dark p, body.dark span, body.dark div {
+  color: #d1d5db;
+}
+
+/* Specific text overrides */
+body.dark .text-xl.text-gray-600 { color: #9ca3af !important; }
+body.dark .text-lg.text-gray-600 { color: #cbd5e1 !important; }
+body.dark .text-gray-600 { color: #d1d5db !important; }
+body.dark .text-gray-500 { color: #9ca3af !important; }
+
+/* Links */
+body.dark a { color: #60a5fa; }
+body.dark a:hover { color: #93c5fd; }
+
+/* Buttons */
+body.dark button { color: #f3f4f6; }
+body.dark .bg-green-600 { background-color: #16a34a; }
+body.dark .bg-green-600:hover { background-color: #15803d; }
+
+/* Carousel indicators */
+body.dark .carousel-indicator { background-color: rgba(255, 255, 255, 0.5); }
+body.dark .carousel-indicator.active { background-color: white; }
+
+/* Modal text */
+body.dark .modal-title { color: #f3f4f6; }
+body.dark .modal-description { color: #cbd5e1; }
+
+/* Special text in sports cards */
+body.dark .text-green-200 { color: #bbf7d0; }
+body.dark .text-purple-200 { color: #d8b4fe; }
+body.dark .text-emerald-100 { color: #a7f3d0; }
+
+/* Achievement section */
+body.dark .bg-white.rounded-2xl.shadow-lg.p-8 h3 { color: #f3f4f6; }
+body.dark .bg-white.rounded-2xl.shadow-lg.p-8 p { color: #cbd5e1; }
+body.dark .bg-white.rounded-2xl.shadow-lg.p-8 .text-gray-900 { color: #f3f4f6; }
+body.dark .bg-white.rounded-2xl.shadow-lg.p-8 .text-gray-600 { color: #d1d5db; }
+
+/* Gallery section */
+body.dark .text-3xl.font-extrabold.text-gray-900 { color: #f3f4f6; }
+body.dark .text-xl.text-gray-500 { color: #9ca3af; }
 </style>
 </head>
 <body class="font-sans antialiased text-gray-800">

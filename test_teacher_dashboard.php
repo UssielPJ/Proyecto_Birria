@@ -12,7 +12,7 @@ foreach (glob(__DIR__ . '/src/plataforma/app/models/*.php') as $f) require_once 
 echo "=== Testing Teacher Dashboard ===\n\n";
 
 $userModel = new \App\Models\User();
-$user = $userModel->findByEmail('maestro@utec.edu');
+$user = $userModel->findByEmail('maestro@UTSC.edu');
 
 if ($user) {
     // Set session like Auth::attempt does

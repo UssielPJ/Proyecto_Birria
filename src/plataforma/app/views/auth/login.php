@@ -99,7 +99,7 @@ $HOME_URL = '/src'; // p.ej. '/' o '/index.php'
               inputmode="email"
               value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
               class="input-field w-full pl-10 pr-4 py-3 rounded-lg text-white placeholder-white/50"
-              placeholder="admin@utec.edu">
+              placeholder="admin@UTSC.edu">
           </div>
         </div>
 

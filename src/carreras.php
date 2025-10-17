@@ -46,6 +46,219 @@ body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
+.dark .hero-section {
+    background: linear-gradient(135deg, var(--ut-green-800) 0%, var(--ut-green-900) 100%);
+}
+
+.dark .hero-section h1 {
+    color: white;
+}
+
+.dark .hero-section p {
+    color: #e2e8f0;
+}
+
+.dark .hero-section .bg-white {
+    background: #1e293b;
+    color: white;
+}
+
+.dark .hero-section .bg-white:hover {
+    background: #334155;
+}
+
+.dark .hero-section .border-white {
+    border-color: #e2e8f0;
+    color: white;
+}
+
+.dark .hero-section .border-white:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark .university-card h3 {
+    color: white;
+}
+
+.dark .university-card p {
+    color: #cbd5e1;
+}
+
+.dark .career-card h4 {
+    color: white;
+}
+
+.dark .career-card p {
+    color: #cbd5e1;
+}
+
+.dark .career-card .text-gray-500 {
+    color: #9ca3af;
+}
+
+.dark .section-title {
+    color: white;
+}
+
+.dark .badge-primary {
+    background: rgba(40, 165, 95, 0.2);
+    color: #4ade80;
+    border-color: rgba(40, 165, 95, 0.3);
+}
+
+.dark .badge-secondary {
+    background: rgba(212, 175, 55, 0.2);
+    color: #fbbf24;
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.dark .nav-link {
+    color: #e5e7eb;
+}
+
+.dark .nav-link:hover,
+.dark .nav-link.active {
+    color: #10b981;
+}
+
+.dark .nav-title {
+    background: linear-gradient(135deg, #34d399, #10b981);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dark .theme-toggle {
+    background: rgba(31, 41, 55, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .theme-toggle:hover {
+    background: rgba(31, 41, 55, 0.9);
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.dark .modal-header {
+    background: linear-gradient(135deg, var(--ut-green-700), var(--ut-green-800));
+}
+
+.dark .modal-body {
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+}
+
+.dark .plantel-description {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.dark .plantel-description h4 {
+    color: #93c5fd;
+}
+
+.dark .plantel-description p {
+    color: #bfdbfe;
+}
+
+.dark .modal-body h4 {
+    color: white;
+}
+
+.dark .modal-body p {
+    color: #cbd5e1;
+}
+
+.dark .modal-body li {
+    color: #cbd5e1;
+}
+
+.dark .modal-body .bg-gray-100 {
+    background: #374151;
+    color: #e5e7eb;
+}
+
+.dark .modal-body .bg-blue-50 {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.dark .modal-body .bg-blue-50 h5 {
+    color: #93c5fd;
+}
+
+.dark .modal-body .bg-blue-50 p {
+    color: #bfdbfe;
+}
+
+.dark .modal-body .bg-green-50 {
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.dark .modal-body .bg-green-50 h5 {
+    color: #86efac;
+}
+
+.dark .modal-body .bg-green-50 p {
+    color: #bbf7d0;
+}
+
+.dark .modal-body .text-gray-600 {
+    color: #cbd5e1;
+}
+
+.dark .modal-body .text-gray-700 {
+    color: #e5e7eb;
+}
+
+.dark .modal-body .text-blue-900 {
+    color: #93c5fd;
+}
+
+.dark .modal-body .text-blue-700 {
+    color: #bfdbfe;
+}
+
+.dark .modal-body .text-green-900 {
+    color: #86efac;
+}
+
+.dark .modal-body .text-green-700 {
+    color: #bbf7d0;
+}
+
+.dark .modal-body .border-gray-200 {
+    border-color: #374151;
+}
+
+.dark .modal-body .bg-gray-50 {
+    background: #1f2937;
+}
+
+.dark .modal-body .bg-gray-50 .text-gray-700 {
+    color: #e5e7eb;
+}
+
+.dark .modal-body .bg-gray-50 .border-gray-300 {
+    border-color: #4b5563;
+}
+
+.dark .modal-body .bg-gray-50 .hover\:border-gray-400:hover {
+    border-color: #6b7280;
+}
+
+.dark .modal-body .bg-green-500 {
+    background: #16a34a;
+}
+
+.dark .modal-body .bg-green-500:hover {
+    background: #15803d;
+}
+
+.dark .modal-body .bg-blue-500 {
+    background: #2563eb;
+}
+
+.dark .modal-body .bg-blue-500:hover {
+    background: #1d4ed8;
+}
+
 .hero-section {
     position: relative;
     background: linear-gradient(135deg, var(--ut-green-600) 0%, var(--ut-green-800) 100%);
@@ -673,15 +886,13 @@ body {
         <div class="nav-shell mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="h-16 flex items-center justify-between">
                 <!-- Brand -->
-                <a href="#inicio" class="flex items-center gap-3 group transition-all duration-300 nav-brand">
+                <a href="index.php" class="flex items-center gap-3 group transition-all duration-300 nav-brand">
                     <div class="relative h-10 w-10">
-                        <div class="h-full w-full rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
-                            <span class="text-white font-bold">UT</span>
-                        </div>
+                        <img src="plataforma/app/img/UT.jpg" alt="Universidad Tecnológica de Santa Catarina" class="h-full w-full rounded-lg object-cover">
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-lg font-bold tracking-wide nav-title bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600">UTSC</span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Universidad Tecnológica Santa Catarina</span>
+                        <span class="text-lg font-bold tracking-wide nav-title">UTSC</span>
+                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Universidad Tecnológica de Santa Catarina</span>
                     </div>
                 </a>
 
@@ -987,7 +1198,7 @@ body {
                     <!-- Procesos Productivos -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="plataforma/app/img/proceso-industrial.jpg"
                                  alt="Procesos Productivos" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-industry text-white text-xl"></i>
@@ -1365,7 +1576,7 @@ body {
                     <!-- Carrera 7 - Realidad Virtual y Aumentada -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc696?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="plataforma/app/img/Realidad Virtual y Aumentada.jpg"
                                  alt="Realidad Virtual y Aumentada" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-vr-cardboard text-white text-xl"></i>
@@ -1696,10 +1907,10 @@ body {
                     </div>
 
                     <!-- Carrera 7 - Tecnologías de la Información -->
-                    <div class="career-card p-0 glow-effect">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                                 alt="Tecnologías de la Información" class="career-image">
+                     <div class="career-card p-0 glow-effect">
+                         <div class="relative">
+                             <img src="plataforma/app/img/Tecnologías de la Información.jpg"
+                                  alt="Tecnologías de la Información" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-server text-white text-xl"></i>
                             </div>

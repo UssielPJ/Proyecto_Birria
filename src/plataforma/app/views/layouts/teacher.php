@@ -2,7 +2,7 @@
 /** @var string $title */
 /** @var array|null $user */
 /** @var string $content */
-if (!isset($title))  $title  = 'UTEC · Panel Maestro';
+if (!isset($title))  $title  = 'UTSC · Panel Maestro';
 if (!isset($user))   $user   = $_SESSION['user'] ?? [];
 ?>
 <!DOCTYPE html>
@@ -137,8 +137,8 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
     <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg">
       <div class="p-4 flex items-center gap-3">
         <div class="flex items-center gap-2">
-          <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 w-auto rounded">
-          <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
+          <img src="/src/plataforma/app/img/UT.jpg" alt="UTSC Logo" class="h-10 w-auto rounded">
+          <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTSC</span>
         </div>
       </div>
 
@@ -211,7 +211,7 @@ if (!isset($user))   $user   = $_SESSION['user'] ?? [];
       </main>
 
       <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
-        <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTEC · Panel del Maestro</p>
+        <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTSC · Panel del Maestro</p>
       </footer>
     </div>
   </div>

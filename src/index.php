@@ -51,11 +51,62 @@
         body.dark .text-gray-900 { color: #f3f4f6 !important; }
         body.dark .text-gray-500 { color: #9ca3af !important; }
         body.dark .text-gray-600 { color: #d1d5db !important; }
-
-        /* Tarjetas / elementos */
-        body.dark .course-card { background-color: #1f2937; }
-        body.dark .bg-gray-50.p-8 { background-color: #1f2937; }
-
+        
+        /* Hero section */
+        body.dark .hero-gradient {
+          background: linear-gradient(135deg, var(--ut-green-900) 0%, var(--ut-green-800) 50%, var(--ut-green-700) 100%);
+        }
+        body.dark .hero-gradient h1 { color: white; }
+        body.dark .hero-gradient p { color: #e2e8f0; }
+        body.dark .hero-gradient .bg-white { background: #1e293b; color: white; }
+        body.dark .hero-gradient .bg-white:hover { background: #334155; }
+        body.dark .hero-gradient .border-white { border-color: #e2e8f0; color: white; }
+        body.dark .hero-gradient .border-white:hover { background: rgba(255, 255, 255, 0.1); }
+        
+        /* Stats cards */
+        body.dark .stats-card { background: linear-gradient(135deg, var(--ut-green-800), var(--ut-green-900)); }
+        
+        /* Career cards */
+        body.dark .career-card { background-color: #1f2937; }
+        body.dark .career-card h3 { color: white; }
+        body.dark .career-card p { color: #cbd5e1; }
+        body.dark .career-card .text-gray-500 { color: #9ca3af; }
+        body.dark .career-card .text-gray-600 { color: #d1d5db; }
+        
+        /* News cards */
+        body.dark .news-card { background-color: #1f2937; }
+        body.dark .news-card h3 { color: white; }
+        body.dark .news-card p { color: #cbd5e1; }
+        body.dark .news-card .text-gray-600 { color: #d1d5db; }
+        
+        /* Campus cards */
+        body.dark .campus-card { background-color: #1f2937; }
+        body.dark .campus-card h3 { color: white; }
+        body.dark .campus-card p { color: #cbd5e1; }
+        
+        /* Sports cards */
+        body.dark .sports-card { background-color: #1f2937; }
+        body.dark .sports-card h3 { color: white; }
+        body.dark .sports-card p { color: #cbd5e1; }
+        body.dark .sports-card .text-gray-600 { color: #d1d5db; }
+        
+        /* Gallery items */
+        body.dark .gallery-item { background-color: #1f2937; }
+        body.dark .gallery-item h4 { color: white; }
+        body.dark .gallery-item p { color: #cbd5e1; }
+        
+        /* CTA sections */
+        body.dark .bg-gradient-to-br.from-green-50.to-emerald-100 { background: linear-gradient(135deg, #0f172a, #1e293b); }
+        body.dark .bg-gradient-to-r.from-green-600.to-emerald-700 { background: linear-gradient(135deg, var(--ut-green-700), var(--ut-green-800)); }
+        
+        /* Modal backgrounds */
+        body.dark .bg-black.bg-opacity-75 { background-color: rgba(0, 0, 0, 0.9); }
+        body.dark .bg-white.rounded-2xl { background-color: #1f2937; }
+        body.dark .bg-gray-50 { background-color: #111827; }
+        body.dark .text-gray-900 { color: #f3f4f6; }
+        body.dark .text-gray-600 { color: #d1d5db; }
+        body.dark .border-gray-200 { border-color: #374151; }
+        
         /* Tarjetas de docentes */
         .docente-card {
           background-color: #ffffff;          /* Claro en modo light */
@@ -101,7 +152,7 @@
         }
         /* Botón dentro de la card más oscuro */
         body.dark .docente-card .btn-docente{
-          background:#0b1220 !important; 
+          background:#0b1220 !important;
           color:#e5e7eb !important;
           border:1px solid rgba(255,255,255,.06) !important;
           box-shadow: 0 8px 18px -12px rgba(0,0,0,.75) !important;
@@ -784,7 +835,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="text-lg text-emerald-100 mb-8 max-w-2xl mx-auto">Únete a nuestra comunidad de más de 5,000 estudiantes que están construyendo el futuro de la tecnología</p>
                 <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
                     <a href="registro.php" class="bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-6 py-3 rounded-md text-lg font-semibold transition">Crear Cuenta Gratuita</a>
-                    <a href="mailto:contacto@utec.edu" class="border-2 border-white text-white hover:bg-white hover:text-[var(--ut-green-800)] px-6 py-3 rounded-md text-lg font-semibold transition">Contactar Asesor</a>
+                    <a href="mailto:contacto@UTSC.edu" class="border-2 border-white text-white hover:bg-white hover:text-[var(--ut-green-800)] px-6 py-3 rounded-md text-lg font-semibold transition">Contactar Asesor</a>
                 </div>
             </div>
         </div>

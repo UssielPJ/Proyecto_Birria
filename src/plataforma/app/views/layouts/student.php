@@ -9,7 +9,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UTEC · Plataforma Estudiantil</title>
+  <title>UTSC · Plataforma Estudiantil</title>
   <!-- Prevenir flash de tema incorrecto -->
   <script>
     (function() {
@@ -157,8 +157,8 @@ $role      = $_SESSION['user']['role']  ?? 'alumno';
     <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg">
       <div class="p-4 flex items-center space-x-3">
         <div class="flex items-center gap-2">
-          <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 w-auto rounded">
-          <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
+          <img src="/src/plataforma/app/img/UT.jpg" alt="UTSC Logo" class="h-10 w-auto rounded">
+          <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTSC</span>
         </div>
       </div>
 
@@ -228,7 +228,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno';
       </main>
 
       <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
-        <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTEC · Plataforma Estudiantil</p>
+        <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTSC · Plataforma Estudiantil</p>
       </footer>
     </div>
   </div>
