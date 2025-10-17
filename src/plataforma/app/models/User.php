@@ -445,4 +445,84 @@ class User {
     public function getStudentsByTeacher(int $teacherId): array {
         return []; // Implementar según tus tablas de cursos/inscripciones
     }
+
+    /* ===================== Profesores: helpers ===================== */
+
+/** Trae un profesor por ID con JOIN a teacher_profiles y departamentos */
+public function findTeacherById(int $id): mixed {
+    $sql = "SELECT 
+                u.id, u.nombre, u.email, u.status, u.created_at,
+                tp.numero_empleado, tp.rfc, tp.especialidad, tp.departamento_id,
+                tp.grado_academico, tp.fecha_contratacion, tp.tipo_contrato,
+                tp.nivel_sni, tp.perfil_prodep,
+                d.nombre AS departamento
+            FROM ".self::T_USERS." u
+            LEFT JOIN ".self::T_TEACH." tp ON tp.user_id = u.id
+            LEFT JOIN departamentos d ON d.id = tp.departamento_id
+            WHERE u.id = :id
+            LIMIT 1";
+    $this->db->query($sql, [':id' => $id]);
+    return $this->db->fetch();
+}
+
+/** Inserta/actualiza el perfil de profesor (UPsert sencillo) */
+public function upsertTeacherProfile(int $userId, array $data): bool {
+    $params = [
+        ':uid'  => $userId,
+        ':num'  => $data['numero_empleado']     ?? ($data['num_empleado'] ?? null),
+        ':rfc'  => $data['rfc']                 ?? null,
+        ':dep'  => isset($data['departamento_id']) ? (int)$data['departamento_id'] : null,
+        ':grado'=> $data['grado_academico']     ?? null,
+        ':esp'  => $data['especialidad']        ?? null,
+        ':fcon' => $data['fecha_contratacion']  ?? ($data['fecha_ingreso'] ?? null),
+        ':tcon' => $data['tipo_contrato']       ?? null,
+        ':sni'  => $data['nivel_sni']           ?? 'sin_nivel',
+        ':pro'  => isset($data['perfil_prodep']) ? 1 : 0,
+    ];
+
+    $this->db->query("SELECT COUNT(*) FROM ".self::T_TEACH." WHERE user_id = :uid", [':uid' => $userId]);
+    $exists = (int)$this->db->fetchColumn() > 0;
+
+    if ($exists) {
+        $sql = "UPDATE ".self::T_TEACH." SET
+                    numero_empleado = :num,
+                    rfc = :rfc,
+                    departamento_id = :dep,
+                    grado_academico = :grado,
+                    especialidad = :esp,
+                    fecha_contratacion = :fcon,
+                    tipo_contrato = :tcon,
+                    nivel_sni = :sni,
+                    perfil_prodep = :pro,
+                    updated_at = NOW()
+                WHERE user_id = :uid";
+    } else {
+        $sql = "INSERT INTO ".self::T_TEACH."
+                    (user_id, numero_empleado, rfc, departamento_id, grado_academico, especialidad,
+                     fecha_contratacion, tipo_contrato, nivel_sni, perfil_prodep, created_at)
+                VALUES
+                    (:uid, :num, :rfc, :dep, :grado, :esp, :fcon, :tcon, :sni, :pro, NOW())";
+    }
+
+    $this->db->query($sql, $params);
+    return true;
+}
+
+/** Baja lógica del usuario (recomendada para no romper FK) */
+public function softDeleteUser(int $userId): bool {
+    $this->db->query(
+        "UPDATE ".self::T_USERS." SET status = 'inactive', updated_at = NOW() WHERE id = ?",
+        [$userId]
+    );
+    return $this->db->rowCount() > 0;
+}
+
+/** Eliminación física del usuario + perfil de profesor (si no hay ON DELETE CASCADE) */
+public function deleteTeacherHard(int $userId): bool {
+    // Si tu FK no tiene ON DELETE CASCADE, borra perfil primero:
+    $this->db->query("DELETE FROM ".self::T_TEACH." WHERE user_id = ?", [$userId]);
+    $this->db->query("DELETE FROM ".self::T_USERS." WHERE id = ?", [$userId]);
+    return $this->db->rowCount() > 0;
+}
+
 }
