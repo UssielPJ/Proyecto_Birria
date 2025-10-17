@@ -409,19 +409,19 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-4xl font-bold mb-2">5,000+</div>
+                    <div class="text-4xl font-bold mb-2">4,600+</div>
                     <div class="text-emerald-100">Estudiantes Activos</div>
                 </div>
                 <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-4xl font-bold mb-2">120+</div>
+                    <div class="text-4xl font-bold mb-2">12+</div>
                     <div class="text-emerald-100">Programas Académicos</div>
                 </div>
                 <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-4xl font-bold mb-2">98%</div>
+                    <div class="text-4xl font-bold mb-2">95%</div>
                     <div class="text-emerald-100">Tasa de Satisfacción</div>
                 </div>
                 <div class="stats-card text-center" data-aos="fade-up" data-aos-delay="400">
-                    <div class="text-4xl font-bold mb-2">15</div>
+                    <div class="text-4xl font-bold mb-2">27</div>
                     <div class="text-emerald-100">Años de Experiencia</div>
                 </div>
             </div>
@@ -439,12 +439,12 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Universidad Tecnológica Montemorelos -->
         <div class="mb-16">
             <div class="text-center mb-8">
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">Universidad Tecnológica Montemorelos</h3>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Unidad Montemorelos - UTSC</h3>
                 <p class="text-gray-600">Excelencia educativa con visión global y enfoque en la innovación tecnológica</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            <!-- Carrera 1: Desarrollo y Gestión de Software -->
+            <!-- Carrera 1: Desarrollo de Software -->
             <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
                 <div class="image-flip-container h-48 relative">
                     <!-- Frente de la imagen -->
@@ -460,10 +460,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-center">
                             <h4 class="font-bold mb-2">Especialidades:</h4>
                             <ul class="text-sm text-green-100 space-y-1">
-                                <li>• Programación full-stack</li>
+                                <li>• Desarrollo de aplicaciones</li>
+                                <li>• Programación web</li>
                                 <li>• Bases de datos</li>
-                                <li>• Inteligencia artificial</li>
-                                <li>• Ciberseguridad</li>
+                                <li>• Sistemas embebidos</li>
                             </ul>
                         </div>
                     </div>
@@ -471,10 +471,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 <div class="p-6">
                     <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Tecnología</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Desarrollo y Gestión de Software</h3>
-                    <p class="text-gray-600">Formación en desarrollo de software, gestión de proyectos tecnológicos y sistemas de información empresarial.</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Desarrollo y Gestión de Software</h3>
+                    <p class="text-gray-600">Formación en el diseño, desarrollo y mantenimiento de software, con énfasis en metodologías ágiles y gestión de proyectos.</p>
                     <div class="mt-4 flex justify-between items-center">
-                        <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                        <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                         <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                             Más info ›
                         </a>
@@ -498,10 +498,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-center">
                             <h4 class="font-bold mb-2">Especialidades:</h4>
                             <ul class="text-sm text-orange-100 space-y-1">
-                                <li>• Gestión de mantenimiento</li>
-                                <li>• Automatización</li>
+                                <li>• Mantenimiento predictivo</li>
+                                <li>• Gestión de activos</li>
                                 <li>• Seguridad industrial</li>
-                                <li>• Control de calidad</li>
+                                <li>• Optimización de procesos</li>
                             </ul>
                         </div>
                     </div>
@@ -509,10 +509,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 <div class="p-6">
                     <span class="inline-block bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Mantenimiento Industrial</h3>
-                    <p class="text-gray-600">Especialización en mantenimiento de sistemas industriales, automatización y gestión de procesos productivos.</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Mantenimiento Industrial</h3>
+                    <p class="text-gray-600">Capacitación en el mantenimiento de equipos industriales, con enfoque en eficiencia y sostenibilidad operativa.</p>
                     <div class="mt-4 flex justify-between items-center">
-                        <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                        <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                         <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                             Más info ›
                         </a>
@@ -520,12 +520,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
 
-            <!-- Carrera 3: Negocios Internacionales -->
+            <!-- Carrera 3: Mecatrónica -->
             <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                 <div class="image-flip-container h-48 relative">
                     <!-- Frente de la imagen -->
                     <div class="image-flip-front absolute inset-0">
-                        <img src="./plataforma/app/img/Negocios.jpg" alt="Negocios Internacionales" class="w-full h-full object-cover">
+                        <img src="./plataforma/app/img/60-IMG_3099.jpg" alt="Mecatrónica" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                             <span class="text-white font-semibold">Ver detalles</span>
                         </div>
@@ -536,21 +536,21 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-center">
                             <h4 class="font-bold mb-2">Especialidades:</h4>
                             <ul class="text-sm text-blue-100 space-y-1">
-                                <li>• Comercio exterior</li>
-                                <li>• Marketing global</li>
-                                <li>• Finanzas internacionales</li>
-                                <li>• Logística</li>
+                                <li>• Robótica industrial</li>
+                                <li>• Control automático</li>
+                                <li>• Sistemas embebidos</li>
+                                <li>• Diseño mecatrónico</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <div class="p-6">
-                    <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Marketing Global</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Negocios Internacionales</h3>
-                    <p class="text-gray-600">Formación en comercio exterior, logística internacional y gestión de negocios globales con visión estratégica.</p>
+                    <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Mecatrónica</h3>
+                    <p class="text-gray-600">Integración de mecánica, electrónica e informática para el desarrollo de sistemas automatizados.</p>
                     <div class="mt-4 flex justify-between items-center">
-                        <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                        <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                         <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                             Más info ›
                         </a>
@@ -567,12 +567,12 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                <!-- Carrera 1: Inteligencia Artificial -->
+                <!-- Carrera 1: Tecnologías de la Información -->
                 <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
                     <div class="image-flip-container h-48 relative">
                         <!-- Frente de la imagen -->
                         <div class="image-flip-front absolute inset-0">
-                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Inteligencia Artificial" class="w-full h-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Tecnologías de la Información" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                                 <span class="text-white font-semibold">Ver detalles</span>
                             </div>
@@ -583,21 +583,21 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="text-center">
                                 <h4 class="font-bold mb-2">Especialidades:</h4>
                                 <ul class="text-sm text-purple-100 space-y-1">
-                                    <li>• Machine learning</li>
-                                    <li>• Visión por computadora</li>
-                                    <li>• Chatbots inteligentes</li>
-                                    <li>• IA ética</li>
+                                    <li>• Desarrollo de software</li>
+                                    <li>• Ciberseguridad</li>
+                                    <li>• Análisis de datos</li>
+                                    <li>• Innovación digital</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <div class="p-6">
-                        <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">IA</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Inteligencia Artificial</h3>
-                        <p class="text-gray-600">Desarrollo de sistemas inteligentes, machine learning y soluciones innovadoras con IA.</p>
+                        <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Tecnología</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Tecnologías de la Información e Innovación Digital</h3>
+                        <p class="text-gray-600">Formación en tecnologías emergentes para la innovación y transformación digital en organizaciones.</p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                            <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                             <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                                 Más info ›
                             </a>
@@ -605,12 +605,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
 
-                <!-- Carrera 2: Ciberseguridad -->
+                <!-- Carrera 2: Mecatrónica -->
                 <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                     <div class="image-flip-container h-48 relative">
                         <!-- Frente de la imagen -->
                         <div class="image-flip-front absolute inset-0">
-                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Ciberseguridad" class="w-full h-full object-cover">
+                            <img src="./plataforma/app/img/Ingeniería en Mecatrónica.jpg" alt="Mecatrónica" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                                 <span class="text-white font-semibold">Ver detalles</span>
                             </div>
@@ -621,21 +621,21 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="text-center">
                                 <h4 class="font-bold mb-2">Especialidades:</h4>
                                 <ul class="text-sm text-red-100 space-y-1">
-                                    <li>• Análisis forense digital</li>
-                                    <li>• Ethical hacking</li>
-                                    <li>• Gestión de incidentes</li>
-                                    <li>• Seguridad de infraestructuras</li>
+                                    <li>• Automatización industrial</li>
+                                    <li>• Robótica</li>
+                                    <li>• Control de procesos</li>
+                                    <li>• Sistemas inteligentes</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <div class="p-6">
-                        <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Seguridad</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ciberseguridad</h3>
-                        <p class="text-gray-600">Protección de sistemas informáticos, análisis de vulnerabilidades y seguridad digital.</p>
+                        <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Mecatrónica</h3>
+                        <p class="text-gray-600">Desarrollo de sistemas mecatrónicos para la industria 4.0 y automatización avanzada.</p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                            <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                             <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                                 Más info ›
                             </a>
@@ -643,12 +643,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
 
-                <!-- Carrera 3: Energías Renovables -->
+                <!-- Carrera 3: Sistemas Productivos -->
                 <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                     <div class="image-flip-container h-48 relative">
                         <!-- Frente de la imagen -->
                         <div class="image-flip-front absolute inset-0">
-                            <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Energías Renovables" class="w-full h-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sistemas Productivos" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                                 <span class="text-white font-semibold">Ver detalles</span>
                             </div>
@@ -659,21 +659,21 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="text-center">
                                 <h4 class="font-bold mb-2">Especialidades:</h4>
                                 <ul class="text-sm text-yellow-100 space-y-1">
-                                    <li>• Sistemas fotovoltaicos</li>
-                                    <li>• Energía eólica</li>
-                                    <li>• Eficiencia energética</li>
-                                    <li>• Biocombustibles</li>
+                                    <li>• Optimización de procesos</li>
+                                    <li>• Logística industrial</li>
+                                    <li>• Calidad y productividad</li>
+                                    <li>• Sostenibilidad operativa</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <div class="p-6">
-                        <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Sostenibilidad</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Energías Renovables</h3>
-                        <p class="text-gray-600">Desarrollo de sistemas de energía sostenible y tecnologías limpias para el futuro.</p>
+                        <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ingeniería</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Sistemas Productivos</h3>
+                        <p class="text-gray-600">Gestión y optimización de sistemas productivos para mejorar la eficiencia en entornos industriales.</p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                            <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                             <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                                 Más info ›
                             </a>
@@ -691,12 +691,12 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                <!-- Carrera 1: Agrotecnología -->
+                <!-- Carrera 1: Agricultura Sustentable -->
                 <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
                     <div class="image-flip-container h-48 relative">
                         <!-- Frente de la imagen -->
                         <div class="image-flip-front absolute inset-0">
-                            <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Agrotecnología" class="w-full h-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Agricultura Sustentable" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                                 <span class="text-white font-semibold">Ver detalles</span>
                             </div>
@@ -708,9 +708,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <h4 class="font-bold mb-2">Especialidades:</h4>
                                 <ul class="text-sm text-green-100 space-y-1">
                                     <li>• Agricultura de precisión</li>
-                                    <li>• Riego tecnificado</li>
-                                    <li>• Análisis de suelos</li>
-                                    <li>• Bioinsumos</li>
+                                    <li>• Manejo integrado de plagas</li>
+                                    <li>• Riego eficiente</li>
+                                    <li>• Biotecnología agrícola</li>
                                 </ul>
                             </div>
                         </div>
@@ -718,10 +718,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="p-6">
                         <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Agroindustria</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Agrotecnología</h3>
-                        <p class="text-gray-600">Aplicación de tecnología avanzada en la agricultura para optimizar producción y sostenibilidad.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Agricultura Sustentable y Protegida</h3>
+                        <p class="text-gray-600">Técnicas modernas para la producción agrícola sostenible y protegida, enfocada en eficiencia y medio ambiente.</p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                            <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                             <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                                 Más info ›
                             </a>
@@ -745,10 +745,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="text-center">
                                 <h4 class="font-bold mb-2">Especialidades:</h4>
                                 <ul class="text-sm text-blue-100 space-y-1">
-                                    <li>• Ecoturismo</li>
-                                    <li>• Patrimonio cultural</li>
+                                    <li>• Turismo ecológico</li>
+                                    <li>• Gestión de patrimonio</li>
                                     <li>• Marketing turístico</li>
-                                    <li>• Gestión sostenible</li>
+                                    <li>• Planificación sostenible</li>
                                 </ul>
                             </div>
                         </div>
@@ -756,10 +756,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="p-6">
                         <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Turismo</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Turismo Sustentable</h3>
-                        <p class="text-gray-600">Gestión de destinos turísticos con enfoque en sostenibilidad y desarrollo local.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Turismo Sustentable</h3>
+                        <p class="text-gray-600">Desarrollo de estrategias para el turismo responsable y sostenible en regiones locales.</p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                            <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                             <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                                 Más info ›
                             </a>
@@ -767,12 +767,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
 
-                <!-- Carrera 3: Logística y Transporte -->
+                <!-- Carrera 3: Logística y Cadena de Suministro -->
                 <div class="career-card bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                     <div class="image-flip-container h-48 relative">
                         <!-- Frente de la imagen -->
                         <div class="image-flip-front absolute inset-0">
-                            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Logística y Transporte" class="w-full h-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Logística y Cadena de Suministro" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                                 <span class="text-white font-semibold">Ver detalles</span>
                             </div>
@@ -783,10 +783,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="text-center">
                                 <h4 class="font-bold mb-2">Especialidades:</h4>
                                 <ul class="text-sm text-orange-100 space-y-1">
-                                    <li>• Cadena de suministro</li>
-                                    <li>• Comercio exterior</li>
-                                    <li>• Planificación de rutas</li>
-                                    <li>• Gestión de almacenes</li>
+                                    <li>• Gestión de cadenas de suministro</li>
+                                    <li>• Logística internacional</li>
+                                    <li>• Optimización de rutas</li>
+                                    <li>• Almacenamiento y distribución</li>
                                 </ul>
                             </div>
                         </div>
@@ -794,10 +794,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="p-6">
                         <span class="inline-block bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">Logística</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Logística y Transporte</h3>
-                        <p class="text-gray-600">Optimización de cadenas de suministro y gestión eficiente del transporte.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ingeniería en Logística y Cadena de Suministro</h3>
+                        <p class="text-gray-600">Optimización de flujos logísticos y cadenas de suministro para operaciones eficientes.</p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-sm text-gray-500">TSU: 1.5 años | Ing: +1.5 años</span>
+                            <span class="text-sm text-gray-500">TSU: 2 años | Ing: +1 año</span>
                             <a href="carreras.php" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] text-sm font-medium">
                                 Más info ›
                             </a>
@@ -826,11 +826,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="news-card bg-white rounded-lg overflow-hidden shadow-md" data-aos="fade-up">
-                    <img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Beca Santander">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/beca_santander_excelencia_academica.png" alt="Beca Santander">
                     <div class="p-6">
                         <span class="inline-block bg-[var(--ut-green-100)] text-[var(--ut-green-800)] text-xs font-semibold px-2.5 py-0.5 rounded mb-2">Novedad</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Beca Santander Media Manutención 2025</h3>
-                        <p class="text-gray-600 mb-4">Ya está disponible la beca de Grupo Santander para estudiantes de la UTSC Montemorelos, apoyando la manutención durante el ciclo escolar 2025.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Beca Santander 2025 para Estudiantes UTSC</h3>
+                        <p class="text-gray-600 mb-4">Anunciada la beca de Grupo Santander con apoyo económico de $4,500 para estudiantes activos de la UTSC.</p>
                         <button onclick="showNewsModal('beca-santander')" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center">
                             Leer más
                             <i data-feather="arrow-right" class="ml-1 w-4 h-4"></i>
@@ -839,11 +839,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div class="news-card bg-white rounded-lg overflow-hidden shadow-md" data-aos="fade-up" data-aos-delay="100">
-                    <img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="FIL Monterrey">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/Presencial Feria FIL 2025.jpg" alt="FIL Monterrey">
                     <div class="p-6">
                         <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded mb-2">Evento</span>
                         <h3 class="text-xl font-bold text-gray-900 mb-2">Presencia en FIL Monterrey 2025</h3>
-                        <p class="text-gray-600 mb-4">La UT Santa Catarina, incluyendo la unidad Montemorelos, participó en la inauguración de la Feria Internacional del Libro Monterrey 2025.</p>
+                        <p class="text-gray-600 mb-4">La UTSC participó en la inauguración de la Feria Internacional del Libro Monterrey 2025, presentando programas académicos.</p>
                         <button onclick="showNewsModal('fil-monterrey')" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center">
                             Leer más
                             <i data-feather="arrow-right" class="ml-1 w-4 h-4"></i>
@@ -852,11 +852,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div class="news-card bg-white rounded-lg overflow-hidden shadow-md" data-aos="fade-up" data-aos-delay="200">
-                    <img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Graduación">
+                    <img class="w-full h-48 object-cover" src="./plataforma/app/img/Backstage Graduación UTSC 2025.jpeg" alt="Graduación">
                     <div class="p-6">
                         <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded mb-2">Logro</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Backstage Graduación UTSC 2025</h3>
-                        <p class="text-gray-600 mb-4">Felicitaciones a los graduados de la Universidad Tecnológica de Santa Catarina en la ceremonia de septiembre 2025.</p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Graduación UTSC 2025</h3>
+                        <p class="text-gray-600 mb-4">Ceremonia de graduación de 950 estudiantes de la UTSC en septiembre de 2025.</p>
                         <button onclick="showNewsModal('graduacion')" class="text-[var(--ut-green-700)] hover:text-[var(--ut-green-900)] font-medium flex items-center">
                             Leer más
                             <i data-feather="arrow-right" class="ml-1 w-4 h-4"></i>
@@ -903,7 +903,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <i data-feather="book" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-medium text-gray-900">Universidad Tecnológica Montemorelos</h4>
+                                <h4 class="font-medium text-gray-900">Unidad Montemorelos UTSC</h4>
                                 <p class="text-sm text-gray-500">6 carreras disponibles</p>
                             </div>
                         </div>
@@ -914,7 +914,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div>
                                 <h4 class="font-medium text-gray-900">Universidad Tecnológica Santa Catarina</h4>
-                                <p class="text-sm text-gray-500">7 carreras disponibles</p>
+                                <p class="text-sm text-gray-500">8 carreras disponibles</p>
                             </div>
                         </div>
 
@@ -924,7 +924,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div>
                                 <h4 class="font-medium text-gray-900">Universidad Tecnológica de Linares</h4>
-                                <p class="text-sm text-gray-500">8 carreras disponibles</p>
+                                <p class="text-sm text-gray-500">6 carreras disponibles</p>
                             </div>
                         </div>
                     </div>
@@ -1095,41 +1095,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const newsData = {
                 'beca-santander': {
-                    title: 'Beca Santander Media Manutención 2025',
+                    title: 'Beca Santander 2025 para Estudiantes UTSC',
                     content: `
-                        <p class="mb-4">La Universidad Tecnológica de Santa Catarina (UTSC) Montemorelos se complace en anunciar que ya está disponible la Beca Santander Media Manutención 2025.</p>
-                        <p class="mb-4">Esta beca, proporcionada por Grupo Santander, tiene como objetivo apoyar a los estudiantes de la UTSC Montemorelos durante el ciclo escolar 2025, cubriendo parcialmente los gastos de manutención.</p>
+                        <p class="mb-4">La Universidad Tecnológica de Santa Catarina anuncia la Beca Santander 2025 para estudiantes activos.</p>
+                        <p class="mb-4">Esta beca proporciona un apoyo económico único de $4,500 pesos, además de cursos complementarios en Santander Open Academy y recursos para materiales educativos.</p>
                         <p class="mb-4"><strong>Requisitos:</strong></p>
                         <ul class="list-disc list-inside mb-4">
-                            <li>Ser estudiante activo de la UTSC Montemorelos</li>
-                            <li>Mantener un promedio mínimo de 8.0</li>
-                            <li>Presentar solicitud antes del 31 de enero de 2025</li>
+                            <li>Ser estudiante activo de la UTSC</li>
+                            <li>Mantener buen promedio académico</li>
+                            <li>Presentar solicitud en el portal de becas</li>
                         </ul>
-                        <p>Para más información, contacta a la oficina de becas al correo: becas@utsc.edu.mx</p>
+                        <p>Para más información, consulta el portal de becas de la UTSC.</p>
                     `
                 },
                 'fil-monterrey': {
                     title: 'Presencia en FIL Monterrey 2025',
                     content: `
-                        <p class="mb-4">La Universidad Tecnológica de Santa Catarina, incluyendo su unidad en Montemorelos, participó activamente en la inauguración de la Feria Internacional del Libro Monterrey 2025.</p>
-                        <p class="mb-4">Nuestros representantes tuvieron la oportunidad de presentar los programas académicos innovadores que ofrecemos, destacando las carreras en tecnología, negocios y energías renovables.</p>
-                        <p class="mb-4">Durante el evento, se realizaron alianzas estratégicas con editoriales y se presentó el nuevo catálogo de publicaciones académicas de la UTSC.</p>
-                        <p>La participación en FIL Monterrey reafirma nuestro compromiso con la educación y la cultura en la región noreste de México.</p>
+                        <p class="mb-4">La Universidad Tecnológica de Santa Catarina participó en la inauguración de la Feria Internacional del Libro Monterrey 2025.</p>
+                        <p class="mb-4">Representantes de la UTSC presentaron los programas académicos innovadores, destacando carreras en tecnología, ingeniería y negocios.</p>
+                        <p class="mb-4">El evento permitió establecer alianzas con editoriales y promover el catálogo de publicaciones académicas de la institución.</p>
+                        <p>Esta participación refuerza el compromiso de la UTSC con la educación y la difusión cultural en Nuevo León.</p>
                     `
                 },
                 'graduacion': {
-                    title: 'Backstage Graduación UTSC 2025',
+                    title: 'Graduación UTSC 2025',
                     content: `
-                        <p class="mb-4">¡Felicitaciones a todos los graduados de la Universidad Tecnológica de Santa Catarina en la ceremonia de septiembre 2025!</p>
-                        <p class="mb-4">La ceremonia de graduación fue un evento memorable donde se reconoció el esfuerzo y dedicación de nuestros estudiantes. Más de 500 egresados recibieron su título en diversas disciplinas tecnológicas.</p>
+                        <p class="mb-4">¡Felicitaciones a los 950 egresados de la Universidad Tecnológica de Santa Catarina en la ceremonia de septiembre 2025!</p>
+                        <p class="mb-4">La ceremonia reconoció el esfuerzo de los estudiantes en carreras como Ingeniería en Mecatrónica, Mantenimiento Industrial y Sistemas Productivos.</p>
                         <p class="mb-4"><strong>Destacados del evento:</strong></p>
                         <ul class="list-disc list-inside mb-4">
-                            <li>Discurso inaugural del Rector Dr. Roberto Silva</li>
-                            <li>Reconocimientos especiales a estudiantes destacados</li>
-                            <li>Presentación musical de la Orquesta Sinfónica de la UTSC</li>
-                            <li>Cena de gala con familiares y amigos</li>
+                            <li>Presencia del Gobernador de Nuevo León</li>
+                            <li>Reconocimientos a estudiantes destacados</li>
+                            <li>Presentaciones culturales</li>
+                            <li>Celebración con familias</li>
                         </ul>
-                        <p>Los graduados de 2025 están preparados para liderar la transformación tecnológica en México y el mundo. ¡Les deseamos el mayor de los éxitos!</p>
+                        <p>Los egresados están listos para contribuir al desarrollo tecnológico de México.</p>
                     `
                 }
             };
