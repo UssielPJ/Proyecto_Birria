@@ -846,34 +846,74 @@ body {
     padding-bottom: 60px;
 }
 
+/* Estilos para el flip solo en la imagen */
+.image-flip-container {
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.image-flip-front,
+.image-flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease-in-out;
+  border-radius: 12px 12px 0 0;
+}
+
+.image-flip-back {
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-flip-container:hover .image-flip-front {
+  transform: rotateY(-180deg);
+}
+
+.image-flip-container:hover .image-flip-back {
+  transform: rotateY(0deg);
+}
+
+.career-card {
+  transition: all 0.3s ease;
+}
+
+.career-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .hero-section {
         min-height: 50vh;
         padding: 2rem 0;
     }
-    
+
     .section-title {
         font-size: 1.5rem;
         margin-bottom: 1rem;
     }
-    
+
     .career-image {
         height: 120px;
     }
-    
+
     .career-icon {
         width: 40px;
         height: 40px;
         top: 95px;
         right: 12px;
     }
-    
+
     .university-icon {
         width: 50px;
         height: 50px;
     }
-    
+
     .button-group {
         flex-direction: column;
     }
@@ -1021,7 +1061,7 @@ body {
                     <!-- Desarrollo y Gestión de Software -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="./plataforma/app/img/Desarrollo de Software.jpeg"
                                  alt="Desarrollo de Software" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-laptop-code text-white text-xl"></i>
@@ -1029,23 +1069,23 @@ body {
                         </div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
-                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Desarrollo y Gestión de Software</h4>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Ingeniería en Desarrollo y Gestión de Software</h4>
                                 <div class="flex space-x-2">
                                     <span class="badge badge-primary">TSU/Ing</span>
                                     <span class="badge badge-secondary">Nuevo</span>
                                 </div>
                             </div>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Formación en desarrollo de software, gestión de proyectos tecnológicos y sistemas de información empresarial.
+                                Formación en el diseño, desarrollo y mantenimiento de software, con énfasis en metodologías ágiles y gestión de proyectos.
                             </p>
                             <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-clock"></i>
-                                    TSU: 1.5 años
+                                    TSU: 2 años
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-users"></i>
-                                    Ing: +1.5 años
+                                    Ing: +1 año
                                 </span>
                             </div>
                             <div class="button-group">
@@ -1066,7 +1106,7 @@ body {
                     <!-- Mantenimiento Industrial -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="./plataforma/app/img/IndustrialM.jpg"
                                  alt="Mantenimiento Industrial" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-cogs text-white text-xl"></i>
@@ -1074,22 +1114,22 @@ body {
                         </div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
-                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Mantenimiento Industrial</h4>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Ingeniería en Mantenimiento Industrial</h4>
                                 <div class="flex space-x-2">
                                     <span class="badge badge-primary">TSU/Ing</span>
                                 </div>
                             </div>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Especialización en mantenimiento de sistemas industriales, automatización y gestión de procesos productivos.
+                                Capacitación en el mantenimiento de equipos industriales, con enfoque en eficiencia y sostenibilidad operativa.
                             </p>
                             <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-clock"></i>
-                                    TSU: 1.5 años
+                                    TSU: 2 años
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-users"></i>
-                                    Ing: +1.5 años
+                                    Ing: +1 año
                                 </span>
                             </div>
                             <div class="button-group">
@@ -1154,7 +1194,7 @@ body {
                     <!-- Mecatrónica -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="./plataforma/app/img/60-IMG_3099.jpg"
                                  alt="Mecatrónica" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-robot text-white text-xl"></i>
@@ -1162,22 +1202,22 @@ body {
                         </div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
-                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Mecatrónica</h4>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Ingeniería en Mecatrónica</h4>
                                 <div class="flex space-x-2">
                                     <span class="badge badge-primary">TSU/Ing</span>
                                 </div>
                             </div>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Integración de mecánica, electrónica e informática para el desarrollo de sistemas automatizados y robots industriales.
+                                Integración de mecánica, electrónica e informática para el desarrollo de sistemas automatizados.
                             </p>
                             <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-clock"></i>
-                                    TSU: 1.5 años
+                                    TSU: 2 años
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-users"></i>
-                                    Ing: +1.5 años
+                                    Ing: +1 año
                                 </span>
                             </div>
                             <div class="button-group">
@@ -1242,7 +1282,7 @@ body {
                     <!-- Lengua Inglesa -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="./plataforma/app/img/Lengua Inglesa.jpg" 
                                  alt="Lengua Inglesa" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-language text-white text-xl"></i>
@@ -2073,488 +2113,392 @@ body {
         // Datos de las carreras de Montemorelos
         const carrerasData = {
             'desarrollo-software': {
-                title: 'Desarrollo y Gestión de Software',
+                title: 'Ingeniería en Desarrollo y Gestión de Software',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Forma profesionales capaces de desarrollar, implementar y gestionar sistemas de software de calidad, aplicando metodologías ágiles y estándares internacionales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Formación en diseño, programación, pruebas, mantenimiento y gestión de proyectos de software. Incluye metodologías ágiles, desarrollo web, bases de datos y sistemas embebidos.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Desarrollar aplicaciones web y móviles',
-                    'Gestionar proyectos de software',
-                    'Administrar bases de datos',
-                    'Implementar metodologías ágiles',
-                    'Diseñar arquitecturas de software',
-                    'Realizar pruebas de calidad'
+                    'Programador de aplicaciones',
+                    'gestor de proyectos tecnológicos',
+                    'administrador de bases de datos',
+                    'arquitecto de software',
+                    'analista de sistemas'
                 ],
                 campoLaboral: [
-                    'Desarrollador Full Stack',
-                    'Gestor de Proyectos TI',
-                    'Administrador de Bases de Datos',
-                    'Consultor Tecnológico',
-                    'Arquitecto de Software',
-                    'Analista de Sistemas'
+                    'Empresas de desarrollo de software',
+                    'startups tecnológicas',
+                    'áreas de TI en empresas grandes',
+                    'consultoras tecnológicas',
+                    'instituciones educativas'
                 ]
             },
             'mantenimiento-industrial': {
-                title: 'Mantenimiento Industrial',
+                title: 'Ingeniería en Mantenimiento Industrial',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Prepara especialistas en el mantenimiento de sistemas industriales, automatización y gestión de procesos productivos con enfoque en eficiencia y seguridad.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Capacitación en mantenimiento predictivo y preventivo, gestión de activos, seguridad industrial, control de procesos y automatización.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Mantenimiento predictivo y preventivo',
-                    'Automatización industrial',
-                    'Gestión de procesos productivos',
-                    'Seguridad industrial',
-                    'Control de calidad',
-                    'Supervisión de equipos'
+                    'Supervisor de mantenimiento',
+                    'técnico en automatización',
+                    'ingeniero de planta',
+                    'gestor de mantenimiento industrial'
                 ],
                 campoLaboral: [
-                    'Supervisor de Mantenimiento',
-                    'Técnico en Automatización',
-                    'Gestor de Procesos',
-                    'Consultor Industrial',
-                    'Ingeniero de Planta',
-                    'Coordinador de Producción'
+                    'Industrias manufactureras',
+                    'plantas de producción',
+                    'empresas de servicios de mantenimiento',
+                    'sectores automotriz, petroquímico y alimenticio'
                 ]
             },
             'negocios-internacionales': {
                 title: 'Negocios Internacionales',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Forma profesionales en comercio exterior, logística internacional y gestión de negocios globales con visión estratégica y competencias interculturales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Formación en comercio exterior, logística internacional, negociación intercultural, marketing y financiamiento internacional.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Gestión de comercio exterior',
-                    'Logística internacional',
-                    'Negociación intercultural',
-                    'Marketing global',
-                    'Finanzas internacionales',
-                    'Estrategias de expansión'
+                    'Ejecutivo de comercio exterior',
+                    'gestor logístico',
+                    'analista de mercados internacionales',
+                    'asesor en negocios globales'
                 ],
                 campoLaboral: [
-                    'Ejecutivo de Comercio Exterior',
-                    'Agente Aduanal',
-                    'Consultor Internacional',
-                    'Gestor Logístico',
-                    'Analista de Mercados',
-                    'Coordinador de Exportación'
+                    'Empresas exportadoras e importadoras',
+                    'agencias aduanales',
+                    'consultoras internacionales',
+                    'instituciones gubernamentales y ONGs'
                 ]
             },
             'mecatronica': {
-                title: 'Mecatrónica',
+                title: 'Ingeniería en Mecatrónica',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Integra conocimientos de mecánica, electrónica e informática para el diseño, desarrollo y mantenimiento de sistemas automatizados y robots industriales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Integración de mecánica, electrónica, informática y control para el desarrollo de sistemas automatizados y robots.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Diseño de sistemas mecatrónicos',
-                    'Programación de robots',
-                    'Automatización industrial',
-                    'Control de procesos',
-                    'Instrumentación y control',
-                    'Diseño CAD/CAM'
+                    'Ingeniero en automatización',
+                    'diseñador de robots',
+                    'técnico en control de procesos',
+                    'desarrollador de sistemas mecatrónicos'
                 ],
                 campoLaboral: [
-                    'Ingeniero de Automatización',
-                    'Técnico en Robótica',
-                    'Diseñador Mecatrónico',
-                    'Supervisor de Producción',
-                    'Especialista en Control',
-                    'Proyectista Industrial'
+                    'Industria manufacturera',
+                    'robótica',
+                    'automatización de procesos',
+                    'sectores aeronáuticos y de energía'
                 ]
             },
             'procesos-productivos': {
                 title: 'Procesos Productivos',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Especializa en la optimización de procesos de manufactura, control de calidad y gestión de producción para maximizar la eficiencia operativa.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Especialización en optimización de procesos de manufactura, control de calidad, gestión de producción y mejora continua.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Optimización de procesos',
-                    'Control de calidad',
-                    'Gestión de producción',
-                    'Lean manufacturing',
-                    'Logística y cadena de suministro',
-                    'Seguridad industrial'
+                    'Ingeniero de procesos',
+                    'supervisor de producción',
+                    'analista de calidad',
+                    'gestor de operaciones'
                 ],
                 campoLaboral: [
-                    'Ingeniero de Procesos',
-                    'Supervisor de Producción',
-                    'Consultor de Calidad',
-                    'Gestor Operativo',
-                    'Analista de Mejora Continua',
-                    'Coordinador de Manufactura'
+                    'Industrias de alimentos, química, metalurgia, farmacéutica, petroquímica y automotriz'
                 ]
             },
             'lengua-inglesa': {
-                title: 'Lengua Inglesa',
+                title: 'Lengua Inglesa (Bilingüe)',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Desarrolla competencias lingüísticas avanzadas en inglés, preparando para la traducción, interpretación y enseñanza del idioma en contextos profesionales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Dominio avanzado del inglés, habilidades de traducción, interpretación, comunicación intercultural y enseñanza del idioma.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Dominio avanzado del inglés',
-                    'Traducción e interpretación',
-                    'Enseñanza del idioma',
-                    'Comunicación intercultural',
-                    'Lingüística aplicada',
-                    'Gestión cultural'
+                    'Traductor',
+                    'profesor de idiomas',
+                    'guía turístico bilingüe',
+                    'asesor en comunicación internacional'
                 ],
                 campoLaboral: [
-                    'Traductor/Intérprete',
-                    'Profesor de Inglés',
-                    'Guía Turístico Bilingüe',
-                    'Ejecutivo Internacional',
-                    'Editor de Contenidos',
-                    'Asesor Lingüístico'
+                    'Instituciones educativas',
+                    'sector turístico',
+                    'empresas internacionales',
+                    'agencias de traducción'
                 ]
             },
             // Carreras de UTSC
             'ia-utsc': {
-                title: 'Inteligencia Artificial',
+                title: 'Ingeniería en Tecnologías de la Información e Innovación Digital',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Formación en desarrollo de sistemas inteligentes, machine learning, deep learning y soluciones innovadoras con inteligencia artificial para transformar industrias y crear el futuro tecnológico.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Desarrollo de aplicaciones, ciberseguridad, análisis de datos, innovación en transformación digital.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Desarrollar algoritmos de machine learning',
-                    'Implementar sistemas de visión por computadora',
-                    'Crear chatbots y asistentes virtuales inteligentes',
-                    'Diseñar redes neuronales artificiales',
-                    'Analizar grandes volúmenes de datos',
-                    'Implementar soluciones de IA ética'
+                    'Desarrollador full-stack',
+                    'gestor de proyectos digitales',
+                    'administrador de bases de datos',
+                    'arquitecto de soluciones TI'
                 ],
                 campoLaboral: [
-                    'Ingeniero de Machine Learning',
-                    'Científico de Datos',
-                    'Desarrollador de IA',
-                    'Especialista en Visión por Computadora',
-                    'Arquitecto de Sistemas Inteligentes',
-                    'Consultor en Transformación Digital'
+                    'Empresas de tecnología',
+                    'startups',
+                    'hospitales',
+                    'instituciones públicas y privadas en transformación digital'
                 ]
             },
             'ciberseguridad-utsc': {
-                title: 'Ciberseguridad',
+                title: 'Ingeniería en Ciberseguridad',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Formación especializada en protección de sistemas informáticos, análisis de vulnerabilidades, ethical hacking y gestión de seguridad digital para enfrentar los desafíos del mundo conectado.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Protección de sistemas informáticos, análisis de vulnerabilidades, pruebas de penetración, gestión de incidentes.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Auditoría de sistemas de información',
-                    'Análisis forense digital',
-                    'Gestión de incidentes de seguridad',
-                    'Desarrollo de políticas de seguridad',
-                    'Pentesting y ethical hacking',
-                    'Protección de infraestructura crítica'
+                    'Analista en seguridad',
+                    'consultor en ciberseguridad',
+                    'auditor de sistemas',
+                    'pentester'
                 ],
                 campoLaboral: [
-                    'Analista de Ciberseguridad',
-                    'Consultor de Seguridad Informática',
-                    'Ethical Hacker',
-                    'Especialista en Forense Digital',
-                    'Arquitecto de Seguridad',
-                    'Gestor de Riesgos Digitales'
+                    'Empresas financieras',
+                    'sector gubernamental',
+                    'empresas de telecomunicaciones',
+                    'ciberseguridad en la nube'
                 ]
             },
             'energias-utsc': {
-                title: 'Energías Renovables',
+                title: 'Ingeniería en Energías Renovables',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Formación en el diseño, implementación y gestión de sistemas de energía sostenible, incluyendo solar, eólica, biomasa y otras tecnologías limpias para un futuro energético responsable.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Diseño, gestión, mantenimiento de sistemas solares, eólicos, biomasa y tecnologías limpias.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Diseño de sistemas fotovoltaicos',
-                    'Gestión de proyectos eólicos',
-                    'Análisis de eficiencia energética',
-                    'Desarrollo de biocombustibles',
-                    'Planificación de redes inteligentes',
-                    'Auditoría energética'
+                    'Ingeniero en energías renovables',
+                    'gestor de proyectos sostenibles',
+                    'consultor ambiental'
                 ],
                 campoLaboral: [
-                    'Ingeniero de Proyectos Renovables',
-                    'Especialista en Eficiencia Energética',
-                    'Consultor en Sustentabilidad',
-                    'Técnico en Sistemas Solares',
-                    'Gestor de Parques Eólicos',
-                    'Auditor Energético'
+                    'Empresas de energías limpias',
+                    'plantas solares y eólicas',
+                    'consultoras ambientales',
+                    'organismos gubernamentales'
                 ]
             },
             'biotecnologia-utsc': {
-                title: 'Biotecnología',
+                title: 'Ingeniería en Biotecnología',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Integración de conocimientos biológicos y tecnológicos para el desarrollo de productos y procesos innovadores en áreas como salud, alimentación, medio ambiente y agricultura.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Investigación en bioprocesos, cultivos celulares, ADN, producción de bioproductos, control de calidad biotecnológico.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Desarrollo de productos biotecnológicos',
-                    'Análisis de ADN y proteínas',
-                    'Cultivo de células y tejidos',
-                    'Fermentación y procesos biológicos',
-                    'Control de calidad biotecnológico',
-                    'Biorremediación ambiental'
+                    'Técnico de laboratorio',
+                    'investigador',
+                    'desarrollador de productos biotecnológicos'
                 ],
                 campoLaboral: [
-                    'Técnico de Laboratorio Biotecnológico',
-                    'Investigador en Bioprocesos',
-                    'Especialista en Control de Calidad',
-                    'Desarrollador de Productos',
-                    'Consultor Ambiental',
-                    'Técnico en Bioseguridad'
+                    'Laboratorios farmacéuticos',
+                    'industrias alimenticias',
+                    'biotecnología ambiental',
+                    'instituciones de investigación'
                 ]
             },
             'iot-utsc': {
                 title: 'IoT y Sistemas Embebidos',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Desarrollo de dispositivos inteligentes conectados, sistemas embebidos y soluciones de internet de las cosas para la industria 4.0, smart cities y aplicaciones innovadoras.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Desarrollo de dispositivos conectados, microcontroladores, sensores, sistemas de domótica y automatización industrial.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Diseño de sistemas embebidos',
-                    'Programación de microcontroladores',
-                    'Desarrollo de aplicaciones IoT',
-                    'Integración de sensores y actuadores',
-                    'Protocolos de comunicación inalámbrica',
-                    'Ciberseguridad en dispositivos IoT'
+                    'Ingeniero en IoT',
+                    'desarrollador de sistemas embebidos',
+                    'especialista en automatización'
                 ],
                 campoLaboral: [
-                    'Desarrollador de Sistemas Embebidos',
-                    'Ingeniero IoT',
-                    'Especialista en Automatización',
-                    'Arquitecto de Soluciones Conectadas',
-                    'Técnico en Dispositivos Inteligentes',
-                    'Consultor en Transformación Digital'
+                    'Industria 4.0',
+                    'domótica',
+                    'empresas de tecnología',
+                    'consultoras en automatización'
                 ]
             },
             'datascience-utsc': {
                 title: 'Data Science',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Formación en análisis de grandes volúmenes de datos, machine learning, estadística avanzada y visualización de datos para extraer insights valiosos y apoyar la toma de decisiones empresariales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Análisis estadístico, minería de datos, machine learning, visualización avanzada, big data.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Análisis estadístico avanzado',
-                    'Minería de datos y pattern recognition',
-                    'Machine learning y deep learning',
-                    'Visualización de datos complejos',
-                    'Gestión de bases de datos big data',
-                    'Storytelling con datos'
+                    'Científico de datos',
+                    'analista de inteligencia de negocios',
+                    'ingeniero en analytics'
                 ],
                 campoLaboral: [
-                    'Científico de Datos',
-                    'Analista de Business Intelligence',
-                    'Especialista en Machine Learning',
-                    'Arquitecto de Datos',
-                    'Consultor Analytics',
-                    'Desarrollador de Dashboards'
+                    'Empresas tecnológicas',
+                    'bancos',
+                    'instituciones de salud',
+                    'sector retail',
+                    'consultoras de datos'
                 ]
             },
             'rv-utsc': {
                 title: 'Realidad Virtual y Aumentada',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Desarrollo de experiencias inmersivas, aplicaciones de realidad virtual, aumentada y mixta para sectores como entretenimiento, educación, salud, arquitectura y entrenamiento profesional.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Programación de entornos 3D, diseño de experiencias inmersivas, hardware VR/AR, animación.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Desarrollo de entornos virtuales',
-                    'Programación de interacciones 3D',
-                    'Diseño de experiencias inmersivas',
-                    'Integración de hardware VR/AR',
-                    'Animación y modelado 3D',
-                    'Optimización de rendimiento gráfico'
+                    'Desarrollador VR/AR',
+                    'diseñador de experiencias',
+                    'artista 3D'
                 ],
                 campoLaboral: [
-                    'Desarrollador de Realidad Virtual',
-                    'Diseñador de Experiencias Inmersivas',
-                    'Especialista en Realidad Aumentada',
-                    'Artista 3D y Animador',
-                    'Arquitecto de Entornos Virtuales',
-                    'Consultor en Tecnologías Inmersivas'
+                    'Entretenimiento',
+                    'educación',
+                    'arquitectura',
+                    'salud',
+                    'simuladores de entrenamiento'
                 ]
             },
             // Carreras de UTL
             'agrotecnologia-utl': {
-                title: 'Agrotecnología',
+                title: 'Ingeniería en Agricultura Sustentable y Protegida',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Aplicación de tecnología avanzada en la agricultura para optimizar la producción, mejorar la sostenibilidad y desarrollar soluciones innovadoras para el sector agroalimentario regional.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Agricultura de precisión, manejo integrado de plagas, sistemas de riego, biotecnología agrícola.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Manejo de sistemas de riego tecnificado',
-                    'Agricultura de precisión con drones',
-                    'Gestión de invernaderos automatizados',
-                    'Análisis de suelos y cultivos',
-                    'Desarrollo de bioinsumos',
-                    'Comercialización de productos agrícolas'
+                    'Técnico agrícola',
+                    'gestor de invernaderos',
+                    'consultor en agricultura sostenible'
                 ],
                 campoLaboral: [
-                    'Técnico en Agricultura de Precisión',
-                    'Especialista en Riego Tecnificado',
-                    'Gestor de Invernaderos',
-                    'Asesor Agropecuario',
-                    'Desarrollador de Bioinsumos',
-                    'Comercializador Agrotecnológico'
+                    'Empresas agrícolas',
+                    'invernaderos',
+                    'instituciones de innovación agrícola',
+                    'ONGs ambientales'
                 ]
             },
             'turismo-utl': {
-                title: 'Turismo Sustentable',
+                title: 'Ingeniería en Turismo Sustentable',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Formación en gestión de destinos turísticos con enfoque en sostenibilidad, conservación del patrimonio natural y cultural, y desarrollo comunitario responsable.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Desarrollo de destinos ecológicos, gestión patrimonial, marketing turístico responsable.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Planificación de destinos turísticos',
-                    'Gestión de empresas turísticas sustentables',
-                    'Desarrollo de productos ecoturísticos',
-                    'Interpretación del patrimonio natural',
-                    'Marketing turístico responsable',
-                    'Gestión de calidad en servicios turísticos'
+                    'Gestor de destinos turísticos',
+                    'planificador de ecoturismo',
+                    'asesor en turismo responsable'
                 ],
                 campoLaboral: [
-                    'Gestor de Destinos Turísticos',
-                    'Guía de Turismo Sustentable',
-                    'Desarrollador de Productos Ecoturísticos',
-                    'Consultor en Turismo Responsable',
-                    'Coordinador de Proyectos Turísticos',
-                    'Empresario Turístico'
+                    'Agencias de turismo',
+                    'entidades públicas',
+                    'empresas de ecoturismo',
+                    'instituciones culturales'
                 ]
             },
             'logistica-utl': {
-                title: 'Logística y Transporte',
+                title: 'Ingeniería en Logística y Cadena de Suministro',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Optimización de cadenas de suministro, gestión eficiente del transporte y desarrollo de soluciones logísticas para el comercio regional e internacional.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Gestión de cadenas de suministro, logística internacional, optimización de rutas, almacenes inteligentes.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Gestión de almacenes y distribución',
-                    'Planificación de rutas de transporte',
-                    'Análisis de costos logísticos',
-                    'Coordinación de cadena de frío',
-                    'Gestión de comercio exterior',
-                    'Implementación de sistemas ERP'
+                    'Coordinador logístico',
+                    'analista de cadena de suministro',
+                    'gestor de transporte y distribución'
                 ],
                 campoLaboral: [
-                    'Coordinador Logístico',
-                    'Analista de Cadena de Suministro',
-                    'Gestor de Transporte',
-                    'Especialista en Comercio Exterior',
-                    'Supervisor de Almacén',
-                    'Consultor Logístico'
+                    'Empresas de transporte',
+                    'distribución',
+                    'comercio exterior',
+                    'sectores automotriz y retail'
                 ]
             },
             'desarrollo-utl': {
                 title: 'Desarrollo Comunitario',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Formación para implementar proyectos de desarrollo sostenible que mejoren la calidad de vida en comunidades, fomentando la participación ciudadana y el emprendimiento social.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Diseño e implementación de proyectos sociales, gestión de organizaciones civiles, participación comunitaria.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Diseño de proyectos comunitarios',
-                    'Gestión de organizaciones sociales',
-                    'Metodologías de participación ciudadana',
-                    'Elaboración de diagnósticos comunitarios',
-                    'Sostenibilidad de proyectos sociales',
-                    'Emprendimiento social'
+                    'Promotor social',
+                    'gestor de proyectos comunitarios',
+                    'coordinador de organizaciones sociales'
                 ],
                 campoLaboral: [
-                    'Promotor del Desarrollo Comunitario',
-                    'Gestor de Proyectos Sociales',
-                    'Coordinador de Organizaciones Civiles',
-                    'Consultor en Desarrollo Local',
-                    'Facilitador Comunitario',
-                    'Emprendedor Social'
+                    'ONGs',
+                    'instituciones públicas',
+                    'comunidades rurales',
+                    'proyectos de desarrollo social'
                 ]
             },
             'gastronomia-utl': {
                 title: 'Gastronomía Regional',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Preservación e innovación de la cocina tradicional regional, combinando técnicas culinarias modernas con ingredientes locales para el desarrollo gastronómico sostenible.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Técnicas culinarias tradicionales y modernas, gestión de restaurantes, innovación en gastronomía local.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Técnicas culinarias tradicionales',
-                    'Innovación en cocina regional',
-                    'Gestión de establecimientos gastronómicos',
-                    'Seguridad e higiene alimentaria',
-                    'Maridaje y enología',
-                    'Emprendimiento gastronómico'
+                    'Chef especializado',
+                    'gestor gastronómico',
+                    'innovador culinario',
+                    'instructor de cocina'
                 ],
                 campoLaboral: [
-                    'Chef Especializado en Cocina Regional',
-                    'Gestor de Restaurantes',
-                    'Consultor Gastronómico',
-                    'Investigador Culinario',
-                    'Emprendedor Gastronómico',
-                    'Instructor Culinario'
+                    'Restaurantes',
+                    'hoteles',
+                    'centros de investigación culinaria',
+                    'emprendimientos gastronómicos'
                 ]
             },
             'energias-utl': {
                 title: 'Energías Alternativas',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Implementación de soluciones energéticas sostenibles adaptadas a las necesidades de comunidades rurales y urbanas, con enfoque en accesibilidad y bajo impacto ambiental.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Instalación de sistemas solares, eólicos, biodigestores, gestión de proyectos energéticos sostenibles.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Instalación de sistemas solares',
-                    'Diseño de biodigestores',
-                    'Eficiencia energética residencial',
-                    'Energía eólica a pequeña escala',
-                    'Gestión de proyectos energéticos',
-                    'Educación comunitaria en energía'
+                    'Técnico en energías renovables',
+                    'instalador de sistemas solares',
+                    'gestor de proyectos energéticos'
                 ],
                 campoLaboral: [
-                    'Técnico en Energías Renovables',
-                    'Instalador de Sistemas Solares',
-                    'Promotor de Eficiencia Energética',
-                    'Consultor en Energía Comunitaria',
-                    'Gestor de Proyectos Energéticos',
-                    'Educador Ambiental'
+                    'Empresas de energías limpias',
+                    'instituciones públicas',
+                    'comunidades rurales',
+                    'consultoras ambientales'
                 ]
             },
             'ti-utl': {
                 title: 'Tecnologías de la Información',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Desarrollo de soluciones tecnológicas adaptadas al contexto regional, incluyendo software para PyMEs, sistemas de información municipal y herramientas digitales para el desarrollo local.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Desarrollo de software, redes, soporte técnico, soluciones digitales para el desarrollo local.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Desarrollo de software adaptado',
-                    'Implementación de redes locales',
-                    'Soporte técnico comunitario',
-                    'Sistemas de información municipal',
-                    'Capacitación digital',
-                    'Ciberseguridad básica'
+                    'Desarrollador',
+                    'administrador de redes',
+                    'consultor en tecnologías de la información'
                 ],
                 campoLaboral: [
-                    'Desarrollador de Software Local',
-                    'Técnico en Soporte Comunitario',
-                    'Administrador de Redes Locales',
-                    'Consultor TI para PyMEs',
-                    'Coordinador de Proyectos Digitales',
-                    'Instructor de Alfabetización Digital'
+                    'Empresas de tecnología',
+                    'sectores gubernamentales',
+                    'organizaciones civiles y privadas'
                 ]
             },
             'adminpublica-utl': {
                 title: 'Administración Pública',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Formación para la gestión eficiente de instituciones públicas, desarrollo de políticas sociales y mejora de los servicios gubernamentales con enfoque en transparencia y participación ciudadana.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Gestión de recursos públicos, diseño y evaluación de políticas públicas, administración de instituciones gubernamentales, transparencia y rendición de cuentas.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Gestión de recursos públicos',
-                    'Elaboración de políticas sociales',
-                    'Transparencia y rendición de cuentas',
-                    'Participación ciudadana',
-                    'Planificación del desarrollo local',
-                    'Evaluación de programas públicos'
+                    'Administrador público',
+                    'gestor de proyectos gubernamentales',
+                    'asesor en políticas públicas'
                 ],
                 campoLaboral: [
-                    'Funcionario Público',
-                    'Gestor de Proyectos Gubernamentales',
-                    'Analista de Políticas Públicas',
-                    'Consultor en Administración Pública',
-                    'Coordinador de Participación Ciudadana',
-                    'Auditor Gubernamental'
+                    'Gobiernos municipales, estatales y federales',
+                    'ONG',
+                    'instituciones internacionales',
+                    'organizaciones civiles'
                 ]
             }
         };
@@ -2563,7 +2507,7 @@ body {
         const plantelesData = {
             'desarrollo-software': {
                 title: 'Desarrollo y Gestión de Software',
-                description: 'Nuestras instalaciones para Desarrollo de Software cuentan con laboratorios de última generación, aulas especializadas y espacios colaborativos diseñados para fomentar la innovación y el trabajo en equipo.',
+                description: 'Laboratorios de programación, aulas de desarrollo colaborativo, salas de servidores y espacios para proyectos en equipo.',
                 images: [
                     'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2573,7 +2517,7 @@ body {
             },
             'mantenimiento-industrial': {
                 title: 'Mantenimiento Industrial',
-                description: 'Contamos con talleres especializados, laboratorios de automatización y áreas de práctica equipadas con tecnología industrial de vanguardia para la formación práctica de nuestros estudiantes.',
+                description: 'Talleres de mecánica y electricidad, laboratorios de automatización, áreas de práctica en equipos reales.',
                 images: [
                     'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2583,7 +2527,7 @@ body {
             },
             'negocios-internacionales': {
                 title: 'Negocios Internacionales',
-                description: 'Nuestras instalaciones para Negocios Internacionales incluyen salas de negociación, laboratorios de comercio exterior y espacios de simulación empresarial para una formación práctica y realista.',
+                description: 'Áreas de simulación de negociaciones, laboratorios de comercio exterior, salas de capacitación en idiomas.',
                 images: [
                     'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2593,7 +2537,7 @@ body {
             },
             'mecatronica': {
                 title: 'Mecatrónica',
-                description: 'Laboratorios de robótica, talleres de automatización y áreas de prototipado equipados con tecnología de punta para el desarrollo de proyectos mecatrónicos innovadores.',
+                description: 'Laboratorios de robótica, áreas de prototipado, talleres de electrónica y mecánica.',
                 images: [
                     'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2603,7 +2547,7 @@ body {
             },
             'procesos-productivos': {
                 title: 'Procesos Productivos',
-                description: 'Instalaciones industriales a escala, laboratorios de control de calidad y áreas de simulación de procesos para una formación práctica en optimización productiva.',
+                description: 'Laboratorios de control de calidad, simuladores de procesos, áreas de análisis y medición.',
                 images: [
                     'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2612,8 +2556,8 @@ body {
                 ]
             },
             'lengua-inglesa': {
-                title: 'Lengua Inglesa',
-                description: 'Aulas multimedia, laboratorios de idiomas, salas de interpretación y espacios culturales diseñados para la inmersión lingüística y el desarrollo de competencias interculturales.',
+                title: 'Lengua Inglesa (Bilingüe)',
+                description: 'Aulas multimedia, laboratorios de idiomas, salas de interpretación, espacios culturales bilingües.',
                 images: [
                     'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2622,8 +2566,8 @@ body {
                 ]
             },
             'ia-utsc': {
-                title: 'Inteligencia Artificial',
-                description: 'Laboratorios de IA equipados con servidores de alto rendimiento, estaciones de trabajo especializadas y espacios colaborativos para el desarrollo de proyectos de inteligencia artificial y machine learning.',
+                title: 'Ingeniería en Tecnologías de la Información e Innovación Digital',
+                description: 'Laboratorios de programación, centros de datos, espacios de innovación y colaboración.',
                 images: [
                     'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2632,8 +2576,8 @@ body {
                 ]
             },
             'ciberseguridad-utsc': {
-                title: 'Ciberseguridad',
-                description: 'Laboratorios especializados en ciberseguridad con redes aisladas, equipos de pentesting, salas de war games y herramientas profesionales para la formación en seguridad informática.',
+                title: 'Ingeniería en Ciberseguridad',
+                description: 'Redes aisladas, laboratorios de hacking ético, plataformas de simulación de ataques.',
                 images: [
                     'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2642,8 +2586,8 @@ body {
                 ]
             },
             'energias-utsc': {
-                title: 'Energías Renovables',
-                description: 'Laboratorios de energías renovables con paneles solares, turbinas eólicas a escala, estaciones de simulación energética y espacios para proyectos sostenibles.',
+                title: 'Ingeniería en Energías Renovables',
+                description: 'Laboratorios de energías sostenibles, áreas de simulación, talleres en campo.',
                 images: [
                     'https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2652,8 +2596,8 @@ body {
                 ]
             },
             'biotecnologia-utsc': {
-                title: 'Biotecnología',
-                description: 'Laboratorios de biotecnología con equipos de biología molecular, cultivos celulares, incubadoras y áreas estériles para investigación y desarrollo biotecnológico.',
+                title: 'Ingeniería en Biotecnología',
+                description: 'Laboratorios especializados en biología molecular, áreas de cultivo y fermentación.',
                 images: [
                     'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2663,7 +2607,7 @@ body {
             },
             'iot-utsc': {
                 title: 'IoT y Sistemas Embebidos',
-                description: 'Laboratorios de IoT con kits de desarrollo, sensores, microcontroladores y redes inalámbricas para prototipado y simulación de dispositivos conectados.',
+                description: 'Laboratorios de electrónica, estaciones de prototipado, plataformas de desarrollo IoT.',
                 images: [
                     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2673,7 +2617,7 @@ body {
             },
             'datascience-utsc': {
                 title: 'Data Science',
-                description: 'Salas de análisis de datos con clústeres computacionales, software de visualización y herramientas de big data para procesamiento y modelado estadístico.',
+                description: 'Salas de análisis, servidores de alto rendimiento, software de análisis avanzado.',
                 images: [
                     'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2683,7 +2627,7 @@ body {
             },
             'rv-utsc': {
                 title: 'Realidad Virtual y Aumentada',
-                description: 'Estudios de VR/AR con cascos inmersivos, estaciones de modelado 3D y espacios de simulación para creación de experiencias virtuales interactivas.',
+                description: 'Estudios de captura de movimiento, laboratorios de modelado 3D, talleres de programación.',
                 images: [
                     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2692,7 +2636,7 @@ body {
                 ]
             },
             'agrotecnologia-utl': {
-                title: 'Agrotecnología',
+                title: 'Ingeniería en Agricultura Sustentable y Protegida',
                 description: 'Invernaderos inteligentes, laboratorios de agricultura de precisión y campos experimentales para la aplicación práctica de tecnologías agropecuarias.',
                 images: [
                     'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2702,7 +2646,7 @@ body {
                 ]
             },
             'turismo-utl': {
-                title: 'Turismo Sustentable',
+                title: 'Ingeniería en Turismo Sustentable',
                 description: 'Salas de simulación turística, espacios de interpretación cultural y laboratorios de gestión de destinos para el desarrollo de proyectos turísticos responsables.',
                 images: [
                     'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -2712,7 +2656,7 @@ body {
                 ]
             },
             'logistica-utl': {
-                title: 'Logística y Transporte',
+                title: 'Ingeniería en Logística y Cadena de Suministro',
                 description: 'Centros de simulación logística, almacenes modelo y laboratorios de optimización de rutas para la gestión eficiente de cadenas de suministro.',
                 images: [
                     'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
