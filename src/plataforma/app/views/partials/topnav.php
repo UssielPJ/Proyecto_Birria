@@ -3,7 +3,7 @@
 ?>
 <nav class="w-full border-b border-white/10 bg-slate-900/70 backdrop-blur">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-    <div class="text-white font-semibold">UTEC · Estudiantes</div>
+    <div class="text-white font-semibold">UTSC · Estudiantes</div>
 
     <div class="flex items-center gap-3">
       <!-- Botón modo claro/oscuro -->

@@ -46,6 +46,219 @@ body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
+.dark .hero-section {
+    background: linear-gradient(135deg, var(--ut-green-800) 0%, var(--ut-green-900) 100%);
+}
+
+.dark .hero-section h1 {
+    color: white;
+}
+
+.dark .hero-section p {
+    color: #e2e8f0;
+}
+
+.dark .hero-section .bg-white {
+    background: #1e293b;
+    color: white;
+}
+
+.dark .hero-section .bg-white:hover {
+    background: #334155;
+}
+
+.dark .hero-section .border-white {
+    border-color: #e2e8f0;
+    color: white;
+}
+
+.dark .hero-section .border-white:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark .university-card h3 {
+    color: white;
+}
+
+.dark .university-card p {
+    color: #cbd5e1;
+}
+
+.dark .career-card h4 {
+    color: white;
+}
+
+.dark .career-card p {
+    color: #cbd5e1;
+}
+
+.dark .career-card .text-gray-500 {
+    color: #9ca3af;
+}
+
+.dark .section-title {
+    color: white;
+}
+
+.dark .badge-primary {
+    background: rgba(40, 165, 95, 0.2);
+    color: #4ade80;
+    border-color: rgba(40, 165, 95, 0.3);
+}
+
+.dark .badge-secondary {
+    background: rgba(212, 175, 55, 0.2);
+    color: #fbbf24;
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.dark .nav-link {
+    color: #e5e7eb;
+}
+
+.dark .nav-link:hover,
+.dark .nav-link.active {
+    color: #10b981;
+}
+
+.dark .nav-title {
+    background: linear-gradient(135deg, #34d399, #10b981);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dark .theme-toggle {
+    background: rgba(31, 41, 55, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .theme-toggle:hover {
+    background: rgba(31, 41, 55, 0.9);
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.dark .modal-header {
+    background: linear-gradient(135deg, var(--ut-green-700), var(--ut-green-800));
+}
+
+.dark .modal-body {
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+}
+
+.dark .plantel-description {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.dark .plantel-description h4 {
+    color: #93c5fd;
+}
+
+.dark .plantel-description p {
+    color: #bfdbfe;
+}
+
+.dark .modal-body h4 {
+    color: white;
+}
+
+.dark .modal-body p {
+    color: #cbd5e1;
+}
+
+.dark .modal-body li {
+    color: #cbd5e1;
+}
+
+.dark .modal-body .bg-gray-100 {
+    background: #374151;
+    color: #e5e7eb;
+}
+
+.dark .modal-body .bg-blue-50 {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.dark .modal-body .bg-blue-50 h5 {
+    color: #93c5fd;
+}
+
+.dark .modal-body .bg-blue-50 p {
+    color: #bfdbfe;
+}
+
+.dark .modal-body .bg-green-50 {
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.dark .modal-body .bg-green-50 h5 {
+    color: #86efac;
+}
+
+.dark .modal-body .bg-green-50 p {
+    color: #bbf7d0;
+}
+
+.dark .modal-body .text-gray-600 {
+    color: #cbd5e1;
+}
+
+.dark .modal-body .text-gray-700 {
+    color: #e5e7eb;
+}
+
+.dark .modal-body .text-blue-900 {
+    color: #93c5fd;
+}
+
+.dark .modal-body .text-blue-700 {
+    color: #bfdbfe;
+}
+
+.dark .modal-body .text-green-900 {
+    color: #86efac;
+}
+
+.dark .modal-body .text-green-700 {
+    color: #bbf7d0;
+}
+
+.dark .modal-body .border-gray-200 {
+    border-color: #374151;
+}
+
+.dark .modal-body .bg-gray-50 {
+    background: #1f2937;
+}
+
+.dark .modal-body .bg-gray-50 .text-gray-700 {
+    color: #e5e7eb;
+}
+
+.dark .modal-body .bg-gray-50 .border-gray-300 {
+    border-color: #4b5563;
+}
+
+.dark .modal-body .bg-gray-50 .hover\:border-gray-400:hover {
+    border-color: #6b7280;
+}
+
+.dark .modal-body .bg-green-500 {
+    background: #16a34a;
+}
+
+.dark .modal-body .bg-green-500:hover {
+    background: #15803d;
+}
+
+.dark .modal-body .bg-blue-500 {
+    background: #2563eb;
+}
+
+.dark .modal-body .bg-blue-500:hover {
+    background: #1d4ed8;
+}
+
 .hero-section {
     position: relative;
     background: linear-gradient(135deg, var(--ut-green-600) 0%, var(--ut-green-800) 100%);
@@ -633,34 +846,74 @@ body {
     padding-bottom: 60px;
 }
 
+/* Estilos para el flip solo en la imagen */
+.image-flip-container {
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.image-flip-front,
+.image-flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease-in-out;
+  border-radius: 12px 12px 0 0;
+}
+
+.image-flip-back {
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-flip-container:hover .image-flip-front {
+  transform: rotateY(-180deg);
+}
+
+.image-flip-container:hover .image-flip-back {
+  transform: rotateY(0deg);
+}
+
+.career-card {
+  transition: all 0.3s ease;
+}
+
+.career-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .hero-section {
         min-height: 50vh;
         padding: 2rem 0;
     }
-    
+
     .section-title {
         font-size: 1.5rem;
         margin-bottom: 1rem;
     }
-    
+
     .career-image {
         height: 120px;
     }
-    
+
     .career-icon {
         width: 40px;
         height: 40px;
         top: 95px;
         right: 12px;
     }
-    
+
     .university-icon {
         width: 50px;
         height: 50px;
     }
-    
+
     .button-group {
         flex-direction: column;
     }
@@ -673,15 +926,13 @@ body {
         <div class="nav-shell mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="h-16 flex items-center justify-between">
                 <!-- Brand -->
-                <a href="#inicio" class="flex items-center gap-3 group transition-all duration-300 nav-brand">
+                <a href="index.php" class="flex items-center gap-3 group transition-all duration-300 nav-brand">
                     <div class="relative h-10 w-10">
-                        <div class="h-full w-full rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
-                            <span class="text-white font-bold">UT</span>
-                        </div>
+                        <img src="plataforma/app/img/UT.jpg" alt="Universidad Tecnológica de Santa Catarina" class="h-full w-full rounded-lg object-cover">
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-lg font-bold tracking-wide nav-title bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600">UTSC</span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Universidad Tecnológica Santa Catarina</span>
+                        <span class="text-lg font-bold tracking-wide nav-title">UTSC</span>
+                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Universidad Tecnológica de Santa Catarina</span>
                     </div>
                 </a>
 
@@ -768,11 +1019,11 @@ body {
                     Formamos a los líderes del mañana con programas educativos de vanguardia y enfoque práctico
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button class="bg-white text-green-700 px-8 py-3 rounded-xl font-bold text-lg hover:bg-green-50 transition-colors shadow-lg">
+                    <button onclick="alert('Redirigiendo a solicitud de información...')" class="bg-white text-green-700 px-8 py-3 rounded-xl font-bold text-lg hover:bg-green-50 transition-colors shadow-lg">
                         <i class="fas fa-graduation-cap mr-2"></i>
                         Solicitar Información
                     </button>
-                    <button class="border-2 border-white text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-white/10 transition-colors">
+                    <button onclick="alert('Redirigiendo al proceso de admisión...')" class="border-2 border-white text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-white/10 transition-colors">
                         <i class="fas fa-calendar-alt mr-2"></i>
                         Proceso de Admisión
                     </button>
@@ -810,7 +1061,7 @@ body {
                     <!-- Desarrollo y Gestión de Software -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="./plataforma/app/img/Desarrollo de Software.jpeg"
                                  alt="Desarrollo de Software" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-laptop-code text-white text-xl"></i>
@@ -818,23 +1069,23 @@ body {
                         </div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
-                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Desarrollo y Gestión de Software</h4>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Ingeniería en Desarrollo y Gestión de Software</h4>
                                 <div class="flex space-x-2">
                                     <span class="badge badge-primary">TSU/Ing</span>
                                     <span class="badge badge-secondary">Nuevo</span>
                                 </div>
                             </div>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Formación en desarrollo de software, gestión de proyectos tecnológicos y sistemas de información empresarial.
+                                Formación en el diseño, desarrollo y mantenimiento de software, con énfasis en metodologías ágiles y gestión de proyectos.
                             </p>
                             <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-clock"></i>
-                                    TSU: 1.5 años
+                                    TSU: 2 años
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-users"></i>
-                                    Ing: +1.5 años
+                                    Ing: +1 año
                                 </span>
                             </div>
                             <div class="button-group">
@@ -855,7 +1106,7 @@ body {
                     <!-- Mantenimiento Industrial -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="./plataforma/app/img/IndustrialM.jpg"
                                  alt="Mantenimiento Industrial" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-cogs text-white text-xl"></i>
@@ -863,22 +1114,22 @@ body {
                         </div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
-                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Mantenimiento Industrial</h4>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Ingeniería en Mantenimiento Industrial</h4>
                                 <div class="flex space-x-2">
                                     <span class="badge badge-primary">TSU/Ing</span>
                                 </div>
                             </div>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Especialización en mantenimiento de sistemas industriales, automatización y gestión de procesos productivos.
+                                Capacitación en el mantenimiento de equipos industriales, con enfoque en eficiencia y sostenibilidad operativa.
                             </p>
                             <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-clock"></i>
-                                    TSU: 1.5 años
+                                    TSU: 2 años
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-users"></i>
-                                    Ing: +1.5 años
+                                    Ing: +1 año
                                 </span>
                             </div>
                             <div class="button-group">
@@ -943,7 +1194,7 @@ body {
                     <!-- Mecatrónica -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="./plataforma/app/img/60-IMG_3099.jpg"
                                  alt="Mecatrónica" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-robot text-white text-xl"></i>
@@ -951,22 +1202,22 @@ body {
                         </div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
-                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Mecatrónica</h4>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white">Ingeniería en Mecatrónica</h4>
                                 <div class="flex space-x-2">
                                     <span class="badge badge-primary">TSU/Ing</span>
                                 </div>
                             </div>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Integración de mecánica, electrónica e informática para el desarrollo de sistemas automatizados y robots industriales.
+                                Integración de mecánica, electrónica e informática para el desarrollo de sistemas automatizados.
                             </p>
                             <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-clock"></i>
-                                    TSU: 1.5 años
+                                    TSU: 2 años
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <i class="fas fa-users"></i>
-                                    Ing: +1.5 años
+                                    Ing: +1 año
                                 </span>
                             </div>
                             <div class="button-group">
@@ -987,7 +1238,7 @@ body {
                     <!-- Procesos Productivos -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="plataforma/app/img/proceso-industrial.jpg"
                                  alt="Procesos Productivos" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-industry text-white text-xl"></i>
@@ -1031,7 +1282,7 @@ body {
                     <!-- Lengua Inglesa -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="./plataforma/app/img/Lengua Inglesa.jpg" 
                                  alt="Lengua Inglesa" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-language text-white text-xl"></i>
@@ -1365,7 +1616,7 @@ body {
                     <!-- Carrera 7 - Realidad Virtual y Aumentada -->
                     <div class="career-card p-0 glow-effect">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc696?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                            <img src="plataforma/app/img/Realidad Virtual y Aumentada.jpg"
                                  alt="Realidad Virtual y Aumentada" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-vr-cardboard text-white text-xl"></i>
@@ -1696,10 +1947,10 @@ body {
                     </div>
 
                     <!-- Carrera 7 - Tecnologías de la Información -->
-                    <div class="career-card p-0 glow-effect">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                                 alt="Tecnologías de la Información" class="career-image">
+                     <div class="career-card p-0 glow-effect">
+                         <div class="relative">
+                             <img src="plataforma/app/img/Tecnologías de la Información.jpg"
+                                  alt="Tecnologías de la Información" class="career-image">
                             <div class="career-icon">
                                 <i class="fas fa-server text-white text-xl"></i>
                             </div>
@@ -1799,22 +2050,22 @@ body {
                     </button>
                 </div>
             </div>
-            
+
             <!-- Contenido del modal -->
             <div class="modal-body p-6 overflow-y-auto max-h-[60vh]">
                 <div id="modalCarreraContent">
                     <!-- El contenido se cargará dinámicamente -->
                 </div>
             </div>
-            
+
             <!-- Footer del modal -->
             <div class="p-6 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <button class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-gray-700 dark:text-gray-300 border-2 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 transition-colors">
+                    <button onclick="alert('Descargando plan de estudios...')" class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-gray-700 dark:text-gray-300 border-2 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 transition-colors">
                         <i class="fas fa-download"></i>
                         Descargar Plan de Estudios
                     </button>
-                    <button class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-white bg-green-500 hover:bg-green-600 transition-colors">
+                    <button onclick="alert('Solicitud enviada. Te contactaremos pronto.')" class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-white bg-green-500 hover:bg-green-600 transition-colors">
                         <i class="fas fa-paper-plane"></i>
                         Solicitar Información
                     </button>
@@ -1835,18 +2086,18 @@ body {
                     </button>
                 </div>
             </div>
-            
+
             <!-- Contenido del modal -->
             <div class="modal-body p-6 overflow-y-auto max-h-[60vh]">
                 <div id="modalPlantelContent">
                     <!-- El contenido se cargará dinámicamente -->
                 </div>
             </div>
-            
+
             <!-- Footer del modal -->
             <div class="p-6 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
                 <div class="flex justify-center">
-                    <button class="inline-flex items-center justify-center gap-2 py-3 px-8 rounded-xl font-semibold text-white bg-blue-500 hover:bg-blue-600 transition-colors">
+                    <button onclick="alert('Agendando visita al plantel...')" class="inline-flex items-center justify-center gap-2 py-3 px-8 rounded-xl font-semibold text-white bg-blue-500 hover:bg-blue-600 transition-colors">
                         <i class="fas fa-calendar-alt"></i>
                         Agendar Visita al Plantel
                     </button>
@@ -1862,575 +2113,609 @@ body {
         // Datos de las carreras de Montemorelos
         const carrerasData = {
             'desarrollo-software': {
-                title: 'Desarrollo y Gestión de Software',
+                title: 'Ingeniería en Desarrollo y Gestión de Software',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Forma profesionales capaces de desarrollar, implementar y gestionar sistemas de software de calidad, aplicando metodologías ágiles y estándares internacionales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Formación en diseño, programación, pruebas, mantenimiento y gestión de proyectos de software. Incluye metodologías ágiles, desarrollo web, bases de datos y sistemas embebidos.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Desarrollar aplicaciones web y móviles',
-                    'Gestionar proyectos de software',
-                    'Administrar bases de datos',
-                    'Implementar metodologías ágiles',
-                    'Diseñar arquitecturas de software',
-                    'Realizar pruebas de calidad'
+                    'Programador de aplicaciones',
+                    'gestor de proyectos tecnológicos',
+                    'administrador de bases de datos',
+                    'arquitecto de software',
+                    'analista de sistemas'
                 ],
                 campoLaboral: [
-                    'Desarrollador Full Stack',
-                    'Gestor de Proyectos TI',
-                    'Administrador de Bases de Datos',
-                    'Consultor Tecnológico',
-                    'Arquitecto de Software',
-                    'Analista de Sistemas'
+                    'Empresas de desarrollo de software',
+                    'startups tecnológicas',
+                    'áreas de TI en empresas grandes',
+                    'consultoras tecnológicas',
+                    'instituciones educativas'
                 ]
             },
             'mantenimiento-industrial': {
-                title: 'Mantenimiento Industrial',
+                title: 'Ingeniería en Mantenimiento Industrial',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Prepara especialistas en el mantenimiento de sistemas industriales, automatización y gestión de procesos productivos con enfoque en eficiencia y seguridad.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Capacitación en mantenimiento predictivo y preventivo, gestión de activos, seguridad industrial, control de procesos y automatización.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Mantenimiento predictivo y preventivo',
-                    'Automatización industrial',
-                    'Gestión de procesos productivos',
-                    'Seguridad industrial',
-                    'Control de calidad',
-                    'Supervisión de equipos'
+                    'Supervisor de mantenimiento',
+                    'técnico en automatización',
+                    'ingeniero de planta',
+                    'gestor de mantenimiento industrial'
                 ],
                 campoLaboral: [
-                    'Supervisor de Mantenimiento',
-                    'Técnico en Automatización',
-                    'Gestor de Procesos',
-                    'Consultor Industrial',
-                    'Ingeniero de Planta',
-                    'Coordinador de Producción'
+                    'Industrias manufactureras',
+                    'plantas de producción',
+                    'empresas de servicios de mantenimiento',
+                    'sectores automotriz, petroquímico y alimenticio'
                 ]
             },
             'negocios-internacionales': {
                 title: 'Negocios Internacionales',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Forma profesionales en comercio exterior, logística internacional y gestión de negocios globales con visión estratégica y competencias interculturales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Formación en comercio exterior, logística internacional, negociación intercultural, marketing y financiamiento internacional.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Gestión de comercio exterior',
-                    'Logística internacional',
-                    'Negociación intercultural',
-                    'Marketing global',
-                    'Finanzas internacionales',
-                    'Estrategias de expansión'
+                    'Ejecutivo de comercio exterior',
+                    'gestor logístico',
+                    'analista de mercados internacionales',
+                    'asesor en negocios globales'
                 ],
                 campoLaboral: [
-                    'Ejecutivo de Comercio Exterior',
-                    'Agente Aduanal',
-                    'Consultor Internacional',
-                    'Gestor Logístico',
-                    'Analista de Mercados',
-                    'Coordinador de Exportación'
+                    'Empresas exportadoras e importadoras',
+                    'agencias aduanales',
+                    'consultoras internacionales',
+                    'instituciones gubernamentales y ONGs'
                 ]
             },
             'mecatronica': {
-                title: 'Mecatrónica',
+                title: 'Ingeniería en Mecatrónica',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Integra conocimientos de mecánica, electrónica e informática para el diseño, desarrollo y mantenimiento de sistemas automatizados y robots industriales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Integración de mecánica, electrónica, informática y control para el desarrollo de sistemas automatizados y robots.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Diseño de sistemas mecatrónicos',
-                    'Programación de robots',
-                    'Automatización industrial',
-                    'Control de procesos',
-                    'Instrumentación y control',
-                    'Diseño CAD/CAM'
+                    'Ingeniero en automatización',
+                    'diseñador de robots',
+                    'técnico en control de procesos',
+                    'desarrollador de sistemas mecatrónicos'
                 ],
                 campoLaboral: [
-                    'Ingeniero de Automatización',
-                    'Técnico en Robótica',
-                    'Diseñador Mecatrónico',
-                    'Supervisor de Producción',
-                    'Especialista en Control',
-                    'Proyectista Industrial'
+                    'Industria manufacturera',
+                    'robótica',
+                    'automatización de procesos',
+                    'sectores aeronáuticos y de energía'
                 ]
             },
             'procesos-productivos': {
                 title: 'Procesos Productivos',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Especializa en la optimización de procesos de manufactura, control de calidad y gestión de producción para maximizar la eficiencia operativa.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Especialización en optimización de procesos de manufactura, control de calidad, gestión de producción y mejora continua.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Optimización de procesos',
-                    'Control de calidad',
-                    'Gestión de producción',
-                    'Lean manufacturing',
-                    'Logística y cadena de suministro',
-                    'Seguridad industrial'
+                    'Ingeniero de procesos',
+                    'supervisor de producción',
+                    'analista de calidad',
+                    'gestor de operaciones'
                 ],
                 campoLaboral: [
-                    'Ingeniero de Procesos',
-                    'Supervisor de Producción',
-                    'Consultor de Calidad',
-                    'Gestor Operativo',
-                    'Analista de Mejora Continua',
-                    'Coordinador de Manufactura'
+                    'Industrias de alimentos, química, metalurgia, farmacéutica, petroquímica y automotriz'
                 ]
             },
             'lengua-inglesa': {
-                title: 'Lengua Inglesa',
+                title: 'Lengua Inglesa (Bilingüe)',
                 universidad: 'Universidad Tecnológica Montemorelos',
-                descripcion: 'Desarrolla competencias lingüísticas avanzadas en inglés, preparando para la traducción, interpretación y enseñanza del idioma en contextos profesionales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Dominio avanzado del inglés, habilidades de traducción, interpretación, comunicación intercultural y enseñanza del idioma.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Dominio avanzado del inglés',
-                    'Traducción e interpretación',
-                    'Enseñanza del idioma',
-                    'Comunicación intercultural',
-                    'Lingüística aplicada',
-                    'Gestión cultural'
+                    'Traductor',
+                    'profesor de idiomas',
+                    'guía turístico bilingüe',
+                    'asesor en comunicación internacional'
                 ],
                 campoLaboral: [
-                    'Traductor/Intérprete',
-                    'Profesor de Inglés',
-                    'Guía Turístico Bilingüe',
-                    'Ejecutivo Internacional',
-                    'Editor de Contenidos',
-                    'Asesor Lingüístico'
+                    'Instituciones educativas',
+                    'sector turístico',
+                    'empresas internacionales',
+                    'agencias de traducción'
                 ]
             },
             // Carreras de UTSC
             'ia-utsc': {
-                title: 'Inteligencia Artificial',
+                title: 'Ingeniería en Tecnologías de la Información e Innovación Digital',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Formación en desarrollo de sistemas inteligentes, machine learning, deep learning y soluciones innovadoras con inteligencia artificial para transformar industrias y crear el futuro tecnológico.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Desarrollo de aplicaciones, ciberseguridad, análisis de datos, innovación en transformación digital.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Desarrollar algoritmos de machine learning',
-                    'Implementar sistemas de visión por computadora',
-                    'Crear chatbots y asistentes virtuales inteligentes',
-                    'Diseñar redes neuronales artificiales',
-                    'Analizar grandes volúmenes de datos',
-                    'Implementar soluciones de IA ética'
+                    'Desarrollador full-stack',
+                    'gestor de proyectos digitales',
+                    'administrador de bases de datos',
+                    'arquitecto de soluciones TI'
                 ],
                 campoLaboral: [
-                    'Ingeniero de Machine Learning',
-                    'Científico de Datos',
-                    'Desarrollador de IA',
-                    'Especialista en Visión por Computadora',
-                    'Arquitecto de Sistemas Inteligentes',
-                    'Consultor en Transformación Digital'
+                    'Empresas de tecnología',
+                    'startups',
+                    'hospitales',
+                    'instituciones públicas y privadas en transformación digital'
                 ]
             },
             'ciberseguridad-utsc': {
-                title: 'Ciberseguridad',
+                title: 'Ingeniería en Ciberseguridad',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Formación especializada en protección de sistemas informáticos, análisis de vulnerabilidades, ethical hacking y gestión de seguridad digital para enfrentar los desafíos del mundo conectado.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Protección de sistemas informáticos, análisis de vulnerabilidades, pruebas de penetración, gestión de incidentes.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Auditoría de sistemas de información',
-                    'Análisis forense digital',
-                    'Gestión de incidentes de seguridad',
-                    'Desarrollo de políticas de seguridad',
-                    'Pentesting y ethical hacking',
-                    'Protección de infraestructura crítica'
+                    'Analista en seguridad',
+                    'consultor en ciberseguridad',
+                    'auditor de sistemas',
+                    'pentester'
                 ],
                 campoLaboral: [
-                    'Analista de Ciberseguridad',
-                    'Consultor de Seguridad Informática',
-                    'Ethical Hacker',
-                    'Especialista en Forense Digital',
-                    'Arquitecto de Seguridad',
-                    'Gestor de Riesgos Digitales'
+                    'Empresas financieras',
+                    'sector gubernamental',
+                    'empresas de telecomunicaciones',
+                    'ciberseguridad en la nube'
                 ]
             },
             'energias-utsc': {
-                title: 'Energías Renovables',
+                title: 'Ingeniería en Energías Renovables',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Formación en el diseño, implementación y gestión de sistemas de energía sostenible, incluyendo solar, eólica, biomasa y otras tecnologías limpias para un futuro energético responsable.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Diseño, gestión, mantenimiento de sistemas solares, eólicos, biomasa y tecnologías limpias.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Diseño de sistemas fotovoltaicos',
-                    'Gestión de proyectos eólicos',
-                    'Análisis de eficiencia energética',
-                    'Desarrollo de biocombustibles',
-                    'Planificación de redes inteligentes',
-                    'Auditoría energética'
+                    'Ingeniero en energías renovables',
+                    'gestor de proyectos sostenibles',
+                    'consultor ambiental'
                 ],
                 campoLaboral: [
-                    'Ingeniero de Proyectos Renovables',
-                    'Especialista en Eficiencia Energética',
-                    'Consultor en Sustentabilidad',
-                    'Técnico en Sistemas Solares',
-                    'Gestor de Parques Eólicos',
-                    'Auditor Energético'
+                    'Empresas de energías limpias',
+                    'plantas solares y eólicas',
+                    'consultoras ambientales',
+                    'organismos gubernamentales'
                 ]
             },
             'biotecnologia-utsc': {
-                title: 'Biotecnología',
+                title: 'Ingeniería en Biotecnología',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Integración de conocimientos biológicos y tecnológicos para el desarrollo de productos y procesos innovadores en áreas como salud, alimentación, medio ambiente y agricultura.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Investigación en bioprocesos, cultivos celulares, ADN, producción de bioproductos, control de calidad biotecnológico.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Desarrollo de productos biotecnológicos',
-                    'Análisis de ADN y proteínas',
-                    'Cultivo de células y tejidos',
-                    'Fermentación y procesos biológicos',
-                    'Control de calidad biotecnológico',
-                    'Biorremediación ambiental'
+                    'Técnico de laboratorio',
+                    'investigador',
+                    'desarrollador de productos biotecnológicos'
                 ],
                 campoLaboral: [
-                    'Técnico de Laboratorio Biotecnológico',
-                    'Investigador en Bioprocesos',
-                    'Especialista en Control de Calidad',
-                    'Desarrollador de Productos',
-                    'Consultor Ambiental',
-                    'Técnico en Bioseguridad'
+                    'Laboratorios farmacéuticos',
+                    'industrias alimenticias',
+                    'biotecnología ambiental',
+                    'instituciones de investigación'
                 ]
             },
             'iot-utsc': {
                 title: 'IoT y Sistemas Embebidos',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Desarrollo de dispositivos inteligentes conectados, sistemas embebidos y soluciones de internet de las cosas para la industria 4.0, smart cities y aplicaciones innovadoras.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Desarrollo de dispositivos conectados, microcontroladores, sensores, sistemas de domótica y automatización industrial.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Diseño de sistemas embebidos',
-                    'Programación de microcontroladores',
-                    'Desarrollo de aplicaciones IoT',
-                    'Integración de sensores y actuadores',
-                    'Protocolos de comunicación inalámbrica',
-                    'Ciberseguridad en dispositivos IoT'
+                    'Ingeniero en IoT',
+                    'desarrollador de sistemas embebidos',
+                    'especialista en automatización'
                 ],
                 campoLaboral: [
-                    'Desarrollador de Sistemas Embebidos',
-                    'Ingeniero IoT',
-                    'Especialista en Automatización',
-                    'Arquitecto de Soluciones Conectadas',
-                    'Técnico en Dispositivos Inteligentes',
-                    'Consultor en Transformación Digital'
+                    'Industria 4.0',
+                    'domótica',
+                    'empresas de tecnología',
+                    'consultoras en automatización'
                 ]
             },
             'datascience-utsc': {
                 title: 'Data Science',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Formación en análisis de grandes volúmenes de datos, machine learning, estadística avanzada y visualización de datos para extraer insights valiosos y apoyar la toma de decisiones empresariales.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Análisis estadístico, minería de datos, machine learning, visualización avanzada, big data.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Análisis estadístico avanzado',
-                    'Minería de datos y pattern recognition',
-                    'Machine learning y deep learning',
-                    'Visualización de datos complejos',
-                    'Gestión de bases de datos big data',
-                    'Storytelling con datos'
+                    'Científico de datos',
+                    'analista de inteligencia de negocios',
+                    'ingeniero en analytics'
                 ],
                 campoLaboral: [
-                    'Científico de Datos',
-                    'Analista de Business Intelligence',
-                    'Especialista en Machine Learning',
-                    'Arquitecto de Datos',
-                    'Consultor Analytics',
-                    'Desarrollador de Dashboards'
+                    'Empresas tecnológicas',
+                    'bancos',
+                    'instituciones de salud',
+                    'sector retail',
+                    'consultoras de datos'
                 ]
             },
             'rv-utsc': {
                 title: 'Realidad Virtual y Aumentada',
                 universidad: 'Universidad Tecnológica Santa Catarina',
-                descripcion: 'Desarrollo de experiencias inmersivas, aplicaciones de realidad virtual, aumentada y mixta para sectores como entretenimiento, educación, salud, arquitectura y entrenamiento profesional.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Programación de entornos 3D, diseño de experiencias inmersivas, hardware VR/AR, animación.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Desarrollo de entornos virtuales',
-                    'Programación de interacciones 3D',
-                    'Diseño de experiencias inmersivas',
-                    'Integración de hardware VR/AR',
-                    'Animación y modelado 3D',
-                    'Optimización de rendimiento gráfico'
+                    'Desarrollador VR/AR',
+                    'diseñador de experiencias',
+                    'artista 3D'
                 ],
                 campoLaboral: [
-                    'Desarrollador de Realidad Virtual',
-                    'Diseñador de Experiencias Inmersivas',
-                    'Especialista en Realidad Aumentada',
-                    'Artista 3D y Animador',
-                    'Arquitecto de Entornos Virtuales',
-                    'Consultor en Tecnologías Inmersivas'
+                    'Entretenimiento',
+                    'educación',
+                    'arquitectura',
+                    'salud',
+                    'simuladores de entrenamiento'
                 ]
             },
             // Carreras de UTL
             'agrotecnologia-utl': {
-                title: 'Agrotecnología',
+                title: 'Ingeniería en Agricultura Sustentable y Protegida',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Aplicación de tecnología avanzada en la agricultura para optimizar la producción, mejorar la sostenibilidad y desarrollar soluciones innovadoras para el sector agroalimentario regional.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Agricultura de precisión, manejo integrado de plagas, sistemas de riego, biotecnología agrícola.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Manejo de sistemas de riego tecnificado',
-                    'Agricultura de precisión con drones',
-                    'Gestión de invernaderos automatizados',
-                    'Análisis de suelos y cultivos',
-                    'Desarrollo de bioinsumos',
-                    'Comercialización de productos agrícolas'
+                    'Técnico agrícola',
+                    'gestor de invernaderos',
+                    'consultor en agricultura sostenible'
                 ],
                 campoLaboral: [
-                    'Técnico en Agricultura de Precisión',
-                    'Especialista en Riego Tecnificado',
-                    'Gestor de Invernaderos',
-                    'Asesor Agropecuario',
-                    'Desarrollador de Bioinsumos',
-                    'Comercializador Agrotecnológico'
+                    'Empresas agrícolas',
+                    'invernaderos',
+                    'instituciones de innovación agrícola',
+                    'ONGs ambientales'
                 ]
             },
             'turismo-utl': {
-                title: 'Turismo Sustentable',
+                title: 'Ingeniería en Turismo Sustentable',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Formación en gestión de destinos turísticos con enfoque en sostenibilidad, conservación del patrimonio natural y cultural, y desarrollo comunitario responsable.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Desarrollo de destinos ecológicos, gestión patrimonial, marketing turístico responsable.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Planificación de destinos turísticos',
-                    'Gestión de empresas turísticas sustentables',
-                    'Desarrollo de productos ecoturísticos',
-                    'Interpretación del patrimonio natural',
-                    'Marketing turístico responsable',
-                    'Gestión de calidad en servicios turísticos'
+                    'Gestor de destinos turísticos',
+                    'planificador de ecoturismo',
+                    'asesor en turismo responsable'
                 ],
                 campoLaboral: [
-                    'Gestor de Destinos Turísticos',
-                    'Guía de Turismo Sustentable',
-                    'Desarrollador de Productos Ecoturísticos',
-                    'Consultor en Turismo Responsable',
-                    'Coordinador de Proyectos Turísticos',
-                    'Empresario Turístico'
+                    'Agencias de turismo',
+                    'entidades públicas',
+                    'empresas de ecoturismo',
+                    'instituciones culturales'
                 ]
             },
             'logistica-utl': {
-                title: 'Logística y Transporte',
+                title: 'Ingeniería en Logística y Cadena de Suministro',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Optimización de cadenas de suministro, gestión eficiente del transporte y desarrollo de soluciones logísticas para el comercio regional e internacional.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Gestión de cadenas de suministro, logística internacional, optimización de rutas, almacenes inteligentes.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Gestión de almacenes y distribución',
-                    'Planificación de rutas de transporte',
-                    'Análisis de costos logísticos',
-                    'Coordinación de cadena de frío',
-                    'Gestión de comercio exterior',
-                    'Implementación de sistemas ERP'
+                    'Coordinador logístico',
+                    'analista de cadena de suministro',
+                    'gestor de transporte y distribución'
                 ],
                 campoLaboral: [
-                    'Coordinador Logístico',
-                    'Analista de Cadena de Suministro',
-                    'Gestor de Transporte',
-                    'Especialista en Comercio Exterior',
-                    'Supervisor de Almacén',
-                    'Consultor Logístico'
+                    'Empresas de transporte',
+                    'distribución',
+                    'comercio exterior',
+                    'sectores automotriz y retail'
                 ]
             },
             'desarrollo-utl': {
                 title: 'Desarrollo Comunitario',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Formación para implementar proyectos de desarrollo sostenible que mejoren la calidad de vida en comunidades, fomentando la participación ciudadana y el emprendimiento social.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Diseño e implementación de proyectos sociales, gestión de organizaciones civiles, participación comunitaria.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Diseño de proyectos comunitarios',
-                    'Gestión de organizaciones sociales',
-                    'Metodologías de participación ciudadana',
-                    'Elaboración de diagnósticos comunitarios',
-                    'Sostenibilidad de proyectos sociales',
-                    'Emprendimiento social'
+                    'Promotor social',
+                    'gestor de proyectos comunitarios',
+                    'coordinador de organizaciones sociales'
                 ],
                 campoLaboral: [
-                    'Promotor del Desarrollo Comunitario',
-                    'Gestor de Proyectos Sociales',
-                    'Coordinador de Organizaciones Civiles',
-                    'Consultor en Desarrollo Local',
-                    'Facilitador Comunitario',
-                    'Emprendedor Social'
+                    'ONGs',
+                    'instituciones públicas',
+                    'comunidades rurales',
+                    'proyectos de desarrollo social'
                 ]
             },
             'gastronomia-utl': {
                 title: 'Gastronomía Regional',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Preservación e innovación de la cocina tradicional regional, combinando técnicas culinarias modernas con ingredientes locales para el desarrollo gastronómico sostenible.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Técnicas culinarias tradicionales y modernas, gestión de restaurantes, innovación en gastronomía local.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Técnicas culinarias tradicionales',
-                    'Innovación en cocina regional',
-                    'Gestión de establecimientos gastronómicos',
-                    'Seguridad e higiene alimentaria',
-                    'Maridaje y enología',
-                    'Emprendimiento gastronómico'
+                    'Chef especializado',
+                    'gestor gastronómico',
+                    'innovador culinario',
+                    'instructor de cocina'
                 ],
                 campoLaboral: [
-                    'Chef Especializado en Cocina Regional',
-                    'Gestor de Restaurantes',
-                    'Consultor Gastronómico',
-                    'Investigador Culinario',
-                    'Emprendedor Gastronómico',
-                    'Instructor Culinario'
+                    'Restaurantes',
+                    'hoteles',
+                    'centros de investigación culinaria',
+                    'emprendimientos gastronómicos'
                 ]
             },
             'energias-utl': {
                 title: 'Energías Alternativas',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Implementación de soluciones energéticas sostenibles adaptadas a las necesidades de comunidades rurales y urbanas, con enfoque en accesibilidad y bajo impacto ambiental.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Instalación de sistemas solares, eólicos, biodigestores, gestión de proyectos energéticos sostenibles.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Instalación de sistemas solares',
-                    'Diseño de biodigestores',
-                    'Eficiencia energética residencial',
-                    'Energía eólica a pequeña escala',
-                    'Gestión de proyectos energéticos',
-                    'Educación comunitaria en energía'
+                    'Técnico en energías renovables',
+                    'instalador de sistemas solares',
+                    'gestor de proyectos energéticos'
                 ],
                 campoLaboral: [
-                    'Técnico en Energías Renovables',
-                    'Instalador de Sistemas Solares',
-                    'Promotor de Eficiencia Energética',
-                    'Consultor en Energía Comunitaria',
-                    'Gestor de Proyectos Energéticos',
-                    'Educador Ambiental'
+                    'Empresas de energías limpias',
+                    'instituciones públicas',
+                    'comunidades rurales',
+                    'consultoras ambientales'
                 ]
             },
             'ti-utl': {
                 title: 'Tecnologías de la Información',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Desarrollo de soluciones tecnológicas adaptadas al contexto regional, incluyendo software para PyMEs, sistemas de información municipal y herramientas digitales para el desarrollo local.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Desarrollo de software, redes, soporte técnico, soluciones digitales para el desarrollo local.',
+                duracionTsu: '1.5 años',
+                duracionIng: '+1.5 años',
                 perfilEgreso: [
-                    'Desarrollo de software adaptado',
-                    'Implementación de redes locales',
-                    'Soporte técnico comunitario',
-                    'Sistemas de información municipal',
-                    'Capacitación digital',
-                    'Ciberseguridad básica'
+                    'Desarrollador',
+                    'administrador de redes',
+                    'consultor en tecnologías de la información'
                 ],
                 campoLaboral: [
-                    'Desarrollador de Software Local',
-                    'Técnico en Soporte Comunitario',
-                    'Administrador de Redes Locales',
-                    'Consultor TI para PyMEs',
-                    'Coordinador de Proyectos Digitales',
-                    'Instructor de Alfabetización Digital'
+                    'Empresas de tecnología',
+                    'sectores gubernamentales',
+                    'organizaciones civiles y privadas'
                 ]
             },
             'adminpublica-utl': {
                 title: 'Administración Pública',
                 universidad: 'Universidad Tecnológica de Linares',
-                descripcion: 'Formación para la gestión eficiente de instituciones públicas, desarrollo de políticas sociales y mejora de los servicios gubernamentales con enfoque en transparencia y participación ciudadana.',
-                duracionTsu: '1 año 6 meses',
-                duracionIng: '1 año 6 meses adicionales',
+                descripcion: 'Gestión de recursos públicos, diseño y evaluación de políticas públicas, administración de instituciones gubernamentales, transparencia y rendición de cuentas.',
+                duracionTsu: '2 años',
+                duracionIng: '+1 año',
                 perfilEgreso: [
-                    'Gestión de recursos públicos',
-                    'Elaboración de políticas sociales',
-                    'Transparencia y rendición de cuentas',
-                    'Participación ciudadana',
-                    'Planificación del desarrollo local',
-                    'Evaluación de programas públicos'
+                    'Administrador público',
+                    'gestor de proyectos gubernamentales',
+                    'asesor en políticas públicas'
                 ],
                 campoLaboral: [
-                    'Funcionario Público',
-                    'Gestor de Proyectos Gubernamentales',
-                    'Analista de Políticas Públicas',
-                    'Consultor en Administración Pública',
-                    'Coordinador de Participación Ciudadana',
-                    'Auditor Gubernamental'
+                    'Gobiernos municipales, estatales y federales',
+                    'ONG',
+                    'instituciones internacionales',
+                    'organizaciones civiles'
                 ]
             }
         };
 
-        // Datos de los planteles
-        const plantelesData = {
-            'desarrollo-software': {
-                title: 'Desarrollo y Gestión de Software',
-                description: 'Nuestras instalaciones para Desarrollo de Software cuentan con laboratorios de última generación, aulas especializadas y espacios colaborativos diseñados para fomentar la innovación y el trabajo en equipo.',
-                images: [
-                    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'mantenimiento-industrial': {
-                title: 'Mantenimiento Industrial',
-                description: 'Contamos con talleres especializados, laboratorios de automatización y áreas de práctica equipadas con tecnología industrial de vanguardia para la formación práctica de nuestros estudiantes.',
-                images: [
-                    'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'negocios-internacionales': {
-                title: 'Negocios Internacionales',
-                description: 'Nuestras instalaciones para Negocios Internacionales incluyen salas de negociación, laboratorios de comercio exterior y espacios de simulación empresarial para una formación práctica y realista.',
-                images: [
-                    'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'mecatronica': {
-                title: 'Mecatrónica',
-                description: 'Laboratorios de robótica, talleres de automatización y áreas de prototipado equipados con tecnología de punta para el desarrollo de proyectos mecatrónicos innovadores.',
-                images: [
-                    'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'procesos-productivos': {
-                title: 'Procesos Productivos',
-                description: 'Instalaciones industriales a escala, laboratorios de control de calidad y áreas de simulación de procesos para una formación práctica en optimización productiva.',
-                images: [
-                    'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'lengua-inglesa': {
-                title: 'Lengua Inglesa',
-                description: 'Aulas multimedia, laboratorios de idiomas, salas de interpretación y espacios culturales diseñados para la inmersión lingüística y el desarrollo de competencias interculturales.',
-                images: [
-                    'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'ia-utsc': {
-                title: 'Inteligencia Artificial',
-                description: 'Laboratorios de IA equipados con servidores de alto rendimiento, estaciones de trabajo especializadas y espacios colaborativos para el desarrollo de proyectos de inteligencia artificial y machine learning.',
-                images: [
-                    'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'ciberseguridad-utsc': {
-                title: 'Ciberseguridad',
-                description: 'Laboratorios especializados en ciberseguridad con redes aisladas, equipos de pentesting, salas de war games y herramientas profesionales para la formación en seguridad informática.',
-                images: [
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            }
-        };
+      // Datos de los planteles (completado para todas las carreras)
+const plantelesData = {
+    'desarrollo-software': {
+        title: 'Desarrollo y Gestión de Software',
+        description: 'Laboratorios de programación, aulas de desarrollo colaborativo, salas de servidores y espacios para proyectos en equipo.',
+        images: [
+            'https://www.shutterstock.com/image-photo/advanced-medical-science-laboratory-scientist-260nw-1912524370.jpg',
+            'https://img.freepik.com/free-photo/programming-background-with-person-working-with-codes-computer_23-2150010125.jpg?semt=ais_hybrid&w=740&q=80',
+            'https://static.vecteezy.com/system/resources/previews/006/697/113/non_2x/software-develper-working-on-laptop-at-home-office-programmer-working-develop-web-application-software-programming-concept-free-photo.jpg',
+            'https://www.shutterstock.com/image-photo/advanced-medical-science-laboratory-scientist-260nw-1912524385.jpg'
+        ]
+    },
+    'mantenimiento-industrial': {
+        title: 'Mantenimiento Industrial',
+        description: 'Talleres de mecánica y electricidad, laboratorios de automatización, áreas de práctica en equipos reales.',
+        images: [
+            'https://www.shutterstock.com/image-photo/dallas-texas-may-22nd-2023-600nw-2325207215.jpg',
+            'https://www.shutterstock.com/image-photo/industrial-engineer-working-on-robot-260nw-2461722781.jpg',
+            'https://www.shutterstock.com/image-photo/portrait-shot-handsome-mechanic-working-600nw-1711144648.jpg',
+            'https://img.freepik.com/free-photo/industrial-worker-working-production-line-factory_342744-177.jpg'
+        ]
+    },
+    'negocios-internacionales': {
+        title: 'Negocios Internacionales',
+        description: 'Áreas de simulación de negociaciones, laboratorios de comercio exterior, salas de capacitación en idiomas.',
+        images: [
+            'https://www.shutterstock.com/image-photo/male-mature-caucasian-ceo-businessman-600w-2142010187.jpg',
+            'https://thumbs.dreamstime.com/b/business-people-negotiating-conference-room-group-58114637.jpg',
+            'https://thumbs.dreamstime.com/b/businessmen-showing-papers-webcam-laptop-negotiation-meeting-room-closeup-to-having-online-office-two-managers-discussing-387578106.jpg',
+            'https://thumbs.dreamstime.com/b/group-young-people-sitting-negotiation-room-debating-their-work-joy-business-partners-discussing-board-112926620.jpg'
+        ]
+    },
+    'mecatronica': {
+        title: 'Mecatrónica',
+        description: 'Laboratorios de robótica, áreas de prototipado, talleres de electrónica y mecánica.',
+        images: [
+            'https://www.shutterstock.com/image-photo/industrial-programmable-robotic-arm-factory-260nw-2242349339.jpg',
+            'https://media.istockphoto.com/id/2084424942/photo/a-female-mechatronics-engineer-is-working-with-a-robotic-arm-prototype-to-examine-new.jpg?s=612x612&w=0&k=20&c=8ihCJ7CzRgnZMlXN8X66ZR0inZS1tdyZ_D-mYrPrapk=',
+            'https://static.vecteezy.com/system/resources/thumbnails/070/981/748/small/various-mechanical-parts-and-tools-are-arranged-meticulously-on-a-workbench-in-a-workshop-precision-equipment-is-ready-for-assembly-and-engineering-tasks-illuminated-by-overhead-lights-photo.jpeg',
+            'https://media.istockphoto.com/id/1330931321/photo/mechatronics-engineering-in-process-experienced-engineer-working-on-new-automated-robotic.jpg?s=612x612&w=0&k=20&c=kP-W_IWtrL0nCwqLdIRv0dCInP3YDpLkWRIKBuAVn3o='
+        ]
+    },
+    'procesos-productivos': {
+        title: 'Procesos Productivos',
+        description: 'Laboratorios de control de calidad, simuladores de procesos, áreas de análisis y medición.',
+        images: [
+            'https://www.shutterstock.com/image-photo/quality-control-officer-inspecting-raw-260nw-2599932405.jpg',
+            'https://www.shutterstock.com/image-photo/hygiene-staff-worker-foods-drinks-260nw-2393015413.jpg',
+            'https://thumbs.dreamstime.com/b/food-quality-control-concept-expert-inspecting-specimens-groceries-laboratory-148050380.jpg',
+            'https://www.shutterstock.com/image-photo/concept-food-industry-banner-factory-260nw-1845178195.jpg'
+        ]
+    },
+    'lengua-inglesa': {
+        title: 'Lengua Inglesa (Bilingüe)',
+        description: 'Aulas multimedia, laboratorios de idiomas, salas de interpretación, espacios culturales bilingües.',
+        images: [
+            'https://www.shutterstock.com/image-photo/smiling-young-male-teacher-helping-600nw-2483441623.jpg',
+            'https://media.istockphoto.com/id/953264308/photo/learn-english-note-at-wooden-background-with-teachers-glasses.jpg?s=612x612&w=0&k=20&c=S2fmg6b_1CrCwzsGKP_YxVaGA0jHYAyxbJfHvnORFlQ=',
+            'https://img.freepik.com/free-photo/kids-classroom-taking-english-class_23-2149402668.jpg',
+            'https://media.istockphoto.com/id/184106979/photo/classroom-slide-composited-in.jpg?s=612x612&w=0&k=20&c=vXKLTD-Bcbix3vTcpo1jzixBHQ74Z3yoV6sBdpW4YPE='
+        ]
+    },
+    'ia-utsc': {
+        title: 'Ingeniería en Tecnologías de la Información e Innovación Digital',
+        description: 'Laboratorios de programación, centros de datos, espacios de innovación y colaboración.',
+        images: [
+            'https://static.vecteezy.com/system/resources/previews/037/996/745/non_2x/ai-generated-sustainable-technology-diverse-team-innovating-in-green-energy-lab-photo.jpg',
+            'https://www.shutterstock.com/image-photo/tablet-laptop-woman-scientist-lab-260nw-2422946607.jpg',
+            'https://www.shutterstock.com/image-photo/pharmaceutical-laboratory-young-male-scientist-260nw-2556717801.jpg',
+            'https://img.freepik.com/premium-vector/design-digital-innovation-lab-logo-white-background_579306-9365.jpg'
+        ]
+    },
+    'ciberseguridad-utsc': {
+        title: 'Ingeniería en Ciberseguridad',
+        description: 'Redes aisladas, laboratorios de hacking ético, plataformas de simulación de ataques.',
+        images: [
+            'https://www.shutterstock.com/image-photo/side-view-hacker-using-computer-260nw-1156539508.jpg',
+            'https://media.istockphoto.com/id/958989154/photo/ethical-hacking-concept-with-faceless-hooded-male-person.jpg?s=170667a&w=is&k=20&c=Z9E-7EuSTkxRRNgwbkzu8f8re-W5bGI5QVAHh91HRNA=',
+            'https://t4.ftcdn.net/jpg/02/05/93/21/360_F_205932110_IWiDmketVT703mNPZ8eSn76Sa25QoSYw.jpg',
+            'https://www.shutterstock.com/image-photo/security-hack-threats-data-leaks-260nw-2331750317.jpg'
+        ]
+    },
+    'energias-utsc': {
+        title: 'Ingeniería en Energías Renovables',
+        description: 'Laboratorios de energías sostenibles, áreas de simulación, talleres en campo.',
+        images: [
+            'https://t4.ftcdn.net/jpg/05/08/05/97/360_F_508059717_UR8jns4nwJZm9VTCWo1TNLV3h8JXU2DC.jpg',
+            'https://media.istockphoto.com/id/489193525/photo/solar-panels-and-wind-generators-under-blue-sky-on-sunset.jpg?s=612x612&w=0&k=20&c=hIithVnTA3vKOYPa-Okn8qSQunI1OAhGR_tH-NZvqdw=',
+            'https://static.vecteezy.com/system/resources/previews/008/563/432/non_2x/esg-banners-environment-society-and-governance-hand-holding-light-bulb-with-renewable-energy-icon-revolving-revenue-photo.jpg',
+            'https://media.istockphoto.com/id/2156966176/photo/environmental-concept-with-hand-holding-planet-earth-showing-sustainable-and-eco-friendly.jpg?s=612x612&w=0&k=20&c=sowge6N0GcisgxPq-QmJBS5RBQ0ZmEiVQap5cIytWWU='
+        ]
+    },
+    'biotecnologia-utsc': {
+        title: 'Ingeniería en Biotecnología',
+        description: 'Laboratorios especializados en biología molecular, áreas de cultivo y fermentación.',
+        images: [
+            'https://media.istockphoto.com/id/171591485/photo/group-of-scientist-in-laboratory.jpg?s=612x612&w=0&k=20&c=8_feJDq0zslWqzAkQ-WVcmEMC8CTVLFxHfoi3FJ4o2k=',
+            'https://www.shutterstock.com/image-photo/close-scientist-hands-holding-test-600w-2431314377.jpg',
+            'https://media.istockphoto.com/id/477013712/photo/scientist-using-protective-robber-gloves-for-handling-substances-and-experiments.jpg?s=612x612&w=0&k=20&c=y8qCj3Ok5JwvNz0AgHPXuujoNpnUapzEZ7NkOkyxHqA=',
+            'https://www.shutterstock.com/image-photo/medicine-development-laboratory-asian-female-600nw-2456036585.jpg'
+        ]
+    },
+    'iot-utsc': {
+        title: 'IoT y Sistemas Embebidos',
+        description: 'Laboratorios de electrónica, estaciones de prototipado, plataformas de desarrollo IoT.',
+        images: [
+            'https://www.shutterstock.com/image-photo/closeup-printed-circuit-board-pcb-260nw-2530139329.jpg',
+            'https://st4.depositphotos.com/2978065/24062/i/450/depositphotos_240620438-stock-photo-render-cpu-central-processor-unit.jpg',
+            'https://www.shutterstock.com/image-illustration/intricate-illustration-showcasing-advanced-glowing-260nw-2439656221.jpg',
+            'https://cdn.pixabay.com/photo/2017/03/23/12/32/arduino-2168193_1280.png'
+        ]
+    },
+    'datascience-utsc': {
+        title: 'Data Science',
+        description: 'Salas de análisis, servidores de alto rendimiento, software de análisis avanzado.',
+        images: [
+            'https://www.shutterstock.com/image-photo/server-racks-cabinets-full-hard-600nw-2306905651.jpg',
+            'https://media.istockphoto.com/id/1350722246/photo/server-room-background.jpg?s=170667a&w=is&k=20&c=PT0piukz6GO_RhaGY2pmyWqdLg-a8uXO0Hi4q9qGdYM=',
+            'https://www.shutterstock.com/image-photo/supercomputer-advanced-cloud-computing-concept-600nw-2306905657.jpg',
+            'https://www.shutterstock.com/image-illustration/countless-modern-server-cabinets-render-600nw-2356888839.jpg'
+        ]
+    },
+    'rv-utsc': {
+        title: 'Realidad Virtual y Aumentada',
+        description: 'Estudios de captura de movimiento, laboratorios de modelado 3D, espacios de programación.',
+        images: [
+            'https://thumbs.dreamstime.com/b/person-fully-engaged-virtual-reality-experience-using-motion-capture-equipment-sensors-their-body-gloves-391002136.jpg',
+            'https://thumbs.dreamstime.com/b/person-wearing-motion-capture-suit-stands-studio-facing-projection-screen-displaying-grid-pattern-321815650.jpg',
+            'https://thumbs.dreamstime.com/b/person-wearing-motion-capture-suit-vr-headset-stands-against-green-screen-background-ai-generated-person-motion-325427104.jpg',
+            'https://media.istockphoto.com/id/1324380506/photo/people-with-vr-grasses-playing-virtual-reality-game-future-digital-technology-and-3d-virtual.jpg?s=612x612&w=0&k=20&c=I_9fnEi1hNHFwy0qe8g7V1ZQJmgyKEDOSDJonScTSMU='
+        ]
+    },
+    'agrotecnologia-utl': {
+        title: 'Ingeniería en Agricultura Sustentable y Protegida',
+        description: 'Invernaderos inteligentes, laboratorios de agricultura de precisión y campos experimentales para la aplicación práctica de tecnologías agropecuarias.',
+        images: [
+            'https://www.shutterstock.com/image-photo/organic-hydroponic-vegetable-growing-greenhouse-260nw-2479106433.jpg',
+            'https://media.istockphoto.com/id/1265704346/photo/organic-greenhouse.jpg?s=612x612&w=0&k=20&c=3UYDiVDVED2i2XvUvf0iMxydTNp152-rkehaEvLA6uw=',
+            'https://static.vecteezy.com/system/resources/thumbnails/066/755/731/small_2x/farmer-using-a-digital-tablet-to-manage-smart-irrigation-and-crop-growth-in-a-modern-greenhouse-photo.jpeg',
+            'https://thumbs.dreamstime.com/b/smart-greenhouse-control-parameters-greenhouse-smart-greenhouse-control-parameters-greenhouse-smart-396709009.jpg'
+        ]
+    },
+    'turismo-utl': {
+        title: 'Ingeniería en Turismo Sustentable',
+        description: 'Salas de simulación turística, espacios de interpretación cultural y laboratorios de gestión de destinos para el desarrollo de proyectos turísticos responsables.',
+        images: [
+            'https://media.istockphoto.com/id/1031430214/photo/young-woman-kayaking-through-the-the-backwaters-of-monroe-island.jpg?s=612x612&w=0&k=20&c=kbv2s1kknMzJgk8Nd-W2VNIf0AFx48YtCqygtI3Ppos=',
+            'https://media.istockphoto.com/id/1372488167/photo/a-lake-in-the-shape-of-an-airplane-in-the-middle-of-untouched-nature-a-concept-illustrating.jpg?s=612x612&w=0&k=20&c=d-2X_9pmP_RRfvNfTsptxluq5mCcF_ahUZhMi6ESlow=',
+            'https://www.shutterstock.com/image-vector/sustainable-tourism-ecological-responsible-travel-260nw-1982804408.jpg',
+            'https://www.shutterstock.com/image-vector/sustainable-tourism-set-ecotourism-ecofriendly-260nw-2378753787.jpg'
+        ]
+    },
+    'logistica-utl': {
+        title: 'Ingeniería en Logística y Cadena de Suministro',
+        description: 'Centros de simulación logística, almacenes modelo y laboratorios de optimización de rutas para la gestión eficiente de cadenas de suministro.',
+        images: [
+            'https://www.shutterstock.com/image-vector/automated-warehouse-robotic-autonomous-robot-260nw-2480187763.jpg',
+            'https://media.istockphoto.com/id/1581309911/photo/high-angle-view-of-a-warehouse-manager-walking-with-foremen-checking-stock-on-racks.jpg?s=612x612&w=0&k=20&c=JCF-qJiwTUAhD8sEgEhHNcJZvxy4JtIWHYeQLKcbcKk=',
+            'https://www.shutterstock.com/image-photo/defocused-background-futuristic-warehouse-interior-260nw-2632606263.jpg',
+            'https://www.shutterstock.com/image-photo/three-warehouse-workers-safety-vests-600w-2576831333.jpg'
+        ]
+    },
+    'desarrollo-utl': {
+        title: 'Desarrollo Comunitario',
+        description: 'Espacios de planificación comunitaria, salas de talleres participativos y espacios de proyectos sociales para el diseño e implementación de iniciativas locales.',
+        images: [
+            'https://media.istockphoto.com/id/2094337676/photo/diverse-team-working-together-in-modern-co-working-space.jpg?s=612x612&w=0&k=20&c=EvWROZsfro1ghOVViXVj-tKS364-NeabwNNYkyvhxoY=',
+            'https://www.shutterstock.com/image-photo/group-senior-adults-actively-participating-600nw-2455512829.jpg',
+            'https://static.vecteezy.com/system/resources/thumbnails/071/884/290/small_2x/diverse-community-enjoying-a-gardening-workshop-outdoors-photo.jpg',
+            'https://media.istockphoto.com/id/1438225124/photo/mid-adult-woman-applauding-during-a-presentation.jpg?s=612x612&w=0&k=20&c=L9w4j54ADE5EK21UQlQtKWnG-2ViKu7tHHfp9LlU0rU='
+        ]
+    },
+    'gastronomia-utl': {
+        title: 'Gastronomía Regional',
+        description: 'Cocinas especializadas, laboratorios de catación y espacios de innovación culinaria para la preservación y evolución de la gastronomía local.',
+        images: [
+            'https://img.freepik.com/premium-photo/chef-experimenting-with-new-flavors-modern-kitchen-lab-candid-daily-environment-routine-o_980716-109063.jpg?w=360',
+            'https://thumbs.dreamstime.com/b/food-scientist-lab-coat-inspects-vibrant-tomatoes-broccoli-professional-kitchen-environment-focusing-quality-control-341089430.jpg',
+            'https://thumbs.dreamstime.com/b/cultured-meat-packs-kitchen-counter-innovative-food-ai-generated-405105780.jpg',
+            'https://media.istockphoto.com/id/1327977778/photo/two-female-scientist-cooking-genetic-meat.jpg?s=612x612&w=0&k=20&c=XZ4ihze2dDtqDkHdRjNitw4GyqEKOan1TO1QymlY9Co='
+        ]
+    },
+    'energias-utl': {
+        title: 'Energías Alternativas',
+        description: 'Instalaciones para energías alternativas con biodigestores, paneles solares comunitarios y laboratorios de eficiencia energética para proyectos rurales.',
+        images: [
+            'https://img.freepik.com/premium-photo/aerial-view-biogas-plant-facility-with-solar-panels-rural-landscape-renewable-energy-concept_114541-14640.jpg',
+            'https://img.freepik.com/premium-photo/solar-panels-livestock-farm-providing-clean-sustainable-energy_269655-74997.jpg',
+            'https://media.istockphoto.com/id/1170098138/photo/solar-panels-fields-on-the-green-hills.jpg?s=612x612&w=0&k=20&c=xYjwuTPHyIHsRzj8NAABoGfE5ZpLq2zJbfXi-oJrqQo=',
+            'https://static.vecteezy.com/system/resources/previews/068/299/136/non_2x/advanced-solar-research-laboratory-featuring-solar-panels-and-high-tech-equipment-on-display-in-a-modern-scientific-environment-with-natural-light-and-engineering-focus-for-sustainable-energy-photo.jpeg'
+        ]
+    },
+    'ti-utl': {
+        title: 'Tecnologías de la Información',
+        description: 'Laboratorios de TI regionales con servidores locales, estaciones de desarrollo y centros de capacitación digital para soluciones adaptadas a PyMEs y municipios.',
+        images: [
+            'https://media.istockphoto.com/id/527034734/photo/huge-data-center.jpg?s=612x612&w=0&k=20&c=etdY4vrRFufNhyeMRCQKWr7jEMAkleCVq9GnPYikalc=',
+            'https://www.shutterstock.com/image-photo/network-servers-data-center-shallow-600nw-102675134.jpg',
+            'https://media.istockphoto.com/id/477130337/photo/network-servers-racks.jpg?s=612x612&w=0&k=20&c=vCw92YUUOS4HpehQc4Zv8mgbXs-20ob6QgjA1zdODeg=',
+            'https://www.shutterstock.com/image-photo/hightech-bright-data-center-computers-600nw-1913228191.jpg'
+        ]
+    },
+    'adminpublica-utl': {
+        title: 'Administración Pública',
+        description: 'Aulas de simulación gubernamental, laboratorios de políticas públicas y espacios de análisis social para la formación en gestión y transparencia administrativa.',
+        images: [
+            'https://www.shutterstock.com/image-photo/audience-listening-instructor-employee-education-260nw-2354268499.jpg',
+            'https://www.shutterstock.com/image-photo/senior-woman-handing-papers-official-260nw-2630234759.jpg',
+            'https://img.freepik.com/free-photo/vintage-style-people-working-office-with-computers_23-2149850976.jpg?semt=ais_hybrid&w=740&q=80',
+            'https://www.shutterstock.com/image-photo/digital-government-online-public-services-260nw-2603198411.jpg'
+        ]
+    }
+};
 
         // JavaScript para los modales
         document.addEventListener('DOMContentLoaded', function() {

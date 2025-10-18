@@ -10,7 +10,7 @@ $user = $_SESSION['user'] ?? [];
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UTEC · Panel Administrativo</title>
+  <title>UTSC · Panel Administrativo</title>
 
   <!-- Tema inicial -->
   <script>
@@ -153,8 +153,8 @@ $user = $_SESSION['user'] ?? [];
   <!-- layout a dos columnas, contenido empujado por la sidebar fija -->
   <aside id="sidebar" class="sidebar shadow-lg">
     <div class="p-4 flex items-center space-x-3">
-      <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 w-auto rounded">
-      <span class="brand-text text-xl font-bold text-neutral-800 dark:text-white">UTEC</span>
+      <img src="/src/plataforma/app/img/UT.jpg" alt="UTSC Logo" class="h-10 w-auto rounded">
+      <span class="brand-text text-xl font-bold text-neutral-800 dark:text-white">UTSC</span>
     </div>
 
     <div class="px-4 pb-4 border-b border-neutral-200 dark:border-neutral-700">
@@ -164,7 +164,7 @@ $user = $_SESSION['user'] ?? [];
         </div>
         <div class="min-w-0">
           <p class="font-medium leading-tight truncate"><?= htmlspecialchars($user['name'] ?? 'Administrador') ?></p>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-tight truncate"><?= htmlspecialchars($user['email'] ?? 'admin@utec.edu') ?></p>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-tight truncate"><?= htmlspecialchars($user['email'] ?? 'admin@UTSC.edu') ?></p>
         </div>
       </div>
     </div>
@@ -226,7 +226,7 @@ $user = $_SESSION['user'] ?? [];
     </main>
 
     <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
-      <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTEC · Panel Administrativo</p>
+      <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTSC · Panel Administrativo</p>
     </footer>
   </div>
 

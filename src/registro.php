@@ -122,8 +122,8 @@
     <div class="p-8">
       <!-- Header -->
       <div class="flex items-center gap-4 mb-8">
-        <div class="w-14 h-14 bg-gradient-to-br from-green-600 to-emerald-500 rounded-xl flex items-center justify-center">
-          <i data-feather="book-open" class="w-7 h-7 text-white"></i>
+        <div class="w-14 h-14 bg-gradient-to-br from-green-600 to-emerald-500 rounded-xl flex items-center justify-center overflow-hidden">
+          <img src="./plataforma/app/img/UT.jpg" alt="Logo UTSC" class="w-full h-full object-cover">
         </div>
         <div>
           <h1 class="text-2xl font-bold text-gray-900">UTSC</h1>
@@ -143,7 +143,7 @@
         <div class="text-sm text-gray-500 font-medium">Paso 2 de 3</div>
       </div>
 
-      <form id="admissionForm" action="/admission/apply" method="post" novalidate class="space-y-8">
+      <form id="admissionForm" action="" method="post" novalidate class="space-y-8">
         <!-- Información Personal -->
         <div class="space-y-6">
           <div class="border-l-4 border-green-500 pl-4">
@@ -313,11 +313,10 @@
 
         <!-- Botones de acción -->
         <div class="flex flex-col sm:flex-row gap-4 pt-6">
-          <button type="button" class="flex-1 inline-flex items-center justify-center gap-2 py-4 px-6 rounded-xl font-semibold text-gray-700 border-2 border-gray-300 hover:border-gray-400 transition-colors">
+          <a href="./index.php" class="flex-1 inline-flex items-center justify-center gap-2 py-4 px-6 rounded-xl font-semibold text-gray-700 border-2 border-gray-300 hover:border-gray-400 transition-colors">
             <i data-feather="arrow-left" class="w-5 h-5"></i>
             Regresar
-            <a href="./index.php"></a>
-          </button>
+          </a>
           <button type="submit" class="premium-btn flex-1 inline-flex items-center justify-center gap-2 py-4 px-6 rounded-xl font-semibold">
             <i data-feather="send" class="w-5 h-5"></i>
             Enviar Solicitud
@@ -327,8 +326,8 @@
 
       <div class="mt-8 pt-6 border-t border-gray-200 text-center">
         <p class="text-sm text-gray-600">
-          ¿Ya tienes una cuenta? 
-          <a href="login.html" class="text-green-600 hover:text-green-700 font-semibold">Iniciar sesión</a>
+          ¿Ya tienes una cuenta?
+          <a href="./plataforma/app/views/auth/login.php" class="text-green-600 hover:text-green-700 font-semibold">Iniciar sesión</a>
         </p>
       </div>
     </div>
@@ -343,22 +342,27 @@
       const password = document.getElementById('password');
       const confirmPassword = document.getElementById('confirm_password');
       const terminos = document.getElementById('terminos');
-      
+
       let isValid = true;
-      
+
       // Validar contraseñas
       if (password.value !== confirmPassword.value) {
         isValid = false;
         alert('Las contraseñas no coinciden');
       }
-      
+
       // Validar términos
       if (!terminos.checked) {
         isValid = false;
         alert('Debes aceptar los términos y condiciones');
       }
-      
-      if (!isValid) {
+
+      if (isValid) {
+        // Si es válido, mostrar mensaje y redirigir
+        e.preventDefault();
+        alert('Registro exitoso. Redirigiendo al login...');
+        window.location.href = './plataforma/app/views/auth/login.php';
+      } else {
         e.preventDefault();
       }
     });

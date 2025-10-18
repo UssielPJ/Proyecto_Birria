@@ -1,2 +1,2 @@
 <?php
-define('APP_NAME', 'UTEC · Plataforma Estudiantil');
+define('APP_NAME', 'UTSC · Plataforma Estudiantil');

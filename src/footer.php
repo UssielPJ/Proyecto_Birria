@@ -5,7 +5,7 @@
     <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[var(--ut-green-900)/0.1] to-transparent"></div>
   </div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
       <!-- About UTSC -->
       <div class="space-y-4">
         <div class="flex items-center gap-3">
@@ -40,21 +40,20 @@
       <div>
         <h3 class="text-lg font-semibold mb-4">Carreras</h3>
         <ul class="space-y-2">
-          <li><a href="/src/cursos.php#tecnologia" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Tecnologías de la Información</a></li>
-          <li><a href="/src/cursos.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Mecatrónica</a></li>
-          <li><a href="/src/cursos.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Ingeniería Industrial</a></li>
-          <li><a href="/src/cursos.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Electromovilidad</a></li>
+          <li><a href="/src/carreras.php#tecnologia" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Tecnologías de la Información</a></li>
+          <li><a href="/src/carreras.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Mecatrónica</a></li>
+          <li><a href="/src/carreras.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Ingeniería Industrial</a></li>
+          <li><a href="/src/carreras.php#ingenieria" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Electromovilidad</a></li>
         </ul>
       </div>
 
-      <!-- Recursos -->
+      <!-- Enlaces Rápidos -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Recursos</h3>
+        <h3 class="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
         <ul class="space-y-2">
-          <li><a href="/src/recursos.php#biblioteca" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Mediateca</a></li>
-          <li><a href="/src/recursos.php#webinars" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Webinars</a></li>
-          <li><a href="/src/recursos.php#blog" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Directorio</a></li>
-          <li><a href="/src/recursos.php#faq" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Transparencia</a></li>
+          <li><a href="/src/registro.php" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Inscripción</a></li>
+          <li><a href="/src/plataforma/app/views/auth/login.php" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Plataforma Estudiantil</a></li>
+          <li><a href="/src/nosotros.php" class="text-gray-400 hover:text-white transition-colors duration-200 block py-1">Nosotros</a></li>
         </ul>
       </div>
 
@@ -78,19 +77,6 @@
       </div>
     </div>
 
-    <!-- Newsletter Signup -->
-    <div class="border-t border-gray-800 dark:border-neutral-700 pt-8 mb-8">
-      <div class="lg:flex lg:justify-between lg:items-center">
-        <div class="mb-6 lg:mb-0">
-          <h4 class="text-lg font-semibold mb-2">Mantente actualizado</h4>
-          <p class="text-gray-400 text-sm">Suscríbete para recibir noticias y recursos exclusivos.</p>
-        </div>
-        <form class="flex flex-col sm:flex-row gap-3 max-w-md" id="newsletterForm">
-          <input type="email" placeholder="Tu correo electrónico" class="flex-1 px-4 py-2 rounded-md border border-gray-600 dark:border-neutral-600 bg-gray-800 dark:bg-neutral-800 text-white placeholder-gray-400 focus:ring-[var(--ut-green-600)] focus:border-[var(--ut-green-600)]" required aria-label="Correo para suscripción">
-          <button type="submit" class="px-6 py-2 bg-[var(--ut-green-600)] hover:bg-[var(--ut-green-700)] text-white rounded-md font-semibold transition-all duration-200 shadow-md hover:shadow-lg" aria-label="Suscribirse al boletín">Suscribirse</button>
-        </form>
-      </div>
-    </div>
 
     <!-- Copyright -->
     <div class="border-t border-gray-800 dark:border-neutral-700 pt-6">

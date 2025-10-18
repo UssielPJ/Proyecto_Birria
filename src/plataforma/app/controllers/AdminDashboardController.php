@@ -68,7 +68,7 @@ class AdminDashboardController {
       // ===== Render real =====
       // SI falla aquí, el problema es la vista o la clase View.
       \App\Core\View::render('admin/dashboard', 'admin', [
-        'title' => 'UTEC · Administración',
+        'title' => 'UTSC · Administración',
         'user'  => $_SESSION['user'] ?? null,
         'name'  => $_SESSION['user']['name'] ?? '',
         'email' => $_SESSION['user']['email'] ?? '',

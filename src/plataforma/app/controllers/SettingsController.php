@@ -127,7 +127,7 @@ class SettingsController
             $stmt->execute();
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Plano: settings['school_name'] => 'UTEC', etc.
+            // Plano: settings['school_name'] => 'UTSC', etc.
             $settings = [];
             foreach ($rows as $r) {
                 $settings[$r['setting_key']] = $r['setting_value'];

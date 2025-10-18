@@ -18,7 +18,7 @@ try {
     echo 'Longitud del hash: ' . strlen($user['password']) . PHP_EOL;
     
     // Probar contraseñas comunes
-    $passwords = ['password', '123456', 'admin', 'test', 'utec2025'];
+    $passwords = ['password', '123456', 'admin', 'test', 'UTSC2025'];
     
     foreach ($passwords as $password) {
         $result = password_verify($password, $user['password']);

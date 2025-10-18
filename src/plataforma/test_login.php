@@ -19,7 +19,7 @@ use App\Core\Auth;
 echo "=== Prueba de Login ===\n\n";
 
 // Probar login con el usuario administrador
-$email = 'admin@utec.edu';
+$email = 'admin@UTSC.edu';
 $password = '12345';
 
 echo "Intentando login con: $email / $password\n";

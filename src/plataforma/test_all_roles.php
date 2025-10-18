@@ -20,10 +20,10 @@ echo "=== Prueba de Login con todos los roles ===\n\n";
 
 // Usuarios de prueba
 $users = [
-    ['email' => 'admin@utec.edu', 'password' => '12345', 'expected_role' => 'admin', 'expected_redirect' => '/src/plataforma/admin'],
-    ['email' => 'maestro@utec.edu', 'password' => '12345', 'expected_role' => 'teacher', 'expected_redirect' => '/src/plataforma/teacher'],
-    ['email' => 'alumno@utec.edu', 'password' => '12345', 'expected_role' => 'student', 'expected_redirect' => '/src/plataforma/app'],
-    ['email' => 'capturista@utec.edu', 'password' => '12345', 'expected_role' => 'capturista', 'expected_redirect' => '/src/plataforma/capturista']
+    ['email' => 'admin@UTSC.edu', 'password' => '12345', 'expected_role' => 'admin', 'expected_redirect' => '/src/plataforma/admin'],
+    ['email' => 'maestro@UTSC.edu', 'password' => '12345', 'expected_role' => 'teacher', 'expected_redirect' => '/src/plataforma/teacher'],
+    ['email' => 'alumno@UTSC.edu', 'password' => '12345', 'expected_role' => 'student', 'expected_redirect' => '/src/plataforma/app'],
+    ['email' => 'capturista@UTSC.edu', 'password' => '12345', 'expected_role' => 'capturista', 'expected_redirect' => '/src/plataforma/capturista']
 ];
 
 // Crear instancia del modelo User

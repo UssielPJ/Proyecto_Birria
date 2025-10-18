@@ -13,10 +13,10 @@ echo "=== Testing Dashboard Functionality ===\n\n";
 
 // Test users (same as in test_all_roles.php)
 $testUsers = [
-    ['email' => 'admin@utec.edu', 'role' => 'admin', 'dashboard_url' => '/src/plataforma/admin'],
-    ['email' => 'maestro@utec.edu', 'role' => 'teacher', 'dashboard_url' => '/src/plataforma/teacher'],
-    ['email' => 'alumno@utec.edu', 'role' => 'student', 'dashboard_url' => '/src/plataforma/app'],
-    ['email' => 'capturista@utec.edu', 'role' => 'capturista', 'dashboard_url' => '/src/plataforma/capturista']
+    ['email' => 'admin@UTSC.edu', 'role' => 'admin', 'dashboard_url' => '/src/plataforma/admin'],
+    ['email' => 'maestro@UTSC.edu', 'role' => 'teacher', 'dashboard_url' => '/src/plataforma/teacher'],
+    ['email' => 'alumno@UTSC.edu', 'role' => 'student', 'dashboard_url' => '/src/plataforma/app'],
+    ['email' => 'capturista@UTSC.edu', 'role' => 'capturista', 'dashboard_url' => '/src/plataforma/capturista']
 ];
 
 $userModel = new \App\Models\User();

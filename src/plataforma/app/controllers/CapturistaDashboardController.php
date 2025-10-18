@@ -43,7 +43,7 @@ class CapturistaDashboardController {
     ];
 
     \App\Core\View::render('capturista/dashboard', 'capturista', [
-      'title'               => 'UTEC · Capturista',
+      'title'               => 'UTSC · Capturista',
       'user'                => $_SESSION['user'] ?? null,
       'todayStats'          => $todayStats,
       'pendingActions'      => $pendingActions,

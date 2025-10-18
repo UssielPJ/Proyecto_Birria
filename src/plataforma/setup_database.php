@@ -65,10 +65,10 @@ try {
 
         $stmt = $pdo->prepare("
             INSERT INTO users (name, email, password, role) VALUES
-            ('Administrador', 'admin@utec.edu', ?, 'admin'),
-            ('Capturista', 'capturista@utec.edu', ?, 'capturista'),
-            ('Maestro', 'maestro@utec.edu', ?, 'teacher'),
-            ('Estudiante', 'estudiante@utec.edu', ?, 'student')
+            ('Administrador', 'admin@UTSC.edu', ?, 'admin'),
+            ('Capturista', 'capturista@UTSC.edu', ?, 'capturista'),
+            ('Maestro', 'maestro@UTSC.edu', ?, 'teacher'),
+            ('Estudiante', 'estudiante@UTSC.edu', ?, 'student')
         ");
 
         $stmt->execute([$passwordHash, $passwordHash, $passwordHash, $passwordHash]);
@@ -77,13 +77,13 @@ try {
 ";
         echo "Puedes iniciar sesión con:
 ";
-        echo "- Admin: admin@utec.edu / 12345
+        echo "- Admin: admin@UTSC.edu / 12345
 ";
-        echo "- Capturista: capturista@utec.edu / 12345
+        echo "- Capturista: capturista@UTSC.edu / 12345
 ";
-        echo "- Maestro: maestro@utec.edu / 12345
+        echo "- Maestro: maestro@UTSC.edu / 12345
 ";
-        echo "- Estudiante: estudiante@utec.edu / 12345
+        echo "- Estudiante: estudiante@UTSC.edu / 12345
 ";
     } else {
         echo "Ya existen {$userCount} usuarios en la base de datos.

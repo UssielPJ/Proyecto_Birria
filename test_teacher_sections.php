@@ -13,7 +13,7 @@ echo "=== Testing Teacher Section Access ===\n\n";
 
 // Test login
 $userModel = new \App\Models\User();
-$user = $userModel->findByEmail('maestro@utec.edu');
+$user = $userModel->findByEmail('maestro@UTSC.edu');
 
 if ($user) {
     echo "User found: {$user->name} (ID: {$user->id}, Role ID: {$user->role_id})\n";

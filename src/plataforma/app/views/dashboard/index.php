@@ -1,7 +1,7 @@
 <?php
 // Opcional: si ya tienes sesión y usuario:
 $userName  = $_SESSION['user']['name']  ?? 'Estudiante';
-$userEmail = $_SESSION['user']['email'] ?? 'usuario@utec.edu';
+$userEmail = $_SESSION['user']['email'] ?? 'usuario@UTSC.edu';
 $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | 'admin'
 ?>
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UTEC · Panel</title>
+  <title>UTSC · Panel</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -71,8 +71,8 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar bg-white dark:bg-neutral-800 shadow-lg h-screen fixed top-0 left-0 w-64 overflow-y-auto">
       <div class="p-4 flex items-center space-x-3">
-        <img src="/src/plataforma/app/img/UT.jpg" alt="UTEC Logo" class="h-10 w-auto rounded">
-        <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTEC</span>
+        <img src="/src/plataforma/app/img/UT.jpg" alt="UTSC Logo" class="h-10 w-auto rounded">
+        <span class="logo-text text-xl font-bold text-primary-700 dark:text-primary-300">UTSC</span>
       </div>
 
       <div class="px-4 pb-4 border-b border-neutral-200 dark:border-neutral-700">
@@ -385,7 +385,7 @@ $role      = $_SESSION['user']['role']  ?? 'alumno'; // 'alumno' | 'maestro' | '
       </main>
 
       <footer class="p-6 border-t border-neutral-200 dark:border-neutral-700 mt-6">
-        <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTEC · Plataforma Estudiantil</p>
+        <p class="text-center text-sm text-neutral-500 dark:text-neutral-400">© <?= date('Y') ?> UTSC · Plataforma Estudiantil</p>
       </footer>
     </div>
   </div>

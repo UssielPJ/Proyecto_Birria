@@ -153,10 +153,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <div style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
             Usuarios de prueba:<br>
-            admin@utec.edu / 12345<br>
-            maestro@utec.edu / 12345<br>
-            alumno@utec.edu / 12345<br>
-            capturista@utec.edu / 12345
+            admin@UTSC.edu / 12345<br>
+            maestro@UTSC.edu / 12345<br>
+            alumno@UTSC.edu / 12345<br>
+            capturista@UTSC.edu / 12345
         </div>
     </div>
     

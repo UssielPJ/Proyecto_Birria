@@ -59,7 +59,7 @@ class StudentDashboardController {
     }
     
     View::render('student/dashboard', 'student', [
-      'title' => 'UTEC · Estudiante',
+      'title' => 'UTSC · Estudiante',
       'user'  => $user,
       'currentCourses' => $currentCourses,
       'recentGrades' => $recentGrades,

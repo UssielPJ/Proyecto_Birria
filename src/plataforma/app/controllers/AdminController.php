@@ -18,7 +18,7 @@ class AdminController {
 
     // Variables para la vista
     $name = $currentUser->name ?? 'Usuario';
-    $email = $currentUser->email ?? 'usuario@utec.edu';
+    $email = $currentUser->email ?? 'usuario@UTSC.edu';
 
     // Cargar modelos necesarios
     $courseModel = new \App\Models\Course();
