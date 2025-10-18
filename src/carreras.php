@@ -2503,219 +2503,219 @@ body {
             }
         };
 
-        // Datos de los planteles (completado para todas las carreras)
-        const plantelesData = {
-            'desarrollo-software': {
-                title: 'Desarrollo y Gestión de Software',
-                description: 'Laboratorios de programación, aulas de desarrollo colaborativo, salas de servidores y espacios para proyectos en equipo.',
-                images: [
-                    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'mantenimiento-industrial': {
-                title: 'Mantenimiento Industrial',
-                description: 'Talleres de mecánica y electricidad, laboratorios de automatización, áreas de práctica en equipos reales.',
-                images: [
-                    'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'negocios-internacionales': {
-                title: 'Negocios Internacionales',
-                description: 'Áreas de simulación de negociaciones, laboratorios de comercio exterior, salas de capacitación en idiomas.',
-                images: [
-                    'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'mecatronica': {
-                title: 'Mecatrónica',
-                description: 'Laboratorios de robótica, áreas de prototipado, talleres de electrónica y mecánica.',
-                images: [
-                    'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'procesos-productivos': {
-                title: 'Procesos Productivos',
-                description: 'Laboratorios de control de calidad, simuladores de procesos, áreas de análisis y medición.',
-                images: [
-                    'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1581093458791-9d4a26f5b0d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'lengua-inglesa': {
-                title: 'Lengua Inglesa (Bilingüe)',
-                description: 'Aulas multimedia, laboratorios de idiomas, salas de interpretación, espacios culturales bilingües.',
-                images: [
-                    'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'ia-utsc': {
-                title: 'Ingeniería en Tecnologías de la Información e Innovación Digital',
-                description: 'Laboratorios de programación, centros de datos, espacios de innovación y colaboración.',
-                images: [
-                    'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'ciberseguridad-utsc': {
-                title: 'Ingeniería en Ciberseguridad',
-                description: 'Redes aisladas, laboratorios de hacking ético, plataformas de simulación de ataques.',
-                images: [
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'energias-utsc': {
-                title: 'Ingeniería en Energías Renovables',
-                description: 'Laboratorios de energías sostenibles, áreas de simulación, talleres en campo.',
-                images: [
-                    'https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'biotecnologia-utsc': {
-                title: 'Ingeniería en Biotecnología',
-                description: 'Laboratorios especializados en biología molecular, áreas de cultivo y fermentación.',
-                images: [
-                    'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'iot-utsc': {
-                title: 'IoT y Sistemas Embebidos',
-                description: 'Laboratorios de electrónica, estaciones de prototipado, plataformas de desarrollo IoT.',
-                images: [
-                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'datascience-utsc': {
-                title: 'Data Science',
-                description: 'Salas de análisis, servidores de alto rendimiento, software de análisis avanzado.',
-                images: [
-                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'rv-utsc': {
-                title: 'Realidad Virtual y Aumentada',
-                description: 'Estudios de captura de movimiento, laboratorios de modelado 3D, talleres de programación.',
-                images: [
-                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'agrotecnologia-utl': {
-                title: 'Ingeniería en Agricultura Sustentable y Protegida',
-                description: 'Invernaderos inteligentes, laboratorios de agricultura de precisión y campos experimentales para la aplicación práctica de tecnologías agropecuarias.',
-                images: [
-                    'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'turismo-utl': {
-                title: 'Ingeniería en Turismo Sustentable',
-                description: 'Salas de simulación turística, espacios de interpretación cultural y laboratorios de gestión de destinos para el desarrollo de proyectos turísticos responsables.',
-                images: [
-                    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'logistica-utl': {
-                title: 'Ingeniería en Logística y Cadena de Suministro',
-                description: 'Centros de simulación logística, almacenes modelo y laboratorios de optimización de rutas para la gestión eficiente de cadenas de suministro.',
-                images: [
-                    'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'desarrollo-utl': {
-                title: 'Desarrollo Comunitario',
-                description: 'Espacios de planificación comunitaria, salas de talleres participativos y laboratorios de proyectos sociales para el diseño e implementación de iniciativas locales.',
-                images: [
-                    'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'gastronomia-utl': {
-                title: 'Gastronomía Regional',
-                description: 'Cocinas especializadas, laboratorios de catación y espacios de innovación culinaria para la preservación y evolución de la gastronomía local.',
-                images: [
-                    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'energias-utl': {
-                title: 'Energías Alternativas',
-                description: 'Instalaciones para energías alternativas con biodigestores, paneles solares comunitarios y laboratorios de eficiencia energética para proyectos rurales.',
-                images: [
-                    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'ti-utl': {
-                title: 'Tecnologías de la Información',
-                description: 'Laboratorios de TI regionales con servidores locales, estaciones de desarrollo y centros de capacitación digital para soluciones adaptadas a PyMEs y municipios.',
-                images: [
-                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            },
-            'adminpublica-utl': {
-                title: 'Administración Pública',
-                description: 'Aulas de simulación gubernamental, laboratorios de políticas públicas y espacios de análisis social para la formación en gestión y transparencia administrativa.',
-                images: [
-                    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
-                ]
-            }
-        };
+      // Datos de los planteles (completado para todas las carreras)
+const plantelesData = {
+    'desarrollo-software': {
+        title: 'Desarrollo y Gestión de Software',
+        description: 'Laboratorios de programación, aulas de desarrollo colaborativo, salas de servidores y espacios para proyectos en equipo.',
+        images: [
+            'https://www.shutterstock.com/image-photo/advanced-medical-science-laboratory-scientist-260nw-1912524370.jpg',
+            'https://img.freepik.com/free-photo/programming-background-with-person-working-with-codes-computer_23-2150010125.jpg?semt=ais_hybrid&w=740&q=80',
+            'https://static.vecteezy.com/system/resources/previews/006/697/113/non_2x/software-develper-working-on-laptop-at-home-office-programmer-working-develop-web-application-software-programming-concept-free-photo.jpg',
+            'https://www.shutterstock.com/image-photo/advanced-medical-science-laboratory-scientist-260nw-1912524385.jpg'
+        ]
+    },
+    'mantenimiento-industrial': {
+        title: 'Mantenimiento Industrial',
+        description: 'Talleres de mecánica y electricidad, laboratorios de automatización, áreas de práctica en equipos reales.',
+        images: [
+            'https://www.shutterstock.com/image-photo/dallas-texas-may-22nd-2023-600nw-2325207215.jpg',
+            'https://www.shutterstock.com/image-photo/industrial-engineer-working-on-robot-260nw-2461722781.jpg',
+            'https://www.shutterstock.com/image-photo/portrait-shot-handsome-mechanic-working-600nw-1711144648.jpg',
+            'https://img.freepik.com/free-photo/industrial-worker-working-production-line-factory_342744-177.jpg'
+        ]
+    },
+    'negocios-internacionales': {
+        title: 'Negocios Internacionales',
+        description: 'Áreas de simulación de negociaciones, laboratorios de comercio exterior, salas de capacitación en idiomas.',
+        images: [
+            'https://www.shutterstock.com/image-photo/male-mature-caucasian-ceo-businessman-600w-2142010187.jpg',
+            'https://thumbs.dreamstime.com/b/business-people-negotiating-conference-room-group-58114637.jpg',
+            'https://thumbs.dreamstime.com/b/businessmen-showing-papers-webcam-laptop-negotiation-meeting-room-closeup-to-having-online-office-two-managers-discussing-387578106.jpg',
+            'https://thumbs.dreamstime.com/b/group-young-people-sitting-negotiation-room-debating-their-work-joy-business-partners-discussing-board-112926620.jpg'
+        ]
+    },
+    'mecatronica': {
+        title: 'Mecatrónica',
+        description: 'Laboratorios de robótica, áreas de prototipado, talleres de electrónica y mecánica.',
+        images: [
+            'https://www.shutterstock.com/image-photo/industrial-programmable-robotic-arm-factory-260nw-2242349339.jpg',
+            'https://media.istockphoto.com/id/2084424942/photo/a-female-mechatronics-engineer-is-working-with-a-robotic-arm-prototype-to-examine-new.jpg?s=612x612&w=0&k=20&c=8ihCJ7CzRgnZMlXN8X66ZR0inZS1tdyZ_D-mYrPrapk=',
+            'https://static.vecteezy.com/system/resources/thumbnails/070/981/748/small/various-mechanical-parts-and-tools-are-arranged-meticulously-on-a-workbench-in-a-workshop-precision-equipment-is-ready-for-assembly-and-engineering-tasks-illuminated-by-overhead-lights-photo.jpeg',
+            'https://media.istockphoto.com/id/1330931321/photo/mechatronics-engineering-in-process-experienced-engineer-working-on-new-automated-robotic.jpg?s=612x612&w=0&k=20&c=kP-W_IWtrL0nCwqLdIRv0dCInP3YDpLkWRIKBuAVn3o='
+        ]
+    },
+    'procesos-productivos': {
+        title: 'Procesos Productivos',
+        description: 'Laboratorios de control de calidad, simuladores de procesos, áreas de análisis y medición.',
+        images: [
+            'https://www.shutterstock.com/image-photo/quality-control-officer-inspecting-raw-260nw-2599932405.jpg',
+            'https://www.shutterstock.com/image-photo/hygiene-staff-worker-foods-drinks-260nw-2393015413.jpg',
+            'https://thumbs.dreamstime.com/b/food-quality-control-concept-expert-inspecting-specimens-groceries-laboratory-148050380.jpg',
+            'https://www.shutterstock.com/image-photo/concept-food-industry-banner-factory-260nw-1845178195.jpg'
+        ]
+    },
+    'lengua-inglesa': {
+        title: 'Lengua Inglesa (Bilingüe)',
+        description: 'Aulas multimedia, laboratorios de idiomas, salas de interpretación, espacios culturales bilingües.',
+        images: [
+            'https://www.shutterstock.com/image-photo/smiling-young-male-teacher-helping-600nw-2483441623.jpg',
+            'https://media.istockphoto.com/id/953264308/photo/learn-english-note-at-wooden-background-with-teachers-glasses.jpg?s=612x612&w=0&k=20&c=S2fmg6b_1CrCwzsGKP_YxVaGA0jHYAyxbJfHvnORFlQ=',
+            'https://img.freepik.com/free-photo/kids-classroom-taking-english-class_23-2149402668.jpg',
+            'https://media.istockphoto.com/id/184106979/photo/classroom-slide-composited-in.jpg?s=612x612&w=0&k=20&c=vXKLTD-Bcbix3vTcpo1jzixBHQ74Z3yoV6sBdpW4YPE='
+        ]
+    },
+    'ia-utsc': {
+        title: 'Ingeniería en Tecnologías de la Información e Innovación Digital',
+        description: 'Laboratorios de programación, centros de datos, espacios de innovación y colaboración.',
+        images: [
+            'https://static.vecteezy.com/system/resources/previews/037/996/745/non_2x/ai-generated-sustainable-technology-diverse-team-innovating-in-green-energy-lab-photo.jpg',
+            'https://www.shutterstock.com/image-photo/tablet-laptop-woman-scientist-lab-260nw-2422946607.jpg',
+            'https://www.shutterstock.com/image-photo/pharmaceutical-laboratory-young-male-scientist-260nw-2556717801.jpg',
+            'https://img.freepik.com/premium-vector/design-digital-innovation-lab-logo-white-background_579306-9365.jpg'
+        ]
+    },
+    'ciberseguridad-utsc': {
+        title: 'Ingeniería en Ciberseguridad',
+        description: 'Redes aisladas, laboratorios de hacking ético, plataformas de simulación de ataques.',
+        images: [
+            'https://www.shutterstock.com/image-photo/side-view-hacker-using-computer-260nw-1156539508.jpg',
+            'https://media.istockphoto.com/id/958989154/photo/ethical-hacking-concept-with-faceless-hooded-male-person.jpg?s=170667a&w=is&k=20&c=Z9E-7EuSTkxRRNgwbkzu8f8re-W5bGI5QVAHh91HRNA=',
+            'https://t4.ftcdn.net/jpg/02/05/93/21/360_F_205932110_IWiDmketVT703mNPZ8eSn76Sa25QoSYw.jpg',
+            'https://www.shutterstock.com/image-photo/security-hack-threats-data-leaks-260nw-2331750317.jpg'
+        ]
+    },
+    'energias-utsc': {
+        title: 'Ingeniería en Energías Renovables',
+        description: 'Laboratorios de energías sostenibles, áreas de simulación, talleres en campo.',
+        images: [
+            'https://t4.ftcdn.net/jpg/05/08/05/97/360_F_508059717_UR8jns4nwJZm9VTCWo1TNLV3h8JXU2DC.jpg',
+            'https://media.istockphoto.com/id/489193525/photo/solar-panels-and-wind-generators-under-blue-sky-on-sunset.jpg?s=612x612&w=0&k=20&c=hIithVnTA3vKOYPa-Okn8qSQunI1OAhGR_tH-NZvqdw=',
+            'https://static.vecteezy.com/system/resources/previews/008/563/432/non_2x/esg-banners-environment-society-and-governance-hand-holding-light-bulb-with-renewable-energy-icon-revolving-revenue-photo.jpg',
+            'https://media.istockphoto.com/id/2156966176/photo/environmental-concept-with-hand-holding-planet-earth-showing-sustainable-and-eco-friendly.jpg?s=612x612&w=0&k=20&c=sowge6N0GcisgxPq-QmJBS5RBQ0ZmEiVQap5cIytWWU='
+        ]
+    },
+    'biotecnologia-utsc': {
+        title: 'Ingeniería en Biotecnología',
+        description: 'Laboratorios especializados en biología molecular, áreas de cultivo y fermentación.',
+        images: [
+            'https://media.istockphoto.com/id/171591485/photo/group-of-scientist-in-laboratory.jpg?s=612x612&w=0&k=20&c=8_feJDq0zslWqzAkQ-WVcmEMC8CTVLFxHfoi3FJ4o2k=',
+            'https://www.shutterstock.com/image-photo/close-scientist-hands-holding-test-600w-2431314377.jpg',
+            'https://media.istockphoto.com/id/477013712/photo/scientist-using-protective-robber-gloves-for-handling-substances-and-experiments.jpg?s=612x612&w=0&k=20&c=y8qCj3Ok5JwvNz0AgHPXuujoNpnUapzEZ7NkOkyxHqA=',
+            'https://www.shutterstock.com/image-photo/medicine-development-laboratory-asian-female-600nw-2456036585.jpg'
+        ]
+    },
+    'iot-utsc': {
+        title: 'IoT y Sistemas Embebidos',
+        description: 'Laboratorios de electrónica, estaciones de prototipado, plataformas de desarrollo IoT.',
+        images: [
+            'https://www.shutterstock.com/image-photo/closeup-printed-circuit-board-pcb-260nw-2530139329.jpg',
+            'https://st4.depositphotos.com/2978065/24062/i/450/depositphotos_240620438-stock-photo-render-cpu-central-processor-unit.jpg',
+            'https://www.shutterstock.com/image-illustration/intricate-illustration-showcasing-advanced-glowing-260nw-2439656221.jpg',
+            'https://cdn.pixabay.com/photo/2017/03/23/12/32/arduino-2168193_1280.png'
+        ]
+    },
+    'datascience-utsc': {
+        title: 'Data Science',
+        description: 'Salas de análisis, servidores de alto rendimiento, software de análisis avanzado.',
+        images: [
+            'https://www.shutterstock.com/image-photo/server-racks-cabinets-full-hard-600nw-2306905651.jpg',
+            'https://media.istockphoto.com/id/1350722246/photo/server-room-background.jpg?s=170667a&w=is&k=20&c=PT0piukz6GO_RhaGY2pmyWqdLg-a8uXO0Hi4q9qGdYM=',
+            'https://www.shutterstock.com/image-photo/supercomputer-advanced-cloud-computing-concept-600nw-2306905657.jpg',
+            'https://www.shutterstock.com/image-illustration/countless-modern-server-cabinets-render-600nw-2356888839.jpg'
+        ]
+    },
+    'rv-utsc': {
+        title: 'Realidad Virtual y Aumentada',
+        description: 'Estudios de captura de movimiento, laboratorios de modelado 3D, espacios de programación.',
+        images: [
+            'https://thumbs.dreamstime.com/b/person-fully-engaged-virtual-reality-experience-using-motion-capture-equipment-sensors-their-body-gloves-391002136.jpg',
+            'https://thumbs.dreamstime.com/b/person-wearing-motion-capture-suit-stands-studio-facing-projection-screen-displaying-grid-pattern-321815650.jpg',
+            'https://thumbs.dreamstime.com/b/person-wearing-motion-capture-suit-vr-headset-stands-against-green-screen-background-ai-generated-person-motion-325427104.jpg',
+            'https://media.istockphoto.com/id/1324380506/photo/people-with-vr-grasses-playing-virtual-reality-game-future-digital-technology-and-3d-virtual.jpg?s=612x612&w=0&k=20&c=I_9fnEi1hNHFwy0qe8g7V1ZQJmgyKEDOSDJonScTSMU='
+        ]
+    },
+    'agrotecnologia-utl': {
+        title: 'Ingeniería en Agricultura Sustentable y Protegida',
+        description: 'Invernaderos inteligentes, laboratorios de agricultura de precisión y campos experimentales para la aplicación práctica de tecnologías agropecuarias.',
+        images: [
+            'https://www.shutterstock.com/image-photo/organic-hydroponic-vegetable-growing-greenhouse-260nw-2479106433.jpg',
+            'https://media.istockphoto.com/id/1265704346/photo/organic-greenhouse.jpg?s=612x612&w=0&k=20&c=3UYDiVDVED2i2XvUvf0iMxydTNp152-rkehaEvLA6uw=',
+            'https://static.vecteezy.com/system/resources/thumbnails/066/755/731/small_2x/farmer-using-a-digital-tablet-to-manage-smart-irrigation-and-crop-growth-in-a-modern-greenhouse-photo.jpeg',
+            'https://thumbs.dreamstime.com/b/smart-greenhouse-control-parameters-greenhouse-smart-greenhouse-control-parameters-greenhouse-smart-396709009.jpg'
+        ]
+    },
+    'turismo-utl': {
+        title: 'Ingeniería en Turismo Sustentable',
+        description: 'Salas de simulación turística, espacios de interpretación cultural y laboratorios de gestión de destinos para el desarrollo de proyectos turísticos responsables.',
+        images: [
+            'https://media.istockphoto.com/id/1031430214/photo/young-woman-kayaking-through-the-the-backwaters-of-monroe-island.jpg?s=612x612&w=0&k=20&c=kbv2s1kknMzJgk8Nd-W2VNIf0AFx48YtCqygtI3Ppos=',
+            'https://media.istockphoto.com/id/1372488167/photo/a-lake-in-the-shape-of-an-airplane-in-the-middle-of-untouched-nature-a-concept-illustrating.jpg?s=612x612&w=0&k=20&c=d-2X_9pmP_RRfvNfTsptxluq5mCcF_ahUZhMi6ESlow=',
+            'https://www.shutterstock.com/image-vector/sustainable-tourism-ecological-responsible-travel-260nw-1982804408.jpg',
+            'https://www.shutterstock.com/image-vector/sustainable-tourism-set-ecotourism-ecofriendly-260nw-2378753787.jpg'
+        ]
+    },
+    'logistica-utl': {
+        title: 'Ingeniería en Logística y Cadena de Suministro',
+        description: 'Centros de simulación logística, almacenes modelo y laboratorios de optimización de rutas para la gestión eficiente de cadenas de suministro.',
+        images: [
+            'https://www.shutterstock.com/image-vector/automated-warehouse-robotic-autonomous-robot-260nw-2480187763.jpg',
+            'https://media.istockphoto.com/id/1581309911/photo/high-angle-view-of-a-warehouse-manager-walking-with-foremen-checking-stock-on-racks.jpg?s=612x612&w=0&k=20&c=JCF-qJiwTUAhD8sEgEhHNcJZvxy4JtIWHYeQLKcbcKk=',
+            'https://www.shutterstock.com/image-photo/defocused-background-futuristic-warehouse-interior-260nw-2632606263.jpg',
+            'https://www.shutterstock.com/image-photo/three-warehouse-workers-safety-vests-600w-2576831333.jpg'
+        ]
+    },
+    'desarrollo-utl': {
+        title: 'Desarrollo Comunitario',
+        description: 'Espacios de planificación comunitaria, salas de talleres participativos y espacios de proyectos sociales para el diseño e implementación de iniciativas locales.',
+        images: [
+            'https://media.istockphoto.com/id/2094337676/photo/diverse-team-working-together-in-modern-co-working-space.jpg?s=612x612&w=0&k=20&c=EvWROZsfro1ghOVViXVj-tKS364-NeabwNNYkyvhxoY=',
+            'https://www.shutterstock.com/image-photo/group-senior-adults-actively-participating-600nw-2455512829.jpg',
+            'https://static.vecteezy.com/system/resources/thumbnails/071/884/290/small_2x/diverse-community-enjoying-a-gardening-workshop-outdoors-photo.jpg',
+            'https://media.istockphoto.com/id/1438225124/photo/mid-adult-woman-applauding-during-a-presentation.jpg?s=612x612&w=0&k=20&c=L9w4j54ADE5EK21UQlQtKWnG-2ViKu7tHHfp9LlU0rU='
+        ]
+    },
+    'gastronomia-utl': {
+        title: 'Gastronomía Regional',
+        description: 'Cocinas especializadas, laboratorios de catación y espacios de innovación culinaria para la preservación y evolución de la gastronomía local.',
+        images: [
+            'https://img.freepik.com/premium-photo/chef-experimenting-with-new-flavors-modern-kitchen-lab-candid-daily-environment-routine-o_980716-109063.jpg?w=360',
+            'https://thumbs.dreamstime.com/b/food-scientist-lab-coat-inspects-vibrant-tomatoes-broccoli-professional-kitchen-environment-focusing-quality-control-341089430.jpg',
+            'https://thumbs.dreamstime.com/b/cultured-meat-packs-kitchen-counter-innovative-food-ai-generated-405105780.jpg',
+            'https://media.istockphoto.com/id/1327977778/photo/two-female-scientist-cooking-genetic-meat.jpg?s=612x612&w=0&k=20&c=XZ4ihze2dDtqDkHdRjNitw4GyqEKOan1TO1QymlY9Co='
+        ]
+    },
+    'energias-utl': {
+        title: 'Energías Alternativas',
+        description: 'Instalaciones para energías alternativas con biodigestores, paneles solares comunitarios y laboratorios de eficiencia energética para proyectos rurales.',
+        images: [
+            'https://img.freepik.com/premium-photo/aerial-view-biogas-plant-facility-with-solar-panels-rural-landscape-renewable-energy-concept_114541-14640.jpg',
+            'https://img.freepik.com/premium-photo/solar-panels-livestock-farm-providing-clean-sustainable-energy_269655-74997.jpg',
+            'https://media.istockphoto.com/id/1170098138/photo/solar-panels-fields-on-the-green-hills.jpg?s=612x612&w=0&k=20&c=xYjwuTPHyIHsRzj8NAABoGfE5ZpLq2zJbfXi-oJrqQo=',
+            'https://static.vecteezy.com/system/resources/previews/068/299/136/non_2x/advanced-solar-research-laboratory-featuring-solar-panels-and-high-tech-equipment-on-display-in-a-modern-scientific-environment-with-natural-light-and-engineering-focus-for-sustainable-energy-photo.jpeg'
+        ]
+    },
+    'ti-utl': {
+        title: 'Tecnologías de la Información',
+        description: 'Laboratorios de TI regionales con servidores locales, estaciones de desarrollo y centros de capacitación digital para soluciones adaptadas a PyMEs y municipios.',
+        images: [
+            'https://media.istockphoto.com/id/527034734/photo/huge-data-center.jpg?s=612x612&w=0&k=20&c=etdY4vrRFufNhyeMRCQKWr7jEMAkleCVq9GnPYikalc=',
+            'https://www.shutterstock.com/image-photo/network-servers-data-center-shallow-600nw-102675134.jpg',
+            'https://media.istockphoto.com/id/477130337/photo/network-servers-racks.jpg?s=612x612&w=0&k=20&c=vCw92YUUOS4HpehQc4Zv8mgbXs-20ob6QgjA1zdODeg=',
+            'https://www.shutterstock.com/image-photo/hightech-bright-data-center-computers-600nw-1913228191.jpg'
+        ]
+    },
+    'adminpublica-utl': {
+        title: 'Administración Pública',
+        description: 'Aulas de simulación gubernamental, laboratorios de políticas públicas y espacios de análisis social para la formación en gestión y transparencia administrativa.',
+        images: [
+            'https://www.shutterstock.com/image-photo/audience-listening-instructor-employee-education-260nw-2354268499.jpg',
+            'https://www.shutterstock.com/image-photo/senior-woman-handing-papers-official-260nw-2630234759.jpg',
+            'https://img.freepik.com/free-photo/vintage-style-people-working-office-with-computers_23-2149850976.jpg?semt=ais_hybrid&w=740&q=80',
+            'https://www.shutterstock.com/image-photo/digital-government-online-public-services-260nw-2603198411.jpg'
+        ]
+    }
+};
 
         // JavaScript para los modales
         document.addEventListener('DOMContentLoaded', function() {
