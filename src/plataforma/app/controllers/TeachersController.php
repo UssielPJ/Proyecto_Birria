@@ -77,106 +77,158 @@ class TeachersController
     ]);
 }
 
-    public function store() {
+public function store() {
+    $this->requireRole(['admin']);
     if (session_status() === PHP_SESSION_NONE) session_start();
-    if (!\App\Core\Auth::check()) { header('Location: /src/plataforma/'); exit; }
-    \App\Core\Gate::allow('admin');
 
     $d = $_POST;
     $errors = [];
 
-    // Validaciones básicas
-    if (empty($d['nombre']))  $errors[] = 'El nombre es requerido.';
-    if (empty($d['email']) || !filter_var($d['email'], FILTER_VALIDATE_EMAIL)) $errors[] = 'Email inválido.';
-    if (empty($d['password'])) $errors[] = 'La contraseña es requerida.';
-    if (!empty($d['password']) && ($d['password'] !== ($d['password_confirmation'] ?? ''))) {
+    /* ========== Validaciones (users) ========== */
+    if (empty($d['nombre']))             $errors[] = 'El nombre es requerido.';
+    if (empty($d['apellido_paterno']))   $errors[] = 'El apellido paterno es requerido.';
+    if (empty($d['apellido_materno']))   $errors[] = 'El apellido materno es requerido.';
+    if (empty($d['email']) || !filter_var($d['email'], FILTER_VALIDATE_EMAIL))
+        $errors[] = 'Email inválido.';
+    if (empty($d['password']))           $errors[] = 'La contraseña es requerida.';
+    if (!empty($d['password']) && ($d['password_confirmation'] ?? '') !== $d['password'])
         $errors[] = 'Las contraseñas no coinciden.';
-    }
-    if (!empty($errors)) {
+    if (!empty($d['telefono']) && !preg_match('/^[0-9\s+\-()]{7,20}$/', $d['telefono']))
+        $errors[] = 'El teléfono tiene un formato inválido.';
+    if (!empty($d['fecha_nacimiento']) && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $d['fecha_nacimiento']))
+        $errors[] = 'La fecha de nacimiento debe ser YYYY-MM-DD.';
+
+    /* ========== Perfil docente (teacher_profiles) ========== */
+    $perfil = [
+        'rfc'                => $d['rfc']                ?? null,
+        'departamento_id'    => !empty($d['departamento_id']) ? (int)$d['departamento_id'] : null,
+        'grado_academico'    => $d['grado_academico']    ?? null,
+        'especialidad'       => $d['especialidad']       ?? null,
+        'fecha_contratacion' => $d['fecha_contratacion'] ?? null,
+        'tipo_contrato'      => $d['tipo_contrato']      ?? null,
+        'nivel_sni'          => $d['nivel_sni']          ?? 'sin_nivel',
+        'perfil_prodep'      => isset($d['perfil_prodep']) ? 1 : 0,
+    ];
+
+    $gradoEnum = ['licenciatura','maestria','doctorado','esp'];
+    $tipoEnum  = ['tiempo_completo','medio_tiempo','por_horas','asignatura'];
+    $sniEnum   = ['sin_nivel','candidato','nivel1','nivel2','nivel3'];
+
+    if (empty($perfil['departamento_id'])) $errors[] = 'El departamento es requerido.';
+    if (!empty($perfil['grado_academico']) && !in_array($perfil['grado_academico'], $gradoEnum, true))
+        $errors[] = 'Grado académico inválido.';
+    if (!empty($perfil['tipo_contrato']) && !in_array($perfil['tipo_contrato'], $tipoEnum, true))
+        $errors[] = 'Tipo de contrato inválido.';
+    if (!empty($perfil['nivel_sni']) && !in_array($perfil['nivel_sni'], $sniEnum, true))
+        $errors[] = 'Nivel SNI inválido.';
+    if (!empty($perfil['fecha_contratacion']) && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $perfil['fecha_contratacion']))
+        $errors[] = 'La fecha de contratación debe ser YYYY-MM-DD.';
+
+    if ($errors) {
         $_SESSION['error'] = implode(' ', $errors);
-        header('Location: /src/plataforma/app/admin/teachers/create');
-        exit;
+        header('Location: /src/plataforma/app/admin/teachers/create'); exit;
     }
 
-    $db = new \App\Core\Database();
+    $user = new \App\Models\User();
+    $db   = $user->getDb();
+
+    /* ========== PRE-CHECKS para errores típicos ========== */
+    // 1) Email duplicado
+    $existsEmail = $user->findByEmail($d['email']);
+    if ($existsEmail) {
+        $_SESSION['error'] = 'El correo ya está registrado.';
+        header('Location: /src/plataforma/app/admin/teachers/create'); exit;
+    }
+
+    // 2) Departamento existe (FK)
+    if (!$this->departamentoExiste((int)$perfil['departamento_id'])) {
+        $_SESSION['error'] = 'Departamento inválido (no existe en el catálogo).';
+        header('Location: /src/plataforma/app/admin/teachers/create'); exit;
+    }
 
     try {
-        // Iniciar transacción (si tu Database la soporta; si no, omite estas 3 líneas)
         $db->query('START TRANSACTION');
 
-        // 1) Crear usuario (tu tabla usa 'nombre')
-        $db->query(
-            "INSERT INTO users (nombre, email, password, status, created_at)
-             VALUES (:n, :e, :p, 'active', NOW())",
-            [
-                ':n' => $d['nombre'],
-                ':e' => $d['email'],
-                ':p' => password_hash($d['password'], PASSWORD_DEFAULT),
-            ]
-        );
+        // === Insert users ===
+        $userId = $user->create([
+            'nombre'            => $d['nombre'],
+            'apellido_paterno'  => $d['apellido_paterno'],
+            'apellido_materno'  => $d['apellido_materno'],
+            'telefono'          => $d['telefono'] ?? null,
+            'fecha_nacimiento'  => $d['fecha_nacimiento'] ?? null,
+            'email'             => $d['email'],
+            'password'          => password_hash($d['password'], PASSWORD_DEFAULT),
+            'status'            => $d['status'] ?? 'active',
+        ]);
 
-        // Obtener ID
-        $db->query("SELECT LAST_INSERT_ID()");
-        $userId = (int)$db->fetchColumn();
+        // === Numero de empleado auto + verificación de colisión ===
+        $autoNum = $user->generateNumeroEmpleado();
+        // si por alguna razón ya existe, incrementa hasta encontrar uno libre
+        $intNum = (int)$autoNum;
+        while ($this->numeroEmpleadoExiste((string)$intNum)) {
+            $intNum++;
+        }
+        $perfil['numero_empleado'] = str_pad((string)$intNum, 4, '0', STR_PAD_LEFT);
 
-        // 2) Resolver departamento_id (acepta id o nombre)
-        $departamentoId = null;
-        if (!empty($d['departamento'])) {
-            if (ctype_digit((string)$d['departamento'])) {
-                $departamentoId = (int)$d['departamento'];
+        // === Insert/Update perfil docente ===
+        $user->upsertTeacherProfile($userId, $perfil);
+
+        $db->query('COMMIT');
+        $_SESSION['success'] = "Profesor creado correctamente. Número de empleado asignado: {$perfil['numero_empleado']}";
+        header('Location: /src/plataforma/app/admin/teachers'); exit;
+
+    } catch (\PDOException $e) {
+        try { $db->query('ROLLBACK'); } catch (\Throwable $ignored) {}
+
+        // Mensajes más claros con errorInfo
+        $msg = $e->getMessage();
+        $driverMsg = $e->errorInfo[2] ?? ''; // detalle del motor (índice/columna)
+        $m = strtolower($msg.' '.$driverMsg);
+
+        if ($e->getCode() === '23000') {
+            if (str_contains($m, 'users_email_unique') || str_contains($m, 'email')) {
+                $msg = 'El correo ya está registrado.';
+            } elseif (str_contains($m, 'numero_empleado')) {
+                $msg = 'El número de empleado ya existe.';
+            } elseif (str_contains($m, 'foreign key') && str_contains($m, 'departamento')) {
+                $msg = 'El departamento seleccionado no existe (violación de llave foránea).';
+            } elseif (str_contains($m, 'cannot be null')) {
+                // Detecta qué columna
+                if (preg_match('/Column \'([^\']+)\' cannot be null/i', $driverMsg, $mm)) {
+                    $msg = "El campo '{$mm[1]}' no puede ser nulo.";
+                } else {
+                    $msg = 'Hay campos requeridos vacíos.';
+                }
             } else {
-                $db->query("SELECT id FROM departamentos WHERE nombre = :nom LIMIT 1", [':nom' => $d['departamento']]);
-                $row = $db->fetch();
-                $departamentoId = $row ? (int)$row->id : null;
+                $msg = 'Conflicto de integridad de datos.';
             }
         }
 
-        // Normalizar campos opcionales
-        $numeroEmpleado    = $d['num_empleado']      ?? null;
-        $especialidad      = $d['especialidad']      ?? null;
-        $gradoAcademico    = $d['grado_academico']   ?? 'licenciatura';
-        $nivelSni          = $d['nivel_sni']         ?? 'sin_nivel';       // según tu UI
-        $perfilProdep      = isset($d['perfil_prodep']) ? 1 : 0;           // checkbox -> tinyint(1)
-        $fechaContratacion = $d['fecha_ingreso']     ?? null;              // name del form; en DB es fecha_contratacion
-        $tipoContrato      = $d['tipo_contrato']     ?? 'asignatura';
-
-        // 3) Insert en teacher_profiles (solo columnas reales)
-        $db->query(
-            "INSERT INTO teacher_profiles
-               (user_id, numero_empleado, especialidad, departamento_id, grado_academico,
-                nivel_sni, perfil_prodep, fecha_contratacion, tipo_contrato, created_at)
-             VALUES
-               (:uid, :num, :esp, :dep, :grado, :sni, :prodep, :fcon, :tcon, NOW())",
-            [
-                ':uid'   => $userId,
-                ':num'   => $numeroEmpleado,
-                ':esp'   => $especialidad,
-                ':dep'   => $departamentoId,
-                ':grado' => $gradoAcademico,
-                ':sni'   => $nivelSni,
-                ':prodep'=> $perfilProdep,
-                ':fcon'  => $fechaContratacion,
-                ':tcon'  => $tipoContrato,
-            ]
-        );
-
-        $db->query('COMMIT');
-
-        $_SESSION['success'] = 'Profesor creado correctamente';
-        header('Location: /src/plataforma/app/admin/teachers');
-        exit;
+        error_log('TeachersController@store PDO: '.$e->getMessage().' | Driver: '.$driverMsg);
+        $_SESSION['error'] = 'Error al guardar: '.$msg;
+        header('Location: /src/plataforma/app/admin/teachers/create'); exit;
 
     } catch (\Throwable $e) {
-        // Rollback si fue iniciada la transacción
         try { $db->query('ROLLBACK'); } catch (\Throwable $ignored) {}
-        error_log('TeachersController@store error: '.$e->getMessage());
-        $_SESSION['error'] = 'No fue posible crear el profesor. Intenta de nuevo.';
-        header('Location: /src/plataforma/app/admin/teachers/create');
-        exit;
+        error_log('TeachersController@store: '.$e->getMessage());
+        $_SESSION['error'] = 'Error al guardar: '.$e->getMessage();
+        header('Location: /src/plataforma/app/admin/teachers/create'); exit;
     }
 }
 
+/* ===== Helpers privados en el mismo controlador ===== */
+private function numeroEmpleadoExiste(string $numero): bool {
+    $db = new \App\Core\Database();
+    $db->query("SELECT 1 FROM teacher_profiles WHERE numero_empleado = :n LIMIT 1", [':n' => $numero]);
+    return (bool)$db->fetchColumn();
+}
 
+private function departamentoExiste(int $id): bool {
+    if ($id <= 0) return false;
+    $db = new \App\Core\Database();
+    $db->query("SELECT 1 FROM departamentos WHERE id = :id LIMIT 1", [':id' => $id]);
+    return (bool)$db->fetchColumn();
+}
 
     /* ===================== Editar ===================== */
     public function edit($id) {
@@ -188,6 +240,10 @@ class TeachersController
         SELECT
             u.id,
             u.nombre,
+            u.apellido_paterno,
+            u.apellido_materno,
+            u.telefono,
+            u.fecha_nacimiento,
             u.email,
             u.status,
             tp.numero_empleado,
@@ -208,13 +264,14 @@ class TeachersController
     $teacher = $db->fetch();
     if (!$teacher) { header('Location: /src/plataforma/app/admin/teachers'); exit; }
 
-    $deps = (new Departamento())->allActive();
+    $deps = (new \App\Models\Departamento())->allActive();
 
-    View::render('admin/teachers/edit', 'admin', [
+    \App\Core\View::render('admin/teachers/edit', 'admin', [
         'teacher' => $teacher,
         'departamentos' => $deps
     ]);
 }
+
 
 
     public function update($id) {
@@ -230,26 +287,28 @@ class TeachersController
     if (!empty($d['password']) && ($d['password'] !== ($d['password_confirmation'] ?? ''))) {
         $errors[] = 'Las contraseñas no coinciden.';
     }
-
-    // Enums permitidos
-    $gradoEnum = ['licenciatura','maestria','doctorado','esp']; // ajusta a tus valores reales
-    $tipoEnum  = ['tiempo_completo','medio_tiempo','por_horas']; // ajusta a tus valores reales
-    $sniEnum   = ['sin_nivel','candidato','nivel1','nivel2','nivel3']; // ajusta a tus valores reales
-
-    if (!empty($d['grado_academico']) && !in_array($d['grado_academico'], $gradoEnum, true)) {
-        $errors[] = 'Grado académico inválido.';
+    if (!empty($d['fecha_nacimiento']) && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $d['fecha_nacimiento'])) {
+        $errors[] = 'La fecha de nacimiento debe ser YYYY-MM-DD.';
     }
-    if (!empty($d['tipo_contrato']) && !in_array($d['tipo_contrato'], $tipoEnum, true)) {
-        $errors[] = 'Tipo de contrato inválido.';
+    if (!empty($d['telefono']) && !preg_match('/^[0-9\s+\-()]{7,20}$/', $d['telefono'])) {
+        $errors[] = 'El teléfono tiene un formato inválido.';
     }
-    if (!empty($d['nivel_sni']) && !in_array($d['nivel_sni'], $sniEnum, true)) {
-        $errors[] = 'Nivel SNI inválido.';
+
+    // Enums permitidos (ajusta a tu BD real)
+    $gradoEnum = ['licenciatura','maestria','doctorado','especialidad']; // <-- en tu BD es "especialidad"
+    $tipoEnum  = ['tiempo_completo','medio_tiempo','por_horas','asignatura'];
+    $sniEnum   = ['sin_nivel','candidato','nivel1','nivel2','nivel3'];
+
+    if (!empty($d['grado_academico']) && !in_array($d['grado_academico'], $gradoEnum, true)) $errors[] = 'Grado académico inválido.';
+    if (!empty($d['tipo_contrato']) && !in_array($d['tipo_contrato'], $tipoEnum, true))       $errors[] = 'Tipo de contrato inválido.';
+    if (!empty($d['nivel_sni']) && !in_array($d['nivel_sni'], $sniEnum, true))               $errors[] = 'Nivel SNI inválido.';
+    if (!empty($d['fecha_contratacion']) && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $d['fecha_contratacion'])) {
+        $errors[] = 'La fecha de contratación debe ser YYYY-MM-DD.';
     }
 
     if (!empty($errors)) {
         $_SESSION['error'] = implode(' ', $errors);
-        header('Location: /src/plataforma/app/admin/teachers/edit/'.$id);
-        exit;
+        header('Location: /src/plataforma/app/admin/teachers/edit/'.$id); exit;
     }
 
     $db = new \App\Core\Database();
@@ -257,14 +316,25 @@ class TeachersController
     try {
         $db->query('START TRANSACTION');
 
-        // 1) Users
+        // 1) Users (incluye apellidos, teléfono, fecha_nacimiento)
         $paramsUser = [
-            ':id' => $id,
-            ':n'  => $d['nombre'],
-            ':e'  => $d['email'],
-            ':s'  => $d['status'] ?? 'active',
+            ':id'   => $id,
+            ':n'    => $d['nombre'],
+            ':ap'   => $d['apellido_paterno'] ?? null,
+            ':am'   => $d['apellido_materno'] ?? null,
+            ':e'    => $d['email'],
+            ':tel'  => $d['telefono'] ?? null,
+            ':fnac' => $d['fecha_nacimiento'] ?? null,
+            ':s'    => $d['status'] ?? 'active',
         ];
-        $sqlUser = "UPDATE users SET nombre = :n, email = :e, status = :s";
+        $sqlUser = "UPDATE users
+                    SET nombre = :n,
+                        apellido_paterno = :ap,
+                        apellido_materno = :am,
+                        email = :e,
+                        telefono = :tel,
+                        fecha_nacimiento = :fnac,
+                        status = :s";
         if (!empty($d['password'])) {
             $sqlUser .= ", password = :p";
             $paramsUser[':p'] = password_hash($d['password'], PASSWORD_DEFAULT);
@@ -272,14 +342,14 @@ class TeachersController
         $sqlUser .= " WHERE id = :id";
         $db->query($sqlUser, $paramsUser);
 
-        // 2) Teacher profile (upsert simple)
+        // 2) Teacher profile (upsert simple, ya lo tenías)
         $db->query("SELECT COUNT(*) FROM teacher_profiles WHERE user_id = :id", [':id' => $id]);
         $exists = (int)$db->fetchColumn() > 0;
 
         $paramsTp = [
             ':uid'  => $id,
-            ':num'  => $d['numero_empleado'] ?? null,
-            ':rfc'  => $d['rfc'] ?? null,
+            ':num'  => $d['numero_empleado'] ?? null, // si lo dejas readonly, no cambiará
+            ':rfc'  => !empty(trim($d['rfc'] ?? '')) ? trim($d['rfc']) : null, // vacíos -> NULL (por UNIQUE en RFC)
             ':dep'  => !empty($d['departamento_id']) ? (int)$d['departamento_id'] : null,
             ':grado'=> $d['grado_academico'] ?? null,
             ':esp'  => $d['especialidad'] ?? null,

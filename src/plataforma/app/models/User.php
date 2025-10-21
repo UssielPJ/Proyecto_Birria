@@ -21,7 +21,7 @@ class User {
 
     // Nombres de tablas (ajusta aquí si en tu DB difieren)
     private const T_USERS   = 'users';
-    private const T_STUDS   = 'student_profiles';  // <-- SINGULAR
+    private const T_STUDS   = 'student_profiles';  // si existe
     private const T_TEACH   = 'teacher_profiles';  // si existe
     private const T_CARRERA = 'carreras';          // si existe
 
@@ -170,43 +170,55 @@ class User {
 
     /**
      * Crea usuario en `users`. Devuelve el ID insertado.
-     * (El perfil del rol se crea en el controlador adecuado, no aquí.)
+     * Acepta password en texto plano o ya hasheado.
      */
     public function create(array $data): int {
-        // Normaliza/Mapea alias comunes
-        $email  = mb_strtolower(trim($data['email']));
-        $fields = [
-            'nombre'           => $data['nombre'] ?? ($data['name'] ?? null),
-            'apellido_paterno' => $data['apellido_paterno'] ?? null,
-            'apellido_materno' => $data['apellido_materno'] ?? null,
-            'email'            => $email,
-            'password'         => password_hash($data['password'], PASSWORD_DEFAULT),
-            'telefono'         => $data['telefono'] ?? ($data['phone'] ?? null),
-            'fecha_nacimiento' => $data['fecha_nacimiento'] ?? ($data['birthdate'] ?? null),
-            'status'           => $data['status'] ?? 'active',
-        ];
+        // Normaliza / mapea
+        $nombre           = $data['nombre'] ?? ($data['name'] ?? null);
+        $ap               = $data['apellido_paterno'] ?? null;
+        $am               = $data['apellido_materno'] ?? null;
+        $email            = mb_strtolower(trim($data['email']));
+        $telefono         = $data['telefono'] ?? ($data['phone'] ?? null);
+        $fecha_nacimiento = $data['fecha_nacimiento'] ?? ($data['birthdate'] ?? null);
+        $status           = $data['status'] ?? 'active';
+
+        // Password: si ya viene en formato bcrypt ($2y$...) respétalo; si no, hashea.
+        $pwdInput = $data['password'];
+        $password = $this->looksLikeBcrypt($pwdInput)
+            ? $pwdInput
+            : password_hash($pwdInput, PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO ".self::T_USERS."
-                (nombre, apellido_paterno, apellido_materno, email, password, telefono, fecha_nacimiento, status, created_at, updated_at)
-                VALUES (:nombre, :ap, :am, :email, :password, :tel, :fnac, :status, NOW(), NOW())";
+                (nombre, apellido_paterno, apellido_materno, email, password,
+                 telefono, fecha_nacimiento, status, created_at, updated_at)
+                VALUES
+                (:nombre, :ap, :am, :email, :password,
+                 :tel, :fnac, :status, NOW(), NOW())";
+
         $this->db->query($sql, [
-            ':nombre'  => $fields['nombre'],
-            ':ap'      => $fields['apellido_paterno'],
-            ':am'      => $fields['apellido_materno'],
-            ':email'   => $fields['email'],
-            ':password'=> $fields['password'],
-            ':tel'     => $fields['telefono'],
-            ':fnac'    => $fields['fecha_nacimiento'],
-            ':status'  => $fields['status'],
+            ':nombre'  => $nombre,
+            ':ap'      => $ap,
+            ':am'      => $am,
+            ':email'   => $email,
+            ':password'=> $password,
+            ':tel'     => $telefono,
+            ':fnac'    => $fecha_nacimiento,
+            ':status'  => $status,
         ]);
 
-        $this->db->query("SELECT LAST_INSERT_ID()");
-        return (int)$this->db->fetchColumn();
+        // lastInsertId — usa método del wrapper si existe; si no, fallback
+        $id = null;
+        if (method_exists($this->db, 'lastInsertId')) {
+            $id = (int)$this->db->lastInsertId();
+        } else {
+            $this->db->query("SELECT LAST_INSERT_ID()");
+            $id = (int)$this->db->fetchColumn();
+        }
+        return $id;
     }
 
     /**
      * Actualiza SOLO columnas de `users`.
-     * Ignora campos de perfil (students/teachers) para evitar mezcla.
      */
     public function update(int $id, array $data): bool {
         $map = [
@@ -228,7 +240,9 @@ class User {
         }
         if (!empty($data['password'])) {
             $set[] = "password = :password";
-            $params[':password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+            $params[':password'] = $this->looksLikeBcrypt($data['password'])
+                ? $data['password']
+                : password_hash($data['password'], PASSWORD_DEFAULT);
         }
 
         if (!$set) return true;
@@ -348,13 +362,8 @@ class User {
     }
 
     public function getDistinctCarreras(): array {
-        // Si tienes catálogo de carreras:
         $this->db->query("SELECT nombre FROM ".self::T_CARRERA." ORDER BY nombre");
         return $this->db->fetchAll(PDO::FETCH_COLUMN, 0);
-
-        // Si NO tienes catálogo, usa IDs:
-        // $this->db->query("SELECT DISTINCT carrera_id FROM ".self::T_STUDS." WHERE carrera_id IS NOT NULL ORDER BY carrera_id");
-        // return $this->db->fetchAll(PDO::FETCH_COLUMN, 0);
     }
 
     public function getDistinctSemestres(): array {
@@ -448,81 +457,102 @@ class User {
 
     /* ===================== Profesores: helpers ===================== */
 
-/** Trae un profesor por ID con JOIN a teacher_profiles y departamentos */
-public function findTeacherById(int $id): mixed {
-    $sql = "SELECT 
-                u.id, u.nombre, u.email, u.status, u.created_at,
-                tp.numero_empleado, tp.rfc, tp.especialidad, tp.departamento_id,
-                tp.grado_academico, tp.fecha_contratacion, tp.tipo_contrato,
-                tp.nivel_sni, tp.perfil_prodep,
-                d.nombre AS departamento
-            FROM ".self::T_USERS." u
-            LEFT JOIN ".self::T_TEACH." tp ON tp.user_id = u.id
-            LEFT JOIN departamentos d ON d.id = tp.departamento_id
-            WHERE u.id = :id
-            LIMIT 1";
-    $this->db->query($sql, [':id' => $id]);
-    return $this->db->fetch();
-}
-
-/** Inserta/actualiza el perfil de profesor (UPsert sencillo) */
-public function upsertTeacherProfile(int $userId, array $data): bool {
-    $params = [
-        ':uid'  => $userId,
-        ':num'  => $data['numero_empleado']     ?? ($data['num_empleado'] ?? null),
-        ':rfc'  => $data['rfc']                 ?? null,
-        ':dep'  => isset($data['departamento_id']) ? (int)$data['departamento_id'] : null,
-        ':grado'=> $data['grado_academico']     ?? null,
-        ':esp'  => $data['especialidad']        ?? null,
-        ':fcon' => $data['fecha_contratacion']  ?? ($data['fecha_ingreso'] ?? null),
-        ':tcon' => $data['tipo_contrato']       ?? null,
-        ':sni'  => $data['nivel_sni']           ?? 'sin_nivel',
-        ':pro'  => isset($data['perfil_prodep']) ? 1 : 0,
-    ];
-
-    $this->db->query("SELECT COUNT(*) FROM ".self::T_TEACH." WHERE user_id = :uid", [':uid' => $userId]);
-    $exists = (int)$this->db->fetchColumn() > 0;
-
-    if ($exists) {
-        $sql = "UPDATE ".self::T_TEACH." SET
-                    numero_empleado = :num,
-                    rfc = :rfc,
-                    departamento_id = :dep,
-                    grado_academico = :grado,
-                    especialidad = :esp,
-                    fecha_contratacion = :fcon,
-                    tipo_contrato = :tcon,
-                    nivel_sni = :sni,
-                    perfil_prodep = :pro,
-                    updated_at = NOW()
-                WHERE user_id = :uid";
-    } else {
-        $sql = "INSERT INTO ".self::T_TEACH."
-                    (user_id, numero_empleado, rfc, departamento_id, grado_academico, especialidad,
-                     fecha_contratacion, tipo_contrato, nivel_sni, perfil_prodep, created_at)
-                VALUES
-                    (:uid, :num, :rfc, :dep, :grado, :esp, :fcon, :tcon, :sni, :pro, NOW())";
+    /** Trae un profesor por ID con JOIN a teacher_profiles y departamentos */
+    public function findTeacherById(int $id): mixed {
+        $sql = "SELECT 
+                    u.id, u.nombre, u.email, u.status, u.created_at,
+                    tp.numero_empleado, tp.rfc, tp.especialidad, tp.departamento_id,
+                    tp.grado_academico, tp.fecha_contratacion, tp.tipo_contrato,
+                    tp.nivel_sni, tp.perfil_prodep,
+                    d.nombre AS departamento
+                FROM ".self::T_USERS." u
+                LEFT JOIN ".self::T_TEACH." tp ON tp.user_id = u.id
+                LEFT JOIN departamentos d ON d.id = tp.departamento_id
+                WHERE u.id = :id
+                LIMIT 1";
+        $this->db->query($sql, [':id' => $id]);
+        return $this->db->fetch();
     }
 
-    $this->db->query($sql, $params);
-    return true;
-}
+    /** Inserta/actualiza el perfil de profesor (UPsert sencillo) */
+    public function upsertTeacherProfile(int $userId, array $data): bool {
+        $params = [
+            ':uid'  => $userId,
+            ':num'  => $data['numero_empleado']     ?? ($data['num_empleado'] ?? null),
+            ':rfc'  => !empty(trim($data['rfc'] ?? '')) ? trim($data['rfc']) : null,
+            ':dep'  => isset($data['departamento_id']) ? (int)$data['departamento_id'] : null,
+            ':grado'=> $data['grado_academico']     ?? null,
+            ':esp'  => $data['especialidad']        ?? null,
+            ':fcon' => $data['fecha_contratacion']  ?? ($data['fecha_ingreso'] ?? null),
+            ':tcon' => $data['tipo_contrato']       ?? null,
+            ':sni'  => $data['nivel_sni']           ?? 'sin_nivel',
+            ':pro'  => isset($data['perfil_prodep']) ? 1 : 0,
+        ];
 
-/** Baja lógica del usuario (recomendada para no romper FK) */
-public function softDeleteUser(int $userId): bool {
-    $this->db->query(
-        "UPDATE ".self::T_USERS." SET status = 'inactive', updated_at = NOW() WHERE id = ?",
-        [$userId]
-    );
-    return $this->db->rowCount() > 0;
-}
+        $this->db->query("SELECT COUNT(*) FROM ".self::T_TEACH." WHERE user_id = :uid", [':uid' => $userId]);
+        $exists = (int)$this->db->fetchColumn() > 0;
 
-/** Eliminación física del usuario + perfil de profesor (si no hay ON DELETE CASCADE) */
-public function deleteTeacherHard(int $userId): bool {
-    // Si tu FK no tiene ON DELETE CASCADE, borra perfil primero:
-    $this->db->query("DELETE FROM ".self::T_TEACH." WHERE user_id = ?", [$userId]);
-    $this->db->query("DELETE FROM ".self::T_USERS." WHERE id = ?", [$userId]);
-    return $this->db->rowCount() > 0;
+        if ($exists) {
+            $sql = "UPDATE ".self::T_TEACH." SET
+                        numero_empleado = :num,
+                        rfc = :rfc,
+                        departamento_id = :dep,
+                        grado_academico = :grado,
+                        especialidad = :esp,
+                        fecha_contratacion = :fcon,
+                        tipo_contrato = :tcon,
+                        nivel_sni = :sni,
+                        perfil_prodep = :pro,
+                        updated_at = NOW()
+                    WHERE user_id = :uid";
+        } else {
+            $sql = "INSERT INTO ".self::T_TEACH."
+                        (user_id, numero_empleado, rfc, departamento_id, grado_academico, especialidad,
+                         fecha_contratacion, tipo_contrato, nivel_sni, perfil_prodep, created_at)
+                    VALUES
+                        (:uid, :num, :rfc, :dep, :grado, :esp, :fcon, :tcon, :sni, :pro, NOW())";
+        }
+
+        $this->db->query($sql, $params);
+        return true;
+    }
+
+    /** Baja lógica del usuario (recomendada para no romper FK) */
+    public function softDeleteUser(int $userId): bool {
+        $this->db->query(
+            "UPDATE ".self::T_USERS." SET status = 'inactive', updated_at = NOW() WHERE id = ?",
+            [$userId]
+        );
+        return $this->db->rowCount() > 0;
+    }
+
+    /** Eliminación física del usuario + perfil de profesor (si no hay ON DELETE CASCADE) */
+    public function deleteTeacherHard(int $userId): bool {
+        // Si tu FK no tiene ON DELETE CASCADE, borra perfil primero:
+        $this->db->query("DELETE FROM ".self::T_TEACH." WHERE user_id = ?", [$userId]);
+        $this->db->query("DELETE FROM ".self::T_USERS." WHERE id = ?", [$userId]);
+        return $this->db->rowCount() > 0;
+    }
+
+    /* ===================== Utils privadas ===================== */
+
+    private function looksLikeBcrypt(?string $hash): bool {
+        if (!$hash) return false;
+        // Bcrypt típico: $2y$10$...
+        return str_starts_with($hash, '$2y$') || str_starts_with($hash, '$2a$') || str_starts_with($hash, '$2b$');
+    }
+
+    /**
+ * Genera automáticamente el siguiente número de empleado disponible.
+ * Ejemplo: 1001, 1002, ... 9999
+ */
+public function generateNumeroEmpleado(): string {
+    $sql = "SELECT MAX(CAST(numero_empleado AS UNSIGNED)) AS max_num FROM " . self::T_TEACH;
+    $this->db->query($sql);
+    $max = (int)$this->db->fetchColumn();
+
+    $next = $max > 0 ? $max + 1 : 1000; // empieza en 1000 si no hay registros
+    return str_pad((string)$next, 4, '0', STR_PAD_LEFT); // genera 4 o 5 dígitos, ej. 0100 o 1000
 }
 
 }
