@@ -42,6 +42,240 @@ body {
     scroll-behavior: smooth;
 }
 
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    color: #1f2937;
+}
+
+.dark body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--ut-green-600) 0%, var(--ut-green-800) 100%);
+}
+
+.hero-section h1 {
+    color: white;
+}
+
+.hero-section p {
+    color: #e2e8f0;
+}
+
+.hero-section .bg-white {
+    background: white;
+    color: var(--ut-green-700);
+}
+
+.hero-section .bg-white:hover {
+    background: #f9fafb;
+}
+
+.hero-section .border-white {
+    border-color: white;
+    color: white;
+}
+
+.hero-section .border-white:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.university-card {
+    background: white;
+    color: #1f2937;
+}
+
+.university-card h3 {
+    color: #111827;
+}
+
+.university-card p {
+    color: #4b5563;
+}
+
+.career-card {
+    background: white;
+    color: #1f2937;
+}
+
+.career-card h4 {
+    color: #111827;
+}
+
+.career-card p {
+    color: #4b5563;
+}
+
+.career-card .text-gray-500 {
+    color: #6b7280;
+}
+
+.section-title {
+    color: #111827;
+}
+
+.badge-primary {
+    background: rgba(40, 165, 95, 0.1);
+    color: var(--ut-green-700);
+    border-color: rgba(40, 165, 95, 0.2);
+}
+
+.badge-secondary {
+    background: rgba(212, 175, 55, 0.1);
+    color: #b8941f;
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+.nav-link {
+    color: #374151;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--ut-green-600);
+}
+
+.nav-title {
+    background: linear-gradient(135deg, #059669, #10b981);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--ut-green-500), var(--ut-green-700));
+    color: white;
+}
+
+.modal-body {
+    background: white;
+    color: #1f2937;
+}
+
+.plantel-description {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.plantel-description h4 {
+    color: #1e40af;
+}
+
+.plantel-description p {
+    color: #1e3a8a;
+}
+
+.modal-body h4 {
+    color: #111827;
+}
+
+.modal-body p {
+    color: #4b5563;
+}
+
+.modal-body li {
+    color: #4b5563;
+}
+
+.modal-body .bg-gray-100 {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.modal-body .bg-blue-50 {
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.modal-body .bg-blue-50 h5 {
+    color: #1e40af;
+}
+
+.modal-body .bg-blue-50 p {
+    color: #1e3a8a;
+}
+
+.modal-body .bg-green-50 {
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.modal-body .bg-green-50 h5 {
+    color: #166534;
+}
+
+.modal-body .bg-green-50 p {
+    color: #14532d;
+}
+
+.modal-body .text-gray-600 {
+    color: #4b5563;
+}
+
+.modal-body .text-gray-700 {
+    color: #374151;
+}
+
+.modal-body .text-blue-900 {
+    color: #1e3a8a;
+}
+
+.modal-body .text-blue-700 {
+    color: #1d4ed8;
+}
+
+.modal-body .text-green-900 {
+    color: #14532d;
+}
+
+.modal-body .text-green-700 {
+    color: #15803d;
+}
+
+.modal-body .border-gray-200 {
+    border-color: #e5e7eb;
+}
+
+.modal-body .bg-gray-50 {
+    background: #f9fafb;
+}
+
+.modal-body .bg-gray-50 .text-gray-700 {
+    color: #374151;
+}
+
+.modal-body .bg-gray-50 .border-gray-300 {
+    border-color: #d1d5db;
+}
+
+.modal-body .bg-gray-50 .hover\:border-gray-400:hover {
+    border-color: #9ca3af;
+}
+
+.modal-body .bg-green-500 {
+    background: var(--ut-green-500);
+}
+
+.modal-body .bg-green-500:hover {
+    background: var(--ut-green-600);
+}
+
+.modal-body .bg-blue-500 {
+    background: var(--ut-blue);
+}
+
+.modal-body .bg-blue-500:hover {
+    background: #2563eb;
+}
+
 .dark body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
@@ -76,12 +310,20 @@ body {
     background: rgba(255, 255, 255, 0.1);
 }
 
+.dark .university-card {
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+}
+
 .dark .university-card h3 {
     color: white;
 }
 
 .dark .university-card p {
     color: #cbd5e1;
+}
+
+.dark .career-card {
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
 }
 
 .dark .career-card h4 {
