@@ -8,14 +8,28 @@
         <p class="text-neutral-500 dark:text-neutral-400">Completa los datos requeridos</p>
       </div>
 
+      <?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
+      <?php if (!empty($_SESSION['error'])): ?>
+        <div class="mb-4 p-3 rounded bg-red-50 text-red-700">
+          <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+        </div>
+      <?php endif; ?>
+      <?php if (!empty($_SESSION['success'])): ?>
+        <div class="mb-4 p-3 rounded bg-green-50 text-green-700">
+          <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
+        </div>
+      <?php endif; ?>
+
       <form action="/src/plataforma/app/admin/teachers/store" method="POST" class="space-y-6" novalidate>
         <!-- Usuario -->
         <div class="bg-neutral-50 dark:bg-neutral-900 p-4 rounded-lg space-y-4">
           <h2 class="font-semibold text-lg">Cuenta de Usuario</h2>
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Nombre y correo -->
             <div>
-              <label class="block text-sm font-medium mb-1">Nombre completo</label>
-              <input type="text" name="nombre" required autocomplete="name"
+              <label class="block text-sm font-medium mb-1">Nombre(s)</label>
+              <input type="text" name="nombre" required autocomplete="given-name"
                      class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
             </div>
             <div>
@@ -23,6 +37,43 @@
               <input type="email" name="email" required autocomplete="email"
                      class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
             </div>
+
+            <!-- NUEVOS: Apellidos -->
+            <div>
+              <label class="block text-sm font-medium mb-1">Apellido paterno</label>
+              <input type="text" name="apellido_paterno" required
+                     class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Apellido materno</label>
+              <input type="text" name="apellido_materno" required
+                     class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+            </div>
+
+            <!-- NUEVOS: Teléfono y Fecha de nacimiento -->
+            <div>
+              <label class="block text-sm font-medium mb-1">Teléfono</label>
+              <input type="tel" name="telefono" inputmode="tel" placeholder="Ej. 8112345678"
+                     class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Fecha de nacimiento</label>
+              <input type="date" name="fecha_nacimiento"
+                     class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+            </div>
+
+            <!-- Estado -->
+            <div>
+              <label class="block text-sm font-medium mb-1">Estado de la cuenta</label>
+              <select name="status"
+                      class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+                <option value="active" selected>Activo</option>
+                <option value="inactive">Inactivo</option>
+                <option value="suspended">Suspendido</option>
+              </select>
+            </div>
+
+            <!-- Password -->
             <div>
               <label class="block text-sm font-medium mb-1">Contraseña</label>
               <input type="password" name="password" required autocomplete="new-password" minlength="6"
@@ -40,11 +91,6 @@
         <div class="bg-neutral-50 dark:bg-neutral-900 p-4 rounded-lg space-y-4">
           <h2 class="font-semibold text-lg">Perfil Docente</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium mb-1">Número de empleado</label>
-              <input type="text" name="numero_empleado" required inputmode="numeric"
-                     class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
-            </div>
 
             <div>
               <label class="block text-sm font-medium mb-1">RFC (opcional)</label>
@@ -71,6 +117,7 @@
                 <option value="licenciatura">Licenciatura</option>
                 <option value="maestria">Maestría</option>
                 <option value="doctorado">Doctorado</option>
+                <option value="esp">Especialidad</option>
               </select>
             </div>
 
@@ -94,6 +141,7 @@
                 <option value="tiempo_completo">Tiempo completo</option>
                 <option value="medio_tiempo">Medio tiempo</option>
                 <option value="por_horas">Por horas</option>
+                <option value="asignatura">Asignatura</option>
               </select>
             </div>
 
