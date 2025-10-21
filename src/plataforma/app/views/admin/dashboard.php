@@ -83,7 +83,7 @@
 </div>
 
 <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 mb-6" data-aos="fade-up">
-  <h2 class="text-xl font-bold mb-4">Acciones rápidas</h2>
+  <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Acciones rápidas</h2>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
     <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
       <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700 mb-2">
@@ -115,7 +115,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
   <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl font-bold">Últimos estudiantes</h2>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white">Últimos estudiantes</h2>
       <a href="#" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
     </div>
 
@@ -143,7 +143,7 @@
 
   <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl font-bold">Pendientes administrativos</h2>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white">Pendientes administrativos</h2>
       <a href="#" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
     </div>
 

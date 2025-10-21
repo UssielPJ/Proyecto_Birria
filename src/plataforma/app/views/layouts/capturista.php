@@ -16,6 +16,7 @@ $U = $_SESSION['user'] ?? [];
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
+  <script src="/src/plataforma/app/js/theme.js" defer></script>
 
   <script>
     tailwind.config = {

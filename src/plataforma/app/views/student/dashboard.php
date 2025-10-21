@@ -115,9 +115,9 @@
     <!-- Contenido Principal -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Mis Cursos Actuales -->
-        <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300" data-aos="fade-up">
+        <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300" data-aos="fade-up">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-white flex items-center">
                     <i data-feather="book-open" class="w-5 h-5 mr-2 text-emerald-600"></i>
                     Mis Cursos Actuales
                 </h3>
@@ -159,7 +159,7 @@
         <!-- Calificaciones Recientes -->
         <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="100">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-white flex items-center">
                     <i data-feather="award" class="w-5 h-5 mr-2 text-teal-600"></i>
                     Calificaciones Recientes
                 </h3>

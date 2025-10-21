@@ -2552,9 +2552,8 @@ document.addEventListener('DOMContentLoaded', function() {
         './plataforma/app/img/2-IMG_2663.jpg',
         './plataforma/app/img/123-IMG_7641.jpg',
         './plataforma/app/img/101-IMG_4617.jpg',
-        './plataforma/app/img/99-IMG_3636.jpg',
-        './plataforma/app/img/tochito-extra1.jpg',
-        './plataforma/app/img/tochito-extra2.jpg'
+        './plataforma/app/img/99-IMG_3636.jpg'
+        
       ]
     }
   };

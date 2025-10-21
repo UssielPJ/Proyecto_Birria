@@ -106,7 +106,7 @@
 <!-- Contenido Principal -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <!-- Últimos Registros -->
-    <div class="bg-white rounded-xl shadow-sm p-6" data-aos="fade-up">
+    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-bold">Últimos Registros</h2>
             <a href="/src/plataforma/capturista/alumnos" class="text-purple-600 hover:text-purple-700 text-sm">Ver todos</a>
@@ -114,27 +114,27 @@
         <div class="space-y-4">
             <?php if (!empty($recentRegistrations)): ?>
                 <?php foreach ($recentRegistrations as $registration): ?>
-                    <div class="flex items-center justify-between p-3 border border-gray-100 rounded-lg">
+                    <div class="flex items-center justify-between p-3 border border-gray-100 dark:border-neutral-700 rounded-lg">
                         <div class="flex items-center gap-3">
                             <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
                                 <i data-feather="user"></i>
                             </div>
                             <div>
                                 <h3 class="font-medium"><?= htmlspecialchars($registration->name) ?></h3>
-                                <p class="text-sm text-gray-500"><?= htmlspecialchars($registration->email) ?></p>
+                                <p class="text-sm text-gray-500 dark:text-neutral-400"><?= htmlspecialchars($registration->email) ?></p>
                             </div>
                         </div>
                         <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full"><?= htmlspecialchars($registration->role) ?></span>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p class="text-gray-500">No hay registros recientes.</p>
+                <p class="text-gray-500 dark:text-neutral-400">No hay registros recientes.</p>
             <?php endif; ?>
         </div>
     </div>
 
     <!-- Calificaciones Pendientes -->
-    <div class="bg-white rounded-xl shadow-sm p-6" data-aos="fade-up">
+    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-bold">Calificaciones Pendientes</h2>
             <a href="/src/plataforma/capturista/inscripciones" class="text-yellow-600 hover:text-yellow-700 text-sm">Ver todas</a>
@@ -142,14 +142,14 @@
         <div class="space-y-4">
             <?php if (!empty($pendingGrades)): ?>
                 <?php foreach ($pendingGrades as $grade): ?>
-                    <div class="flex items-center justify-between p-3 border border-gray-100 rounded-lg">
+                    <div class="flex items-center justify-between p-3 border border-gray-100 dark:border-neutral-700 rounded-lg">
                         <div class="flex items-center gap-3">
                             <div class="p-2 rounded-lg bg-yellow-50">
                                 <i data-feather="file-text"></i>
                             </div>
                             <div>
                                 <h3 class="font-medium">Calificación de <?= htmlspecialchars($grade->student_name) ?></h3>
-                                <p class="text-sm text-gray-500"><?= htmlspecialchars($grade->course_name) ?></p>
+                                <p class="text-sm text-gray-500 dark:text-neutral-400"><?= htmlspecialchars($grade->course_name) ?></p>
                             </div>
                         </div>
                         <span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">Pendiente</span>

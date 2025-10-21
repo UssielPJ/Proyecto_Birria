@@ -6,7 +6,7 @@ if (!in_array('admin', $roles, true)) { header('Location: /src/plataforma/login'
 $user = $_SESSION['user'] ?? [];
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -26,6 +26,7 @@ $user = $_SESSION['user'] ?? [];
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="/src/plataforma/app/js/theme.js" defer></script>
 
   <script>
     tailwind.config = {
