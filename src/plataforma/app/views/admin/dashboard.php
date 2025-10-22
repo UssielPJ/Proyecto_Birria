@@ -85,13 +85,13 @@
 <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6 mb-6" data-aos="fade-up">
   <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Acciones rápidas</h2>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
+    <a href="/src/plataforma/app/admin/students/create" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
       <div class="p-3 rounded-lg bg-primary-50 dark:bg-neutral-700 mb-2">
         <i data-feather="user-plus" class="text-primary-600"></i>
       </div>
       <span class="text-sm font-medium">Nuevo estudiante</span>
     </a>
-    <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
+    <a href="/src/plataforma/app/admin/teachers/create" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
       <div class="p-3 rounded-lg bg-emerald-50 dark:bg-neutral-700 mb-2">
         <i data-feather="user-plus" class="text-emerald-600"></i>
       </div>
@@ -103,7 +103,7 @@
       </div>
       <span class="text-sm font-medium">Nueva materia</span>
     </a>
-    <a href="#" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
+    <a href="/src/plataforma/app/admin/announcements/create" class="flex flex-col items-center justify-center p-4 rounded-lg border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition">
       <div class="p-3 rounded-lg bg-purple-50 dark:bg-neutral-700 mb-2">
         <i data-feather="bell" class="text-purple-600"></i>
       </div>
