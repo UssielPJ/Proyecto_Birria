@@ -2048,9 +2048,11 @@ document.addEventListener('DOMContentLoaded', function() {
               <i data-feather="users" class="w-5 h-5 mr-2"></i>
               1,200+ Estudiantes
             </div>
-            <div class="flex items-center text-sm text-gray-500">
+            <div class="flex items-center text-sm text-gray-500 cursor-pointer hover:text-[var(--ut-green-700)] transition-colors">
               <i data-feather="map-pin" class="w-4 h-4 mr-1"></i>
-              Montemorelos, NL
+              <a href="https://www.google.com/maps/search/?api=1&query=Av.+Las+Adjuntas+S%2FN%2C+Col.+Bugambilias%2C+Montemorelos%2C+N.L.%2C+C.P.+67535" target="_blank" class="location-link hover:underline">
+                Montemorelos, NL
+              </a>
             </div>
           </div>
           <button class="conocer-mas-btn w-full bg-gradient-to-r from-[var(--ut-green-600)] to-[var(--ut-green-700)] text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:from-[var(--ut-green-700)] hover:to-[var(--ut-green-800)] transform hover:scale-105" data-campus="central">
@@ -2073,9 +2075,11 @@ document.addEventListener('DOMContentLoaded', function() {
               <i data-feather="users" class="w-5 h-5 mr-2"></i>
               2,500+ Estudiantes
             </div>
-            <div class="flex items-center text-sm text-gray-500">
+            <div class="flex items-center text-sm text-gray-500 cursor-pointer hover:text-[var(--ut-green-700)] transition-colors">
               <i data-feather="map-pin" class="w-4 h-4 mr-1"></i>
-              Santa Catarina, NL
+              <a href="https://www.google.com/maps/search/?api=1&query=Carretera+Saltillo-Monterrey+Km.+61.5%2C+Santa+Catarina%2C+N.L.%2C+C.P.+66359" target="_blank" class="location-link hover:underline">
+                Santa Catarina, NL
+              </a>
             </div>
           </div>
           <button class="conocer-mas-btn w-full bg-gradient-to-r from-[var(--ut-green-600)] to-[var(--ut-green-700)] text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:from-[var(--ut-green-700)] hover:to-[var(--ut-green-800)] transform hover:scale-105" data-campus="tecnologico">
@@ -2098,9 +2102,11 @@ document.addEventListener('DOMContentLoaded', function() {
               <i data-feather="users" class="w-5 h-5 mr-2"></i>
               1,800+ Estudiantes
             </div>
-            <div class="flex items-center text-sm text-gray-500">
+            <div class="flex items-center text-sm text-gray-500 cursor-pointer hover:text-[var(--ut-green-700)] transition-colors">
               <i data-feather="map-pin" class="w-4 h-4 mr-1"></i>
-              Linares, NL
+              <a href="https://www.google.com/maps/search/?api=1&query=Antiguo+Camino+a+Hualahuises+S%2FN%2C+Col.+Camachito%2C+Linares%2C+N.L.%2C+C.P.+67867" target="_blank" class="location-link hover:underline">
+                Linares, NL
+              </a>
             </div>
           </div>
           <button class="conocer-mas-btn w-full bg-gradient-to-r from-[var(--ut-green-600)] to-[var(--ut-green-700)] text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:from-[var(--ut-green-700)] hover:to-[var(--ut-green-800)] transform hover:scale-105" data-campus="innovacion">
@@ -2114,9 +2120,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Modal para Campus - Unificado y mejorado -->
 <div id="campusModal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 hidden">
-  <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-6xl w-full mx-4 max-h-[95vh] overflow-hidden relative">
+  <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-6xl w-full mx-4 max-h-[95vh] overflow-y-auto relative">
     <!-- Header -->
-    <div class="flex justify-between items-center p-8 border-b border-white/20">
+    <div class="flex justify-between items-center p-8 border-b border-white/20 sticky top-0 bg-white/95 z-10">
       <div>
         <h3 id="modalTitle" class="text-3xl font-bold text-gray-900 mb-1">Campus Central</h3>
         <p id="modalSubtitle" class="text-gray-600 text-lg">Descubre nuestra infraestructura de vanguardia</p>
@@ -2149,6 +2155,16 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="flex items-center"><i data-feather="accessibility" class="w-4 h-4 mr-2"></i><span>Accesible 100%</span></div>
       </div>
     </div>
+
+    <!-- Nueva sección de Ubicación -->
+    <div id="modalLocation" class="p-8 bg-gray-50 border-t border-gray-100">
+      <h4 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <i data-feather="map-pin" class="w-5 h-5 text-[var(--ut-green-600)]"></i>
+        Ubicación Exacta
+      </h4>
+      <p id="modalAddress" class="text-gray-700 mb-4 text-lg font-medium"></p>
+      <iframe id="mapEmbed" src="" width="100%" height="300" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
   </div>
 </div>
 
@@ -2172,6 +2188,16 @@ document.addEventListener('DOMContentLoaded', function() {
   background-color: white;
   transform: scale(1.3);
 }
+
+/* Estilos para la ubicación clickable */
+.location-link {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.location-link:hover {
+  color: var(--ut-green-700) !important;
+}
 </style>
 
 <script>
@@ -2182,6 +2208,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const modalTitle = document.getElementById('modalTitle');
   const modalSubtitle = document.getElementById('modalSubtitle');
   const modalDescription = document.getElementById('modalDescription');
+  const modalAddress = document.getElementById('modalAddress');
+  const mapEmbed = document.getElementById('mapEmbed');
   const carouselSlides = document.getElementById('carouselSlides');
   const carouselIndicators = document.getElementById('carouselIndicators');
   const carouselPrev = document.getElementById('carouselPrev');
@@ -2195,6 +2223,9 @@ document.addEventListener('DOMContentLoaded', function() {
       title: 'Campus Montemorelos',
       subtitle: 'Innovación en un Entorno Natural',
       description: 'Nuestro campus en Montemorelos integra tecnología de punta con un entorno ecológico único, contando con labs de biotecnología equipados con secuenciadores genéticos y un makerspace de 1,000 m² para prototipado rápido. Destaca por su programa de conservación de biodiversidad local y clases al aire libre.',
+      location: {
+        address: 'Av. Las Adjuntas S/N, Col. Bugambilias, Montemorelos, N.L., C.P. 67535'
+      },
       images: [
         './plataforma/app/img/125-IMG_4241.jpg',
         './plataforma/app/img/122-IMG_3871.jpg',
@@ -2212,6 +2243,9 @@ document.addEventListener('DOMContentLoaded', function() {
       title: 'Campus Santa Catarina',
       subtitle: 'Corazón de la Ingeniería Avanzada',
       description: 'Sede principal con más de 20 labs especializados, incluyendo un centro de ciberseguridad con simuladores de hacking ético y talleres de impresión 3D industrial. Incluye un data center propio con IA para optimización energética y auditorio holográfico para conferencias globales.',
+      location: {
+        address: 'Carretera Saltillo-Monterrey Km. 61.5, Santa Catarina, N.L., C.P. 66359'
+      },
       images: [
         './plataforma/app/img/tecnologico1.jpg',
         './plataforma/app/img/tecnologico2.jpg',
@@ -2229,6 +2263,9 @@ document.addEventListener('DOMContentLoaded', function() {
       title: 'Campus Linares',
       subtitle: 'Cuna del Emprendimiento Agro-Tech',
       description: 'Diseñado para innovación regional, con huertos hidropónicos inteligentes, incubadora de startups con mentorship de INCmty y centro VR para turismo virtual. Enfocado en agroindustria 4.0, con drones para monitoreo agrícola y programas de economía circular que han generado 15 startups activas.',
+      location: {
+        address: 'Antiguo Camino a Hualahuises S/N, Col. Camachito, Linares, N.L., C.P. 67867'
+      },
       images: [
         './plataforma/app/img/innovacion1.jpg',
         './plataforma/app/img/innovacion2.jpg',
@@ -2244,33 +2281,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
   
-  conocerMasBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      currentCampus = this.getAttribute('data-campus');
-      openModal(currentCampus);
-    });
-  });
-  
-  closeModal.addEventListener('click', closeModalFunc);
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) closeModalFunc();
-  });
-  
-  carouselPrev.addEventListener('click', () => {
-    currentSlide = (currentSlide - 1 + campusData[currentCampus].images.length) % campusData[currentCampus].images.length;
-    updateCarousel();
-  });
-  
-  carouselNext.addEventListener('click', () => {
-    currentSlide = (currentSlide + 1) % campusData[currentCampus].images.length;
-    updateCarousel();
-  });
+  function openCampusModal(campus) {
+    currentCampus = campus;
+    openModal(currentCampus);
+  }
   
   function openModal(campus) {
     const data = campusData[campus];
     modalTitle.textContent = data.title;
     modalSubtitle.textContent = data.subtitle;
     modalDescription.textContent = data.description;
+    modalAddress.textContent = data.location.address;
+    
+    const mapUrl = `https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(data.location.address)}&key=`;
+    mapEmbed.src = mapUrl;
     
     carouselSlides.innerHTML = '';
     carouselIndicators.innerHTML = '';
@@ -2301,6 +2325,28 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.style.overflow = 'auto';
   }
   
+  conocerMasBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      currentCampus = this.getAttribute('data-campus');
+      openModal(currentCampus);
+    });
+  });
+  
+  closeModal.addEventListener('click', closeModalFunc);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModalFunc();
+  });
+  
+  carouselPrev.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + campusData[currentCampus].images.length) % campusData[currentCampus].images.length;
+    updateCarousel();
+  });
+  
+  carouselNext.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % campusData[currentCampus].images.length;
+    updateCarousel();
+  });
+  
   function updateCarousel() {
     carouselSlides.style.transform = `translateX(-${currentSlide * 100}%)`;
     const indicators = carouselIndicators.querySelectorAll('.carousel-indicator');
@@ -2314,6 +2360,9 @@ document.addEventListener('DOMContentLoaded', function() {
       closeModalFunc();
     }
   });
+  
+  // Exponer función global para onclick en HTML
+  window.openCampusModal = openCampusModal;
 });
 </script>
 

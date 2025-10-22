@@ -949,7 +949,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="text-lg text-emerald-100 mb-8 max-w-2xl mx-auto">Realiza tu inscripción en nuestras universidades tecnológicas y comienza tu camino hacia el éxito académico</p>
                 <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
                     <a href="registro.php" class="bg-white text-[var(--ut-green-800)] hover:bg-gray-100 px-6 py-3 rounded-md text-lg font-semibold transition">Inscribirme Ahora</a>
-                    <a href="mailto:contacto@UTSC.edu?subject=Solicitud%20de%20Información%20sobre%20Inscripciones&body=Hola,%20me%20gustaría%20obtener%20más%20información%20sobre%20las%20inscripciones%20en%20la%20UTSC.%20Por%20favor,%20contáctenme%20para%20asesorarme." class="border-2 border-white text-white hover:bg-white hover:text-[var(--ut-green-800)] px-6 py-3 rounded-md text-lg font-semibold transition" onclick="alert('Se abrirá tu cliente de correo electrónico para contactar al asesor.')">Contactar Asesor</a>
                 </div>
             </div>
         </div>
