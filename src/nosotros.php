@@ -1938,25 +1938,6 @@ document.head.appendChild(style);
       </div>
     </div>
 
-    <!-- CTA para Preparatorias - Más detallado -->
-    <div class="text-center" data-aos="fade-up">
-      <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-12 max-w-5xl mx-auto border border-white/30">
-        <h3 class="text-3xl font-bold text-gray-900 mb-6">¿Eres de Preparatoria?</h3>
-        <p class="text-gray-600 mb-8 text-xl leading-relaxed">
-          Agenda una visita guiada personalizada y descubre cómo puedes formar parte de nuestra comunidad universitaria. Incluye tour VR de campus, talleres interactivos de IA y sesiones con egresados exitosos. ¡Capacidad limitada para 2025!
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-          <button class="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-10 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:from-green-700 hover:to-emerald-800 transform hover:scale-105 shadow-xl">
-            <i data-feather="calendar" class="w-5 h-5 inline mr-2"></i>
-            Agendar Visita Gratuita
-          </button>
-          <a href="contacto.php" class="text-green-600 hover:text-green-700 font-semibold text-lg flex items-center gap-2 transition-colors">
-            Más Información
-            <i data-feather="arrow-right" class="w-5 h-5"></i>
-          </a>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -2480,21 +2461,27 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="grid md:grid-cols-3 gap-8">
         <div class="p-6">
           <div class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
-            <i data-feather="trophy" class="w-10 h-10 text-white"></i>
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M5 3a2 2 0 00-2 2v2a2 2 0 00-2 2v4a2 2 0 002 2h2a2 2 0 002 2v2a2 2 0 002 2h4a2 2 0 002-2v-2a2 2 0 002-2h2a2 2 0 002-2V9a2 2 0 00-2-2h-2a2 2 0 00-2-2V5a2 2 0 00-2-2H5z"/>
+            </svg>
           </div>
           <h4 class="text-xl font-bold text-gray-900 mb-3">Campeonato Nacional 2024</h4>
           <p class="text-gray-600 text-lg">Liga Interuniversitaria de Fútbol, con invicto de 12 partidos y premio al fair play.</p>
         </div>
         <div class="p-6">
           <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
-            <i data-feather="medal" class="w-10 h-10 text-white"></i>
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
           </div>
           <h4 class="text-xl font-bold text-gray-900 mb-3">Subcampeonato Nacional 2025</h4>
           <p class="text-gray-600 text-lg">Torneo Nacional de Tochito Femenino, destacando en estrategia y liderazgo femenino.</p>
         </div>
         <div class="p-6">
           <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
-            <i data-feather="users" class="w-10 h-10 text-white"></i>
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+            </svg>
           </div>
           <h4 class="text-xl font-bold text-gray-900 mb-3">+75 Atletas Formados</h4>
           <p class="text-gray-600 text-lg">En programas integrales con becas deportivas y certificación en coaching mental.</p>

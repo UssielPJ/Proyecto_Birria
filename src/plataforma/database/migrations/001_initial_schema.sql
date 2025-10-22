@@ -238,7 +238,6 @@ CREATE TABLE IF NOT EXISTS classes (
     FOREIGN KEY (period_id) REFERENCES periods(id),
     FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
-
 -- Insert sample data
 INSERT INTO careers (name, code, description, duration_semesters, total_credits, modality) VALUES
 ('Ingeniería en Sistemas Computacionales', 'ISC', 'Carrera enfocada en el desarrollo de sistemas de información y tecnologías computacionales', 9, 260, 'presencial'),
@@ -250,8 +249,3 @@ INSERT INTO periods (name, start_date, end_date, year, status) VALUES
 ('Enero - Junio 2024', '2024-01-15', '2024-06-15', 2024, 'finished'),
 ('Agosto - Diciembre 2024', '2024-08-15', '2024-12-15', 2024, 'active'),
 ('Enero - Junio 2025', '2025-01-15', '2025-06-15', 2025, 'upcoming');
-
--- Insertar un usuario administrador por defecto
-INSERT INTO users (name, email, password, role) VALUES
-('Admin', 'admin@utec.edu', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
--- La contraseña es 'password'
