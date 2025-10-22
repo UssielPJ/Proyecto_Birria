@@ -2,43 +2,42 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 $role = $_SESSION['user']['roles'][0] ?? 'student';
-$menu = [];
+  $menu = [];
 
-if ($role === 'admin') {
-    // 🔹 Admin: agregamos navegación para Cohortes y Clases
-    $menu = [
-        // Panel
-        ['href' => '/src/plataforma/admin',                         'icon' => 'home',        'text' => 'Panel'],
+  if ($role === 'admin') {
+      // 🔹 Admin: agregamos navegación para Cohortes y Clases
+      $menu = [
+      // Panel principal
+      ['href' => '/src/plataforma/app/admin/',          'icon' => 'home',        'text' => 'Panel'],
 
-        // Personas
-        ['href' => '/src/plataforma/app/admin/students',            'icon' => 'users',       'text' => 'Estudiantes'],
-        ['href' => '/src/plataforma/app/admin/teachers',            'icon' => 'user-plus',   'text' => 'Profesores'],
+      // Personas
+      ['href' => '/src/plataforma/app/admin/students',           'icon' => 'users',       'text' => 'Estudiantes'],
+      ['href' => '/src/plataforma/app/admin/teachers',           'icon' => 'user-plus',   'text' => 'Profesores'],
 
-        // Cohortes (nuevo flujo)
-        ['href' => '/src/plataforma/app/admin/carreras',            'icon' => 'layers',      'text' => 'Carreras'],
-        ['href' => '/src/plataforma/app/admin/semestres',           'icon' => 'hash',        'text' => 'Semestres'],
-        ['href' => '/src/plataforma/app/admin/grupos-semestre',     'icon' => 'grid',        'text' => 'Grupos (Cohorte)'],
-        ['href' => '/src/plataforma/app/admin/asignar-grupo',       'icon' => 'user-check',  'text' => 'Asignar a Grupo'],
+      // Cohortes y organización académica
+      ['href' => '/src/plataforma/app/admin/careers',            'icon' => 'layers',      'text' => 'Carreras'],
+      ['href' => '/src/plataforma/app/admin/semesters',          'icon' => 'hash',        'text' => 'Semestres'],
+      ['href' => '/src/plataforma/app/admin/groups',             'icon' => 'grid',        'text' => 'Grupos (Cohorte)'],
+      ['href' => '/src/plataforma/app/admin/group_assignments',  'icon' => 'user-check',  'text' => 'Asignar a Grupo'],
 
-        // Catálogos académicos
-        ['href' => '/src/plataforma/app/admin/materias',            'icon' => 'book-open',   'text' => 'Materias'],
-        ['href' => '/src/plataforma/app/admin/salones',             'icon' => 'layout',      'text' => 'Salones'],
-        ['href' => '/src/plataforma/app/admin/periodos',            'icon' => 'calendar',    'text' => 'Periodos'],
+      // Clases y estructura académica
+      ['href' => '/src/plataforma/app/admin/classes',            'icon' => 'layers',      'text' => 'Clases'],
+      ['href' => '/src/plataforma/app/admin/subjects',           'icon' => 'book-open',   'text' => 'Materias'],
+      ['href' => '/src/plataforma/app/admin/rooms',              'icon' => 'layout',      'text' => 'Salones'],
+      ['href' => '/src/plataforma/app/admin/periods',            'icon' => 'calendar',    'text' => 'Periodos'],
+      ['href' => '/src/plataforma/app/admin/schedule',           'icon' => 'clock',       'text' => 'Horarios'],
 
-        // Clases (oferta por materia/periodo, distinto a cohorte)
-        ['href' => '/src/plataforma/app/admin/grupos',              'icon' => 'layers',      'text' => 'Grupos (Clases)'],
-        ['href' => '/src/plataforma/app/admin/horarios',            'icon' => 'clock',       'text' => 'Horarios'],
+      // Operación escolar
+      ['href' => '/src/plataforma/app/admin/grades',             'icon' => 'award',       'text' => 'Calificaciones'],
+      ['href' => '/src/plataforma/app/admin/scholarships',       'icon' => 'gift',        'text' => 'Becas'],
+      ['href' => '/src/plataforma/app/admin/surveys',            'icon' => 'clipboard',   'text' => 'Encuestas'],
+      ['href' => '/src/plataforma/app/admin/payments',           'icon' => 'dollar-sign', 'text' => 'Pagos'],
 
-        // Operación escolar
-        ['href' => '/src/plataforma/app/admin/grades',              'icon' => 'award',       'text' => 'Calificaciones'],
-        ['href' => '/src/plataforma/app/admin/scholarships',        'icon' => 'gift',        'text' => 'Becas'],
-        ['href' => '/src/plataforma/app/admin/surveys',             'icon' => 'clipboard',   'text' => 'Encuestas'],
-        ['href' => '/src/plataforma/app/admin/payments',            'icon' => 'dollar-sign', 'text' => 'Pagos'],
+      // Sistema y comunicación
+      ['href' => '/src/plataforma/app/admin/announcements',      'icon' => 'bell',        'text' => 'Anuncios'],
+      ['href' => '/src/plataforma/app/admin/settings',           'icon' => 'settings',    'text' => 'Configuración'],
+  ];
 
-        // Sistema
-        ['href' => '/src/plataforma/app/admin/announcements',       'icon' => 'bell',        'text' => 'Anuncios'],
-        ['href' => '/src/plataforma/app/admin/settings',            'icon' => 'settings',    'text' => 'Configuración'],
-    ];
 } elseif ($role === 'student') {
     $menu = [
         ['href' => '/src/plataforma/app',                   'icon' => 'home',       'text' => 'Panel'],
