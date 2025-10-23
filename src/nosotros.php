@@ -12,7 +12,6 @@
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-<script src="https://unpkg.com/feather-icons"></script>
 <!-- Vanta para fondo único en hero -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
@@ -1249,7 +1248,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div>
                           <div class="text-3xl font-bold text-[var(--ut-green-700)] leading-none">2025</div>
-                          <div class="text-sm text-gray-500 font-medium">Futuro</div>
+                          <div class="text-sm text-gray-500 font-medium">Actual</div>
                         </div>
                       </div>
                       <div class="text-right">
@@ -1258,10 +1257,10 @@ document.addEventListener('DOMContentLoaded', function() {
                       </div>
                     </div>
 
-                    <h4 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">Liderazgo Sostenible</h4>
+                    <h4 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">Liderazgo Sostenible Consolidado</h4>
 
                     <p class="text-gray-700 leading-relaxed mb-6">
-                      Reconocimiento como la universidad tecnológica #1 en innovación educativa sostenible por el QS World University Rankings. Lanzamiento de campus carbono neutral y programas especializados en energías renovables para el futuro.
+                      Reconocimiento como la universidad tecnológica #1 en innovación educativa sostenible por el QS World University Rankings en octubre 2025. Operaciones en campus carbono neutral y programas especializados en energías renovables implementados con éxito.
                     </p>
 
                     <div class="grid grid-cols-3 gap-4 mb-6">
@@ -1282,7 +1281,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="flex flex-wrap gap-2">
                       <span class="px-3 py-1 bg-[var(--ut-green-100)] text-[var(--ut-green-700)] text-xs font-semibold rounded-full">Sostenible</span>
                       <span class="px-3 py-1 bg-lime-100 text-lime-700 text-xs font-semibold rounded-full">Verde</span>
-                      <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">Futuro</span>
+                      <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">Consolidado</span>
                     </div>
                   </div>
                 </div>
@@ -1854,7 +1853,7 @@ document.head.appendChild(style);
       </div>
     </div>
 
-    <!-- Proyectos Destacados - Expandido con más detalles -->
+    <!-- Proyectos Destacados - Expandido con más detalles realistas -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
       <div class="bg-white rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-500 relative" data-aos="fade-up">
         <div class="relative overflow-hidden">
@@ -1866,7 +1865,7 @@ document.head.appendChild(style);
         </div>
         <div class="p-8">
           <h3 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">Proyectos de Tecnología Avanzada</h3>
-          <p class="text-gray-600 mb-6 leading-relaxed">Soluciones innovadoras en robótica colaborativa, IoT industrial y IA predictiva desarrolladas por futuros ingenieros, con prototipos funcionales probados en entornos reales y potencial de patentes internacionales.</p>
+          <p class="text-gray-600 mb-6 leading-relaxed">Soluciones innovadoras como laboratorios autónomos impulsados por IA (inspirados en proyectos de U of T), robots de reconocimiento facial y sistemas IoT para monitoreo predictivo en entornos industriales, desarrollados por futuros ingenieros con prototipos probados en escenarios reales y potencial para patentes internacionales.</p>
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center text-sm text-gray-500">
               <i data-feather="users" class="w-5 h-5 mr-2 text-green-600"></i>
@@ -1877,9 +1876,9 @@ document.head.appendChild(style);
               4.8/5 Calificación
             </div>
           </div>
-          <button class="w-full bg-gradient-to-r from-green-600 to-emerald-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:from-green-700 hover:to-emerald-800 transform hover:scale-105">
+          <a href="proyectos-tecnologia.php" class="w-full block bg-gradient-to-r from-green-600 to-emerald-700 text-white py-3 rounded-xl font-semibold text-center transition-all duration-300 hover:from-green-700 hover:to-emerald-800 transform hover:scale-105">
             Explorar Detalles
-          </button>
+          </a>
         </div>
       </div>
       
@@ -1893,7 +1892,7 @@ document.head.appendChild(style);
         </div>
         <div class="p-8">
           <h3 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">Mecatrónica y Automatización Industrial</h3>
-          <p class="text-gray-600 mb-6 leading-relaxed">Sistemas automatizados, brazos robóticos y líneas de producción inteligentes creados por estudiantes de mecatrónica, integrando sensores IoT y control por visión artificial para optimización energética en la industria 4.0.</p>
+          <p class="text-gray-600 mb-6 leading-relaxed">Sistemas automatizados como routers CNC mini para industria y escuelas (proyectos universitarios reales), brazos robóticos con control por visión artificial y líneas de producción inteligentes integrando sensores IoT para optimización energética en la industria 4.0.</p>
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center text-sm text-gray-500">
               <i data-feather="cpu" class="w-5 h-5 mr-2 text-blue-600"></i>
@@ -1904,9 +1903,9 @@ document.head.appendChild(style);
               4.9/5 Calificación
             </div>
           </div>
-          <button class="w-full bg-gradient-to-r from-blue-600 to-cyan-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:from-blue-700 hover:to-cyan-800 transform hover:scale-105">
+          <a href="proyectos-mecatronica.php" class="w-full block bg-gradient-to-r from-blue-600 to-cyan-700 text-white py-3 rounded-xl font-semibold text-center transition-all duration-300 hover:from-blue-700 hover:to-cyan-800 transform hover:scale-105">
             Explorar Detalles
-          </button>
+          </a>
         </div>
       </div>
       
@@ -1920,7 +1919,7 @@ document.head.appendChild(style);
         </div>
         <div class="p-8">
           <h3 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">Innovación Empresarial y Startups</h3>
-          <p class="text-gray-600 mb-6 leading-relaxed">Modelos de negocio disruptivos, apps fintech y plataformas de e-commerce sostenible desarrollados por futuros empresarios, con validación de mercado y pitch a inversores reales en colaboración con INCmty.</p>
+          <p class="text-gray-600 mb-6 leading-relaxed">Modelos de negocio disruptivos como plataformas e-commerce sostenibles (inspirados en startups YC 2025), apps fintech con IA para pagos inteligentes y marketplaces para experiencias digitales, desarrollados por futuros empresarios con validación de mercado y pitch a inversores reales en colaboración con INCmty.</p>
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center text-sm text-gray-500">
               <i data-feather="trending-up" class="w-5 h-5 mr-2 text-purple-600"></i>
@@ -1931,9 +1930,9 @@ document.head.appendChild(style);
               4.7/5 Calificación
             </div>
           </div>
-          <button class="w-full bg-gradient-to-r from-purple-600 to-pink-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:from-purple-700 hover:to-pink-800 transform hover:scale-105">
+          <a href="proyectos-startups.php" class="w-full block bg-gradient-to-r from-purple-600 to-pink-700 text-white py-3 rounded-xl font-semibold text-center transition-all duration-300 hover:from-purple-700 hover:to-pink-800 transform hover:scale-105">
             Explorar Detalles
-          </button>
+          </a>
         </div>
       </div>
     </div>
