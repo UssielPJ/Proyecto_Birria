@@ -47,6 +47,13 @@ use App\Controllers\CapturistaAlumnosController;
 use App\Controllers\CapturistaInscripcionesController;
 use App\Controllers\CapturistaReportesController;
 use App\Controllers\SolicitudesController;
+use App\Controllers\GroupsController;
+use App\Controllers\GroupAssignmentsController;
+use App\Controllers\ClassesController;
+use App\Controllers\RoomsController;
+use App\Controllers\PeriodsController;
+use App\Controllers\CareersController;
+use App\Controllers\SemestersController;
 
 $router = new Router();
 
@@ -160,6 +167,56 @@ $map('GET', '/src/plataforma/app/admin/teachers/edit/{id}', [new TeachersControl
 $map('POST', '/src/plataforma/app/admin/teachers/update/{id}', [new TeachersController, 'update']);
 $map('POST', '/src/plataforma/app/admin/teachers/delete/{id}', [new TeachersController, 'delete']);
 $map('GET', '/src/plataforma/app/admin/schedule', [new ScheduleController, 'index']);
+
+/* ========== Admin Groups Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/groups',               [new GroupsController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/groups/create',        [new GroupsController, 'create']);
+$map('POST', '/src/plataforma/app/admin/groups/store',         [new GroupsController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/groups/edit/{id}',     [new GroupsController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/groups/update/{id}',   [new GroupsController, 'update']);
+$map('POST', '/src/plataforma/app/admin/groups/delete/{id}',   [new GroupsController, 'delete']);
+
+/*========== Admin Groups assignments Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/group_assignments',        [new GroupAssignmentsController, 'index']);
+$map('POST', '/src/plataforma/app/admin/group_assignments/assign', [new GroupAssignmentsController, 'assign']);
+$map('POST', '/src/plataforma/app/admin/group_assignments/unassign',[new GroupAssignmentsController, 'unassign']);
+
+/*  ======== Admin Classes Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/classes',             [new ClassesController, 'index']);
+$map('POST', '/src/plataforma/app/admin/classes/store',       [new ClassesController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/classes/edit/{id}',   [new ClassesController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/classes/update/{id}', [new ClassesController, 'update']);
+$map('POST', '/src/plataforma/app/admin/classes/delete/{id}', [new ClassesController, 'delete']);
+
+/*  ======== Admin Rooms Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/rooms',             [new RoomsController, 'index']);
+$map('POST', '/src/plataforma/app/admin/rooms/store',       [new RoomsController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/rooms/edit/{id}',   [new RoomsController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/rooms/update/{id}', [new RoomsController, 'update']);
+$map('POST', '/src/plataforma/app/admin/rooms/delete/{id}', [new RoomsController, 'delete']);
+
+/*  ========= Admin Periods Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/periods',             [new PeriodsController, 'index']);
+$map('POST', '/src/plataforma/app/admin/periods/store',       [new PeriodsController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/periods/edit/{id}',   [new PeriodsController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/periods/update/{id}', [new PeriodsController, 'update']);
+$map('POST', '/src/plataforma/app/admin/periods/delete/{id}', [new PeriodsController, 'delete']);
+
+/* ========= Admin Careers Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/careers',               [new CareersController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/careers/create',        [new CareersController, 'create']);
+$map('POST', '/src/plataforma/app/admin/careers/store',         [new CareersController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/careers/edit/{id}',     [new CareersController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/careers/update/{id}',   [new CareersController, 'update']);
+$map('POST', '/src/plataforma/app/admin/careers/delete/{id}',   [new CareersController, 'delete']);
+
+/* ========= Admin Semesters Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/semesters',               [new SemestersController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/semesters/create',        [new SemestersController, 'create']);
+$map('POST', '/src/plataforma/app/admin/semesters/store',         [new SemestersController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/semesters/edit/{id}',     [new SemestersController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/semesters/update/{id}',   [new SemestersController, 'update']);
+$map('POST', '/src/plataforma/app/admin/semesters/delete/{id}',   [new SemestersController, 'delete']);
 
 /* ========== Admin Schedule Routes ========== */
 $map('GET',  '/src/plataforma/app/admin/schedule',            [new \App\Controllers\ScheduleController,'index']);
