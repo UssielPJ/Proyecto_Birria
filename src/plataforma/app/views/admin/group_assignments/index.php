@@ -1,271 +1,298 @@
 <?php
-global $pdo;
-$conn = $pdo;
+// Opcional: protección (igual que otras vistas)
+if (session_status() === PHP_SESSION_NONE) session_start();
+$roles = $_SESSION['user']['roles'] ?? [];
+if (!in_array('admin', $roles ?? [], true)) { header('Location: /src/plataforma/login'); exit; }
 
-/* ===== Parámetros ===== */
-$buscar       = $_GET['q'] ?? '';
-$group        = $_GET['group'] ?? '';
-$status       = $_GET['status'] ?? '';
-$page         = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit        = 10;
-$offset       = ($page - 1) * $limit;
+/**
+ * Variables esperadas desde el controlador:
+ * - $semestres   : array [ ['id'=>..,'clave'=>..], ... ]
+ * - $grupos      : array [ ['id','codigo','titulo','capacidad','inscritos'], ... ] (solo si hay semestre seleccionado)
+ * - $disponibles : array [ ['user_id','matricula','nombre','apellido_paterno','apellido_materno'], ... ] (si hay semestre)
+ * - $asignados   : array [ ['user_id','matricula','nombre','apellido_paterno','apellido_materno'], ... ] (si hay grupo)
+ * - $semestre_id : int
+ * - $grupo_id    : int
+ */
 
-/* ===== WHERE dinámico ===== */
-$where  = [];
-$params = [];
-
-if ($buscar !== '') {
-    $where[] = "(u.name LIKE :buscar OR u.email LIKE :buscar OR g.name LIKE :buscar)";
-    $params[':buscar'] = "%{$buscar}%";
+// Buscar meta del grupo seleccionado para mostrar capacidad/inscritos
+$grupoMeta = null;
+if (!empty($grupo_id) && !empty($grupos)) {
+  foreach ($grupos as $g) {
+    if ((int)$g['id'] === (int)$grupo_id) { $grupoMeta = $g; break; }
+  }
 }
 
-if ($group !== '') {
-    $where[] = "ga.group_id = :group";
-    $params[':group'] = (int)$group;
-}
-
-if ($status !== '') {
-    $where[] = "ga.status = :status";
-    $params[':status'] = $status;
-}
-
-$whereClause = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
-
-/* ===== Total ===== */
-$queryTotal = "SELECT COUNT(*) AS total FROM group_assignments ga {$whereClause}";
-$stmt = $conn->prepare($queryTotal);
-$stmt->execute($params);
-$total = (int)$stmt->fetch(PDO::FETCH_ASSOC)['total'];
-$totalPages = max(1, (int)ceil($total / $limit));
-
-/* ===== Listado ===== */
-$query = "
-    SELECT
-        ga.id, ga.assigned_at, ga.status,
-        u.id as student_id, u.name as student_name, u.email as student_email,
-        g.id as group_id, g.name as group_name,
-        c.name as career_name,
-        s.name as semester_name
-    FROM group_assignments ga
-    LEFT JOIN users u ON ga.student_id = u.id
-    LEFT JOIN groups g ON ga.group_id = g.id
-    LEFT JOIN careers c ON g.career_id = c.id
-    LEFT JOIN semesters s ON g.semester_id = s.id
-    {$whereClause}
-    ORDER BY ga.assigned_at DESC
-    LIMIT {$offset}, {$limit}
-";
-$stmt = $conn->prepare($query);
-$stmt->execute($params);
-$assignments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-/* ===== Filtros ===== */
-$groups = $conn->query("SELECT id, name FROM groups ORDER BY name ASC")->fetchAll(PDO::FETCH_ASSOC);
+// Flash message (estilo consistente con tus otras vistas)
+if (!empty($_SESSION['flash'])):
+  $type = $_SESSION['flash']['type'] ?? 'info';
+  $msg  = $_SESSION['flash']['msg']  ?? '';
+  $classes = [
+    'success' => 'bg-green-50 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-200 dark:border-green-800',
+    'error'   => 'bg-red-50 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-200 dark:border-red-800',
+    'info'    => 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-200 dark:border-blue-800',
+  ];
+  $cls = $classes[$type] ?? $classes['info'];
 ?>
+  <div id="flash-msg" class="mx-6 mt-4 mb-0 border rounded-lg px-4 py-3 <?= $cls; ?>">
+    <div class="flex items-start gap-2">
+      <i data-feather="<?= $type === 'success' ? 'check-circle' : ($type === 'error' ? 'alert-triangle' : 'info') ?>"></i>
+      <div class="text-sm font-medium"><?= htmlspecialchars($msg) ?></div>
+    </div>
+  </div>
+  <script>
+    setTimeout(() => {
+      const el = document.getElementById('flash-msg');
+      if (el) el.style.display = 'none';
+    }, 3500);
+  </script>
+  <?php unset($_SESSION['flash']); ?>
+<?php endif; ?>
 
 <main class="p-6">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <div>
-            <h1 class="text-2xl font-bold mb-2">Asignaciones a Grupos</h1>
-            <p class="text-neutral-500 dark:text-neutral-400">Administra las asignaciones de estudiantes a grupos.</p>
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+    <div>
+      <h1 class="text-2xl font-bold">Asignar alumnos a grupos</h1>
+      <p class="text-neutral-500 dark:text-neutral-400">Selecciona un semestre y un grupo para gestionar asignaciones.</p>
+    </div>
+    <a href="/src/plataforma/app/admin/groups"
+       class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2 w-full sm:w-auto justify-center">
+      <i data-feather="arrow-left"></i> Volver a Grupos
+    </a>
+  </div>
+
+  <!-- Filtros -->
+  <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-4 mb-6">
+    <form class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <!-- Semestre -->
+      <div>
+        <label for="semestre_id" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Semestre</label>
+        <select name="semestre_id" id="semestre_id"
+                class="block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 focus:border-primary-500 focus:ring-primary-500">
+          <option value="">Selecciona semestre…</option>
+          <?php foreach ($semestres as $s): ?>
+            <option value="<?= (int)$s['id'] ?>" <?= (string)$semestre_id === (string)$s['id'] ? 'selected' : '' ?>>
+              <?= htmlspecialchars($s['clave']) ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
+      <!-- Grupo (solo si hay semestre) -->
+      <div>
+        <label for="grupo_id" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Grupo</label>
+        <select name="grupo_id" id="grupo_id"
+                class="block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 focus:border-primary-500 focus:ring-primary-500"
+                <?= empty($semestre_id) ? 'disabled' : '' ?>>
+          <option value=""><?= empty($semestre_id) ? 'Selecciona primero un semestre' : 'Selecciona grupo…' ?></option>
+          <?php if (!empty($grupos)): ?>
+            <?php foreach ($grupos as $g): ?>
+              <?php
+                $label = trim(($g['titulo'] ?? '').($g['codigo'] ? ' ('.$g['codigo'].')' : ''));
+              ?>
+              <option value="<?= (int)$g['id'] ?>" <?= (string)$grupo_id === (string)$g['id'] ? 'selected' : '' ?>>
+                <?= htmlspecialchars($label) ?>
+              </option>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </select>
+      </div>
+
+      <!-- Botón filtrar (para móviles / fallback) -->
+      <div class="flex items-end">
+        <button type="submit"
+                class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2 w-full sm:w-auto justify-center">
+          <i data-feather="filter"></i> Aplicar
+        </button>
+      </div>
+    </form>
+
+    <!-- Resumen del grupo -->
+    <?php if ($grupoMeta): ?>
+      <div class="mt-4 flex flex-wrap items-center gap-3 text-sm">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200">
+          <i data-feather="users"></i>
+          Capacidad: <b><?= (int)$grupoMeta['capacidad'] ?></b>
+        </span>
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200">
+          <i data-feather="user-check"></i>
+          Inscritos: <b><?= (int)$grupoMeta['inscritos'] ?></b>
+        </span>
+      </div>
+    <?php endif; ?>
+  </div>
+
+  <!-- Paneles -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Disponibles -->
+    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold">Alumnos disponibles</h2>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400"><?= count($disponibles ?? []) ?> encontrados</span>
+      </div>
+
+      <?php if (empty($semestre_id)): ?>
+        <div class="p-4 text-sm text-neutral-600 dark:text-neutral-300">
+          Selecciona un <b>semestre</b> para ver alumnos disponibles.
         </div>
-        <a href="/src/plataforma/app/admin/group_assignments/create"
-           class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2 w-full sm:w-auto justify-center">
-            <i data-feather="plus"></i>
-            Nueva Asignación
-        </a>
-    </div>
+      <?php else: ?>
+        <form method="POST" action="/src/plataforma/app/admin/group_assignments/assign" class="space-y-3" onsubmit="return confirmAssign()">
+          <input type="hidden" name="semestre_id" value="<?= (int)$semestre_id ?>">
+          <input type="hidden" name="grupo_id" value="<?= (int)$grupo_id ?>">
 
-    <!-- Filtros y búsqueda -->
-    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-4 mb-6">
-        <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div>
-                <label for="q" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Buscar</label>
-                <div class="relative">
-                    <input type="text" name="q" id="q" value="<?= htmlspecialchars($buscar) ?>"
-                           placeholder="Estudiante, email o grupo…"
-                           class="block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 pr-10 focus:border-primary-500 focus:ring-primary-500">
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                        <i data-feather="search" class="h-5 w-5 text-neutral-400"></i>
-                    </div>
-                </div>
+          <div class="relative">
+            <input type="text" id="filtro_disponibles" placeholder="Filtrar por nombre o matrícula…"
+                   class="w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 pr-10 focus:border-primary-500 focus:ring-primary-500 text-sm">
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <i data-feather="search" class="h-5 w-5 text-neutral-400"></i>
             </div>
+          </div>
 
-            <div>
-                <label for="group" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Grupo</label>
-                <select name="group" id="group"
-                        class="block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 focus:border-primary-500 focus:ring-primary-500">
-                    <option value="">Todos los grupos</option>
-                    <?php foreach ($groups as $g): ?>
-                        <option value="<?= $g['id'] ?>" <?= $group == $g['id'] ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($g['name']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <div>
-                <label for="status" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Estado</label>
-                <select name="status" id="status"
-                        class="block w-full rounded-md border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 focus:border-primary-500 focus:ring-primary-500">
-                    <option value="">Todos los estados</option>
-                    <option value="active" <?= $status === 'active' ? 'selected' : '' ?>>Activo</option>
-                    <option value="inactive" <?= $status === 'inactive' ? 'selected' : '' ?>>Inactivo</option>
-                </select>
-            </div>
-
-            <div class="flex items-end">
-                <button type="submit" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 inline-flex items-center gap-2 w-full sm:w-auto justify-center">
-                    <i data-feather="filter"></i>
-                    Filtrar
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Tabla de asignaciones -->
-    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm overflow-hidden">
-        <div class="overflow-x-auto">
+          <div class="max-h-96 overflow-auto border border-neutral-200 dark:border-neutral-700 rounded-lg">
             <table class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
-                <thead class="bg-neutral-50 dark:bg-neutral-800">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Estudiante</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Grupo</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Carrera</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Semestre</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Fecha de Asignación</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Estado</th>
-                        <th class="relative px-6 py-3"><span class="sr-only">Acciones</span></th>
+              <thead class="bg-neutral-50 dark:bg-neutral-800 sticky top-0">
+                <tr>
+                  <th class="px-4 py-2 w-10">
+                    <input type="checkbox" id="chk_all">
+                  </th>
+                  <th class="px-4 py-2 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Alumno</th>
+                  <th class="px-4 py-2 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Matrícula</th>
+                </tr>
+              </thead>
+              <tbody id="tbody_disponibles" class="bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700">
+                <?php if (!empty($disponibles)): ?>
+                  <?php foreach ($disponibles as $a): ?>
+                    <?php
+                      $nombre = trim(($a['apellido_paterno'] ?? '').' '.($a['apellido_materno'] ?? '').' '.($a['nombre'] ?? ''));
+                    ?>
+                    <tr class="fila-disponible">
+                      <td class="px-4 py-2">
+                        <input type="checkbox" name="alumnos[]" value="<?= (int)$a['user_id'] ?>" class="chk_item">
+                      </td>
+                      <td class="px-4 py-2">
+                        <div class="text-sm font-medium text-neutral-900 dark:text-neutral-100"><?= htmlspecialchars($nombre) ?></div>
+                      </td>
+                      <td class="px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300"><?= htmlspecialchars($a['matricula'] ?? '') ?></td>
                     </tr>
-                </thead>
-                <tbody class="bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700">
-                    <?php foreach ($assignments as $assignment): ?>
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                                    <?= htmlspecialchars($assignment['student_name'] ?? 'N/A') ?>
-                                </div>
-                                <div class="text-sm text-neutral-500 dark:text-neutral-400">
-                                    <?= htmlspecialchars($assignment['student_email'] ?? '') ?>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($assignment['group_name'] ?? '') ?>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($assignment['career_name'] ?? '') ?>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= htmlspecialchars($assignment['semester_name'] ?? '') ?>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                                <?= date('d/m/Y', strtotime($assignment['assigned_at'])) ?>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full
-                                    <?php if ($assignment['status'] === 'active'): ?>
-                                        bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
-                                    <?php else: ?>
-                                        bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
-                                    <?php endif; ?>">
-                                    <?= $assignment['status'] === 'active' ? 'Activo' : 'Inactivo' ?>
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="flex justify-end gap-3">
-                                    <a href="/src/plataforma/app/admin/group_assignments/<?= (int)$assignment['id'] ?>/edit"
-                                       class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">Editar</a>
-                                    <button onclick="confirmDelete(<?= (int)$assignment['id'] ?>)"
-                                            class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Eliminar</button>
-                                </div>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-
-                    <?php if (empty($assignments)): ?>
-                        <tr>
-                            <td colspan="7" class="px-6 py-4 text-center text-neutral-500 dark:text-neutral-400">
-                                No se encontraron asignaciones
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <tr>
+                    <td colspan="3" class="px-4 py-3 text-sm text-neutral-500 dark:text-neutral-400">No hay alumnos disponibles sin grupo en este semestre.</td>
+                  </tr>
+                <?php endif; ?>
+              </tbody>
             </table>
-        </div>
+          </div>
 
-        <!-- Paginación -->
-        <?php if ($totalPages > 1): ?>
-        <div class="bg-neutral-50 dark:bg-neutral-800 px-4 py-3 flex items-center justify-between border-t border-neutral-200 dark:border-neutral-700 sm:px-6">
-            <div class="flex-1 flex justify-between sm:hidden">
-                <?php if ($page > 1): ?>
-                    <a href="?page=<?= $page - 1 ?>&q=<?= urlencode($buscar) ?>&group=<?= urlencode($group) ?>&status=<?= urlencode($status) ?>" 
-                       class="relative inline-flex items-center px-4 py-2 border border-neutral-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50">
-                        Anterior
-                    </a>
-                <?php endif; ?>
-                <?php if ($page < $totalPages): ?>
-                    <a href="?page=<?= $page + 1 ?>&q=<?= urlencode($buscar) ?>&group=<?= urlencode($group) ?>&status=<?= urlencode($status) ?>" 
-                       class="ml-3 relative inline-flex items-center px-4 py-2 border border-neutral-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50">
-                        Siguiente
-                    </a>
-                <?php endif; ?>
-            </div>
-            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                <div>
-                    <p class="text-sm text-neutral-700 dark:text-neutral-400">
-                        Mostrando 
-                        <span class="font-medium"><?= $total ? ($offset + 1) : 0 ?></span>
-                        a 
-                        <span class="font-medium"><?= min($offset + $limit, $total) ?></span>
-                        de 
-                        <span class="font-medium"><?= $total ?></span>
-                        resultados
-                    </p>
-                </div>
-                <div>
-                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                        <?php if ($page > 1): ?>
-                            <a href="?page=<?= $page - 1 ?>&q=<?= urlencode($buscar) ?>&group=<?= urlencode($group) ?>&status=<?= urlencode($status) ?>" 
-                               class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-sm font-medium text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-600">
-                                <span class="sr-only">Previous</span>
-                                <i data-feather="chevron-left" class="h-5 w-5"></i>
-                            </a>
-                        <?php endif; ?>
-
-                        <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
-                            <a href="?page=<?= $i ?>&q=<?= urlencode($buscar) ?>&group=<?= urlencode($group) ?>&status=<?= urlencode($status) ?>" 
-                               class="relative inline-flex items-center px-4 py-2 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-sm font-medium <?= $i === $page ? 'text-primary-600 dark:text-primary-400' : 'text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-600' ?>">
-                                <?= $i ?>
-                            </a>
-                        <?php endfor; ?>
-
-                        <?php if ($page < $totalPages): ?>
-                            <a href="?page=<?= $page + 1 ?>&q=<?= urlencode($buscar) ?>&group=<?= urlencode($group) ?>&status=<?= urlencode($status) ?>" 
-                               class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-sm font-medium text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-600">
-                                <span class="sr-only">Next</span>
-                                <i data-feather="chevron-right" class="h-5 w-5"></i>
-                            </a>
-                        <?php endif; ?>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
+          <div class="flex items-center justify-end gap-2 pt-2">
+            <button type="submit"
+                    class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2"
+                    <?= empty($grupo_id) ? 'disabled title="Selecciona un grupo"' : '' ?>>
+              <i data-feather="user-plus"></i> Asignar seleccionados
+            </button>
+          </div>
+        </form>
+      <?php endif; ?>
     </div>
+
+    <!-- Asignados -->
+    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold">Alumnos asignados</h2>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400"><?= count($asignados ?? []) ?> en el grupo</span>
+      </div>
+
+      <?php if (empty($grupo_id)): ?>
+        <div class="p-4 text-sm text-neutral-600 dark:text-neutral-300">
+          Selecciona un <b>grupo</b> para ver y quitar alumnos asignados.
+        </div>
+      <?php else: ?>
+        <div class="overflow-x-auto border border-neutral-200 dark:border-neutral-700 rounded-lg">
+          <table class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
+            <thead class="bg-neutral-50 dark:bg-neutral-800">
+              <tr>
+                <th class="px-4 py-2 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Alumno</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Matrícula</th>
+                <th class="px-4 py-2"></th>
+              </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700">
+              <?php if (!empty($asignados)): ?>
+                <?php foreach ($asignados as $a): ?>
+                  <?php
+                    $nombre = trim(($a['apellido_paterno'] ?? '').' '.($a['apellido_materno'] ?? '').' '.($a['nombre'] ?? ''));
+                  ?>
+                  <tr>
+                    <td class="px-4 py-2">
+                      <div class="text-sm font-medium text-neutral-900 dark:text-neutral-100"><?= htmlspecialchars($nombre) ?></div>
+                    </td>
+                    <td class="px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300"><?= htmlspecialchars($a['matricula'] ?? '') ?></td>
+                    <td class="px-4 py-2 text-right">
+                      <form method="POST" action="/src/plataforma/app/admin/group_assignments/unassign" class="inline"
+                            onsubmit="return confirm('¿Quitar a este alumno del grupo?');">
+                        <input type="hidden" name="user_id" value="<?= (int)$a['user_id'] ?>">
+                        <input type="hidden" name="grupo_id" value="<?= (int)$grupo_id ?>">
+                        <input type="hidden" name="semestre_id" value="<?= (int)$semestre_id ?>">
+                        <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 inline-flex items-center gap-1">
+                          <i data-feather="user-minus"></i> Quitar
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <tr>
+                  <td colspan="3" class="px-4 py-3 text-sm text-neutral-500 dark:text-neutral-400">Este grupo no tiene alumnos asignados.</td>
+                </tr>
+              <?php endif; ?>
+            </tbody>
+          </table>
+        </div>
+      <?php endif; ?>
+    </div>
+  </div>
 </main>
 
 <script>
-    feather.replace();
+  feather.replace();
 
-    document.querySelectorAll('select[name="group"], select[name="status"]').forEach(select => {
-        select.addEventListener('change', () => {
-            select.closest('form').submit();
-        });
+  // Auto-submit de filtros al cambiar selects
+  const selSem = document.getElementById('semestre_id');
+  const selGru = document.getElementById('grupo_id');
+  if (selSem) selSem.addEventListener('change', () => {
+    // al cambiar semestre, limpia el grupo para evitar confusión
+    if (selGru) selGru.value = '';
+    selSem.form.submit();
+  });
+  if (selGru) selGru.addEventListener('change', () => selGru.form.submit());
+
+  // Filtro local de disponibles
+  const filtro = document.getElementById('filtro_disponibles');
+  const tbody  = document.getElementById('tbody_disponibles');
+  if (filtro && tbody) {
+    filtro.addEventListener('input', () => {
+      const q = filtro.value.toLowerCase();
+      tbody.querySelectorAll('tr.fila-disponible').forEach(tr => {
+        const texto = tr.innerText.toLowerCase();
+        tr.style.display = texto.includes(q) ? '' : 'none';
+      });
     });
+  }
 
-    function confirmDelete(id) {
-        if (confirm('¿Estás seguro de que deseas eliminar esta asignación? Esta acción no se puede deshacer.')) {
-            window.location.href = `/src/plataforma/app/admin/group_assignments/${id}/delete`;
-        }
+  // Seleccionar/Deseleccionar todos
+  const chkAll = document.getElementById('chk_all');
+  if (chkAll && tbody) {
+    chkAll.addEventListener('change', () => {
+      tbody.querySelectorAll('input.chk_item').forEach(chk => { chk.checked = chkAll.checked; });
+    });
+  }
+
+  // Confirmar asignación si no hay grupo seleccionado
+  function confirmAssign() {
+    const gsel = document.querySelector('input[name="grupo_id"]')?.value || document.getElementById('grupo_id')?.value;
+    if (!gsel) {
+      alert('Selecciona un grupo antes de asignar.');
+      return false;
     }
+    return true;
+  }
 </script>

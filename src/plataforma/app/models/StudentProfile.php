@@ -11,7 +11,6 @@ class StudentProfile
     public function __construct(?PDO $pdo = null)
     {
         $this->db = $pdo ?? (new DB())->getPdo();
-
     }
 
     /**
@@ -22,13 +21,17 @@ class StudentProfile
     public function create(array $data): int
     {
         $sql = "INSERT INTO student_profiles (
-                    user_id, matricula, curp, carrera_id, semestre, grupo,
+                    user_id, matricula, curp, carrera_id,
+                    semestre_id, grupo_id,
+                    semestre, grupo,
                     tipo_ingreso, beca_activa, promedio_general,
                     creditos_aprobados, direccion,
                     contacto_emergencia_nombre, contacto_emergencia_telefono,
                     parentesco_emergencia, created_at, updated_at
                 ) VALUES (
-                    :user_id, :matricula, :curp, :carrera_id, :semestre, :grupo,
+                    :user_id, :matricula, :curp, :carrera_id,
+                    :semestre_id, :grupo_id,
+                    :semestre, :grupo,
                     :tipo_ingreso, :beca_activa, :promedio_general,
                     :creditos_aprobados, :direccion,
                     :contacto_emergencia_nombre, :contacto_emergencia_telefono,
@@ -36,22 +39,49 @@ class StudentProfile
                 )";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([
-            ':user_id'                    => $data['user_id'],
-            ':matricula'                  => $data['matricula'],
-            ':curp'                       => $data['curp'],
-            ':carrera_id'                 => $data['carrera_id'],
-            ':semestre'                   => $data['semestre'],
-            ':grupo'                      => $data['grupo'] ?? null,
-            ':tipo_ingreso'               => $data['tipo_ingreso'] ?? 'nuevo',
-            ':beca_activa'                => $data['beca_activa'] ?? 0,
-            ':promedio_general'           => $data['promedio_general'] ?? 0,
-            ':creditos_aprobados'         => $data['creditos_aprobados'] ?? 0,
-            ':direccion'                  => $data['direccion'] ?? null,
-            ':contacto_emergencia_nombre' => $data['contacto_emergencia_nombre'] ?? null,
-            ':contacto_emergencia_telefono' => $data['contacto_emergencia_telefono'] ?? null,
-            ':parentesco_emergencia'      => $data['parentesco_emergencia'] ?? null
-        ]);
+
+        // Normalización segura
+        $carreraId   = isset($data['carrera_id'])   && $data['carrera_id']   !== '' ? (int)$data['carrera_id']   : null;
+        $semestreId  = isset($data['semestre_id'])  && $data['semestre_id']  !== '' ? (int)$data['semestre_id']  : null;
+        $grupoId     = isset($data['grupo_id'])     && $data['grupo_id']     !== '' ? (int)$data['grupo_id']     : null;
+        $semLegacy   = isset($data['semestre'])     && $data['semestre']     !== '' ? (int)$data['semestre']     : null;
+        $grupoLegacy = isset($data['grupo'])        && $data['grupo']        !== '' ? $data['grupo']             : null;
+
+        try {
+            $stmt->execute([
+                ':user_id'                      => (int)$data['user_id'],
+                ':matricula'                    => $data['matricula'],
+                ':curp'                         => $data['curp'],
+                ':carrera_id'                   => $carreraId,
+                ':semestre_id'                  => $semestreId,
+                ':grupo_id'                     => $grupoId,
+                ':semestre'                     => $semLegacy,
+                ':grupo'                        => $grupoLegacy,
+                ':tipo_ingreso'                 => $data['tipo_ingreso'] ?? 'nuevo',
+                ':beca_activa'                  => !empty($data['beca_activa']) ? 1 : 0,
+                ':promedio_general'             => $data['promedio_general'] ?? 0,
+                ':creditos_aprobados'           => $data['creditos_aprobados'] ?? 0,
+                ':direccion'                    => $data['direccion'] ?? null,
+                ':contacto_emergencia_nombre'   => $data['contacto_emergencia_nombre'] ?? null,
+                ':contacto_emergencia_telefono' => $data['contacto_emergencia_telefono'] ?? null,
+                ':parentesco_emergencia'        => $data['parentesco_emergencia'] ?? null,
+            ]);
+        } catch (\PDOException $e) {
+            $info = $stmt->errorInfo();
+            error_log('StudentProfile@create ERROR: ' . $e->getMessage());
+            error_log('SQLSTATE: ' . ($info[0] ?? ''));
+            error_log('DriverCode: ' . ($info[1] ?? ''));
+            error_log('DriverMsg: ' . ($info[2] ?? ''));
+            error_log('BOUND DATA: ' . json_encode([
+                'user_id' => $data['user_id'] ?? null,
+                'matricula' => $data['matricula'] ?? null,
+                'curp' => $data['curp'] ?? null,
+                'carrera_id' => $carreraId,
+                'semestre_id' => $semestreId,
+                'grupo_id' => $grupoId,
+            ]));
+            throw $e;
+        }
 
         return (int)$data['user_id'];
     }
@@ -61,10 +91,12 @@ class StudentProfile
      */
     public function updateByUserId(int $userId, array $data): bool
     {
-        $sql = "UPDATE students_profile SET
+        $sql = "UPDATE student_profiles SET
                     matricula = :matricula,
                     curp = :curp,
                     carrera_id = :carrera_id,
+                    semestre_id = :semestre_id,
+                    grupo_id = :grupo_id,
                     semestre = :semestre,
                     grupo = :grupo,
                     tipo_ingreso = :tipo_ingreso,
@@ -76,24 +108,28 @@ class StudentProfile
                     contacto_emergencia_telefono = :contacto_emergencia_telefono,
                     parentesco_emergencia = :parentesco_emergencia,
                     updated_at = NOW()
-                WHERE user_id = :user_id";
+                WHERE user_id = :user_id
+                LIMIT 1";
 
         $stmt = $this->db->prepare($sql);
+
         return $stmt->execute([
-            ':user_id'                    => $userId,
-            ':matricula'                  => $data['matricula'],
-            ':curp'                       => $data['curp'],
-            ':carrera_id'                 => $data['carrera_id'],
-            ':semestre'                   => $data['semestre'],
-            ':grupo'                      => $data['grupo'] ?? null,
-            ':tipo_ingreso'               => $data['tipo_ingreso'] ?? 'nuevo',
-            ':beca_activa'                => $data['beca_activa'] ?? 0,
-            ':promedio_general'           => $data['promedio_general'] ?? 0,
-            ':creditos_aprobados'         => $data['creditos_aprobados'] ?? 0,
-            ':direccion'                  => $data['direccion'] ?? null,
-            ':contacto_emergencia_nombre' => $data['contacto_emergencia_nombre'] ?? null,
+            ':user_id'                      => (int)$userId,
+            ':matricula'                    => $data['matricula'],
+            ':curp'                         => $data['curp'],
+            ':carrera_id'                   => isset($data['carrera_id']) ? (int)$data['carrera_id'] : null,
+            ':semestre_id'                  => isset($data['semestre_id']) ? (int)$data['semestre_id'] : null,
+            ':grupo_id'                     => isset($data['grupo_id']) ? (int)$data['grupo_id'] : null,
+            ':semestre'                     => isset($data['semestre']) ? (int)$data['semestre'] : null,
+            ':grupo'                        => $data['grupo'] ?? null,
+            ':tipo_ingreso'                 => $data['tipo_ingreso'] ?? 'nuevo',
+            ':beca_activa'                  => !empty($data['beca_activa']) ? 1 : 0,
+            ':promedio_general'             => $data['promedio_general'] ?? 0,
+            ':creditos_aprobados'           => $data['creditos_aprobados'] ?? 0,
+            ':direccion'                    => $data['direccion'] ?? null,
+            ':contacto_emergencia_nombre'   => $data['contacto_emergencia_nombre'] ?? null,
             ':contacto_emergencia_telefono' => $data['contacto_emergencia_telefono'] ?? null,
-            ':parentesco_emergencia'      => $data['parentesco_emergencia'] ?? null
+            ':parentesco_emergencia'        => $data['parentesco_emergencia'] ?? null,
         ]);
     }
 
@@ -125,7 +161,8 @@ class StudentProfile
         $query = "SELECT 
                     u.id, u.email, u.nombre, u.apellido_paterno, u.apellido_materno, u.telefono,
                     u.fecha_nacimiento, u.status, u.created_at,
-                    sp.matricula, sp.curp, sp.carrera_id, sp.semestre, sp.grupo, sp.tipo_ingreso,
+                    sp.matricula, sp.curp, sp.carrera_id, sp.semestre_id, sp.grupo_id,
+                    sp.semestre, sp.grupo, sp.tipo_ingreso,
                     sp.promedio_general, sp.beca_activa
                   FROM users u
                   JOIN student_profiles sp ON sp.user_id = u.id
@@ -160,7 +197,7 @@ class StudentProfile
 
         $stmt = $this->db->prepare($query);
 
-        // Si hay limit/offset se deben bindear como enteros
+        // Bind seguro
         foreach ($params as $k => $v) {
             if (in_array($k, [':limit', ':offset'])) {
                 $stmt->bindValue($k, $v, PDO::PARAM_INT);

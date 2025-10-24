@@ -169,12 +169,12 @@ $map('POST', '/src/plataforma/app/admin/teachers/delete/{id}', [new TeachersCont
 $map('GET', '/src/plataforma/app/admin/schedule', [new ScheduleController, 'index']);
 
 /* ========== Admin Groups Routes ========== */
-$map('GET',  '/src/plataforma/app/admin/groups',               [new GroupsController, 'index']);
 $map('GET',  '/src/plataforma/app/admin/groups/create',        [new GroupsController, 'create']);
 $map('POST', '/src/plataforma/app/admin/groups/store',         [new GroupsController, 'store']);
 $map('GET',  '/src/plataforma/app/admin/groups/edit/{id}',     [new GroupsController, 'edit']);
 $map('POST', '/src/plataforma/app/admin/groups/update/{id}',   [new GroupsController, 'update']);
 $map('POST', '/src/plataforma/app/admin/groups/delete/{id}',   [new GroupsController, 'delete']);
+$map('GET',  '/src/plataforma/app/admin/groups',               [new GroupsController, 'index']);
 
 /*========== Admin Groups assignments Routes ========== */
 $map('GET',  '/src/plataforma/app/admin/group_assignments',        [new GroupAssignmentsController, 'index']);

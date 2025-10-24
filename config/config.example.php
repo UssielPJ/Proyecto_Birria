@@ -2,11 +2,11 @@
 
 return [
   'db' => [
-    'host'    => 'hopper.proxy.rlwy.net',   
-    'port'    => 12717,
+    'host'    => 'shuttle.proxy.rlwy.net',   
+    'port'    => 14430,
     'name'    => 'railway', 
     'user'    => 'root',        
-    'pass'    => 'gwbwvnyEWFatWvxQWSQLIoEftSvdYkwA',            
+    'pass'    => 'kkVCaOrerigVRIIiCdtTYEPFwnDJXCxs',            
     'charset' => 'utf8mb4',
   ],
   'app' => [

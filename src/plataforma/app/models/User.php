@@ -555,4 +555,105 @@ public function generateNumeroEmpleado(): string {
     return str_pad((string)$next, 4, '0', STR_PAD_LEFT); // genera 4 o 5 dígitos, ej. 0100 o 1000
 }
 
+/* =========================
+   Catálogo de CARRERAS
+   Tabla: carreras (id, nombre, iniciales, status)
+   ========================= */
+public function getCarrerasCatalog(): array {
+    $sql = "SELECT id, nombre, iniciales, status
+            FROM carreras
+            WHERE status = 'activa'
+            ORDER BY nombre";
+    $this->db->query($sql);
+    return $this->db->fetchAll();
+}
+
+/* =========================
+   Catálogo de SEMESTRES
+   Tabla: semestres (id, carrera_id, numero, clave)
+   ========================= */
+
+/* Todos los semestres (de todas las carreras) */
+public function getSemestresCatalog(): array {
+    $sql = "SELECT 
+                id,
+                carrera_id,
+                numero,
+                clave,
+                CONCAT('Sem ', numero, ' · ', clave) AS label
+            FROM semestres
+            ORDER BY numero, id";
+    $this->db->query($sql);
+    return $this->db->fetchAll();
+}
+/* Semestres de una carrera específica */
+public function getSemestresByCarrera(int $carreraId): array {
+    $sql = "SELECT 
+                id,
+                carrera_id,
+                numero,
+                clave,
+                CONCAT('Sem ', numero, ' · ', clave) AS label
+            FROM semestres
+            WHERE carrera_id = :cid
+            ORDER BY numero, id";
+    // Usa PDO del wrapper para prepare/execute si tu wrapper no expone prepare()
+    $pdo = method_exists($this->db, 'getPdo') ? $this->db->getPdo() : null;
+    if ($pdo) {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':cid' => $carreraId]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+    // Fallback con query simple si tu wrapper soporta parámetros
+    $this->db->query($sql, [':cid' => $carreraId]);
+    return $this->db->fetchAll();
+}
+
+
+/* =========================
+   Catálogo de GRUPOS
+   Tabla: grupos (id, semestre_id, codigo, titulo, capacidad, inscritos)
+   ========================= */
+
+/* Todos los grupos (de todos los semestres) */
+public function getGruposCatalog(): array {
+    $sql = "SELECT 
+                id,
+                semestre_id,
+                codigo,
+                titulo,
+                capacidad,
+                inscritos,
+                TRIM(CONCAT(codigo, IF(titulo IS NULL OR titulo='', '', CONCAT(' · ', titulo)))) AS label
+            FROM grupos
+            ORDER BY codigo, id";
+    $this->db->query($sql);
+    return $this->db->fetchAll();
+}
+
+/* Grupos de un semestre específico */
+public function getGruposBySemestre(int $semestreId): array {
+    $sql = "SELECT 
+                id,
+                semestre_id,
+                codigo,
+                titulo,
+                capacidad,
+                inscritos,
+                TRIM(CONCAT(codigo, IF(titulo IS NULL OR titulo='', '', CONCAT(' · ', titulo)))) AS label
+            FROM grupos
+            WHERE semestre_id = :sid
+            ORDER BY codigo, id";
+    $pdo = method_exists($this->db, 'getPdo') ? $this->db->getPdo() : null;
+    if ($pdo) {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':sid' => $semestreId]);
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    }
+    $this->db->query($sql, [':sid' => $semestreId]);
+    return $this->db->fetchAll();
+}
+
+
+
 }
