@@ -91,80 +91,86 @@ class GroupAssignmentsController
 
     /* ========== Asignar alumnos seleccionados a un grupo ========== */
     public function assign() {
-        $this->requireRole(['admin']);
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        $db = new Database();
+    $this->requireRole(['admin']);
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    $db = new Database();
 
-        $grupo_id = (int)($_POST['grupo_id'] ?? 0);
-        $alumnos  = $_POST['alumnos'] ?? [];   // array de user_id
-        $sid      = (int)($_POST['semestre_id'] ?? 0);
+    $grupo_id = (int)($_POST['grupo_id'] ?? 0);
+    $alumnos  = $_POST['alumnos'] ?? [];   // array de user_id
+    $sid      = (int)($_POST['semestre_id'] ?? 0);
 
-        if ($grupo_id <= 0 || empty($alumnos)) {
-            $this->flashTo('/src/plataforma/app/admin/group_assignments?semestre_id='.$sid, 'error', 'Selecciona grupo y al menos un alumno.');
-        }
-
-        // Meta del grupo
-        $db->query("SELECT g.id, g.capacidad, s.id AS semestre_id, c.id AS carrera_id
-                    FROM grupos g
-                    LEFT JOIN semestres s ON s.id = g.semestre_id
-                    LEFT JOIN carreras  c ON c.id = s.carrera_id
-                    WHERE g.id = :gid", [':gid'=>$grupo_id]);
-        $grupo = $db->fetch(\PDO::FETCH_ASSOC);
-        if (!$grupo) {
-            $this->flashTo('/src/plataforma/app/admin/group_assignments?semestre_id='.$sid, 'error', 'Grupo inválido.');
-        }
-
-        // Cupo ocupado real (COUNT)
-        $db->query("SELECT COUNT(*) FROM student_profiles WHERE grupo_id = :gid", [':gid'=>$grupo_id]);
-        $ocupados  = (int)$db->fetchColumn();
-        $capacidad = (int)($grupo['capacidad'] ?? 0);
-
-        $asignados = 0;
-        $omitidos  = 0;
-
-        try {
-            $db->query('START TRANSACTION');
-
-            foreach ($alumnos as $uidRaw) {
-                $uid = (int)$uidRaw;
-
-                // Elegible: mismo semestre y sin grupo actualmente
-                $db->query("SELECT user_id FROM student_profiles
-                            WHERE user_id = :u AND semestre_id = :sid AND grupo_id IS NULL",
-                           [':u'=>$uid, ':sid'=>($sid ?: $grupo['semestre_id'])]);
-                if (!$db->fetch()) { $omitidos++; continue; }
-
-                // Capacidad
-                if ($capacidad > 0 && $ocupados >= $capacidad) { $omitidos++; continue; }
-
-                // Asignar y sincronizar semestre/carrera por consistencia
-                $db->query("UPDATE student_profiles
-                            SET grupo_id = :gid, semestre_id = :sid, carrera_id = :cid, updated_at = NOW()
-                            WHERE user_id = :u",
-                           [':gid'=>$grupo_id,
-                            ':sid'=>($grupo['semestre_id'] ?? null),
-                            ':cid'=>($grupo['carrera_id']  ?? null),
-                            ':u'=>$uid]);
-
-                $ocupados++;
-                $asignados++;
-            }
-
-            // Recalcular inscritos en 'grupos'
-            $this->recalcInscritos($db, $grupo_id);
-
-            $db->query('COMMIT');
-        } catch (\Throwable $e) {
-            try { $db->query('ROLLBACK'); } catch (\Throwable $ignored) {}
-            $this->flashTo('/src/plataforma/app/admin/group_assignments?semestre_id='.$sid.'&grupo_id='.$grupo_id,
-                           'error', 'No se pudo asignar: '.$e->getMessage());
-        }
-
-        $msg = "Asignados: {$asignados}";
-        if ($omitidos > 0) $msg .= " · Omitidos: {$omitidos}";
-        $this->flashTo('/src/plataforma/app/admin/group_assignments?semestre_id='.$sid.'&grupo_id='.$grupo_id,
-                       'success', $msg);
+    if ($grupo_id <= 0 || empty($alumnos)) {
+        $this->flashTo('/src/plataforma/app/admin/group_assignments?semestre_id='.$sid, 'error', 'Selecciona grupo y al menos un alumno.');
     }
+
+    // Meta del grupo
+    $db->query("SELECT g.id, g.capacidad, s.id AS semestre_id, c.id AS carrera_id
+                FROM grupos g
+                LEFT JOIN semestres s ON s.id = g.semestre_id
+                LEFT JOIN carreras  c ON c.id = s.carrera_id
+                WHERE g.id = :gid", [':gid'=>$grupo_id]);
+
+    // En algunos wrappers, fetch() devuelve stdClass ignorando el modo.
+    // Forzamos a array para evitar "Cannot use object of type stdClass as array".
+    $grupo = $db->fetch(); 
+    if ($grupo && is_object($grupo)) $grupo = (array)$grupo;
+
+    if (!$grupo) {
+        $this->flashTo('/src/plataforma/app/admin/group_assignments?semestre_id='.$sid, 'error', 'Grupo inválido.');
+    }
+
+    // Cupo ocupado real (COUNT)
+    $db->query("SELECT COUNT(*) FROM student_profiles WHERE grupo_id = :gid", [':gid'=>$grupo_id]);
+    $ocupados  = (int)$db->fetchColumn();
+    $capacidad = (int)($grupo['capacidad'] ?? 0);
+
+    $asignados = 0;
+    $omitidos  = 0;
+
+    try {
+        $db->query('START TRANSACTION');
+
+        foreach ($alumnos as $uidRaw) {
+            $uid = (int)$uidRaw;
+
+            // Elegible: mismo semestre y sin grupo actualmente
+            $db->query("SELECT user_id FROM student_profiles
+                        WHERE user_id = :u AND semestre_id = :sid AND grupo_id IS NULL",
+                       [':u'=>$uid, ':sid'=>($sid ?: ($grupo['semestre_id'] ?? null))]);
+            if (!$db->fetch()) { $omitidos++; continue; }
+
+            // Capacidad
+            if ($capacidad > 0 && $ocupados >= $capacidad) { $omitidos++; continue; }
+
+            // Asignar y sincronizar semestre/carrera por consistencia
+            $db->query("UPDATE student_profiles
+                        SET grupo_id = :gid, semestre_id = :sid, carrera_id = :cid, updated_at = NOW()
+                        WHERE user_id = :u",
+                       [':gid'=>$grupo_id,
+                        ':sid'=>($grupo['semestre_id'] ?? null),
+                        ':cid'=>($grupo['carrera_id']  ?? null),
+                        ':u'=>$uid]);
+
+            $ocupados++;
+            $asignados++;
+        }
+
+        // Recalcular inscritos en 'grupos'
+        $this->recalcInscritos($db, $grupo_id);
+
+        $db->query('COMMIT');
+    } catch (\Throwable $e) {
+        try { $db->query('ROLLBACK'); } catch (\Throwable $ignored) {}
+        $this->flashTo('/src/plataforma/app/admin/group_assignments?semestre_id='.$sid.'&grupo_id='.$grupo_id,
+                       'error', 'No se pudo asignar: '.$e->getMessage());
+    }
+
+    $msg = "Asignados: {$asignados}";
+    if ($omitidos > 0) $msg .= " · Omitidos: {$omitidos}";
+    $this->flashTo('/src/plataforma/app/admin/group_assignments?semestre_id='.$sid.'&grupo_id='.$grupo_id,
+                   'success', $msg);
+}
+
 
     /* ========== Quitar un alumno del grupo ========== */
     public function unassign() {

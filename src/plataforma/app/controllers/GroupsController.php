@@ -213,4 +213,67 @@ public function edit($id) {
         }
         header('Location: /src/plataforma/app/admin/groups'); exit;
     }
+
+
+    /*  ==========  Grupos  ============ */
+    public function students($id) {
+    $this->requireRole(['admin']); // o ['admin', 'teacher'] si deseas permitir ambos
+    $db = new \App\Core\Database();
+
+    // Obtener datos del grupo
+    $db->query("
+        SELECT 
+            g.id,
+            g.codigo,
+            g.titulo,
+            g.capacidad,
+            g.inscritos,
+            s.id AS semestre_id,
+            s.clave AS semestre_clave,
+            s.numero AS semestre_numero,
+            c.id AS carrera_id,
+            c.nombre AS carrera_nombre,
+            c.iniciales AS carrera_iniciales
+        FROM grupos g
+        LEFT JOIN semestres s ON s.id = g.semestre_id
+        LEFT JOIN carreras c ON c.id = s.carrera_id
+        WHERE g.id = :id
+        LIMIT 1
+    ", [':id' => $id]);
+
+    $grupo = $db->fetch(\PDO::FETCH_OBJ);
+
+    if (!$grupo) {
+        header('Location: /src/plataforma/app/admin/groups?error=Grupo no encontrado');
+        exit;
+    }
+
+    // Obtener alumnos asignados a ese grupo
+    $db->query("
+        SELECT 
+            u.id AS user_id,
+            u.nombre,
+            u.apellido_paterno,
+            u.apellido_materno,
+            u.email,
+            sp.curp,
+            sp.tipo_ingreso,
+            sp.beca_activa,
+            sp.promedio_general,
+            sp.creditos_aprobados
+        FROM student_profiles sp
+        INNER JOIN users u ON u.id = sp.user_id
+        WHERE sp.grupo_id = :gid
+        ORDER BY u.apellido_paterno, u.apellido_materno, u.nombre
+    ", [':gid' => $id]);
+
+    $alumnos = $db->fetchAll(\PDO::FETCH_OBJ);
+
+    // Enviar a la vista
+    \App\Core\View::render('admin/groups/students', 'admin', [
+        'grupo'   => $grupo,
+        'alumnos' => $alumnos,
+    ]);
+}
+
 }

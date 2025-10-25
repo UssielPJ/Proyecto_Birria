@@ -52,10 +52,8 @@
           <h2 class="font-semibold text-lg">Información Académica</h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium mb-1">Matrícula</label>
-              <input type="text" name="matricula" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
-            </div>
+            <!-- 🔹 Eliminado campo Matrícula -->
+
             <div>
               <label class="block text-sm font-medium mb-1">CURP</label>
               <input type="text" name="curp" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
@@ -67,7 +65,6 @@
               <select id="semestre_id" name="semestre_id" required class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
                 <option value="">Selecciona semestre</option>
                 <?php foreach (($semestres ?? []) as $sem): 
-                  // Del catálogo: id, carrera_id, numero, clave, label
                   $optId  = (int)($sem->id ?? 0);
                   $carId  = (int)($sem->carrera_id ?? 0);
                   $numero = (int)($sem->numero ?? 0);
@@ -81,9 +78,7 @@
 
               <!-- Hidden auto para el controlador actual -->
               <input type="hidden" id="carrera_id" name="carrera_id" value="">
-              <!-- (Opcional) Legacy: si el backend aún acepta tinyint semestre -->
               <input type="hidden" id="semestre_legacy" name="semestre" value="">
-              <!-- (Opcional) Legacy grupo: ya no se usa, lo dejamos vacío -->
               <input type="hidden" id="grupo_legacy" name="grupo" value="">
             </div>
 

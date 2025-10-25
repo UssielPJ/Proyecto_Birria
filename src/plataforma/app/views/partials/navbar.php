@@ -21,9 +21,7 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
       ['href' => '/src/plataforma/app/admin/group_assignments',  'icon' => 'user-check',  'text' => 'Asignar a Grupo'],
 
       // Clases y estructura académica
-      ['href' => '/src/plataforma/app/admin/classes',            'icon' => 'layers',      'text' => 'Clases'],
       ['href' => '/src/plataforma/app/admin/subjects',           'icon' => 'book-open',   'text' => 'Materias'],
-      ['href' => '/src/plataforma/app/admin/rooms',              'icon' => 'layout',      'text' => 'Salones'],
       ['href' => '/src/plataforma/app/admin/periods',            'icon' => 'calendar',    'text' => 'Periodos'],
       ['href' => '/src/plataforma/app/admin/schedule',           'icon' => 'clock',       'text' => 'Horarios'],
 

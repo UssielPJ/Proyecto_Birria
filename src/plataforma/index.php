@@ -175,6 +175,7 @@ $map('GET',  '/src/plataforma/app/admin/groups/edit/{id}',     [new GroupsContro
 $map('POST', '/src/plataforma/app/admin/groups/update/{id}',   [new GroupsController, 'update']);
 $map('POST', '/src/plataforma/app/admin/groups/delete/{id}',   [new GroupsController, 'delete']);
 $map('GET',  '/src/plataforma/app/admin/groups',               [new GroupsController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/groups/students/{id}',               [new GroupsController, 'students']);
 
 /*========== Admin Groups assignments Routes ========== */
 $map('GET',  '/src/plataforma/app/admin/group_assignments',        [new GroupAssignmentsController, 'index']);

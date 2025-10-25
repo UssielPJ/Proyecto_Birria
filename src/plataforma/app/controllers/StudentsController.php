@@ -131,92 +131,92 @@ class StudentsController {
 
     /* ===== Crear ===== */
 
-    public function store() {
-        $this->requireRole(['admin', 'teacher']);
-        $d = $_POST;
+public function store() {
+    $this->requireRole(['admin', 'teacher']);
+    $d = $_POST;
 
-        // ===== Validación =====
-        $errors = [];
-        if (empty($d['email']) || !filter_var($d['email'], FILTER_VALIDATE_EMAIL)) $errors[] = 'Email inválido.';
-        if (empty($d['password'])) $errors[] = 'La contraseña es requerida.';
-        if (($d['password'] ?? '') !== ($d['password_confirmation'] ?? '')) $errors[] = 'Las contraseñas no coinciden.';
-        if (empty($d['nombre']))     $errors[] = 'El nombre es requerido.';
-        if (empty($d['matricula']))  $errors[] = 'La matrícula es requerida.';
-        if (empty($d['curp']))       $errors[] = 'La CURP es requerida.';
-        // 🚩 Nueva lógica: el semestre_id es obligatorio (ya NO pedimos carrera_id)
-        if (empty($d['semestre_id'])) $errors[] = 'Debes seleccionar el semestre.';
+    // ===== Validación =====
+    $errors = [];
+    if (empty($d['email']) || !filter_var($d['email'], FILTER_VALIDATE_EMAIL)) $errors[] = 'Email inválido.';
+    if (empty($d['password'])) $errors[] = 'La contraseña es requerida.';
+    if (($d['password'] ?? '') !== ($d['password_confirmation'] ?? '')) $errors[] = 'Las contraseñas no coinciden.';
+    if (empty($d['nombre']))     $errors[] = 'El nombre es requerido.';
+    if (empty($d['curp']))       $errors[] = 'La CURP es requerida.';
+    // 🚩 Nueva lógica: el semestre_id es obligatorio (ya NO pedimos carrera_id)
+    if (empty($d['semestre_id'])) $errors[] = 'Debes seleccionar el semestre.';
 
-        if ($errors) {
-            header('Location: /src/plataforma/app/admin/students/create?error='.urlencode(implode(' ', $errors)));
-            exit;
-        }
-
-        $userModel = new User();
-        $pdo = $this->toPdo($userModel->getDb());
-        $pdo->beginTransaction();
-
-        try {
-            // Pre-chequeos duplicados (mejor UX)
-            // email único en users
-            $st = $pdo->prepare("SELECT 1 FROM users WHERE email = ? LIMIT 1");
-            $st->execute([$d['email']]);
-            if ($st->fetch()) throw new \RuntimeException('El email ya está en uso.');
-
-            // matrícula / CURP únicos en student_profiles
-            $st = $pdo->prepare("SELECT 1 FROM student_profiles WHERE matricula = ? OR curp = ? LIMIT 1");
-            $st->execute([$d['matricula'], $d['curp']]);
-            if ($st->fetch()) throw new \RuntimeException('La matrícula o la CURP ya existen.');
-
-            // === Derivar carrera_id y numero (semestre tinyint) a partir del semestre_id ===
-            $semestreRow = $this->getSemestreRow($pdo, (int)$d['semestre_id']);
-            $carreraId   = $semestreRow['carrera_id'];
-            $semNumero   = $semestreRow['numero'];
-
-            // === INSERT users ===
-            $userId = $userModel->create([
-                'email'            => $d['email'],
-                'password'         => $d['password'], // el modelo hace hash
-                'nombre'           => $d['nombre'],
-                'apellido_paterno' => $d['apellido_paterno'] ?? null,
-                'apellido_materno' => $d['apellido_materno'] ?? null,
-                'telefono'         => $d['telefono'] ?? null,
-                'fecha_nacimiento' => $d['fecha_nacimiento'] ?? null,
-                'status'           => $d['status'] ?? 'active',
-            ]);
-
-            // === INSERT profile (usa derivaciones) ===
-            $profileModel = new StudentProfile($pdo);
-            $profileModel->create([
-                'user_id'     => $userId,
-                'matricula'   => $d['matricula'],
-                'curp'        => $d['curp'],
-                'carrera_id'  => $carreraId,                   // ← derivado
-                'semestre_id' => (int)$d['semestre_id'],       // ← elegido
-                'grupo_id'    => null,                         // ← no se selecciona aquí
-                // legacy opcionales:
-                'semestre'    => $semNumero,                   // ← derivado
-                'grupo'       => $d['grupo'] ?? null,          // si llegara, se respeta; si no, null
-                'tipo_ingreso'=> $d['tipo_ingreso'] ?? 'nuevo',
-                'beca_activa' => !empty($d['beca_activa']) ? 1 : 0,
-                'promedio_general'   => ($d['promedio_general'] ?? '') !== '' ? (float)$d['promedio_general'] : 0.00,
-                'creditos_aprobados' => ($d['creditos_aprobados'] ?? '') !== '' ? (int)$d['creditos_aprobados'] : 0,
-                'direccion'   => $d['direccion'] ?? null,
-                'contacto_emergencia_nombre'   => $d['contacto_emergencia_nombre'] ?? null,
-                'contacto_emergencia_telefono' => $d['contacto_emergencia_telefono'] ?? null,
-                'parentesco_emergencia'        => $d['parentesco_emergencia'] ?? null,
-            ]);
-
-            $pdo->commit();
-            header('Location: /src/plataforma/app/admin/students?created=1');
-            exit;
-
-        } catch (\Throwable $e) {
-            if ($pdo->inTransaction()) $pdo->rollBack();
-            error_log('StudentsController@store ERROR: '.$e->getMessage());
-            header('Location: /src/plataforma/app/admin/students/create?error='.urlencode('No se pudo crear: '.$e->getMessage()));
-            exit;
-        }
+    if ($errors) {
+        header('Location: /src/plataforma/app/admin/students/create?error='.urlencode(implode(' ', $errors)));
+        exit;
     }
+
+    $userModel = new User();
+    $pdo = $this->toPdo($userModel->getDb());
+    $pdo->beginTransaction();
+
+    try {
+        // Pre-chequeos duplicados (mejor UX)
+        // email único en users
+        $st = $pdo->prepare("SELECT 1 FROM users WHERE email = ? LIMIT 1");
+        $st->execute([$d['email']]);
+        if ($st->fetch()) throw new \RuntimeException('El email ya está en uso.');
+
+        // CURP único en student_profiles
+        $st = $pdo->prepare("SELECT 1 FROM student_profiles WHERE curp = ? LIMIT 1");
+        $st->execute([$d['curp']]);
+        if ($st->fetch()) throw new \RuntimeException('La CURP ya existe.');
+
+        // === Derivar carrera_id y numero (semestre tinyint) a partir del semestre_id ===
+        $semestreRow = $this->getSemestreRow($pdo, (int)$d['semestre_id']);
+        $carreraId   = $semestreRow['carrera_id'];
+        $semNumero   = $semestreRow['numero'];
+
+        // === INSERT users ===
+        $userId = $userModel->create([
+            'email'            => $d['email'],
+            'password'         => $d['password'], // el modelo hace hash
+            'nombre'           => $d['nombre'],
+            'apellido_paterno' => $d['apellido_paterno'] ?? null,
+            'apellido_materno' => $d['apellido_materno'] ?? null,
+            'telefono'         => $d['telefono'] ?? null,
+            'fecha_nacimiento' => $d['fecha_nacimiento'] ?? null,
+            'status'           => $d['status'] ?? 'active',
+        ]);
+
+        // === INSERT profile (usa derivaciones) ===
+        $profileModel = new StudentProfile($pdo);
+        $profileModel->create([
+            'user_id'     => $userId,
+            'matricula'   => null,                         // 🔹 se deja null
+            'curp'        => $d['curp'],
+            'carrera_id'  => $carreraId,                   // ← derivado
+            'semestre_id' => (int)$d['semestre_id'],       // ← elegido
+            'grupo_id'    => null,                         // ← no se selecciona aquí
+            // legacy opcionales:
+            'semestre'    => $semNumero,                   // ← derivado
+            'grupo'       => $d['grupo'] ?? null,          // si llegara, se respeta; si no, null
+            'tipo_ingreso'=> $d['tipo_ingreso'] ?? 'nuevo',
+            'beca_activa' => !empty($d['beca_activa']) ? 1 : 0,
+            'promedio_general'   => ($d['promedio_general'] ?? '') !== '' ? (float)$d['promedio_general'] : 0.00,
+            'creditos_aprobados' => ($d['creditos_aprobados'] ?? '') !== '' ? (int)$d['creditos_aprobados'] : 0,
+            'direccion'   => $d['direccion'] ?? null,
+            'contacto_emergencia_nombre'   => $d['contacto_emergencia_nombre'] ?? null,
+            'contacto_emergencia_telefono' => $d['contacto_emergencia_telefono'] ?? null,
+            'parentesco_emergencia'        => $d['parentesco_emergencia'] ?? null,
+        ]);
+
+        $pdo->commit();
+        header('Location: /src/plataforma/app/admin/students?created=1');
+        exit;
+
+    } catch (\Throwable $e) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        error_log('StudentsController@store ERROR: '.$e->getMessage());
+        header('Location: /src/plataforma/app/admin/students/create?error='.urlencode('No se pudo crear: '.$e->getMessage()));
+        exit;
+    }
+}
+
 
     /* ===== Editar ===== */
 
@@ -241,105 +241,105 @@ class StudentsController {
 
     /* ===== Actualizar ===== */
 
-    public function update($id) {
-        $this->requireRole(['admin', 'teacher']);
-        $id = (int)$id;
-        $d  = $_POST;
+public function update($id) {
+    $this->requireRole(['admin', 'teacher']);
+    $id = (int)$id;
+    $d  = $_POST;
 
-        // ===== Validación =====
-        $errors = [];
-        if (empty($d['email']) || !filter_var($d['email'], FILTER_VALIDATE_EMAIL)) $errors[] = 'Email inválido.';
-        if (empty($d['nombre']))     $errors[] = 'El nombre es requerido.';
-        if (!empty($d['password']) && ($d['password'] !== ($d['password_confirmation'] ?? ''))) {
-            $errors[] = 'Las contraseñas no coinciden.';
-        }
-        if (empty($d['matricula']))  $errors[] = 'La matrícula es requerida.';
-        if (empty($d['curp']))       $errors[] = 'La CURP es requerida.';
-        // 🚩 Nueva lógica: exigir semestre_id y NO carrera_id
-        if (empty($d['semestre_id'])) $errors[] = 'Debes seleccionar el semestre.';
-
-        if ($errors) {
-            header('Location: /src/plataforma/app/admin/students/edit/'.$id.'?error='.urlencode(implode(' ', $errors)));
-            exit;
-        }
-
-        $userModel = new User();
-        $pdo = $this->toPdo($userModel->getDb());
-        $pdo->beginTransaction();
-
-        try {
-            // Validar unicidad de email si cambió
-            $st = $pdo->prepare("SELECT 1 FROM users WHERE email = ? AND id <> ? LIMIT 1");
-            $st->execute([$d['email'], $id]);
-            if ($st->fetch()) throw new \RuntimeException('El email ya está en uso por otro usuario.');
-
-            // Validar unicidad de matrícula/curp si cambian
-            $st = $pdo->prepare("SELECT 1 FROM student_profiles WHERE (matricula = ? OR curp = ?) AND user_id <> ? LIMIT 1");
-            $st->execute([$d['matricula'], $d['curp'], $id]);
-            if ($st->fetch()) throw new \RuntimeException('La matrícula o la CURP ya pertenecen a otro alumno.');
-
-            // === Derivar carrera_id y numero (semestre tinyint) a partir del semestre_id ===
-            $semestreRow = $this->getSemestreRow($pdo, (int)$d['semestre_id']);
-            $carreraId   = $semestreRow['carrera_id'];
-            $semNumero   = $semestreRow['numero'];
-
-            // === UPDATE users ===
-            $userUpdate = [
-                'email'            => $d['email'],
-                'nombre'           => $d['nombre'],
-                'apellido_paterno' => $d['apellido_paterno'] ?? null,
-                'apellido_materno' => $d['apellido_materno'] ?? null,
-                'telefono'         => $d['telefono'] ?? null,
-                'fecha_nacimiento' => $d['fecha_nacimiento'] ?? null,
-                'status'           => $d['status'] ?? 'active',
-            ];
-            if (!empty($d['password'])) {
-                $userUpdate['password'] = $d['password']; // el modelo hashea
-            }
-            $userModel->update($id, $userUpdate);
-
-            // === UPSERT profile (usa derivaciones) ===
-            $profileModel = new StudentProfile($pdo);
-            $exists = $pdo->prepare("SELECT 1 FROM student_profiles WHERE user_id = ? LIMIT 1");
-            $exists->execute([$id]);
-
-            $payload = [
-                'matricula'   => $d['matricula'],
-                'curp'        => $d['curp'],
-                'carrera_id'  => $carreraId,             // ← derivado
-                'semestre_id' => (int)$d['semestre_id'], // ← elegido
-                'grupo_id'    => null,                   // ← no se selecciona aquí
-                // legacy
-                'semestre'    => $semNumero,             // ← derivado
-                'grupo'       => $d['grupo'] ?? null,
-                'tipo_ingreso'=> $d['tipo_ingreso'] ?? 'nuevo',
-                'beca_activa' => !empty($d['beca_activa']) ? 1 : 0,
-                'promedio_general'   => ($d['promedio_general'] ?? '') !== '' ? (float)$d['promedio_general'] : 0.00,
-                'creditos_aprobados' => ($d['creditos_aprobados'] ?? '') !== '' ? (int)$d['creditos_aprobados'] : 0,
-                'direccion'   => $d['direccion'] ?? null,
-                'contacto_emergencia_nombre'   => $d['contacto_emergencia_nombre'] ?? null,
-                'contacto_emergencia_telefono' => $d['contacto_emergencia_telefono'] ?? null,
-                'parentesco_emergencia'        => $d['parentesco_emergencia'] ?? null,
-            ];
-
-            if ($exists->fetch()) {
-                $profileModel->updateByUserId($id, $payload);
-            } else {
-                $payload['user_id'] = $id;
-                $profileModel->create($payload);
-            }
-
-            $pdo->commit();
-            header('Location: /src/plataforma/app/admin/students?updated=1');
-            exit;
-
-        } catch (\Throwable $e) {
-            if ($pdo->inTransaction()) $pdo->rollBack();
-            error_log('StudentsController@update ERROR: '.$e->getMessage());
-            header('Location: /src/plataforma/app/admin/students/edit/'.$id.'?error='.urlencode('No se pudo actualizar: '.$e->getMessage()));
-            exit;
-        }
+    // ===== Validación =====
+    $errors = [];
+    if (empty($d['email']) || !filter_var($d['email'], FILTER_VALIDATE_EMAIL)) $errors[] = 'Email inválido.';
+    if (empty($d['nombre']))     $errors[] = 'El nombre es requerido.';
+    if (!empty($d['password']) && ($d['password'] !== ($d['password_confirmation'] ?? ''))) {
+        $errors[] = 'Las contraseñas no coinciden.';
     }
+    if (empty($d['curp']))       $errors[] = 'La CURP es requerida.';
+    // 🚩 Nueva lógica: exigir semestre_id y NO carrera_id
+    if (empty($d['semestre_id'])) $errors[] = 'Debes seleccionar el semestre.';
+
+    if ($errors) {
+        header('Location: /src/plataforma/app/admin/students/edit/'.$id.'?error='.urlencode(implode(' ', $errors)));
+        exit;
+    }
+
+    $userModel = new User();
+    $pdo = $this->toPdo($userModel->getDb());
+    $pdo->beginTransaction();
+
+    try {
+        // Validar unicidad de email si cambió
+        $st = $pdo->prepare("SELECT 1 FROM users WHERE email = ? AND id <> ? LIMIT 1");
+        $st->execute([$d['email'], $id]);
+        if ($st->fetch()) throw new \RuntimeException('El email ya está en uso por otro usuario.');
+
+        // Validar unicidad de CURP (matrícula eliminada)
+        $st = $pdo->prepare("SELECT 1 FROM student_profiles WHERE curp = ? AND user_id <> ? LIMIT 1");
+        $st->execute([$d['curp'], $id]);
+        if ($st->fetch()) throw new \RuntimeException('La CURP ya pertenece a otro alumno.');
+
+        // === Derivar carrera_id y numero (semestre tinyint) a partir del semestre_id ===
+        $semestreRow = $this->getSemestreRow($pdo, (int)$d['semestre_id']);
+        $carreraId   = $semestreRow['carrera_id'];
+        $semNumero   = $semestreRow['numero'];
+
+        // === UPDATE users ===
+        $userUpdate = [
+            'email'            => $d['email'],
+            'nombre'           => $d['nombre'],
+            'apellido_paterno' => $d['apellido_paterno'] ?? null,
+            'apellido_materno' => $d['apellido_materno'] ?? null,
+            'telefono'         => $d['telefono'] ?? null,
+            'fecha_nacimiento' => $d['fecha_nacimiento'] ?? null,
+            'status'           => $d['status'] ?? 'active',
+        ];
+        if (!empty($d['password'])) {
+            $userUpdate['password'] = $d['password']; // el modelo hashea
+        }
+        $userModel->update($id, $userUpdate);
+
+        // === UPSERT profile (usa derivaciones) ===
+        $profileModel = new StudentProfile($pdo);
+        $exists = $pdo->prepare("SELECT 1 FROM student_profiles WHERE user_id = ? LIMIT 1");
+        $exists->execute([$id]);
+
+        $payload = [
+            'matricula'   => null,                    // 🔹 eliminada, ahora siempre null
+            'curp'        => $d['curp'],
+            'carrera_id'  => $carreraId,              // ← derivado
+            'semestre_id' => (int)$d['semestre_id'],  // ← elegido
+            'grupo_id'    => null,                    // ← no se selecciona aquí
+            // legacy
+            'semestre'    => $semNumero,              // ← derivado
+            'grupo'       => $d['grupo'] ?? null,
+            'tipo_ingreso'=> $d['tipo_ingreso'] ?? 'nuevo',
+            'beca_activa' => !empty($d['beca_activa']) ? 1 : 0,
+            'promedio_general'   => ($d['promedio_general'] ?? '') !== '' ? (float)$d['promedio_general'] : 0.00,
+            'creditos_aprobados' => ($d['creditos_aprobados'] ?? '') !== '' ? (int)$d['creditos_aprobados'] : 0,
+            'direccion'   => $d['direccion'] ?? null,
+            'contacto_emergencia_nombre'   => $d['contacto_emergencia_nombre'] ?? null,
+            'contacto_emergencia_telefono' => $d['contacto_emergencia_telefono'] ?? null,
+            'parentesco_emergencia'        => $d['parentesco_emergencia'] ?? null,
+        ];
+
+        if ($exists->fetch()) {
+            $profileModel->updateByUserId($id, $payload);
+        } else {
+            $payload['user_id'] = $id;
+            $profileModel->create($payload);
+        }
+
+        $pdo->commit();
+        header('Location: /src/plataforma/app/admin/students?updated=1');
+        exit;
+
+    } catch (\Throwable $e) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        error_log('StudentsController@update ERROR: '.$e->getMessage());
+        header('Location: /src/plataforma/app/admin/students/edit/'.$id.'?error='.urlencode('No se pudo actualizar: '.$e->getMessage()));
+        exit;
+    }
+}
+
 
     /* ===== Eliminar ===== */
 

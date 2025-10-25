@@ -8,17 +8,7 @@
         <p class="text-neutral-500 dark:text-neutral-400">Completa los datos requeridos</p>
       </div>
 
-      <?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
-      <?php if (!empty($_SESSION['error'])): ?>
-        <div class="mb-4 p-3 rounded bg-red-50 text-red-700">
-          <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
-        </div>
-      <?php endif; ?>
-      <?php if (!empty($_SESSION['success'])): ?>
-        <div class="mb-4 p-3 rounded bg-green-50 text-green-700">
-          <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
-        </div>
-      <?php endif; ?>
+
 
       <form action="/src/plataforma/app/admin/teachers/store" method="POST" class="space-y-6" novalidate>
         <!-- Usuario -->

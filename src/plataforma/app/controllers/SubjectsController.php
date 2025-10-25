@@ -6,7 +6,7 @@ use App\Models\Course;
 
 class SubjectsController
 {
-    /* ----------------- Guards compatibles ----------------- */
+    /* ----------------- Guards ----------------- */
     private function requireLogin() {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (empty($_SESSION['user'])) {
@@ -23,6 +23,64 @@ class SubjectsController
         header('Location: /src/plataforma/login'); exit;
     }
 
+    /* ----------------- Helpers SIN intl ----------------- */
+    private function stripDiacritics(string $s): string {
+        // 1) intentar transliterar con iconv si está disponible
+        if (function_exists('iconv')) {
+            $t = @iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $s);
+            if ($t !== false) {
+                return $t;
+            }
+        }
+        // 2) fallback manual para acentos comunes en ES
+        $map = [
+            'á'=>'a','à'=>'a','ä'=>'a','â'=>'a','ã'=>'a','å'=>'a','Á'=>'A','À'=>'A','Ä'=>'A','Â'=>'A','Ã'=>'A','Å'=>'A',
+            'é'=>'e','è'=>'e','ë'=>'e','ê'=>'e','É'=>'E','È'=>'E','Ë'=>'E','Ê'=>'E',
+            'í'=>'i','ì'=>'i','ï'=>'i','î'=>'i','Í'=>'I','Ì'=>'I','Ï'=>'I','Î'=>'I',
+            'ó'=>'o','ò'=>'o','ö'=>'o','ô'=>'o','õ'=>'o','Ó'=>'O','Ò'=>'O','Ö'=>'O','Ô'=>'O','Õ'=>'O',
+            'ú'=>'u','ù'=>'u','ü'=>'u','û'=>'u','Ú'=>'U','Ù'=>'U','Ü'=>'U','Û'=>'U',
+            'ñ'=>'n','Ñ'=>'N','ç'=>'c','Ç'=>'C'
+        ];
+        return strtr($s, $map);
+    }
+
+    private function generateClaveFromNombre(string $nombre): string {
+        // limpiar primero (acentos y espacios)
+        $clean  = trim(preg_replace('/\s+/', ' ', $this->stripDiacritics($nombre)));
+        if ($clean === '') return '';
+
+        $words  = array_filter(explode(' ', $clean));
+        $stops  = ['de','del','la','las','el','los','y','e','a','en','para','por','con','un','una','uno'];
+
+        // iniciales ignorando stopwords si hay más de una palabra
+        $initials = '';
+        $count = count($words);
+        foreach ($words as $w) {
+            if ($count > 1 && in_array(strtolower($w), $stops, true)) continue;
+            $initials .= substr($w, 0, 1);
+        }
+
+        if ($initials === '') {
+            // respaldo: primeras letras del nombre ya sin acentos/espacios
+            $initials = preg_replace('/[^a-z0-9]/i', '', $clean);
+        }
+
+        $clave = strtoupper($initials);
+        $clave = preg_replace('/[^A-Z0-9]/', '', $clave);
+        return substr($clave, 0, 10);
+    }
+
+    private function normalizeOrGenerateClave(?string $clave, string $nombre): string {
+        $clave = trim((string)$clave);
+        if ($clave !== '') {
+            $clave = $this->stripDiacritics($clave);
+            $clave = strtoupper($clave);
+            $clave = preg_replace('/[^A-Z0-9]/', '', $clave);
+            return substr($clave, 0, 10);
+        }
+        return $this->generateClaveFromNombre($nombre);
+    }
+
     /* ===================== Index ===================== */
     public function index() {
         $this->requireLogin();
@@ -31,26 +89,17 @@ class SubjectsController
         $courseModel = new Course();
 
         if (in_array('teacher', $roles, true)) {
-            // Maestro: solo sus materias
             $subjects = $courseModel->getByTeacher($_SESSION['user']['id']);
-
-            View::render('teacher/subjects/index', 'teacher', [
-                'subjects' => $subjects
-            ]);
+            View::render('teacher/subjects/index', 'teacher', ['subjects' => $subjects]);
             return;
         }
 
         if (in_array('admin', $roles, true)) {
-            // Admin: todas las materias
             $subjects = $courseModel->getAll();
-
-            View::render('admin/subjects/index', 'admin', [
-                'subjects' => $subjects
-            ]);
+            View::render('admin/subjects/index', 'admin', ['subjects' => $subjects]);
             return;
         }
 
-        // Rol no autorizado
         header('Location: /src/plataforma/login'); exit;
     }
 
@@ -63,27 +112,24 @@ class SubjectsController
     public function store() {
         $this->requireRole(['admin']);
 
-        // TODO: valida según tu formulario
-        $data = $_POST;
+        $nombre = trim($_POST['nombre'] ?? '');
+        $status = $_POST['status'] ?? 'activa';
+        $clave  = $this->normalizeOrGenerateClave($_POST['clave'] ?? '', $nombre);
+
+        if ($nombre === '' || $clave === '') {
+            header('Location: /src/plataforma/app/admin/subjects/create?error=' . urlencode('Nombre y clave son obligatorios.'));
+            exit;
+        }
 
         $courseModel = new Course();
-        $courseModel->create([
-            'nombre'         => $data['nombre']        ?? '',
-            'codigo'         => $data['codigo']        ?? '',
-            'creditos'       => $data['creditos']      ?? null,
-            'horas_semana'   => $data['horas_semana']  ?? null,
-            'departamento'   => $data['departamento']  ?? '',
-            'semestre'       => $data['semestre']      ?? '',
-            'tipo'           => $data['tipo']          ?? '',
-            'modalidad'      => $data['modalidad']     ?? '',
-            'estado'         => $data['estado']        ?? 'activa',
-            'profesor_id'    => $data['profesor_id']   ?? null,
-            'descripcion'    => $data['descripcion']   ?? '',
-            'objetivo'       => $data['objetivo']      ?? '',
-            'prerrequisitos' => isset($data['prerrequisitos']) ? implode(',', (array)$data['prerrequisitos']) : ''
+        $ok = $courseModel->create([
+            'nombre' => $nombre,
+            'clave'  => $clave,
+            'status' => $status,
         ]);
 
-        header('Location: /src/plataforma/app/admin/subjects'); exit;
+        header('Location: /src/plataforma/app/admin/subjects' . ($ok ? '' : '?error=' . urlencode('No se pudo crear'))); 
+        exit;
     }
 
     /* ===================== Editar ===================== */
@@ -91,41 +137,36 @@ class SubjectsController
         $this->requireRole(['admin']);
 
         $courseModel = new Course();
-        $subject = $courseModel->findById($id);
+        $subject = $courseModel->findById((int)$id);
 
         if (!$subject || !is_object($subject)) {
             header('Location: /src/plataforma/app/admin/subjects'); exit;
         }
 
-        View::render('admin/subjects/edit', 'admin', [
-            'subject' => $subject
-        ]);
+        View::render('admin/subjects/edit', 'admin', ['subject' => $subject]);
     }
 
     public function update($id) {
         $this->requireRole(['admin']);
 
-        // TODO: valida según tu formulario
-        $data = $_POST;
+        $nombre = trim($_POST['nombre'] ?? '');
+        $status = $_POST['status'] ?? 'activa';
+        $clave  = $this->normalizeOrGenerateClave($_POST['clave'] ?? '', $nombre);
+
+        if ($nombre === '' || $clave === '') {
+            header('Location: /src/plataforma/app/admin/subjects/'.$id.'/edit?error=' . urlencode('Nombre y clave son obligatorios.'));
+            exit;
+        }
 
         $courseModel = new Course();
-        $courseModel->update($id, [
-            'nombre'         => $data['nombre']        ?? '',
-            'codigo'         => $data['codigo']        ?? '',
-            'creditos'       => $data['creditos']      ?? null,
-            'horas_semana'   => $data['horas_semana']  ?? null,
-            'departamento'   => $data['departamento']  ?? '',
-            'semestre'       => $data['semestre']      ?? '',
-            'tipo'           => $data['tipo']          ?? '',
-            'modalidad'      => $data['modalidad']     ?? '',
-            'estado'         => $data['estado']        ?? 'activa',
-            'profesor_id'    => $data['profesor_id']   ?? null,
-            'descripcion'    => $data['descripcion']   ?? '',
-            'objetivo'       => $data['objetivo']      ?? '',
-            'prerrequisitos' => isset($data['prerrequisitos']) ? implode(',', (array)$data['prerrequisitos']) : ''
+        $ok = $courseModel->update((int)$id, [
+            'nombre' => $nombre,
+            'clave'  => $clave,
+            'status' => $status,
         ]);
 
-        header('Location: /src/plataforma/app/admin/subjects'); exit;
+        header('Location: /src/plataforma/app/admin/subjects' . ($ok ? '' : '?error=' . urlencode('No se pudo actualizar')));
+        exit;
     }
 
     /* ===================== Eliminar ===================== */
@@ -133,7 +174,7 @@ class SubjectsController
         $this->requireRole(['admin']);
 
         $courseModel = new Course();
-        $courseModel->delete($id);
+        $courseModel->delete((int)$id);
 
         header('Location: /src/plataforma/app/admin/subjects'); exit;
     }

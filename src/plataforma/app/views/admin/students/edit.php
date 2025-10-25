@@ -91,10 +91,7 @@ $carreraIdActual = (string)($pf->carrera_id ?? ''); // para precargar el hidden
           <h2 class="font-semibold text-lg">Información Académica</h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium mb-1">Matrícula</label>
-              <input type="text" name="matricula" required value="<?= $esc($pf->matricula ?? '') ?>" class="w-full px-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
-            </div>
+            <!-- Campo de Matrícula eliminado -->
 
             <div>
               <label class="block text-sm font-medium mb-1">CURP</label>
@@ -187,7 +184,7 @@ $carreraIdActual = (string)($pf->carrera_id ?? ''); // para precargar el hidden
             Deja estos campos en blanco si no deseas cambiar la contraseña
           </p>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="relative">
               <label class="block text-sm font-medium mb-1">Nueva contraseña</label>
               <input type="password" id="password" name="password" placeholder="••••••••"
@@ -249,7 +246,6 @@ $carreraIdActual = (string)($pf->carrera_id ?? ''); // para precargar el hidden
       const carreraId = opt.getAttribute('data-carrera-id') || '';
       hidCar.value = carreraId;
       // Si tuvieras el número de semestre como data-numero, aquí podrías setear hidSemLegacy.
-      // En tu catálogo ya viene "numero", pero no lo imprimimos; si lo necesitas, agrega data-numero en la opción y úsalo aquí.
     }
 
     selSem.addEventListener('change', syncCarrera);
