@@ -24,6 +24,7 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
       ['href' => '/src/plataforma/app/admin/subjects',           'icon' => 'book-open',   'text' => 'Materias'],
       ['href' => '/src/plataforma/app/admin/periods',            'icon' => 'calendar',    'text' => 'Periodos'],
       ['href' => '/src/plataforma/app/admin/schedule',           'icon' => 'clock',       'text' => 'Horarios'],
+      ['href' => '/src/plataforma/app/admin/materias-grupos',    'icon' => 'link',        'text' => 'Asignar Materias a Grupos'],
 
       // Operación escolar
       ['href' => '/src/plataforma/app/admin/grades',             'icon' => 'award',       'text' => 'Calificaciones'],

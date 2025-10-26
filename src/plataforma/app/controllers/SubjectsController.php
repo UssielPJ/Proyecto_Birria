@@ -178,4 +178,8 @@ class SubjectsController
 
         header('Location: /src/plataforma/app/admin/subjects'); exit;
     }
+
+
+    /* ===================== Asignar Materia a Grupo ===================== */
+    
 }

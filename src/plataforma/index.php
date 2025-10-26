@@ -54,6 +54,7 @@ use App\Controllers\RoomsController;
 use App\Controllers\PeriodsController;
 use App\Controllers\CareersController;
 use App\Controllers\SemestersController;
+use App\Controllers\MateriaGrupoController;
 
 $router = new Router();
 
@@ -281,6 +282,13 @@ $map('POST', '/src/plataforma/app/admin/announcements/store',    [new Announceme
 $map('GET',  '/src/plataforma/app/admin/announcements/edit/{id}',[new AnnouncementsController, 'edit']);
 $map('POST', '/src/plataforma/app/admin/announcements/update/{id}',[new AnnouncementsController, 'update']);
 $map('POST', '/src/plataforma/app/admin/announcements/delete/{id}',[new AnnouncementsController, 'delete']);
+
+/* ========== Admin Materia-grupo Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/materias-grupos',          [new MateriaGrupoController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/materias-grupos/create',   [new MateriaGrupoController, 'create']);
+$map('POST', '/src/plataforma/app/admin/materias-grupos/store',    [new MateriaGrupoController, 'store']);
+$map('POST', '/src/plataforma/app/admin/materias-grupos/delete/{id}', [new MateriaGrupoController, 'delete']);
+
 
 /* ========== Notifications Routes ========== */
 $map('GET',  '/src/plataforma/api/notifications',          [new NotificationsController, 'getUnread']);
