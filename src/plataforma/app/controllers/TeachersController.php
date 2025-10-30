@@ -474,8 +474,6 @@ private function departamentoExiste(int $id): bool {
     }
     fclose($out); exit;
 }
-
-
     
 }
 

@@ -155,46 +155,58 @@ public function create(array $data): bool
      * (ajustadas a columnas existentes de 'materias')
      * ============================================================ */
 
-    /** Materias impartidas por un docente (user_id del profesor) */
-    public function getByTeacher(int $teacherUserId): array
-    {
-        $sql = "
-            SELECT DISTINCT
-                m.id,
-                m.nombre AS name,
-                m.clave  AS code,
-                m.status,
-                m.created_at
-            FROM materias m
-            INNER JOIN horarios h ON h.materia_id = m.id
-            WHERE h.profesor_id = :uid
-            ORDER BY m.nombre ASC
-        ";
-        $this->db->query($sql, [':uid' => $teacherUserId]);
-        return $this->db->fetchAll();
-    }
+/** Materias impartidas por un docente (user_id del profesor) */
+public function getByTeacher(int $teacherUserId): array
+{
+    $sql = "
+        SELECT DISTINCT
+            m.id,
+            m.nombre AS name,
+            m.clave  AS code,
+            m.status,
+            m.created_at,
+            -- datos del grupo
+            g.codigo  AS group_code,   -- código oficial del grupo (tabla grupos)
+            g.titulo  AS group_title,  -- título/alias del grupo (si lo usas)
+            mg.codigo AS mg_code       -- código de la relación materia-grupo (opcional para distinguir grupos por materia)
+        FROM materia_grupo_profesor mgp
+        INNER JOIN materias_grupos mg ON mg.id = mgp.mg_id
+        INNER JOIN materias m         ON m.id = mg.materia_id
+        LEFT  JOIN grupos g           ON g.id = mg.grupo_id
+        WHERE mgp.teacher_user_id = :uid
+        ORDER BY m.nombre ASC, g.codigo ASC, mg.codigo ASC
+    ";
+    $this->db->query($sql, [':uid' => $teacherUserId]);
+    return $this->db->fetchAll();
+}
 
-    /** Próximas clases del docente (ordenadas por día y hora) */
-    public function getUpcomingByTeacher(int $teacherUserId, int $limit = 10): array
-    {
-        $limit = (int)$limit;
-        $sql = "
-            SELECT
-                h.id,
-                m.nombre AS course_name,
-                h.dia_semana  AS day_of_week,
-                h.hora_inicio AS start_time,
-                h.hora_fin    AS end_time,
-                h.aula
-            FROM horarios h
-            INNER JOIN materias m ON m.id = h.materia_id
-            WHERE h.profesor_id = :uid
-            ORDER BY FIELD(h.dia_semana,1,2,3,4,5,6,7), h.hora_inicio
-            LIMIT {$limit}
-        ";
-        $this->db->query($sql, [':uid' => $teacherUserId]);
-        return $this->db->fetchAll();
-    }
+
+
+/** Próximas clases del docente según 'horarios' (usa professor_user_id directamente) */
+public function getUpcomingByTeacher(int $teacherUserId, int $limit = 10): array
+{
+    $limit = max(1, (int)$limit);
+    $sql = "
+        SELECT
+            h.id,
+            h.dia_semana  AS day_of_week,   -- en tu esquema es VARCHAR(10)
+            h.hora_inicio AS start_time,
+            h.hora_fin    AS end_time,
+            h.aula,
+            m.nombre      AS course_name,
+            m.clave       AS code
+        FROM horarios h
+        LEFT JOIN materias m ON m.id = h.materia_id   -- FK apunta a backup, pero si IDs coinciden, esto funciona
+        WHERE h.profesor_id = :uid
+        ORDER BY 
+            FIELD(h.dia_semana,'Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'),
+            h.hora_inicio
+        LIMIT {$limit}
+    ";
+    $this->db->query($sql, [':uid' => $teacherUserId]);
+    return $this->db->fetchAll();
+}
+
 
     /**
      * Materias actuales del alumno (por user_id del alumno).

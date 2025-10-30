@@ -55,6 +55,7 @@ use App\Controllers\PeriodsController;
 use App\Controllers\CareersController;
 use App\Controllers\SemestersController;
 use App\Controllers\MateriaGrupoController;
+use App\Controllers\MateriaGrupoProfesorController;
 
 $router = new Router();
 
@@ -177,6 +178,10 @@ $map('POST', '/src/plataforma/app/admin/groups/update/{id}',   [new GroupsContro
 $map('POST', '/src/plataforma/app/admin/groups/delete/{id}',   [new GroupsController, 'delete']);
 $map('GET',  '/src/plataforma/app/admin/groups',               [new GroupsController, 'index']);
 $map('GET',  '/src/plataforma/app/admin/groups/students/{id}',               [new GroupsController, 'students']);
+// Vista previa y ejecución
+$map('GET',  '/src/plataforma/app/admin/groups/assign-matriculas/{id}', [new \App\Controllers\GroupsController, 'assignMatriculasPreview']);
+$map('POST', '/src/plataforma/app/admin/groups/assign-matriculas/{id}', [new \App\Controllers\GroupsController, 'assignMatriculasRun']);
+
 
 /*========== Admin Groups assignments Routes ========== */
 $map('GET',  '/src/plataforma/app/admin/group_assignments',        [new GroupAssignmentsController, 'index']);
@@ -287,7 +292,18 @@ $map('POST', '/src/plataforma/app/admin/announcements/delete/{id}',[new Announce
 $map('GET',  '/src/plataforma/app/admin/materias-grupos',          [new MateriaGrupoController, 'index']);
 $map('GET',  '/src/plataforma/app/admin/materias-grupos/create',   [new MateriaGrupoController, 'create']);
 $map('POST', '/src/plataforma/app/admin/materias-grupos/store',    [new MateriaGrupoController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/materias-grupos/edit/{id}',[new MateriaGrupoController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/materias-grupos/update/{id}',[new MateriaGrupoController, 'update']);
 $map('POST', '/src/plataforma/app/admin/materias-grupos/delete/{id}', [new MateriaGrupoController, 'delete']);
+
+/* ========== Admin MG-Profesores Routes ========== */
+$map('GET',  '/src/plataforma/app/admin/mg-profesores',             [new MateriaGrupoProfesorController, 'index']);
+$map('GET',  '/src/plataforma/app/admin/mg-profesores/create',      [new MateriaGrupoProfesorController, 'create']);
+$map('POST', '/src/plataforma/app/admin/mg-profesores/store',       [new MateriaGrupoProfesorController, 'store']);
+$map('GET',  '/src/plataforma/app/admin/mg-profesores/edit/{id}',   [new MateriaGrupoProfesorController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/mg-profesores/update/{id}', [new MateriaGrupoProfesorController, 'update']);
+$map('POST', '/src/plataforma/app/admin/mg-profesores/delete/{id}', [new MateriaGrupoProfesorController, 'delete']);
+
 
 
 /* ========== Notifications Routes ========== */

@@ -69,14 +69,21 @@
                 </td>
 
                 <td class="px-3 py-2">
-                  <form action="/src/plataforma/app/admin/materias-grupos/delete/<?= (int)$r->id ?>" 
-                        method="POST" 
-                        onsubmit="return confirm('¿Eliminar esta asignación?')">
-                    <button type="submit" 
-                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm flex items-center gap-1">
-                      <i data-feather="trash-2" class="w-4 h-4"></i> Eliminar
-                    </button>
-                  </form>
+                  <div class="flex items-center gap-2">
+                    <a href="/src/plataforma/app/admin/materias-grupos/edit/<?= (int)$r->id ?>"
+                      class="bg-primary-500 hover:bg-primary-600 text-white px-3 py-1.5 rounded-lg text-sm flex items-center gap-1">
+                      <i data-feather="edit-3" class="w-4 h-4"></i> Editar
+                    </a>
+
+                    <form action="/src/plataforma/app/admin/materias-grupos/delete/<?= (int)$r->id ?>" 
+                          method="POST" 
+                          onsubmit="return confirm('¿Eliminar esta asignación?')">
+                      <button type="submit" 
+                              class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm flex items-center gap-1">
+                        <i data-feather="trash-2" class="w-4 h-4"></i> Eliminar
+                      </button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             <?php endforeach; ?>

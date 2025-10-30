@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Core\View;
 use App\Core\Database;
 use PDO;
+
 class GroupsController
 {
     private function requireLogin() {
@@ -104,40 +105,39 @@ class GroupsController
     }
 
     /* ========== EDIT (robusto) ========== */
-public function edit($id) {
-    $this->requireRole(['admin']);
-    if (session_status() === PHP_SESSION_NONE) session_start();
+    public function edit($id) {
+        $this->requireRole(['admin']);
+        if (session_status() === PHP_SESSION_NONE) session_start();
 
-    $id = (int)$id;
-    if ($id <= 0) {
-        $_SESSION['error'] = 'ID inválido.';
-        header('Location: /src/plataforma/app/admin/groups'); exit;
+        $id = (int)$id;
+        if ($id <= 0) {
+            $_SESSION['error'] = 'ID inválido.';
+            header('Location: /src/plataforma/app/admin/groups'); exit;
+        }
+
+        $db = new Database();
+
+        // 1) Traer el grupo con named param (evita problemas con "?")
+        $sqlGrupo = "SELECT * FROM `grupos` WHERE `id` = :id LIMIT 1";
+        $db->query($sqlGrupo, [':id' => $id]);
+        // Fuerza fetch asociativo (si tu Database tiene FETCH_OBJ por default)
+        $grupo = $db->fetch(PDO::FETCH_ASSOC);
+
+        if (!$grupo) {
+            $_SESSION['error'] = 'Grupo no encontrado.';
+            header('Location: /src/plataforma/app/admin/groups'); exit;
+        }
+
+        // 2) Semestres para el select (también asociativo)
+        $sqlSem = "SELECT `id`, `clave`, `numero` FROM `semestres` ORDER BY `clave` ASC";
+        $db->query($sqlSem);
+        $semestres = $db->fetchAll(PDO::FETCH_ASSOC);
+
+        View::render('admin/groups/edit', 'admin', [
+            'grupo'     => $grupo,
+            'semestres' => $semestres
+        ]);
     }
-
-    $db = new Database();
-
-    // 1) Traer el grupo con named param (evita problemas con "?")
-    $sqlGrupo = "SELECT * FROM `grupos` WHERE `id` = :id LIMIT 1";
-    $db->query($sqlGrupo, [':id' => $id]);
-    // Fuerza fetch asociativo (si tu Database tiene FETCH_OBJ por default)
-    $grupo = $db->fetch(PDO::FETCH_ASSOC);
-
-    if (!$grupo) {
-        $_SESSION['error'] = 'Grupo no encontrado.';
-        header('Location: /src/plataforma/app/admin/groups'); exit;
-    }
-
-    // 2) Semestres para el select (también asociativo)
-    $sqlSem = "SELECT `id`, `clave`, `numero` FROM `semestres` ORDER BY `clave` ASC";
-    $db->query($sqlSem);
-    $semestres = $db->fetchAll(PDO::FETCH_ASSOC);
-
-    View::render('admin/groups/edit', 'admin', [
-        'grupo'     => $grupo,
-        'semestres' => $semestres
-    ]);
-}
-
 
     /* ========== UPDATE ========== */
     public function update($id) {
@@ -214,66 +214,207 @@ public function edit($id) {
         header('Location: /src/plataforma/app/admin/groups'); exit;
     }
 
-
-    /*  ==========  Grupos  ============ */
+    /* ========== LISTA DE ALUMNOS DEL GRUPO ========== */
     public function students($id) {
-    $this->requireRole(['admin']); // o ['admin', 'teacher'] si deseas permitir ambos
-    $db = new \App\Core\Database();
+        $this->requireRole(['admin']); // o ['admin','teacher']
+        $db = new Database();
 
-    // Obtener datos del grupo
-    $db->query("
-        SELECT 
-            g.id,
-            g.codigo,
-            g.titulo,
-            g.capacidad,
-            g.inscritos,
-            s.id AS semestre_id,
-            s.clave AS semestre_clave,
-            s.numero AS semestre_numero,
-            c.id AS carrera_id,
-            c.nombre AS carrera_nombre,
-            c.iniciales AS carrera_iniciales
-        FROM grupos g
-        LEFT JOIN semestres s ON s.id = g.semestre_id
-        LEFT JOIN carreras c ON c.id = s.carrera_id
-        WHERE g.id = :id
-        LIMIT 1
-    ", [':id' => $id]);
+        // Datos del grupo
+        $db->query("
+            SELECT 
+                g.id,
+                g.codigo,
+                g.titulo,
+                g.capacidad,
+                g.inscritos,
+                s.id AS semestre_id,
+                s.clave AS semestre_clave,
+                s.numero AS semestre_numero,
+                c.id AS carrera_id,
+                c.nombre AS carrera_nombre,
+                c.iniciales AS carrera_iniciales
+            FROM grupos g
+            LEFT JOIN semestres s ON s.id = g.semestre_id
+            LEFT JOIN carreras c ON c.id = s.carrera_id
+            WHERE g.id = :id
+            LIMIT 1
+        ", [':id' => $id]);
 
-    $grupo = $db->fetch(\PDO::FETCH_OBJ);
+        $grupo = $db->fetch(PDO::FETCH_OBJ);
+        if (!$grupo) {
+            header('Location: /src/plataforma/app/admin/groups?error=Grupo no encontrado');
+            exit;
+        }
 
-    if (!$grupo) {
-        header('Location: /src/plataforma/app/admin/groups?error=Grupo no encontrado');
-        exit;
+        // Alumnos del grupo
+        $db->query("
+            SELECT 
+                u.id AS user_id,
+                u.nombre,
+                u.apellido_paterno,
+                u.apellido_materno,
+                u.email,
+                sp.curp,
+                sp.tipo_ingreso,
+                sp.beca_activa,
+                sp.promedio_general,
+                sp.creditos_aprobados,
+                sp.matricula
+            FROM student_profiles sp
+            INNER JOIN users u ON u.id = sp.user_id
+            WHERE sp.grupo_id = :gid
+            ORDER BY u.apellido_paterno, u.apellido_materno, u.nombre
+        ", [':gid' => $id]);
+
+        $alumnos = $db->fetchAll(PDO::FETCH_OBJ);
+
+        View::render('admin/groups/students', 'admin', [
+            'grupo'   => $grupo,
+            'alumnos' => $alumnos,
+        ]);
     }
 
-    // Obtener alumnos asignados a ese grupo
-    $db->query("
-        SELECT 
-            u.id AS user_id,
-            u.nombre,
-            u.apellido_paterno,
-            u.apellido_materno,
-            u.email,
-            sp.curp,
-            sp.tipo_ingreso,
-            sp.beca_activa,
-            sp.promedio_general,
-            sp.creditos_aprobados
-        FROM student_profiles sp
-        INNER JOIN users u ON u.id = sp.user_id
-        WHERE sp.grupo_id = :gid
-        ORDER BY u.apellido_paterno, u.apellido_materno, u.nombre
-    ", [':gid' => $id]);
+    /* ========== NUEVO: PREVIEW ASIGNACIÓN DE MATRÍCULAS (5 dígitos) ========== */
+    // Ruta: GET /src/plataforma/app/admin/groups/assign-matriculas/{id}
+    public function assignMatriculasPreview($id) {
+        $this->requireRole(['admin']);
+        if (session_status() === PHP_SESSION_NONE) session_start();
 
-    $alumnos = $db->fetchAll(\PDO::FETCH_OBJ);
+        $groupId = (int)$id;
+        $db = new Database();
 
-    // Enviar a la vista
-    \App\Core\View::render('admin/groups/students', 'admin', [
-        'grupo'   => $grupo,
-        'alumnos' => $alumnos,
-    ]);
-}
+        // Grupo
+        $db->query("SELECT id, codigo FROM grupos WHERE id = ? LIMIT 1", [$groupId]);
+        $grupo = $db->fetch();
+        if (!$grupo) { $_SESSION['error'] = 'Grupo no encontrado.'; header('Location: /src/plataforma/app/admin/groups'); exit; }
 
+        // Dígito G derivado del código del grupo
+        $G  = $this->groupDigit((string)$grupo->codigo);
+        // Año YY (2 dígitos) — si luego deseas "año de ingreso" por alumno, se puede cambiar aquí
+        $YY = (int)date('y');
+        // Prefijo de 3 dígitos = YYG
+        $prefix3 = $YY*10 + $G;
+
+        // Alumnos sin matrícula
+        $db->query("
+            SELECT sp.user_id
+            FROM student_profiles sp
+            WHERE sp.grupo_id = ? AND (sp.matricula IS NULL OR sp.matricula = '')
+        ", [$groupId]);
+        $pendientes = $db->fetchAll();
+        $count = count($pendientes);
+
+        // Buscar max para ese prefijo cuando matricula es VARCHAR: castear a UNSIGNED
+        $db->query("
+            SELECT MAX(CAST(matricula AS UNSIGNED)) AS max_mat
+            FROM student_profiles
+            WHERE matricula IS NOT NULL AND matricula <> '' 
+              AND FLOOR(CAST(matricula AS UNSIGNED)/100) = ?
+        ", [$prefix3]);
+        $maxMat = (int)($db->fetchColumn() ?: 0);
+        $lastLL = $maxMat ? ($maxMat % 100) : 0;
+
+        $startLL = $lastLL + 1;
+        $endLL   = $lastLL + $count;
+
+        // Render vista de previa
+        View::render('admin/groups/assign_matriculas_preview', 'admin', [
+            'groupId'  => $groupId,
+            'grupo'    => $grupo,
+            'YY'       => $YY,
+            'G'        => $G,
+            'prefix3'  => $prefix3,
+            'count'    => $count,
+            'startLL'  => $startLL,
+            'endLL'    => $endLL,
+        ]);
+    }
+
+    /* ========== NUEVO: RUN ASIGNACIÓN DE MATRÍCULAS (5 dígitos) ========== */
+    // Ruta: POST /src/plataforma/app/admin/groups/assign-matriculas/{id}
+    public function assignMatriculasRun($id) {
+        $this->requireRole(['admin']);
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        $groupId = (int)$id;
+        $db  = new Database();
+        $pdo = $db->pdo();
+
+        try {
+            $pdo->beginTransaction();
+
+            // Grupo
+            $stmt = $pdo->prepare("SELECT id, codigo FROM grupos WHERE id = ? LIMIT 1");
+            $stmt->execute([$groupId]);
+            $grupo = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$grupo) throw new \RuntimeException('Grupo no encontrado.');
+
+            $G  = $this->groupDigit((string)$grupo['codigo']);
+            $YY = (int)date('y');
+            $prefix3 = $YY*10 + $G; // YYG
+
+            // Bloquear alumnos pendientes
+            $stmt = $pdo->prepare("
+                SELECT sp.user_id
+                FROM student_profiles sp
+                WHERE sp.grupo_id = ? AND (sp.matricula IS NULL OR sp.matricula = '')
+                ORDER BY sp.user_id ASC
+                FOR UPDATE
+            ");
+            $stmt->execute([$groupId]);
+            $pending = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!$pending) {
+                $pdo->commit();
+                $_SESSION['success'] = 'No hay alumnos pendientes de matrícula.';
+                header('Location: /src/plataforma/app/admin/groups'); exit;
+            }
+
+            // Max para el prefijo (matricula VARCHAR -> castear)
+            $stmt = $pdo->prepare("
+                SELECT MAX(CAST(matricula AS UNSIGNED)) AS max_mat
+                FROM student_profiles
+                WHERE matricula IS NOT NULL AND matricula <> '' 
+                  AND FLOOR(CAST(matricula AS UNSIGNED)/100) = ?
+                FOR UPDATE
+            ");
+            $stmt->execute([$prefix3]);
+            $maxMat = (int)($stmt->fetchColumn() ?: 0);
+            $lastLL = $maxMat ? ($maxMat % 100) : 0;
+
+            $upd = $pdo->prepare("UPDATE student_profiles SET matricula = ? WHERE user_id = ?");
+            $LL  = $lastLL;
+
+            foreach ($pending as $row) {
+                $LL++;
+                if ($LL > 99) throw new \RuntimeException('Se alcanzó el límite (99) de lista para este prefijo YYG.');
+                // Matricula de 5 dígitos: YYGLL -> (YY*1000 + G*100 + LL)
+                $matricula = $YY*1000 + $G*100 + $LL;
+                $upd->execute([$matricula, $row['user_id']]);
+            }
+
+            $pdo->commit();
+            $_SESSION['success'] = "Se asignaron matrículas a ".count($pending)." alumno(s).";
+        } catch (\Throwable $e) {
+            if ($pdo->inTransaction()) $pdo->rollBack();
+            $_SESSION['error'] = 'No se pudo asignar: '.$e->getMessage();
+        }
+
+        header('Location: /src/plataforma/app/admin/groups'); exit;
+    }
+
+    /* ========= Helper: derivar dígito de grupo (0–9) desde g.codigo ========= */
+    private function groupDigit(string $codigo): int {
+        $codigo = trim($codigo);
+
+        // Si contiene dígitos, usar el primer dígito (p.ej. "6A", "G6", "06")
+        if (preg_match('/\d/', $codigo, $m)) {
+            return (int)$m[0];
+        }
+
+        // Si es letra, mapa A=1..I=9, J=0 (10 grupos)
+        $letra = mb_strtoupper(mb_substr($codigo, 0, 1, 'UTF-8'), 'UTF-8');
+        $map = ['A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6,'G'=>7,'H'=>8,'I'=>9,'J'=>0];
+        return $map[$letra] ?? 0; // default 0
+    }
 }
