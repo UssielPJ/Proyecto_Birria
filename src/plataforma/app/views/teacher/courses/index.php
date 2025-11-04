@@ -2,7 +2,10 @@
 // Variables esperadas: $courses (array de objetos), $role (string), $user (array)
 $isTeacher = isset($role) && $role === 'teacher';
 
-// Construye el nombre del profesor desde la sesión (según tu tabla users)
+// Helper seguro
+$esc = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
+
+// Nombre del profesor desde sesión
 $sessionTeacherName = '';
 if (!empty($user['nombre'])) {
     $sessionTeacherName = trim(
@@ -26,7 +29,7 @@ if (!empty($user['nombre'])) {
         </div>
     </div>
 
-    <!-- Filtros y Búsqueda (decorativo por ahora) -->
+    <!-- Filtros y Búsqueda (decorativo) -->
     <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
         <div class="flex flex-wrap gap-4 items-center">
             <div class="relative">
@@ -64,98 +67,102 @@ if (!empty($user['nombre'])) {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <?php if (!empty($courses)): ?>
             <?php foreach ($courses as $course): ?>
-                <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm overflow-hidden" data-aos="fade-up">
-                    <div class="relative h-48 bg-neutral-200 dark:bg-neutral-700">
-                        <img src="/src/plataforma/app/img/UT.jpg" alt="<?= htmlspecialchars($course->name ?? 'Materia') ?>" class="w-full h-full object-cover">
-                        <div class="absolute top-4 right-4">
-                            <?php
-                                $status = strtolower((string)($course->status ?? 'activa'));
-                                $isActive = ($status === 'activa' || $status === 'active' || $status === '1');
-                            ?>
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full
-                                         <?= $isActive ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-                                                      : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200' ?>">
-                                <?= $isActive ? 'Activo' : 'Inactivo' ?>
-                            </span>
-                        </div>
-                    </div>
+                <?php
+                  // mg_id preferente, si no existe usa id
+                  $mgId = isset($course->mg_id) ? (int)$course->mg_id : (int)($course->id ?? 0);
+                  $hubUrl = "/src/plataforma/app/teacher/courses/show?id={$mgId}";
+                  $status = strtolower((string)($course->status ?? 'activa'));
+                  $isActive = ($status === 'activa' || $status === 'active' || $status === '1');
+                ?>
+                <a href="<?= $esc($hubUrl) ?>" class="block group">
+                  <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm overflow-hidden ring-1 ring-transparent group-hover:ring-primary-200 dark:group-hover:ring-primary-900 transition" data-aos="fade-up">
+                      <div class="relative h-48 bg-neutral-200 dark:bg-neutral-700">
+                          <img src="/src/plataforma/app/img/UT.jpg" alt="<?= $esc($course->name ?? 'Materia') ?>" class="w-full h-full object-cover">
+                          <div class="absolute top-4 right-4">
+                              <span class="px-2 py-1 text-xs font-semibold rounded-full
+                                           <?= $isActive ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                                                        : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200' ?>">
+                                  <?= $isActive ? 'Activo' : 'Inactivo' ?>
+                              </span>
+                          </div>
+                      </div>
 
-                    <div class="p-6">
-                        <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-1">
-                            <?= htmlspecialchars($course->name ?? 'Materia sin nombre') ?>
-                        </h3>
-                        <p class="text-sm text-neutral-600 dark:text-neutral-300 mb-4">
-                            <span class="opacity-80">Clave:</span>
-                            <?= htmlspecialchars($course->code ?? '—') ?>
-                        </p>
+                      <div class="p-6">
+                          <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-1">
+                              <?= $esc($course->name ?? 'Materia sin nombre') ?>
+                          </h3>
+                          <p class="text-sm text-neutral-600 dark:text-neutral-300 mb-4">
+                              <span class="opacity-80">Clave:</span>
+                              <?= $esc($course->code ?? '—') ?>
+                          </p>
 
-                        <!-- Meta opcional (solo se muestra si existen los campos) -->
-                        <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
-                            <?php if (!empty($course->group_code) || !empty($course->group_title)): ?>
-                                <div class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
-                                    <i data-feather="layers" class="w-4 h-4 text-neutral-400"></i>
-                                    Grupo:
-                                    <?= htmlspecialchars($course->group_code ?? '—') ?>
-                                    <?php if (!empty($course->group_title)): ?>
-                                      · <?= htmlspecialchars($course->group_title) ?>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endif; ?>
+                          <!-- Meta opcional -->
+                          <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
+                              <?php if (!empty($course->group_code) || !empty($course->group_title)): ?>
+                                  <div class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
+                                      <i data-feather="layers" class="w-4 h-4 text-neutral-400"></i>
+                                      Grupo:
+                                      <?= $esc($course->group_code ?? '—') ?>
+                                      <?php if (!empty($course->group_title)): ?>
+                                        · <?= $esc($course->group_title) ?>
+                                      <?php endif; ?>
+                                  </div>
+                              <?php endif; ?>
 
-                            <?php if (!empty($course->mg_code)): ?>
-                                <div class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
-                                    <i data-feather="tag" class="w-4 h-4 text-neutral-400"></i>
-                                    Relación MG: <?= htmlspecialchars($course->mg_code) ?>
-                                </div>
-                            <?php endif; ?>
+                              <?php if (!empty($course->mg_code)): ?>
+                                  <div class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
+                                      <i data-feather="tag" class="w-4 h-4 text-neutral-400"></i>
+                                      Relación MG: <?= $esc($course->mg_code) ?>
+                                  </div>
+                              <?php endif; ?>
 
-                            <?php if (!empty($course->start_time) || !empty($course->room)): ?>
-                                <div class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
-                                    <i data-feather="clock" class="w-4 h-4 text-neutral-400"></i>
-                                    <?= !empty($course->start_time)
-                                        ? htmlspecialchars(($course->day_of_week ?? '')).' '.htmlspecialchars($course->start_time).'–'.htmlspecialchars($course->end_time ?? '')
-                                        : 'Horario por definir' ?>
-                                    <?php if (!empty($course->room)): ?> · Aula <?= htmlspecialchars($course->room) ?><?php endif; ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                              <?php if (!empty($course->start_time) || !empty($course->room)): ?>
+                                  <div class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
+                                      <i data-feather="clock" class="w-4 h-4 text-neutral-400"></i>
+                                      <?= !empty($course->start_time)
+                                          ? $esc(($course->day_of_week ?? '').' '.($course->start_time).'–'.($course->end_time ?? ''))
+                                          : 'Horario por definir' ?>
+                                      <?php if (!empty($course->room)): ?> · Aula <?= $esc($course->room) ?><?php endif; ?>
+                                  </div>
+                              <?php endif; ?>
+                          </div>
 
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                                    <i data-feather="user" class="w-4 h-4 text-primary-600 dark:text-primary-400"></i>
-                                </div>
-                                <span class="text-sm text-neutral-600 dark:text-neutral-300">
-                                  <?php
-                                    // Si viniera desde la consulta (no la usamos ahora), úsalo; si no, toma de sesión
-                                    if (!empty($course->teacher_name)) {
-                                        echo htmlspecialchars($course->teacher_name);
-                                    } elseif ($isTeacher && $sessionTeacherName !== '') {
-                                        echo htmlspecialchars($sessionTeacherName);
-                                    } else {
-                                        echo 'Profesor';
-                                    }
-                                  ?>
-                                </span>
-                            </div>
+                          <div class="flex items-center justify-between">
+                              <div class="flex items-center space-x-2">
+                                  <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
+                                      <i data-feather="user" class="w-4 h-4 text-primary-600 dark:text-primary-400"></i>
+                                  </div>
+                                  <span class="text-sm text-neutral-600 dark:text-neutral-300">
+                                    <?php
+                                      if (!empty($course->teacher_name)) {
+                                          echo $esc($course->teacher_name);
+                                      } elseif ($isTeacher && $sessionTeacherName !== '') {
+                                          echo $esc($sessionTeacherName);
+                                      } else {
+                                          echo 'Profesor';
+                                      }
+                                    ?>
+                                  </span>
+                              </div>
 
-                            <?php if (isset($course->student_count)): ?>
-                                <div class="flex items-center space-x-1">
-                                    <i data-feather="users" class="w-4 h-4 text-neutral-400"></i>
-                                    <span class="text-sm text-neutral-500 dark:text-neutral-400">
-                                        <?= (int)$course->student_count ?> estudiantes
-                                    </span>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                              <?php if (isset($course->student_count)): ?>
+                                  <div class="flex items-center space-x-1">
+                                      <i data-feather="users" class="w-4 h-4 text-neutral-400"></i>
+                                      <span class="text-sm text-neutral-500 dark:text-neutral-400">
+                                          <?= (int)$course->student_count ?> estudiantes
+                                      </span>
+                                  </div>
+                              <?php endif; ?>
+                          </div>
 
-                        <div class="mt-4 flex items-center justify-end">
-                            <a href="#" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium">
-                                Ver detalles
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                          <div class="mt-4 flex items-center justify-end">
+                              <span class="text-primary-600 group-hover:text-primary-700 dark:text-primary-400 dark:group-hover:text-primary-300 text-sm font-medium">
+                                  Abrir curso
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+                </a>
             <?php endforeach; ?>
         <?php else: ?>
             <div class="col-span-full text-center py-12">

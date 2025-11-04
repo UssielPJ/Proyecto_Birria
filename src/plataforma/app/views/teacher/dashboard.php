@@ -1,7 +1,21 @@
 <?php
-// The controller already loads the data, so we don't need to re-declare models or fetch data here.
-// The variables $user, $teacherCourses, $totalStudents, $pendingGrades, $recentGradeUpdates, $weekSchedule, $nextClass are passed from the controller.
+// The controller already loads the data.
+// Variables esperadas: $user, $teacherCourses, $totalStudents, $pendingGrades, $recentGradeUpdates, $weekSchedule, $nextClass, $semesterProgress
 
+/* ===== Helpers seguros para vista ===== */
+$esc = function ($v) { return htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8'); };
+$get = function ($item, string $key, $default = null) {
+    if (is_array($item))  { return array_key_exists($key, $item) ? $item[$key] : $default; }
+    if (is_object($item)) { return isset($item->$key) ? $item->$key : $default; }
+    return $default;
+};
+
+/* Normalizaciones por si vienen nulos/mixtos */
+$teacherCourses      = is_array($teacherCourses ?? null) ? $teacherCourses : [];
+$totalStudents       = (int)($totalStudents ?? 0);
+$pendingGrades       = is_array($pendingGrades ?? null) ? $pendingGrades : [];
+$recentGradeUpdates  = is_array($recentGradeUpdates ?? null) ? $recentGradeUpdates : [];
+$semesterProgress    = (int)($semesterProgress ?? 0);
 ?>
 <div class="container px-6 py-8">
     <!-- Bienvenida -->
@@ -12,7 +26,7 @@
                 <i data-feather="book-open" class="w-8 h-8"></i>
             </div>
             <div>
-                <h2 class="text-2xl font-bold mb-1 animate-fade-in">¡Bienvenido, <?= htmlspecialchars($user['name']) ?>!</h2>
+                <h2 class="text-2xl font-bold mb-1 animate-fade-in">¡Bienvenido, <?= $esc($user['name'] ?? ($user['nombre'] ?? 'Profesor')) ?>!</h2>
                 <p class="opacity-90 animate-fade-in animation-delay-200">Administra tus clases, estudiantes y calificaciones desde aquí.</p>
             </div>
         </div>
@@ -65,7 +79,7 @@
 
         <!-- Calificaciones Pendientes -->
         <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg p-6 border border-purple-200 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden" data-aos="fade-up" data-aos-delay="200" data-tooltip="Calificaciones que requieren tu atención">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 transition-opacity duración-300"></div>
             <div class="relative flex items-center justify-between">
                 <div>
                     <p class="text-purple-600 text-sm font-medium">Calificaciones Pendientes</p>
@@ -111,7 +125,7 @@ feather.replace();
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
     counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
+        const target = parseInt(counter.getAttribute('data-target')) || 0;
         const duration = 2000;
         const step = target / (duration / 16);
         let current = 0;
@@ -193,7 +207,7 @@ document.querySelectorAll('.grid > div').forEach(card => {
 
 // Animate progress bars
 document.querySelectorAll('.counter-bar').forEach(bar => {
-    const width = bar.getAttribute('data-width');
+    const width = bar.getAttribute('data-width') || '0%';
     bar.style.width = '0%';
     setTimeout(() => {
         bar.style.transition = 'width 1.5s ease-out';
@@ -277,17 +291,28 @@ window.addEventListener('load', function() {
         <div class="bg-white rounded-xl shadow-sm p-6" data-aos="fade-up">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-gray-800">Mis Cursos Activos</h3>
-                <a href="/src/plataforma/app/courses" class="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                <a href="/src/plataforma/app/teacher/courses" class="text-blue-600 hover:text-blue-700 text-sm font-medium">
                     Ver todos
                 </a>
             </div>
             <div class="space-y-3">
                 <?php if (!empty($teacherCourses)): ?>
                     <?php foreach ($teacherCourses as $course): ?>
+                        <?php
+                            // Nombre del curso (acepta name/nombre)
+                            $cName = $get($course, 'name', $get($course, 'nombre', '(Sin nombre)'));
+                            // Conteo de estudiantes: usa student_count si existe; si no, intenta arrays alternos (alumnos/enrolled/students)
+                            $studentCount = $get($course, 'student_count', null);
+                            if ($studentCount === null) {
+                                $alumnos  = $get($course, 'alumnos', $get($course, 'enrolled', $get($course, 'students', [])));
+                                $studentCount = is_array($alumnos) ? count($alumnos) : 0;
+                            }
+                            $studentCount = (int)$studentCount;
+                        ?>
                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <div>
-                                <h4 class="font-medium text-gray-800"><?= htmlspecialchars($course->name) ?></h4>
-                                <p class="text-sm text-gray-500"><?= $course->student_count ?> estudiantes</p>
+                                <h4 class="font-medium text-gray-800"><?= $esc($cName) ?></h4>
+                                <p class="text-sm text-gray-500"><?= $studentCount ?> estudiantes</p>
                             </div>
                             <div class="text-right">
                                 <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
@@ -316,14 +341,19 @@ window.addEventListener('load', function() {
             <div class="space-y-3">
                 <?php if (!empty($recentGradeUpdates)): ?>
                     <?php foreach ($recentGradeUpdates as $grade): ?>
+                        <?php
+                            $studentName = $get($grade, 'student_name', $get($grade, 'alumno', '(Sin nombre)'));
+                            $courseName  = $get($grade, 'course_name', $get($grade, 'curso', '(Sin curso)'));
+                            $gradeVal    = (float)$get($grade, 'grade', (float)$get($grade, 'calificacion', 0));
+                        ?>
                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <div>
-                                <h4 class="font-medium text-gray-800"><?= htmlspecialchars($grade->student_name) ?></h4>
-                                <p class="text-sm text-gray-500"><?= htmlspecialchars($grade->course_name) ?></p>
+                                <h4 class="font-medium text-gray-800"><?= $esc($studentName) ?></h4>
+                                <p class="text-sm text-gray-500"><?= $esc($courseName) ?></p>
                             </div>
                             <div class="text-right">
-                                <span class="text-lg font-bold <?= $grade->grade >= 7 ? 'text-green-600' : 'text-red-600' ?>">
-                                    <?= number_format($grade->grade, 1) ?>
+                                <span class="text-lg font-bold <?= $gradeVal >= 7 ? 'text-green-600' : 'text-red-600' ?>">
+                                    <?= number_format($gradeVal, 1) ?>
                                 </span>
                             </div>
                         </div>

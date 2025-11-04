@@ -5,8 +5,21 @@ use App\Core\Database;
 use PDO;
 
 class AuthController {
-  public function showLogin(){ require __DIR__ . '/../views/auth/login.php'; }
 
+  /* ====== Vista de login con soporte de "toast" ====== */
+  public function showLogin(){
+    if (session_status()===PHP_SESSION_NONE) session_start();
+
+    // Si viene un flash_error de algún redirect anterior, lo mostramos como toast y lo limpiamos.
+    $flash = $_SESSION['flash_error'] ?? null;
+    if ($flash) unset($_SESSION['flash_error']);
+
+    // Render simple (la vista puede leer variables locales)
+    $error = $flash; // compat: la vista podría imprimir $error también
+    $this->renderLoginView($error);
+  }
+
+  /* ====== POST /login ====== */
   public function login(){
     if (session_status()===PHP_SESSION_NONE) session_start();
 
@@ -15,8 +28,8 @@ class AuthController {
     $pass  = $_POST['password'] ?? '';
 
     if ($ident === '' || $pass === '') {
-      $_SESSION['flash_error'] = 'Ingresa tu identificador y contraseña.';
-      header('Location: /src/plataforma/login'); exit;
+      // En lugar de redirigir, renderizamos con mensaje flotante
+      return $this->renderLoginView('Ingresa tu identificador y contraseña.');
     }
 
     $db = new Database();
@@ -55,14 +68,13 @@ class AuthController {
       }
     }
 
+    // Validación de credenciales
     if (!$u || !isset($u->password) || !password_verify($pass, $u->password)) {
-      $_SESSION['flash_error'] = 'Identificador o contraseña inválidos.';
-      header('Location: /src/plataforma/login'); exit;
+      return $this->renderLoginView('Identificador o contraseña inválidos.');
     }
 
     if (isset($u->status) && $u->status !== 'active') {
-      $_SESSION['flash_error'] = 'Tu cuenta está inactiva.';
-      header('Location: /src/plataforma/login'); exit;
+      return $this->renderLoginView('Tu cuenta está inactiva.');
     }
 
     // 2) Roles por tabla pivote (si existen)
@@ -124,12 +136,13 @@ class AuthController {
     } elseif ($first === 'teacher') {
       header('Location: /src/plataforma/app/teacher'); exit;
     } elseif ($first === 'student') {
+      // Ajusta esta ruta si tu dashboard de alumno es otra
       header('Location: /src/plataforma/app'); exit;
     } elseif ($first === 'capturista') {
       header('Location: /src/plataforma/capturista'); exit;
     } else {
-      $_SESSION['flash_error'] = 'Tu cuenta no tiene un rol asignado.';
-      header('Location: /src/plataforma/login'); exit;
+      // Si alguien entra sin rol, mostramos toast y devolvemos la vista (sin 404)
+      return $this->renderLoginView('Tu cuenta no tiene un rol asignado.');
     }
   }
 
@@ -142,5 +155,49 @@ class AuthController {
     }
     session_destroy();
     header('Location: /src/plataforma/'); exit;
+  }
+
+  /* ====== Helper para renderizar la vista con mensaje flotante ====== */
+  private function renderLoginView(?string $errorMessage = null): void {
+    http_response_code($errorMessage ? 401 : 200);
+
+    // Salimos en limpio a la misma vista y montamos un "toast" ligero si hay error
+    // (Si tu vista ya imprime $_SESSION['flash_error'] o $error, también funcionará).
+    $error = $errorMessage;
+
+    // Carga la vista en buffer para poder anteponer el toast
+    ob_start();
+    require __DIR__ . '/../views/auth/login.php';
+    $viewHtml = ob_get_clean();
+
+    if ($errorMessage) {
+      // Toast minimalista (Tailwind-friendly). Se auto-cierra en 3.5s.
+      $toast = <<<HTML
+      <div id="login-toast" class="fixed top-5 right-5 z-50 bg-red-600 text-white px-5 py-3 rounded-xl shadow-lg"
+           style="animation: fadein .2s ease-out;">
+        {$this->e($errorMessage)}
+      </div>
+      <style>
+        @keyframes fadein { from {opacity:0; transform: translateY(-4px);} to {opacity:1; transform: translateY(0);} }
+        @keyframes fadeout{ from {opacity:1;} to {opacity:0;} }
+      </style>
+      <script>
+        setTimeout(function(){
+          var t = document.getElementById('login-toast');
+          if(!t) return;
+          t.style.animation = 'fadeout .25s ease-in forwards';
+          setTimeout(function(){ if(t && t.parentNode) t.parentNode.removeChild(t); }, 280);
+        }, 3500);
+      </script>
+      HTML;
+      echo $toast . $viewHtml;
+    } else {
+      echo $viewHtml;
+    }
+    exit; // Importante: detenemos el flujo aquí para no pasar por Router de nuevo.
+  }
+
+  private function e(string $s): string {
+    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   }
 }

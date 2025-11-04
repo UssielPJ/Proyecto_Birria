@@ -1,3 +1,16 @@
+<?php
+// Helpers para la vista (evitan warnings por null y por array/objeto)
+$esc = function($v) { return htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8'); };
+$get = function($item, string $key, $default = null) {
+    if (is_array($item))  return array_key_exists($key, $item) ? $item[$key] : $default;
+    if (is_object($item)) return isset($item->$key) ? $item->$key : $default;
+    return $default;
+};
+
+// Atajos para stats/metrics seguros
+$stats   = is_array($stats   ?? null) ? $stats   : [];
+$metrics = is_array($metrics ?? null) ? $metrics : [];
+?>
 <!-- Bienvenida -->
 <div class="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-xl p-6 text-white mb-8 shadow-2xl relative overflow-hidden" data-aos="fade-up">
     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
@@ -23,7 +36,7 @@
         <div class="relative flex items-center justify-between">
             <div>
                 <p class="text-red-600 text-sm font-medium">Total Estudiantes</p>
-                <h3 class="text-3xl font-bold mt-1 text-red-800 counter" data-target="<?= $stats['total_students'] ?>">0</h3>
+                <h3 class="text-3xl font-bold mt-1 text-red-800 counter" data-target="<?= (int)($stats['total_students'] ?? 0) ?>">0</h3>
                 <p class="text-red-500 text-xs mt-1">↗️ +12% este mes</p>
             </div>
             <div class="p-4 rounded-xl bg-red-100 shadow-inner group-hover:bg-red-200 group-hover:rotate-12 transition-all duration-300">
@@ -39,7 +52,7 @@
         <div class="relative flex items-center justify-between">
             <div>
                 <p class="text-orange-600 text-sm font-medium">Total Profesores</p>
-                <h3 class="text-3xl font-bold mt-1 text-orange-800 counter" data-target="<?= $stats['total_teachers'] ?>">0</h3>
+                <h3 class="text-3xl font-bold mt-1 text-orange-800 counter" data-target="<?= (int)($stats['total_teachers'] ?? 0) ?>">0</h3>
                 <p class="text-orange-500 text-xs mt-1">↗️ +2% este mes</p>
             </div>
             <div class="p-4 rounded-xl bg-orange-100 shadow-inner group-hover:bg-orange-200 group-hover:rotate-12 transition-all duration-300">
@@ -55,7 +68,7 @@
         <div class="relative flex items-center justify-between">
             <div>
                 <p class="text-yellow-600 text-sm font-medium">Total Materias</p>
-                <h3 class="text-3xl font-bold mt-1 text-yellow-800 counter" data-target="<?= $stats['total_subjects'] ?>">0</h3>
+                <h3 class="text-3xl font-bold mt-1 text-yellow-800 counter" data-target="<?= (int)($stats['total_subjects'] ?? 0) ?>">0</h3>
                 <p class="text-yellow-500 text-xs mt-1">→ Sin cambios</p>
             </div>
             <div class="p-4 rounded-xl bg-yellow-100 shadow-inner group-hover:bg-yellow-200 group-hover:rotate-12 transition-all duration-300">
@@ -71,7 +84,7 @@
         <div class="relative flex items-center justify-between">
             <div>
                 <p class="text-amber-600 text-sm font-medium">Cursos Activos</p>
-                <h3 class="text-3xl font-bold mt-1 text-amber-800 counter" data-target="<?= $stats['active_courses'] ?>">0</h3>
+                <h3 class="text-3xl font-bold mt-1 text-amber-800 counter" data-target="<?= (int)($stats['active_courses'] ?? 0) ?>">0</h3>
                 <p class="text-amber-500 text-xs mt-1">↗️ +5% este mes</p>
             </div>
             <div class="p-4 rounded-xl bg-amber-100 shadow-inner group-hover:bg-amber-200 group-hover:rotate-12 transition-all duration-300">
@@ -116,20 +129,31 @@
   <section class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6" data-aos="fade-up">
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-xl font-bold text-gray-800 dark:text-white">Últimos estudiantes</h2>
-      <a href="#" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
+      <a href="students" class="text-primary-700 dark:text-primary-300 text-sm">Ver todos</a>
     </div>
 
     <div class="space-y-4">
-      <?php if (!empty($stats['recent_users'])): ?>
+      <?php if (!empty($stats['recent_users']) && is_array($stats['recent_users'])): ?>
         <?php foreach ($stats['recent_users'] as $user): ?>
+          <?php
+            // Intentar varios campos: name / nombre
+            $name = $get($user, 'name', $get($user, 'nombre', 'Sin nombre'));
+            // Intentar role / rol / roles[0]
+            $role = $get($user, 'role', $get($user, 'rol', null));
+            if ($role === null) {
+                $rolesField = $get($user, 'roles', []);
+                if (is_array($rolesField) && !empty($rolesField)) $role = $rolesField[0];
+            }
+            $role = $role ?: 'Estudiante';
+          ?>
           <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
             <div class="flex items-center gap-3">
               <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
                 <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
               </div>
               <div>
-                <h3 class="font-medium"><?= htmlspecialchars($user->name) ?></h3>
-                <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= htmlspecialchars($user->role ?? 'Unknown') ?></p>
+                <h3 class="font-medium"><?= $esc($name) ?></h3>
+                <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $esc($role) ?></p>
               </div>
             </div>
             <span class="text-xs bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-2 py-1 rounded-full">Nuevo</span>
@@ -155,7 +179,7 @@
           </div>
           <div>
             <h3 class="font-medium">Documentos faltantes</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $stats['incomplete_documents'] ?> estudiantes con documentos incompletos</p>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= (int)($stats['incomplete_documents'] ?? 0) ?> estudiantes con documentos incompletos</p>
           </div>
         </div>
         <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
@@ -170,7 +194,7 @@
           </div>
           <div>
             <h3 class="font-medium">Pagos pendientes</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $stats['pending_payments'] ?> pagos pendientes de confirmación</p>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= (int)($stats['pending_payments'] ?? 0) ?> pagos pendientes de confirmación</p>
           </div>
         </div>
         <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
@@ -185,7 +209,7 @@
           </div>
           <div>
             <h3 class="font-medium">Solicitudes pendientes</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $metrics['pending_solicitudes'] ?? 0 ?>solicitudes requieren atención</p>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= (int)($metrics['pending_solicitudes'] ?? 0) ?> solicitudes requieren atención</p>
           </div>
         </div>
         <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700">
@@ -204,16 +228,21 @@
  </div>
 
  <div class="space-y-4">
-   <?php if (!empty($stats['recent_subjects'])): ?>
+   <?php if (!empty($stats['recent_subjects']) && is_array($stats['recent_subjects'])): ?>
      <?php foreach ($stats['recent_subjects'] as $subject): ?>
+       <?php
+         $subjName  = $get($subject, 'name', $get($subject, 'nombre', '(Sin nombre)'));
+         $subjCode  = $get($subject, 'code', $get($subject, 'clave', ''));
+         $creditos  = (int)$get($subject, 'creditos', (int)$get($subject, 'credits', 0));
+       ?>
        <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-700 rounded-lg">
          <div class="flex items-center gap-3">
            <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
              <i data-feather="book" class="text-amber-600 dark:text-amber-400"></i>
            </div>
            <div>
-             <h3 class="font-medium"><?= htmlspecialchars($subject->name) ?></h3>
-             <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= htmlspecialchars($subject->code ?? '') ?> · <?= $subject->creditos ?? 0 ?> créditos</p>
+             <h3 class="font-medium"><?= $esc($subjName) ?></h3>
+             <p class="text-sm text-neutral-500 dark:text-neutral-400"><?= $esc($subjCode) ?> · <?= $creditos ?> créditos</p>
            </div>
          </div>
          <span class="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-1 rounded-full">Nueva</span>
@@ -233,7 +262,7 @@ feather.replace();
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
     counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
+        const target = parseInt(counter.getAttribute('data-target')) || 0;
         const duration = 2000; // 2 seconds
         const step = target / (duration / 16); // 60fps
         let current = 0;

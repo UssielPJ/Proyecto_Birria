@@ -1,13 +1,15 @@
-# /src/plataforma/.htaccess
 RewriteEngine On
 RewriteBase /src/plataforma/
 
 Options -Indexes
 
-# Si es un archivo físico o un directorio, NO reescribas
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
+# 1) Si es un archivo físico, NO reescribas
+RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# Todo lo demás al front controller
-RewriteRule ^ index.php [QSA,L]
+# 2) (Opcional) Libera assets estáticos por carpeta completa
+RewriteCond %{REQUEST_URI} ^/src/plataforma/(assets|public|uploads)/ [NC]
+RewriteRule ^ - [L]
+
+# 3) Todo lo demás (incluye directorios reales como /app) al front controller
+RewriteRule . index.php [QSA,L]

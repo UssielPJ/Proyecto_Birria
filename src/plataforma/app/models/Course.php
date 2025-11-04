@@ -159,26 +159,54 @@ public function create(array $data): bool
 public function getByTeacher(int $teacherUserId): array
 {
     $sql = "
-        SELECT DISTINCT
-            m.id,
-            m.nombre AS name,
-            m.clave  AS code,
+        SELECT
+            mg.id                  AS mg_id,         -- clave para el hub
+            mg.codigo              AS mg_code,
+            m.id                   AS materia_id,
+            m.nombre               AS name,
+            m.clave                AS code,
             m.status,
             m.created_at,
-            -- datos del grupo
-            g.codigo  AS group_code,   -- código oficial del grupo (tabla grupos)
-            g.titulo  AS group_title,  -- título/alias del grupo (si lo usas)
-            mg.codigo AS mg_code       -- código de la relación materia-grupo (opcional para distinguir grupos por materia)
+
+            g.id                   AS group_id,
+            g.codigo               AS group_code,
+            COALESCE(g.titulo, '') AS group_title,  -- ← ya no usamos g.nombre
+
+            -- Conteo de alumnos usando student_profiles
+            COALESCE((
+                SELECT COUNT(*) FROM student_profiles sp
+                WHERE sp.grupo_id = mg.grupo_id
+            ), 0) AS student_count,
+
+            -- Resumen de horario (si existe la tabla 'horarios')
+            h.day_of_week,
+            h.start_time,
+            h.end_time,
+            h.room
         FROM materia_grupo_profesor mgp
         INNER JOIN materias_grupos mg ON mg.id = mgp.mg_id
         INNER JOIN materias m         ON m.id = mg.materia_id
-        LEFT  JOIN grupos g           ON g.id = mg.grupo_id
-        WHERE mgp.teacher_user_id = :uid
+        LEFT JOIN grupos g            ON g.id = mg.grupo_id
+
+        LEFT JOIN (
+            SELECT 
+                h.group_id,
+                h.materia_id,
+                MIN(h.dia_semana)  AS day_of_week,
+                MIN(h.hora_inicio) AS start_time,
+                MAX(h.hora_fin)    AS end_time,
+                MIN(h.aula)        AS room
+            FROM horarios h
+            GROUP BY h.group_id, h.materia_id
+        ) h ON h.group_id = mg.grupo_id AND h.materia_id = mg.materia_id
+
+        WHERE mgp.teacher_user_id = :tid
         ORDER BY m.nombre ASC, g.codigo ASC, mg.codigo ASC
     ";
-    $this->db->query($sql, [':uid' => $teacherUserId]);
-    return $this->db->fetchAll();
+    $this->db->query($sql, [':tid' => $teacherUserId]);
+    return $this->db->fetchAll() ?: [];
 }
+
 
 
 

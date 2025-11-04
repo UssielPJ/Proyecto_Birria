@@ -18,17 +18,16 @@ if (!empty($_SESSION['user']['roles']) && is_array($_SESSION['user']['roles'])) 
 }
 
 
-// Reusar tu conexión y config
-require __DIR__ . '/app/config/app.php';
-
-// Incluir db.php para inicializar $pdo global
-require_once __DIR__ . '/../db.php';
-
-// cargar core y controladores
+// cargar core y controladores/modelos/helpers
 foreach (glob(__DIR__ . '/app/core/*.php') as $f) require_once $f;
 foreach (glob(__DIR__ . '/app/controllers/*.php') as $f) require_once $f;
 foreach (glob(__DIR__ . '/app/models/*.php') as $f) require_once $f;
+foreach (glob(__DIR__ . '/app/helpers/*.php') as $f) require_once $f; // <--- NUEVO
 
+// configurar storage y garantizar carpetas
+$__filesCfg = require __DIR__ . '/app/config/files.php';
+\App\Helpers\Storage::ensureDirs($__filesCfg);
+use App\Core\Router;
 use App\Controllers\AuthController;
 use App\Controllers\NotificationsController;
 use App\Controllers\PaymentsController;
@@ -56,6 +55,7 @@ use App\Controllers\CareersController;
 use App\Controllers\SemestersController;
 use App\Controllers\MateriaGrupoController;
 use App\Controllers\MateriaGrupoProfesorController;
+use App\Controllers\TeacherCoursesController;
 
 $router = new Router();
 
@@ -113,6 +113,12 @@ $map('POST', '/src/plataforma/app/surveys/submit/{id}',      [new SurveysControl
 /* ========== Panel MAESTRO ========== */
 $map('GET', '/src/plataforma/app/teacher',            [new \App\Controllers\TeacherDashboardController,'index']);
 $map('GET', '/src/plataforma/app/teacher/courses',    [new CoursesController, 'index']);
+// Hub del curso (mg_id por query ?id=...)
+$map('GET',  '/src/plataforma/app/teacher/courses/show', [new TeacherCoursesController, 'show']);
+$map('POST', '/src/plataforma/app/teacher/courses/task/store', [new TeacherCoursesController, 'storeTask']);
+$map('POST', '/src/plataforma/app/teacher/courses/task/grade', [new TeacherCoursesController, 'gradeSubmission']);
+$map('POST', '/src/plataforma/app/teacher/courses/resource/store', [new TeacherCoursesController, 'storeResource']);
+
 $map('GET', '/src/plataforma/app/teacher/horario',    [new ScheduleController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/grades',     [new GradesController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/students',   [new StudentsController, 'index']);
