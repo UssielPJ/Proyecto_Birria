@@ -42,6 +42,7 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
         ['href' => '/src/plataforma/app',                   'icon' => 'home',       'text' => 'Panel'],
         ['href' => '/src/plataforma/app/student/profile',   'icon' => 'user',       'text' => 'Perfil'],
         ['href' => '/src/plataforma/app/materias',          'icon' => 'book-open',  'text' => 'Materias'],
+        ['href' => '/src/plataforma/app/materias', 'icon' => 'check-square', 'text' => 'Tareas'],
         ['href' => '/src/plataforma/app/horario',           'icon' => 'calendar',   'text' => 'Horario'],
         ['href' => '/src/plataforma/app/calificaciones',    'icon' => 'award',      'text' => 'Calificaciones'],
         ['href' => '/src/plataforma/app/scholarships',      'icon' => 'gift',       'text' => 'Becas'],
