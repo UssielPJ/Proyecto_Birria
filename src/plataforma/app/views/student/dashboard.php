@@ -53,7 +53,7 @@ $progress = (int)($semesterProgress ?? 0);
             <div class="relative flex items-center justify-between mb-4">
                 <div>
                     <p class="text-emerald-600 dark:text-emerald-300 text-sm font-medium">Cursos Activos</p>
-                    <h3 class="text-3xl font-bold mt-1 text-emerald-800 dark:text-emerald-100 counter" data-target="<?= count($currentCourses ?? []) ?>">0</h3>
+                    <h3 class="text-3xl font-bold mt-1 text-emerald-800 dark:text-emerald-100 counter" data-target="<?= count($currentCourses ?? []) ?>"><?= count($currentCourses ?? []) ?></h3>
                     <p class="text-emerald-500 dark:text-emerald-300 text-xs mt-1">Este semestre</p>
                 </div>
                 <div class="p-4 rounded-xl bg-emerald-100 dark:bg-neutral-700 shadow-inner group-hover:bg-emerald-200 group-hover:rotate-12 transition-all duration-300">
@@ -73,7 +73,7 @@ $progress = (int)($semesterProgress ?? 0);
             <div class="relative flex items-center justify-between mb-4">
                 <div>
                     <p class="text-teal-600 dark:text-teal-300 text-sm font-medium">Promedio General</p>
-                    <h3 class="text-3xl font-bold mt-1 text-teal-800 dark:text-teal-100 counter" data-target="<?= number_format($avg, 1) ?>">0</h3>
+                    <h3 class="text-3xl font-bold mt-1 text-teal-800 dark:text-teal-100 counter" data-target="<?= number_format($averageGrade ?? 0, 1) ?>"><?= number_format($averageGrade ?? 0, 1) ?></h3>
                     <p class="text-teal-500 dark:text-teal-300 text-xs mt-1">Calificación promedio</p>
                 </div>
                 <div class="p-4 rounded-xl bg-teal-100 dark:bg-neutral-700 shadow-inner group-hover:bg-teal-200 group-hover:rotate-12 transition-all duration-300">
@@ -93,7 +93,7 @@ $progress = (int)($semesterProgress ?? 0);
             <div class="relative flex items-center justify-between mb-4">
                 <div>
                     <p class="text-cyan-600 dark:text-cyan-300 text-sm font-medium">Progreso Semestre</p>
-                    <h3 class="text-3xl font-bold mt-1 text-cyan-800 dark:text-cyan-100 counter" data-target="<?= $progress ?>">0</h3>
+                    <h3 class="text-3xl font-bold mt-1 text-cyan-800 dark:text-cyan-100 counter" data-target="<?= (int)($semesterProgress ?? 0) ?>"><?= (int)($semesterProgress ?? 0) ?></h3>
                     <p class="text-cyan-500 dark:text-cyan-300 text-xs mt-1">Completado</p>
                 </div>
                 <div class="p-4 rounded-xl bg-cyan-100 dark:bg-neutral-700 shadow-inner group-hover:bg-cyan-200 group-hover:rotate-12 transition-all duration-300">
@@ -101,7 +101,7 @@ $progress = (int)($semesterProgress ?? 0);
                 </div>
             </div>
             <div class="mt-4 mb-2 bg-cyan-200 dark:bg-neutral-700 rounded-full h-3 overflow-hidden">
-                <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-3 rounded-full transition-all duration-1000 ease-out counter-bar" data-width="<?= $progress ?>%"></div>
+                <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-3 rounded-full transition-all duration-1000 ease-out counter-bar" data-width="<?= (int)($semesterProgress ?? 0) ?>%"></div>
             </div>
             <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
         </div>
@@ -126,8 +126,8 @@ $progress = (int)($semesterProgress ?? 0);
                             <?= $label ?> · <?= $horaIni ?>–<?= $horaFin ?> · Aula <?= $aula ?> · Prof. <?= $prof ?>
                         </p>
                     <?php else: ?>
-                        <h3 class="text-lg font-bold mt-1 text-blue-800 dark:text-blue-100">Sin clases próximas</h3>
-                        <p class="text-sm text-blue-500 dark:text-blue-300">Revisa tu horario</p>
+                        <h3 class="text-lg font-bold mt-1 text-blue-800 dark:text-blue-100"><?= empty($nextClass) ? 'Sin clases próximas' : htmlspecialchars($nextClass['materia_nombre'] ?? 'Clase') ?></h3>
+                        <p class="text-sm text-blue-500 dark:text-blue-300"><?= empty($nextClass) ? 'Revisa tu horario' : '' ?></p>
                     <?php endif; ?>
                 </div>
                 <div class="p-4 rounded-xl bg-blue-100 dark:bg-neutral-700 shadow-inner group-hover:bg-blue-200 group-hover:rotate-12 transition-all duration-300">
@@ -184,7 +184,7 @@ $progress = (int)($semesterProgress ?? 0);
                 <?php else: ?>
                     <div class="text-center py-12 text-gray-500 dark:text-gray-300">
                         <i data-feather="book" class="w-16 h-16 mx-auto mb-4 text-gray-300 dark:text-neutral-600"></i>
-                        <p class="text-lg">No tienes cursos activos</p>
+                        <p class="text-lg"><?= empty($currentCourses) ? 'No tienes cursos activos' : 'Tus cursos' ?></p>
                         <p class="text-sm mt-2">Contacta a administración para inscribirte</p>
                     </div>
                 <?php endif; ?>
@@ -232,7 +232,7 @@ $progress = (int)($semesterProgress ?? 0);
                 <?php else: ?>
                     <div class="text-center py-12 text-gray-500 dark:text-gray-300">
                         <i data-feather="award" class="w-16 h-16 mx-auto mb-4 text-gray-300 dark:text-neutral-600"></i>
-                        <p class="text-lg">No tienes calificaciones registradas</p>
+                        <p class="text-lg"><?= empty($recentGrades) ? 'No tienes calificaciones registradas' : 'Tus calificaciones recientes' ?></p>
                         <p class="text-sm mt-2">Tus calificaciones aparecerán aquí</p>
                     </div>
                 <?php endif; ?>

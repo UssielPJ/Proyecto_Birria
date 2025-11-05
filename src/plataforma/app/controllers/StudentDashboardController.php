@@ -44,6 +44,13 @@ class StudentDashboardController {
     } catch (\Exception $e) {
         $weekSchedule = [];
     }
+    
+    // Obtener próxima clase
+    try {
+        $nextClass = $scheduleModel->getNextClass($user['id']);
+    } catch (\Exception $e) {
+        $nextClass = null;
+    }
 
     // Calcula el progreso del semestre basado en la fecha actual
     $startDateStr = '2025-08-15'; // Default
@@ -66,7 +73,8 @@ class StudentDashboardController {
       'averageGrade' => $averageGrade,
       'weekSchedule' => $weekSchedule,
       'scheduleModel' => $scheduleModel,
-      'semesterProgress' => $semesterProgress
+      'semesterProgress' => $semesterProgress,
+      'nextClass' => $nextClass
     ]);
   }
 }

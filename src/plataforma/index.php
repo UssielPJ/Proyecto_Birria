@@ -89,6 +89,13 @@ $map('POST', '/src/plataforma/logout',  [new AuthController, 'logout']);
 /* ========== Panel ALUMNO (requiere login) ========== */
 $map('GET', '/src/plataforma/app',                [new \App\Controllers\StudentDashboardController,'index']);
 $map('GET', '/src/plataforma/app/materias',       [new CoursesController,        'index']);
+$map('GET', '/src/plataforma/app/tareas',         [new \App\Controllers\TasksController,          'index']);
+$map('GET', '/src/plataforma/app/tareas/pending', [new \App\Controllers\TasksController,          'pending']);
+$map('GET', '/src/plataforma/app/tareas/submitted', [new \App\Controllers\TasksController,          'submitted']);
+$map('GET', '/src/plataforma/app/tareas/overdue', [new \App\Controllers\TasksController,          'overdue']);
+$map('GET', '/src/plataforma/app/tareas/view/{id}', [new \App\Controllers\TasksController,          'view']);
+$map('GET', '/src/plataforma/app/tareas/submit/{id}', [new \App\Controllers\TasksController,          'submit']);
+$map('POST', '/src/plataforma/app/tareas/store/{id}', [new \App\Controllers\TasksController,          'storeSubmission']);
 $map('GET', '/src/plataforma/app/horario',        [new ScheduleController,       'index']);
 $map('GET', '/src/plataforma/app/calificaciones', [new GradesController,         'index']);
 $map('GET', '/src/plataforma/app/encuestas',      [new SurveysController,        'index']);
