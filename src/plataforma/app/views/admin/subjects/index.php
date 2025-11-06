@@ -1,49 +1,22 @@
 <?php
-global $pdo;
-$conn = $pdo;
-
-/* ===== Parámetros ===== */
-$buscar = $_GET['q'] ?? '';
-$status = $_GET['status'] ?? ''; // '', 'activa', 'inactiva'
-$page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit  = 10;
-$offset = ($page - 1) * $limit;
-
-/* ===== WHERE dinámico ===== */
-$where  = [];
-$params = [];
-
-if ($buscar !== '') {
-    $where[] = "(nombre LIKE :buscar OR clave LIKE :buscar)";
-    $params[':buscar'] = "%{$buscar}%";
-}
-if ($status !== '') {
-    $where[] = "status = :status";
-    $params[':status'] = $status;
-}
-$whereClause = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
-
-/* ===== Total ===== */
-$sqlTotal = "SELECT COUNT(*) AS total FROM materias {$whereClause}";
-$stmt = $conn->prepare($sqlTotal);
-$stmt->execute($params);
-$total = (int)($stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0);
-$totalPages = max(1, (int)ceil($total / $limit));
-
-/* ===== Listado ===== */
-$sql = "
-    SELECT id, clave, nombre, status, created_at, updated_at
-    FROM materias
-    {$whereClause}
-    ORDER BY nombre ASC
-    LIMIT {$offset}, {$limit}
-";
-$stmt = $conn->prepare($sql);
-$stmt->execute($params);
-$materias = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-/* Helper */
+// ===== Vista limpia: sin consultas a la DB =====
 $esc = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
+
+$materias   = is_array($materias ?? null) ? $materias : [];
+$total      = (int)($total ?? 0);
+$totalPages = max(1, (int)($totalPages ?? 1));
+$page       = max(1, (int)($page ?? 1));
+$limit      = max(1, (int)($limit ?? 10));
+$buscar     = (string)($buscar ?? '');
+$status     = (string)($status ?? '');
+$offset     = ($page - 1) * $limit;
+
+// Helper para soportar array u objeto
+$get = function($row, string $key) {
+  if (is_array($row))  return $row[$key] ?? null;
+  if (is_object($row)) return $row->$key ?? null;
+  return null;
+};
 ?>
 <main class="p-6">
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -60,7 +33,7 @@ $esc = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
 
   <!-- Filtros y búsqueda -->
   <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-4 mb-6">
-    <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" method="get">
       <div class="sm:col-span-2">
         <label for="q" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Buscar</label>
         <div class="relative">
@@ -108,17 +81,25 @@ $esc = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
         </thead>
         <tbody class="bg-white dark:bg-neutral-800 divide-y divide-neutral-200 dark:divide-neutral-700">
           <?php foreach ($materias as $m): ?>
+            <?php
+              $id     = (int)($get($m,'id') ?? 0);
+              $nombre = $get($m,'nombre');
+              $clave  = $get($m,'clave');
+              $estado = $get($m,'status') ?? 'activa';
+              $creada = $get($m,'created_at');
+              $actual = $get($m,'updated_at');
+            ?>
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                  <?= $esc($m['nombre']) ?>
+                  <?= $esc($nombre) ?>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                <?= $esc($m['clave']) ?>
+                <?= $esc($clave) ?>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <?php if (($m['status'] ?? 'activa') === 'activa'): ?>
+                <?php if ($estado === 'activa'): ?>
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300">
                     Activa
                   </span>
@@ -129,18 +110,18 @@ $esc = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
                 <?php endif; ?>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 dark:text-neutral-400">
-                <?= $esc($m['created_at']) ?>
+                <?= $esc($creada) ?>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 dark:text-neutral-400">
-                <?= $esc($m['updated_at']) ?>
+                <?= $esc($actual) ?>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div class="flex justify-end gap-3">
-                  <a href="/src/plataforma/app/admin/subjects/<?= (int)$m['id'] ?>" 
+                  <a href="/src/plataforma/app/admin/subjects/show/<?= $id ?>" 
                      class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">Ver</a>
-                  <a href="/src/plataforma/app/admin/subjects/edit/<?= (int)$m['id'] ?>" 
+                  <a href="/src/plataforma/app/admin/subjects/edit/<?= $id ?>" 
                      class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">Editar</a>
-                  <button onclick="confirmDelete(<?= (int)$m['id'] ?>)" 
+                  <button type="button" onclick="confirmDelete(<?= $id ?>)" 
                           class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Eliminar</button>
                 </div>
               </td>
@@ -221,7 +202,16 @@ $esc = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
 
 <script>
   feather.replace();
+
   document.querySelector('select[name="status"]')?.addEventListener('change', (e) => {
     e.target.closest('form').submit();
   });
+
+  function confirmDelete(id) {
+    if (!id) return;
+    if (confirm('¿Eliminar materia #' + id + '?')) {
+      // GET simple; si manejas CSRF/POST, cambia por form POST.
+      window.location.href = '/src/plataforma/app/admin/subjects/delete/' + id;
+    }
+  }
 </script>

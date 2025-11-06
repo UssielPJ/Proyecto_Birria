@@ -255,6 +255,7 @@ $map('POST', '/src/plataforma/app/admin/subjects/store',    [new SubjectsControl
 $map('GET',  '/src/plataforma/app/admin/subjects/edit/{id}',[new SubjectsController, 'edit']);
 $map('POST', '/src/plataforma/app/admin/subjects/update/{id}',[new SubjectsController, 'update']);
 $map('POST', '/src/plataforma/app/admin/subjects/delete/{id}',[new SubjectsController, 'delete']);
+$map('GET',  '/src/plataforma/app/admin/subjects/show/{id}',  [new SubjectsController, 'show']);
 
 /* ========== Admin Payments Routes ========== */
 $map('GET',  '/src/plataforma/app/admin/payments',          [new PaymentsController, 'index']);
