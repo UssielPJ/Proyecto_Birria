@@ -18,12 +18,18 @@ class GroupsController
         header('Location: /src/plataforma/login'); exit;
     }
 
+    /** Expone el PDO como $GLOBALS['pdo'] para vistas legacy que usan "global $pdo" */
+    private function exposePdo(Database $db): void {
+        $pdo = $db->pdo(); // requiere que tu Database tenga ->pdo()
+        $GLOBALS['pdo'] = $pdo; // hace visible "global $pdo" en la vista
+    }
+
     /* ========== INDEX ========== */
     public function index() {
         $this->requireRole(['admin']);
         $db = new Database();
 
-        // OJO: tabla correcta es "grupos"
+        // Consulta opcional (la vista podría volver a consultar, pero no rompe)
         $db->query("
             SELECT g.*, s.clave AS semestre_clave
             FROM grupos g
@@ -35,6 +41,9 @@ class GroupsController
         // para selects (crear/editar)
         $db->query("SELECT id, clave FROM semestres ORDER BY clave ASC");
         $semestres = $db->fetchAll();
+
+        // <-- clave para que la vista no falle con $pdo->prepare()
+        $this->exposePdo($db);
 
         View::render('admin/groups/index', 'admin', [
             'grupos'    => $grupos,
@@ -48,6 +57,9 @@ class GroupsController
         $db = new Database();
         $db->query("SELECT id, clave FROM semestres ORDER BY clave ASC");
         $semestres = $db->fetchAll();
+
+        $this->exposePdo($db);
+
         View::render('admin/groups/create', 'admin', ['semestres'=>$semestres]);
     }
 
@@ -82,11 +94,10 @@ class GroupsController
             $codigo = $sem->clave . '-' . str_pad((string)$next, 2, '0', STR_PAD_LEFT);
 
             if ($titulo === '') {
-                // Título opcional (ej.: "Grupo 01")
                 $titulo = 'Grupo ' . str_pad((string)$next, 2, '0', STR_PAD_LEFT);
             }
 
-            // Insert a la tabla correcta y columnas reales
+            // Insert
             $db->query("
                 INSERT INTO grupos (semestre_id, codigo, titulo, capacidad, inscritos)
                 VALUES (:sid, :cod, :tit, :cap, 0)
@@ -104,7 +115,7 @@ class GroupsController
         header('Location: /src/plataforma/app/admin/groups'); exit;
     }
 
-    /* ========== EDIT (robusto) ========== */
+    /* ========== EDIT ========== */
     public function edit($id) {
         $this->requireRole(['admin']);
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -117,10 +128,8 @@ class GroupsController
 
         $db = new Database();
 
-        // 1) Traer el grupo con named param (evita problemas con "?")
         $sqlGrupo = "SELECT * FROM `grupos` WHERE `id` = :id LIMIT 1";
         $db->query($sqlGrupo, [':id' => $id]);
-        // Fuerza fetch asociativo (si tu Database tiene FETCH_OBJ por default)
         $grupo = $db->fetch(PDO::FETCH_ASSOC);
 
         if (!$grupo) {
@@ -128,10 +137,11 @@ class GroupsController
             header('Location: /src/plataforma/app/admin/groups'); exit;
         }
 
-        // 2) Semestres para el select (también asociativo)
         $sqlSem = "SELECT `id`, `clave`, `numero` FROM `semestres` ORDER BY `clave` ASC";
         $db->query($sqlSem);
         $semestres = $db->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->exposePdo($db);
 
         View::render('admin/groups/edit', 'admin', [
             'grupo'     => $grupo,
@@ -149,7 +159,6 @@ class GroupsController
         $d          = $_POST;
 
         try {
-            // estado actual
             $db->query("SELECT * FROM grupos WHERE id = ?", [$id]);
             $actual = $db->fetch();
             if (!$actual) throw new \Exception('Grupo no encontrado.');
@@ -157,12 +166,10 @@ class GroupsController
             $semestre_id = (int)($d['semestre_id'] ?? $actual->semestre_id);
             $capacidad   = (int)($d['capacidad']   ?? $actual->capacidad);
             $titulo      = trim($d['titulo']       ?? $actual->titulo);
-
             if ($capacidad < 1) $capacidad = $actual->capacidad;
 
             $codigo = $actual->codigo;
 
-            // Si cambió de semestre, recalculamos el código para el nuevo semestre
             if ($semestre_id !== (int)$actual->semestre_id) {
                 $db->query("SELECT clave FROM semestres WHERE id = ?", [$semestre_id]);
                 $sem = $db->fetch();
@@ -268,14 +275,15 @@ class GroupsController
 
         $alumnos = $db->fetchAll(PDO::FETCH_OBJ);
 
+        $this->exposePdo($db);
+
         View::render('admin/groups/students', 'admin', [
             'grupo'   => $grupo,
             'alumnos' => $alumnos,
         ]);
     }
 
-    /* ========== NUEVO: PREVIEW ASIGNACIÓN DE MATRÍCULAS (5 dígitos) ========== */
-    // Ruta: GET /src/plataforma/app/admin/groups/assign-matriculas/{id}
+    /* ========== PREVIEW ASIGNACIÓN DE MATRÍCULAS (5 dígitos) ========== */
     public function assignMatriculasPreview($id) {
         $this->requireRole(['admin']);
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -288,11 +296,8 @@ class GroupsController
         $grupo = $db->fetch();
         if (!$grupo) { $_SESSION['error'] = 'Grupo no encontrado.'; header('Location: /src/plataforma/app/admin/groups'); exit; }
 
-        // Dígito G derivado del código del grupo
         $G  = $this->groupDigit((string)$grupo->codigo);
-        // Año YY (2 dígitos) — si luego deseas "año de ingreso" por alumno, se puede cambiar aquí
         $YY = (int)date('y');
-        // Prefijo de 3 dígitos = YYG
         $prefix3 = $YY*10 + $G;
 
         // Alumnos sin matrícula
@@ -304,7 +309,7 @@ class GroupsController
         $pendientes = $db->fetchAll();
         $count = count($pendientes);
 
-        // Buscar max para ese prefijo cuando matricula es VARCHAR: castear a UNSIGNED
+        // Max para ese prefijo (matricula VARCHAR -> castear a UNSIGNED)
         $db->query("
             SELECT MAX(CAST(matricula AS UNSIGNED)) AS max_mat
             FROM student_profiles
@@ -317,7 +322,8 @@ class GroupsController
         $startLL = $lastLL + 1;
         $endLL   = $lastLL + $count;
 
-        // Render vista de previa
+        $this->exposePdo($db);
+
         View::render('admin/groups/assign_matriculas_preview', 'admin', [
             'groupId'  => $groupId,
             'grupo'    => $grupo,
@@ -330,8 +336,7 @@ class GroupsController
         ]);
     }
 
-    /* ========== NUEVO: RUN ASIGNACIÓN DE MATRÍCULAS (5 dígitos) ========== */
-    // Ruta: POST /src/plataforma/app/admin/groups/assign-matriculas/{id}
+    /* ========== RUN ASIGNACIÓN DE MATRÍCULAS (5 dígitos) ========== */
     public function assignMatriculasRun($id) {
         $this->requireRole(['admin']);
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -388,8 +393,7 @@ class GroupsController
             foreach ($pending as $row) {
                 $LL++;
                 if ($LL > 99) throw new \RuntimeException('Se alcanzó el límite (99) de lista para este prefijo YYG.');
-                // Matricula de 5 dígitos: YYGLL -> (YY*1000 + G*100 + LL)
-                $matricula = $YY*1000 + $G*100 + $LL;
+                $matricula = $YY*1000 + $G*100 + $LL; // YYGLL
                 $upd->execute([$matricula, $row['user_id']]);
             }
 
@@ -407,14 +411,12 @@ class GroupsController
     private function groupDigit(string $codigo): int {
         $codigo = trim($codigo);
 
-        // Si contiene dígitos, usar el primer dígito (p.ej. "6A", "G6", "06")
         if (preg_match('/\d/', $codigo, $m)) {
             return (int)$m[0];
         }
 
-        // Si es letra, mapa A=1..I=9, J=0 (10 grupos)
         $letra = mb_strtoupper(mb_substr($codigo, 0, 1, 'UTF-8'), 'UTF-8');
         $map = ['A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6,'G'=>7,'H'=>8,'I'=>9,'J'=>0];
-        return $map[$letra] ?? 0; // default 0
+        return $map[$letra] ?? 0;
     }
 }

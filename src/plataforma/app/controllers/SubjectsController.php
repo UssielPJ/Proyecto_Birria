@@ -25,14 +25,10 @@ class SubjectsController
 
     /* ----------------- Helpers SIN intl ----------------- */
     private function stripDiacritics(string $s): string {
-        // 1) intentar transliterar con iconv si está disponible
         if (function_exists('iconv')) {
             $t = @iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $s);
-            if ($t !== false) {
-                return $t;
-            }
+            if ($t !== false) return $t;
         }
-        // 2) fallback manual para acentos comunes en ES
         $map = [
             'á'=>'a','à'=>'a','ä'=>'a','â'=>'a','ã'=>'a','å'=>'a','Á'=>'A','À'=>'A','Ä'=>'A','Â'=>'A','Ã'=>'A','Å'=>'A',
             'é'=>'e','è'=>'e','ë'=>'e','ê'=>'e','É'=>'E','È'=>'E','Ë'=>'E','Ê'=>'E',
@@ -45,25 +41,19 @@ class SubjectsController
     }
 
     private function generateClaveFromNombre(string $nombre): string {
-        // limpiar primero (acentos y espacios)
         $clean  = trim(preg_replace('/\s+/', ' ', $this->stripDiacritics($nombre)));
         if ($clean === '') return '';
 
         $words  = array_filter(explode(' ', $clean));
         $stops  = ['de','del','la','las','el','los','y','e','a','en','para','por','con','un','una','uno'];
 
-        // iniciales ignorando stopwords si hay más de una palabra
         $initials = '';
         $count = count($words);
         foreach ($words as $w) {
             if ($count > 1 && in_array(strtolower($w), $stops, true)) continue;
             $initials .= substr($w, 0, 1);
         }
-
-        if ($initials === '') {
-            // respaldo: primeras letras del nombre ya sin acentos/espacios
-            $initials = preg_replace('/[^a-z0-9]/i', '', $clean);
-        }
+        if ($initials === '') $initials = preg_replace('/[^a-z0-9]/i', '', $clean);
 
         $clave = strtoupper($initials);
         $clave = preg_replace('/[^A-Z0-9]/', '', $clave);
@@ -86,17 +76,45 @@ class SubjectsController
         $this->requireLogin();
         $roles = $_SESSION['user']['roles'] ?? [];
 
-        $courseModel = new Course();
+        $courseModel = new Course(); // tu modelo crea Database() internamente
 
+        // Vista profesor (igual que antes)
         if (in_array('teacher', $roles, true)) {
-            $subjects = $courseModel->getByTeacher($_SESSION['user']['id']);
+            $subjects = $courseModel->getByTeacher((int)($_SESSION['user']['id'] ?? 0));
             View::render('teacher/subjects/index', 'teacher', ['subjects' => $subjects]);
             return;
         }
 
+        // Vista admin con filtros/paginación usando getAll()/countAll()
         if (in_array('admin', $roles, true)) {
-            $subjects = $courseModel->getAll();
-            View::render('admin/subjects/index', 'admin', ['subjects' => $subjects]);
+            $buscar = $_GET['q']      ?? '';
+            $status = $_GET['status'] ?? '';
+            $page   = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+            $limit  = 10;
+            $offset = ($page - 1) * $limit;
+
+            $filtersBase = [
+                'search' => $buscar,
+                'status' => $status,
+            ];
+
+            $total      = $courseModel->countAll($filtersBase);
+            $totalPages = max(1, (int)ceil($total / $limit));
+
+            $materias   = $courseModel->getAll($filtersBase + [
+                'limit'  => $limit,
+                'offset' => $offset,
+            ]);
+
+            View::render('admin/subjects/index', 'admin', [
+                'materias'   => $materias,
+                'total'      => $total,
+                'totalPages' => $totalPages,
+                'page'       => $page,
+                'limit'      => $limit,
+                'buscar'     => $buscar,
+                'status'     => $status,
+            ]);
             return;
         }
 
@@ -114,9 +132,12 @@ class SubjectsController
 
         $nombre = trim($_POST['nombre'] ?? '');
         $status = $_POST['status'] ?? 'activa';
-        $clave  = $this->normalizeOrGenerateClave($_POST['clave'] ?? '', $nombre);
+        $claveI = trim((string)($_POST['clave'] ?? ''));
 
-        if ($nombre === '' || $clave === '') {
+        // Si envían clave la normalizamos; si va vacía, tu modelo la autogenera.
+        $clave = $claveI !== '' ? $this->normalizeOrGenerateClave($claveI, $nombre) : '';
+
+        if ($nombre === '') {
             header('Location: /src/plataforma/app/admin/subjects/create?error=' . urlencode('Nombre y clave son obligatorios.'));
             exit;
         }
@@ -124,7 +145,7 @@ class SubjectsController
         $courseModel = new Course();
         $ok = $courseModel->create([
             'nombre' => $nombre,
-            'clave'  => $clave,
+            'clave'  => $clave,   // puede ir '' y el modelo genera única
             'status' => $status,
         ]);
 
@@ -151,9 +172,21 @@ class SubjectsController
 
         $nombre = trim($_POST['nombre'] ?? '');
         $status = $_POST['status'] ?? 'activa';
-        $clave  = $this->normalizeOrGenerateClave($_POST['clave'] ?? '', $nombre);
 
-        if ($nombre === '' || $clave === '') {
+        // Si mandan clave, normalizamos; si no, dejamos null para no tocarla
+        $claveRaw = $_POST['clave'] ?? null;
+        $clave    = null;
+        if ($claveRaw !== null) {
+            $tmp = trim((string)$claveRaw);
+            if ($tmp !== '') {
+                $clave = $this->normalizeOrGenerateClave($tmp, $nombre);
+            } else {
+                // cadena vacía => permitir limpiar/forzar vacía si así lo deseas; aquí la dejamos null (no cambia)
+                $clave = null;
+            }
+        }
+
+        if ($nombre === '') {
             header('Location: /src/plataforma/app/admin/subjects/'.$id.'/edit?error=' . urlencode('Nombre y clave son obligatorios.'));
             exit;
         }
@@ -161,7 +194,7 @@ class SubjectsController
         $courseModel = new Course();
         $ok = $courseModel->update((int)$id, [
             'nombre' => $nombre,
-            'clave'  => $clave,
+            'clave'  => $clave,   // null = no cambia, string = actualiza
             'status' => $status,
         ]);
 
@@ -180,6 +213,24 @@ class SubjectsController
     }
 
 
+    /*  ========== Show ============ */
+    // SubjectsController.php
+public function show($id) {
+    $this->requireRole(['admin']);
+
+    $courseModel = new \App\Models\Course();
+    $subject = $courseModel->findById((int)$id);
+
+    if (!$subject) {
+        header('Location: /src/plataforma/app/admin/subjects?error=' . urlencode('Materia no encontrada'));
+        exit;
+    }
+
+    \App\Core\View::render('admin/subjects/show', 'admin', [
+        'subject' => $subject
+    ]);
+}
+
     /* ===================== Asignar Materia a Grupo ===================== */
-    
+    // (Se deja vacío)
 }
