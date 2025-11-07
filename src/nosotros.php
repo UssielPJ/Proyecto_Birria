@@ -24,13 +24,11 @@
   --ut-green-500:#28a55f;
   --ut-green-100:#e6f6ed;
 }
-
 .hero-nosotros {
   background: linear-gradient(135deg, var(--ut-green-900) 0%, var(--ut-green-800) 50%, var(--ut-green-700) 100%);
   position: relative;
   overflow: hidden;
 }
-
 .hero-nosotros::before {
   content: '';
   position: absolute;
@@ -38,11 +36,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%), 
+  background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
               radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
   pointer-events: none;
 }
-
 .stats-card {
   background: linear-gradient(135deg, var(--ut-green-700), var(--ut-green-800));
   border-radius: 16px;
@@ -51,7 +48,6 @@
   position: relative;
   overflow: hidden;
 }
-
 .stats-card::before {
   content: '';
   position: absolute;
@@ -62,18 +58,15 @@
   background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
   animation: rotate 20s linear infinite;
 }
-
 @keyframes rotate {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 .timeline-container {
   position: relative;
   max-width: 900px;
   margin: 0 auto;
 }
-
 .timeline-line {
   position: absolute;
   left: 50%;
@@ -85,24 +78,20 @@
   border-radius: 3px;
   box-shadow: 0 0 10px rgba(40,165,95,0.3);
 }
-
 .timeline-item {
   position: relative;
   margin-bottom: 4rem;
   width: 50%;
   padding: 0 2.5rem;
 }
-
 .timeline-item:nth-child(odd) {
   left: 0;
   text-align: right;
 }
-
 .timeline-item:nth-child(even) {
   left: 50%;
   text-align: left;
 }
-
 .timeline-dot {
   position: absolute;
   top: 2rem;
@@ -115,19 +104,15 @@
   z-index: 2;
   transition: transform 0.3s ease;
 }
-
 .timeline-item:hover .timeline-dot {
   transform: scale(1.2);
 }
-
 .timeline-item:nth-child(odd) .timeline-dot {
   right: -15px;
 }
-
 .timeline-item:nth-child(even) .timeline-dot {
   left: -15px;
 }
-
 .timeline-content {
   background: linear-gradient(135deg, white, #f8fafc);
   border-radius: 16px;
@@ -137,7 +122,6 @@
   transition: all 0.4s ease;
   position: relative;
 }
-
 .timeline-content::before {
   content: '';
   position: absolute;
@@ -146,22 +130,18 @@
   height: 0;
   border: 12px solid transparent;
 }
-
 .timeline-item:nth-child(odd) .timeline-content::before {
   right: -24px;
   border-left-color: white;
 }
-
 .timeline-item:nth-child(even) .timeline-content::before {
   left: -24px;
   border-right-color: white;
 }
-
 .timeline-content:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
-
 .timeline-year {
   display: inline-flex;
   align-items: center;
@@ -175,30 +155,25 @@
   border-radius: 9999px;
   border: 1px solid var(--ut-green-200);
 }
-
 .timeline-year i {
   color: var(--ut-green-500);
 }
-
 .timeline-title {
   font-size: 1.375rem;
   font-weight: 700;
   color: #1f2937;
   margin-bottom: 0.75rem;
 }
-
 .timeline-description {
   color: #6b7280;
   font-size: 0.95rem;
   line-height: 1.6;
 }
-
 /* Mobile responsive */
 @media (max-width: 768px) {
   .timeline-line {
     left: 35px;
   }
-
   .timeline-item {
     width: 100%;
     padding-left: 5rem;
@@ -206,30 +181,25 @@
     text-align: left;
     margin-bottom: 3rem;
   }
-
   .timeline-item:nth-child(odd),
   .timeline-item:nth-child(even) {
     left: 0;
   }
-
   .timeline-dot {
     left: 20px;
   }
-
   .timeline-content::before {
     left: -24px !important;
     border-right-color: white !important;
     border-left-color: transparent !important;
   }
 }
-
 .value-card {
   transition: all 0.4s ease;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
 }
-
 .value-card::before {
   content: '';
   position: absolute;
@@ -241,23 +211,19 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .value-card:hover::before {
   opacity: 1;
 }
-
 .value-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
-
 .campus-card {
   transition: all 0.4s ease;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
 }
-
 .campus-card::after {
   content: '';
   position: absolute;
@@ -266,27 +232,22 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .campus-card:hover::after {
   opacity: 1;
 }
-
 .campus-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
 }
-
 .gallery-item {
   transition: all 0.4s ease;
   border-radius: 16px;
   overflow: hidden;
 }
-
 .gallery-item:hover {
   transform: scale(1.05) rotate(1deg);
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
-
 /* NUEVO: Estilos para el apartado deportivo - Más único */
 .sports-card {
   transition: all 0.4s ease;
@@ -294,7 +255,6 @@
   overflow: hidden;
   position: relative;
 }
-
 .sports-card::before {
   content: '';
   position: absolute;
@@ -306,35 +266,29 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .sports-card:hover::before {
   opacity: 1;
 }
-
 .sports-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 25px 50px rgba(0,0,0,0.15);
 }
-
 /* Modo oscuro base - Mejorado para mayor cobertura y único */
 body.dark {
   background-color: #0f0f23;
   color: #f0f4f8;
 }
-
 body.dark .bg-white { background-color: #1a1a2e !important; }
 body.dark .bg-gray-50 { background-color: #0f0f23 !important; }
 body.dark .text-gray-900 { color: #f0f4f8 !important; }
 body.dark .text-gray-500 { color: #a0a8b0 !important; }
 body.dark .text-gray-600 { color: #c0c8d0 !important; }
-
 /* Hero section - Gradiente único en dark */
 body.dark .hero-nosotros {
   background: linear-gradient(135deg, var(--ut-green-900) 0%, #0a0a1a 50%, var(--ut-green-700) 100%);
 }
 body.dark .hero-nosotros h1 { color: #f0f4f8; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 body.dark .hero-nosotros p { color: #d0d8e0; }
-
 /* Stats cards - Más único */
 body.dark .stats-card {
   background: linear-gradient(135deg, var(--ut-green-800), #0a0a1a);
@@ -342,13 +296,11 @@ body.dark .stats-card {
 }
 body.dark .stats-card .text-\[var\(--ut-green-700\)\] { color: #4ade80 !important; }
 body.dark .stats-card .text-\[var\(--ut-green-600\)\] { color: #22c55e !important; }
-
 /* Modal improvements */
 body.dark .bg-black.bg-opacity-75 { background-color: rgba(10,10,26,0.95) !important; }
 body.dark .bg-white.rounded-2xl { background-color: #1a1a2e !important; border: 1px solid rgba(40,165,95,0.2) !important; }
 body.dark .border-gray-200 { border-color: #2a2a4e !important; }
 body.dark .bg-gray-50 { background-color: #0f0f23 !important; }
-
 /* Value cards - Bordes únicos */
 body.dark .value-card {
   background-color: #1a1a2e;
@@ -359,7 +311,6 @@ body.dark .value-card p { color: #c0c8d0; }
 body.dark .value-card .text-blue-600 { color: #60a5fa; }
 body.dark .value-card .text-green-600 { color: #34d399; }
 body.dark .value-card .text-purple-600 { color: #a78bfa; }
-
 /* Achievement backgrounds improvements */
 body.dark .bg-yellow-100 { background-color: #2e1a0a !important; }
 body.dark .bg-yellow-100 .text-yellow-600 { color: #fbbf24 !important; }
@@ -369,7 +320,6 @@ body.dark .bg-green-100 { background-color: #0a1a14 !important; }
 body.dark .bg-green-100 .text-green-600 { color: #34d399 !important; }
 body.dark .bg-purple-100 { background-color: #1a0a2e !important; }
 body.dark .bg-purple-100 .text-purple-600 { color: #a78bfa !important; }
-
 /* Timeline - Más inmersivo y mejorado para dark mode */
 body.dark .timeline-content {
   background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
@@ -378,25 +328,23 @@ body.dark .timeline-content {
 }
 body.dark .timeline-title { color: #f0f4f8; }
 body.dark .timeline-description { color: #c0c8d0; }
-body.dark .timeline-year { 
-  color: #4ade80 !important; 
-  background: rgba(40,165,95,0.15) !important; 
-  border-color: rgba(40,165,95,0.4) !important; 
+body.dark .timeline-year {
+  color: #4ade80 !important;
+  background: rgba(40,165,95,0.15) !important;
+  border-color: rgba(40,165,95,0.4) !important;
 }
 body.dark .timeline-year i { color: #22c55e !important; }
-
 /* Campus cards */
-body.dark .campus-card { 
-  background-color: #1a1a2e; 
+body.dark .campus-card {
+  background-color: #1a1a2e;
   border: 1px solid rgba(40,165,95,0.1);
 }
 body.dark .campus-card h3 { color: #f0f4f8; }
 body.dark .campus-card p { color: #c0c8d0; }
 body.dark .campus-card .text-\[var\(--ut-green-700\)\] { color: #22c55e; }
-
 /* Sports cards */
-body.dark .sports-card { 
-  background-color: #1a1a2e; 
+body.dark .sports-card {
+  background-color: #1a1a2e;
   border: 1px solid rgba(40,165,95,0.1);
 }
 body.dark .sports-card h3 { color: #f0f4f8; }
@@ -404,7 +352,6 @@ body.dark .sports-card p { color: #c0c8d0; }
 body.dark .sports-card .text-gray-600 { color: #c0c8d0; }
 body.dark .sports-card .text-green-600 { color: #34d399; }
 body.dark .sports-card .text-purple-600 { color: #a78bfa; }
-
 /* Gallery items */
 body.dark .gallery-item {
   background-color: #1a1a2e;
@@ -412,7 +359,6 @@ body.dark .gallery-item {
 }
 body.dark .gallery-item h4 { color: #f0f4f8; }
 body.dark .gallery-item p { color: #c0c8d0; }
-
 /* CTA sections */
 body.dark .bg-gradient-to-br.from-green-50.to-emerald-100 {
   background: linear-gradient(135deg, #0a0a1a, #1a1a2e);
@@ -428,39 +374,31 @@ body.dark .bg-white.rounded-3xl.shadow-lg h3 { color: #f0f4f8 !important; }
 body.dark .bg-white.rounded-3xl.shadow-lg p { color: #c0c8d0 !important; }
 body.dark .bg-green-600 { background-color: #16a34a !important; }
 body.dark .bg-green-600:hover { background-color: #15803d !important; }
-
 /* Stats section improvements */
 body.dark .text-4xl.font-extrabold.text-gray-900 { color: #f0f4f8 !important; }
 body.dark .text-xl.text-gray-600 { color: #c0c8d0 !important; }
-
 /* Additional text colors */
 body.dark h1, body.dark h2, body.dark h3, body.dark h4, body.dark h5, body.dark h6 {
   color: #f0f4f8 !important;
 }
-
 body.dark p, body.dark span, body.dark div {
   color: #c0c8d0 !important;
 }
-
 body.dark .text-xl.text-gray-600 { color: #a0a8b0 !important; }
 body.dark .text-lg.text-gray-600 { color: #c0c8d0 !important; }
-
 /* Specific section text colors for better visibility */
 body.dark .text-xl.text-gray-500 { color: #a0a8b0 !important; }
 body.dark .text-gray-500 { color: #a0a8b0 !important; }
 body.dark .text-gray-600 { color: #c0c8d0 !important; }
 body.dark .text-gray-700 { color: #d0d8e0 !important; }
 body.dark .text-gray-900 { color: #f0f4f8 !important; }
-
 /* Links and buttons */
 body.dark a { color: #60a5fa; }
 body.dark a:hover { color: #93c5fd; }
 body.dark button { color: #f0f4f8; }
-
 /* Gallery section */
 body.dark .text-3xl.font-extrabold.text-gray-900 { color: #f0f4f8 !important; }
 body.dark .text-xl.text-gray-500 { color: #a0a8b0 !important; }
-
 /* Additional gradient backgrounds for dark mode */
 body.dark .bg-gradient-to-br.from-emerald-50.to-green-50 {
   background: linear-gradient(135deg, #0a0a1a, #1a1a2e) !important;
@@ -480,37 +418,30 @@ body.dark .bg-gradient-to-b.from-emerald-50.to-white {
 body.dark .bg-gradient-to-br.from-gray-50.to-emerald-50 {
   background: linear-gradient(135deg, #0f0f23, #0a0a1a) !important;
 }
-
 /* Carousel in hero - Unique in dark */
 body.dark .carousel-indicator { background-color: rgba(240,244,248,0.5) !important; }
 body.dark .carousel-indicator.active { background-color: #f0f4f8 !important; }
-
 /* Mejoras específicas para la timeline única en dark mode */
 body.dark .timeline-container-unique {
   background: rgba(26, 26, 46, 0.5);
   border-radius: 24px;
   padding: 2rem;
 }
-
 body.dark .timeline-line-unique {
   background: linear-gradient(180deg, #4ade80 0%, #22c55e 25%, #16a34a 50%, #15803d 75%, #0f5132 100%);
   box-shadow: 0 0 30px rgba(74, 222, 128, 0.5);
 }
-
 body.dark .timeline-progress {
   background: linear-gradient(180deg, rgba(74, 222, 128, 0.9) 0%, rgba(34, 197, 94, 0.6) 50%, rgba(22, 163, 74, 0.3) 100%);
 }
-
 body.dark .timeline-dot-unique {
   background: linear-gradient(135deg, #4ade80, #22c55e);
   border-color: #1a1a2e;
   box-shadow: 0 0 0 6px rgba(74, 222, 128, 0.2), 0 0 40px rgba(74, 222, 128, 0.6);
 }
-
 body.dark .timeline-dot-unique::after {
   border-color: rgba(74, 222, 128, 0.4);
 }
-
 body.dark .timeline-card-unique {
   background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(42, 42, 78, 0.95));
   backdrop-filter: blur(20px);
@@ -518,62 +449,49 @@ body.dark .timeline-card-unique {
   color: #f0f4f8;
   box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(74, 222, 128, 0.2);
 }
-
 body.dark .timeline-card-unique h4 {
   color: #f0f4f8 !important;
 }
-
 body.dark .timeline-card-unique p {
   color: #d0d8e0 !important;
 }
-
 body.dark .timeline-card-unique .text-3xl.font-bold {
   color: #f0f4f8 !important;
 }
-
 body.dark .timeline-card-unique .text-2xl.font-bold {
   color: #f0f4f8 !important;
 }
-
 body.dark .timeline-card-unique .text-gray-500,
 body.dark .timeline-card-unique .text-gray-400 {
   color: #a0a8b0 !important;
 }
-
 body.dark .timeline-card-unique .text-\[var\(--ut-green-700\)\] {
   color: #4ade80 !important;
 }
-
 /* Ajustes para stats en timeline cards dark */
 body.dark .timeline-card-unique .text-3xl.font-bold {
   color: #f0f4f8 !important;
 }
-
 body.dark .timeline-card-unique .grid > div {
   background: rgba(74, 222, 128, 0.1) !important;
   border-color: rgba(74, 222, 128, 0.2) !important;
 }
-
 body.dark .timeline-card-unique .grid > div .text-lg.font-bold {
   color: #22c55e !important;
 }
-
 /* Mejoras para elementos decorativos en timeline dark */
 body.dark .timeline-card-unique::before {
   background: linear-gradient(90deg, #4ade80, #22c55e, #16a34a, #15803d);
 }
-
 body.dark .timeline-item-unique:hover .timeline-dot-unique {
   box-shadow: 0 0 0 10px rgba(74, 222, 128, 0.3), 0 0 60px rgba(74, 222, 128, 0.8);
 }
-
 /* Responsive dark mode para timeline */
 @media (max-width: 1024px) {
   body.dark .timeline-card-unique {
     background: rgba(26, 26, 46, 0.9);
   }
 }
-
 @media (max-width: 768px) {
   body.dark .timeline-line-unique {
     width: 4px;
@@ -582,91 +500,73 @@ body.dark .timeline-item-unique:hover .timeline-dot-unique {
     border-width: 3px;
   }
 }
-
 /* Mejoras generales para mejor contraste en dark */
 body.dark .border-gray-200 { border-color: rgba(74, 222, 128, 0.2) !important; }
 body.dark .shadow-xl { box-shadow: 0 20px 40px rgba(0,0,0,0.4) !important; }
 body.dark .hover\:shadow-2xl:hover { box-shadow: 0 25px 50px rgba(0,0,0,0.5) !important; }
-
 /* Dark mode fixes for specific sections */
 body.dark .bg-white\/80.backdrop-blur-sm.rounded-3xl {
   background-color: rgba(26, 26, 46, 0.95) !important;
   border: 1px solid rgba(74, 222, 128, 0.2) !important;
 }
-
 body.dark .bg-white\/80.backdrop-blur-sm.rounded-3xl h3,
 body.dark .bg-white\/80.backdrop-blur-sm.rounded-3xl p {
   color: #f0f4f8 !important;
 }
-
 body.dark .bg-white\/95.backdrop-blur-sm.rounded-3xl {
   background-color: rgba(26, 26, 46, 0.98) !important;
   border: 1px solid rgba(74, 222, 128, 0.3) !important;
 }
-
 body.dark .bg-white\/95.backdrop-blur-sm.rounded-3xl h3,
 body.dark .bg-white\/95.backdrop-blur-sm.rounded-3xl p,
 body.dark .bg-white\/95.backdrop-blur-sm.rounded-3xl span {
   color: #f0f4f8 !important;
 }
-
 body.dark .bg-white\/80.backdrop-blur-sm.rounded-2xl.shadow-2xl {
   background-color: rgba(26, 26, 46, 0.95) !important;
   border: 1px solid rgba(74, 222, 128, 0.2) !important;
 }
-
 body.dark .bg-white\/80.backdrop-blur-sm.rounded-2xl.shadow-2xl h3,
 body.dark .bg-white\/80.backdrop-blur-sm.rounded-2xl.shadow-2xl p {
   color: #f0f4f8 !important;
 }
-
 body.dark .bg-white\/80.backdrop-blur-sm.p-8.rounded-2xl {
   background-color: rgba(26, 26, 46, 0.95) !important;
   border: 1px solid rgba(74, 222, 128, 0.2) !important;
 }
-
 body.dark .bg-white\/80.backdrop-blur-sm.p-8.rounded-2xl h4,
 body.dark .bg-white\/80.backdrop-blur-sm.p-8.rounded-2xl p {
   color: #f0f4f8 !important;
 }
-
 /* Logros Destacados section fixes */
 body.dark .text-xl.font-bold.text-gray-900 {
   color: #f0f4f8 !important;
 }
-
 body.dark h4.text-xl.font-bold.text-gray-900 {
   color: #f0f4f8 !important;
 }
-
 body.dark .flex.items-start.gap-4.p-4 h5,
 body.dark .flex.items-start.gap-4.p-4 p {
   color: #f0f4f8 !important;
 }
-
 body.dark .text-gray-600 {
   color: #c0c8d0 !important;
 }
-
 /* Logros Destacados 2025 section fixes */
 body.dark .text-3xl.font-bold.text-gray-900 {
   color: #f0f4f8 !important;
 }
-
 body.dark .p-6 h4,
 body.dark .p-6 p {
   color: #f0f4f8 !important;
 }
-
 body.dark .w-20.h-20 i {
   color: white !important;
 }
 </style>
 </head>
 <body class="font-sans antialiased text-gray-800">
-
 <?php include 'navbar.php'; ?>
-
 <!-- Hero Section - Más único con Vanta NET -->
 <section class="hero-nosotros text-white py-24 md:py-32 relative">
   <div id="vanta-hero" class="absolute inset-0 opacity-20"></div>
@@ -682,7 +582,6 @@ body.dark .w-20.h-20 i {
     </div>
   </div>
 </section>
-
 <script>
 VANTA.NET({
   el: "#vanta-hero",
@@ -700,20 +599,19 @@ VANTA.NET({
   spacing: 12
 });
 </script>
-
 <!-- Estadísticas Mejoradas - Expandida -->
 <section class="bg-white py-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-20" data-aos="fade-up">
       <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl mb-4">
-        Nuestra Trayectoria en 
+        Nuestra Trayectoria en
         <span class="text-[var(--ut-green-600)]">Cifras</span>
       </h2>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
         Resultados tangibles que respaldan nuestra excelencia educativa. Datos actualizados a octubre 2025, reflejando nuestro crecimiento sostenido y compromiso con la innovación en un mundo post-pandemia y enfocado en la sostenibilidad.
       </p>
     </div>
-    
+   
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
       <!-- Años de Experiencia -->
       <div class="text-center" data-aos="fade-up">
@@ -732,7 +630,7 @@ VANTA.NET({
           </div>
         </div>
       </div>
-      
+     
       <!-- Estudiantes Graduados -->
       <div class="text-center" data-aos="fade-up" data-aos-delay="100">
         <div class="relative bg-gradient-to-br from-[var(--ut-green-50)] to-white rounded-2xl p-10 border border-[var(--ut-green-100)] shadow-xl transition-all duration-500 hover:shadow-2xl">
@@ -750,7 +648,7 @@ VANTA.NET({
           </div>
         </div>
       </div>
-      
+     
       <!-- Programas Académicos -->
       <div class="text-center" data-aos="fade-up" data-aos-delay="200">
         <div class="relative bg-gradient-to-br from-[var(--ut-green-50)] to-white rounded-2xl p-10 border border-[var(--ut-green-100)] shadow-xl transition-all duration-500 hover:shadow-2xl">
@@ -768,7 +666,7 @@ VANTA.NET({
           </div>
         </div>
       </div>
-      
+     
       <!-- Convenios Internacionales -->
       <div class="text-center" data-aos="fade-up" data-aos-delay="300">
         <div class="relative bg-gradient-to-br from-[var(--ut-green-50)] to-white rounded-2xl p-10 border border-[var(--ut-green-100)] shadow-xl transition-all duration-500 hover:shadow-2xl">
@@ -787,7 +685,7 @@ VANTA.NET({
         </div>
       </div>
     </div>
-    
+   
     <!-- Línea decorativa - Más elaborada -->
     <div class="text-center mt-16" data-aos="fade-up">
       <div class="inline-flex items-center gap-4 text-[var(--ut-green-600)] bg-[var(--ut-green-50)] px-8 py-4 rounded-full border border-[var(--ut-green-200)] shadow-lg">
@@ -798,12 +696,11 @@ VANTA.NET({
     </div>
   </div>
 </section>
-
 <script>
 // Animación de conteo - Mejorada
 document.addEventListener('DOMContentLoaded', function() {
   const countUpElements = document.querySelectorAll('.count-up');
-  
+ 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -814,7 +711,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const steps = duration / stepTime;
         const increment = target / steps;
         let current = 0;
-        
+       
         const timer = setInterval(() => {
           current += increment;
           if (current >= target) {
@@ -824,18 +721,17 @@ document.addEventListener('DOMContentLoaded', function() {
             element.textContent = Math.floor(current).toLocaleString();
           }
         }, stepTime);
-        
+       
         observer.unobserve(element);
       }
     });
   }, { threshold: 0.7 });
-  
+ 
   countUpElements.forEach(element => {
     observer.observe(element);
   });
 });
 </script>
-
 <!-- Misión, Visión y Valores - Expandida -->
 <section class="bg-gradient-to-br from-gray-50 to-emerald-50 py-20">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -843,7 +739,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl relative">Nuestra Esencia</h2>
       <p class="mt-6 max-w-3xl text-xl text-gray-500 mx-auto leading-relaxed">Los pilares que nos definen y guían nuestro camino hacia una educación transformadora en la era digital y sostenible.</p>
     </div>
-    
+   
     <div class="grid md:grid-cols-3 gap-12">
       <div class="value-card bg-white/80 backdrop-blur-sm p-10 rounded-2xl shadow-xl border border-white/20" data-aos="fade-up">
         <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mb-8 mx-auto shadow-lg">
@@ -854,7 +750,7 @@ document.addEventListener('DOMContentLoaded', function() {
           Formar profesionales de excelencia en el ámbito tecnológico mediante programas educativos innovadores que integran IA, sostenibilidad y competencias globales, fomentando el desarrollo integral, el emprendimiento ético y el compromiso activo con la sociedad y el medio ambiente.
         </p>
       </div>
-      
+     
       <div class="value-card bg-white/80 backdrop-blur-sm p-10 rounded-2xl shadow-xl border border-white/20" data-aos="fade-up" data-aos-delay="100">
         <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-8 mx-auto shadow-lg">
           <i data-feather="eye" class="w-10 h-10 text-white"></i>
@@ -864,7 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
           Ser la institución líder en educación tecnológica de Latinoamérica para 2030, reconocida por nuestra innovación disruptiva, calidad académica certificada internacionalmente y contribución al desarrollo sostenible, impulsando soluciones globales a desafíos como el cambio climático y la brecha digital.
         </p>
       </div>
-      
+     
       <div class="value-card bg-white/80 backdrop-blur-sm p-10 rounded-2xl shadow-xl border border-white/20" data-aos="fade-up" data-aos-delay="200">
         <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mb-8 mx-auto shadow-lg">
           <i data-feather="heart" class="w-10 h-10 text-white"></i>
@@ -896,7 +792,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </section>
-
 <!-- Historia y Línea de Tiempo - Rediseñada Elegante e Interactiva -->
 <section class="bg-gradient-to-br from-white via-gray-50 to-emerald-50 py-32 relative overflow-hidden">
   <!-- Elementos decorativos de fondo -->
@@ -905,7 +800,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="absolute bottom-20 right-10 w-40 h-40 bg-[var(--ut-green-600)] rounded-full blur-3xl"></div>
     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[var(--ut-green-400)] rounded-full blur-3xl"></div>
   </div>
-
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <!-- Header Section Mejorado -->
     <div class="text-center mb-20" data-aos="fade-up">
@@ -920,7 +814,6 @@ document.addEventListener('DOMContentLoaded', function() {
         Una trayectoria de innovación, crecimiento y compromiso con la excelencia educativa que nos ha convertido en líderes tecnológicos de Latinoamérica.
       </p>
     </div>
-
     <!-- Layout Principal Mejorado -->
     <div class="grid lg:grid-cols-5 gap-16 items-start">
       <!-- Columna Izquierda - Texto Mejorado -->
@@ -933,15 +826,12 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <h3 class="text-2xl font-bold text-gray-900">Nuestra Visión Original</h3>
           </div>
-
           <p class="text-gray-700 text-lg leading-relaxed mb-6">
             Fundada en 2008 en respuesta a la creciente demanda de talento tecnológico en Nuevo León, la Universidad Tecnológica de Santa Catarina inició su trayectoria con una visión audaz: revolucionar la educación superior mediante un enfoque práctico y alineado con las necesidades de la industria 4.0.
           </p>
-
           <p class="text-gray-700 text-lg leading-relaxed mb-8">
             Desde nuestros humildes comienzos con apenas 3 programas académicos y 150 estudiantes, hemos crecido exponencialmente, expandiéndonos a múltiples campus y adoptando tecnologías emergentes como la realidad aumentada en laboratorios virtuales.
           </p>
-
           <!-- Estadísticas Interactivas -->
           <div class="grid grid-cols-3 gap-4 mb-8">
             <div class="text-center p-4 bg-gradient-to-br from-[var(--ut-green-50)] to-white rounded-2xl border border-[var(--ut-green-100)]">
@@ -958,16 +848,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
         </div>
-
       </div>
-
       <!-- Columna Derecha - Timeline Única y Completa -->
       <div class="lg:col-span-3" data-aos="fade-left">
         <div class="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/60 relative overflow-hidden">
           <!-- Elementos decorativos únicos -->
           <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[var(--ut-green-200)] to-transparent rounded-full opacity-20"></div>
           <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-[var(--ut-green-300)] to-transparent rounded-full opacity-30"></div>
-
           <div class="relative z-10">
             <div class="flex items-center justify-between mb-8">
               <h3 class="text-2xl font-bold text-gray-900 flex items-center gap-3">
@@ -981,14 +868,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span>Interactivo</span>
               </div>
             </div>
-
             <!-- Timeline Container Único -->
             <div class="timeline-container-unique relative">
               <!-- Línea central con gradiente animado -->
               <div class="timeline-line-unique absolute left-1/2 top-0 bottom-0 w-2 bg-gradient-to-b from-[var(--ut-green-400)] via-[var(--ut-green-500)] to-[var(--ut-green-600)] transform -translate-x-1/2 rounded-full shadow-2xl">
                 <div class="timeline-progress absolute top-0 left-0 w-full bg-gradient-to-b from-white/80 to-white/40 rounded-full transition-all duration-1000 ease-out"></div>
               </div>
-
               <!-- Timeline Items con Diseño Completo -->
               <div class="timeline-item-unique relative mb-16" data-aos="fade-up" data-year="2008">
                 <div class="timeline-dot-unique absolute left-1/2 w-8 h-8 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full border-4 border-white shadow-2xl transform -translate-x-1/2 z-20 cursor-pointer transition-all duration-500 hover:scale-150 hover:rotate-12">
@@ -996,12 +881,10 @@ document.addEventListener('DOMContentLoaded', function() {
                   <div class="absolute inset-1 bg-white rounded-full"></div>
                   <div class="absolute inset-2 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full"></div>
                 </div>
-
                 <div class="timeline-card-unique bg-gradient-to-r from-white via-gray-50 to-white rounded-3xl p-8 shadow-xl border border-gray-200 hover:border-[var(--ut-green-300)] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden group">
                   <!-- Elementos decorativos de la card -->
                   <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[var(--ut-green-100)] to-transparent rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div class="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[var(--ut-green-200)] to-transparent rounded-full opacity-30 group-hover:opacity-80 transition-opacity duration-500"></div>
-
                   <div class="relative z-10">
                     <!-- Header con año e ícono -->
                     <div class="flex items-center justify-between mb-6">
@@ -1019,15 +902,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-gray-500">Era Digital</div>
                       </div>
                     </div>
-
                     <!-- Título principal -->
                     <h4 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">Fundación Visionaria</h4>
-
                     <!-- Descripción completa -->
                     <p class="text-gray-700 leading-relaxed mb-6">
                       Inauguración del primer campus en Santa Catarina con 3 programas pioneros en ingeniería industrial y sistemas computacionales. Atendiendo a 150 estudiantes iniciales con un enfoque revolucionario en aprendizaje basado en proyectos reales y tecnología aplicada.
                     </p>
-
                     <!-- Estadísticas del período -->
                     <div class="grid grid-cols-3 gap-4 mb-6">
                       <div class="text-center p-3 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
@@ -1043,7 +923,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-purple-600 font-medium">Campus</div>
                       </div>
                     </div>
-
                     <!-- Elementos destacados -->
                     <div class="flex flex-wrap gap-2">
                       <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">Innovación</span>
@@ -1053,19 +932,16 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               </div>
-
               <div class="timeline-item-unique relative mb-16" data-aos="fade-up" data-aos-delay="200" data-year="2012">
                 <div class="timeline-dot-unique absolute left-1/2 w-8 h-8 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full border-4 border-white shadow-2xl transform -translate-x-1/2 z-20 cursor-pointer transition-all duration-500 hover:scale-150 hover:rotate-12">
                   <div class="absolute inset-0 bg-gradient-to-br from-[var(--ut-green-400)] to-[var(--ut-green-600)] rounded-full animate-pulse opacity-75"></div>
                   <div class="absolute inset-1 bg-white rounded-full"></div>
                   <div class="absolute inset-2 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full"></div>
                 </div>
-
                 <div class="timeline-card-unique bg-gradient-to-l from-white via-gray-50 to-white rounded-3xl p-8 shadow-xl border border-gray-200 hover:border-[var(--ut-green-300)] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden group ml-auto max-w-2xl">
                   <!-- Elementos decorativos -->
                   <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-bl from-[var(--ut-green-100)] to-transparent rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div class="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-[var(--ut-green-200)] to-transparent rounded-full opacity-30 group-hover:opacity-80 transition-opacity duration-500"></div>
-
                   <div class="relative z-10">
                     <div class="flex items-center justify-between mb-6">
                       <div class="flex items-center gap-4">
@@ -1082,13 +958,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-gray-500">Regional</div>
                       </div>
                     </div>
-
                     <h4 class="text-2xl font-bold text-gray-900 mb-4 leading-tight text-right">Expansión Regional</h4>
-
                     <p class="text-gray-700 leading-relaxed mb-6 text-right">
                       Apertura del campus Montemorelos y lanzamiento de 5 nuevos programas académicos, incluyendo mecatrónica y desarrollo de software. Duplicando nuestra matrícula a 800 estudiantes y estableciendo los primeros laboratorios de simulación 3D.
                     </p>
-
                     <div class="grid grid-cols-3 gap-4 mb-6">
                       <div class="text-center p-3 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200">
                         <div class="text-lg font-bold text-orange-700">800</div>
@@ -1103,7 +976,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-indigo-600 font-medium">Campus</div>
                       </div>
                     </div>
-
                     <div class="flex flex-wrap gap-2 justify-end">
                       <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full">Crecimiento</span>
                       <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">Mecatrónica</span>
@@ -1112,18 +984,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               </div>
-
               <div class="timeline-item-unique relative mb-16" data-aos="fade-up" data-aos-delay="400" data-year="2016">
                 <div class="timeline-dot-unique absolute left-1/2 w-8 h-8 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full border-4 border-white shadow-2xl transform -translate-x-1/2 z-20 cursor-pointer transition-all duration-500 hover:scale-150 hover:rotate-12">
                   <div class="absolute inset-0 bg-gradient-to-br from-[var(--ut-green-400)] to-[var(--ut-green-600)] rounded-full animate-pulse opacity-75"></div>
                   <div class="absolute inset-1 bg-white rounded-full"></div>
                   <div class="absolute inset-2 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full"></div>
                 </div>
-
                 <div class="timeline-card-unique bg-gradient-to-r from-white via-gray-50 to-white rounded-3xl p-8 shadow-xl border border-gray-200 hover:border-[var(--ut-green-300)] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden group">
                   <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[var(--ut-green-100)] to-transparent rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div class="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[var(--ut-green-200)] to-transparent rounded-full opacity-30 group-hover:opacity-80 transition-opacity duration-500"></div>
-
                   <div class="relative z-10">
                     <div class="flex items-center justify-between mb-6">
                       <div class="flex items-center gap-4">
@@ -1140,13 +1009,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-gray-500">Mundo</div>
                       </div>
                     </div>
-
                     <h4 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">Internacionalización Estratégica</h4>
-
                     <p class="text-gray-700 leading-relaxed mb-6">
                       Establecimiento de 15 convenios internacionales con universidades en EE.UU. y Europa, permitiendo intercambios estudiantiles y doble titulación. Énfasis en movilidad virtual post-pandemia y colaboración en investigación global.
                     </p>
-
                     <div class="grid grid-cols-3 gap-4 mb-6">
                       <div class="text-center p-3 bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-xl border border-cyan-200">
                         <div class="text-lg font-bold text-cyan-700">15</div>
@@ -1161,7 +1027,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-emerald-600 font-medium">Continentes</div>
                       </div>
                     </div>
-
                     <div class="flex flex-wrap gap-2">
                       <span class="px-3 py-1 bg-cyan-100 text-cyan-700 text-xs font-semibold rounded-full">Global</span>
                       <span class="px-3 py-1 bg-teal-100 text-teal-700 text-xs font-semibold rounded-full">Intercambio</span>
@@ -1170,18 +1035,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               </div>
-
               <div class="timeline-item-unique relative mb-16" data-aos="fade-up" data-aos-delay="600" data-year="2020">
                 <div class="timeline-dot-unique absolute left-1/2 w-8 h-8 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full border-4 border-white shadow-2xl transform -translate-x-1/2 z-20 cursor-pointer transition-all duration-500 hover:scale-150 hover:rotate-12">
                   <div class="absolute inset-0 bg-gradient-to-br from-[var(--ut-green-400)] to-[var(--ut-green-600)] rounded-full animate-pulse opacity-75"></div>
                   <div class="absolute inset-1 bg-white rounded-full"></div>
                   <div class="absolute inset-2 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full"></div>
                 </div>
-
                 <div class="timeline-card-unique bg-gradient-to-l from-white via-gray-50 to-white rounded-3xl p-8 shadow-xl border border-gray-200 hover:border-[var(--ut-green-300)] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden group ml-auto max-w-2xl">
                   <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-bl from-[var(--ut-green-100)] to-transparent rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div class="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-[var(--ut-green-200)] to-transparent rounded-full opacity-30 group-hover:opacity-80 transition-opacity duration-500"></div>
-
                   <div class="relative z-10">
                     <div class="flex items-center justify-between mb-6">
                       <div class="flex items-center gap-4">
@@ -1198,13 +1060,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-gray-500">Pandemia</div>
                       </div>
                     </div>
-
                     <h4 class="text-2xl font-bold text-gray-900 mb-4 leading-tight text-right">Transformación Digital Acelerada</h4>
-
                     <p class="text-gray-700 leading-relaxed mb-6 text-right">
                       Implementación completa de plataforma e-learning con IA adaptativa y laboratorios virtuales VR. Manteniendo continuidad educativa durante la pandemia y alcanzando 100% de cobertura digital con herramientas innovadoras.
                     </p>
-
                     <div class="grid grid-cols-3 gap-4 mb-6">
                       <div class="text-center p-3 bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl border border-pink-200">
                         <div class="text-lg font-bold text-pink-700">100%</div>
@@ -1219,7 +1078,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-fuchsia-600 font-medium">Adaptativa</div>
                       </div>
                     </div>
-
                     <div class="flex flex-wrap gap-2 justify-end">
                       <span class="px-3 py-1 bg-pink-100 text-pink-700 text-xs font-semibold rounded-full">Digital</span>
                       <span class="px-3 py-1 bg-rose-100 text-rose-700 text-xs font-semibold rounded-full">VR</span>
@@ -1228,18 +1086,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               </div>
-
               <div class="timeline-item-unique relative mb-16" data-aos="fade-up" data-aos-delay="800" data-year="2025">
                 <div class="timeline-dot-unique absolute left-1/2 w-8 h-8 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full border-4 border-white shadow-2xl transform -translate-x-1/2 z-20 cursor-pointer transition-all duration-500 hover:scale-150 hover:rotate-12">
                   <div class="absolute inset-0 bg-gradient-to-br from-[var(--ut-green-400)] to-[var(--ut-green-600)] rounded-full animate-pulse opacity-75"></div>
                   <div class="absolute inset-1 bg-white rounded-full"></div>
                   <div class="absolute inset-2 bg-gradient-to-br from-[var(--ut-green-500)] to-[var(--ut-green-700)] rounded-full"></div>
                 </div>
-
                 <div class="timeline-card-unique bg-gradient-to-r from-white via-gray-50 to-white rounded-3xl p-8 shadow-xl border border-gray-200 hover:border-[var(--ut-green-300)] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden group">
                   <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[var(--ut-green-100)] to-transparent rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div class="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[var(--ut-green-200)] to-transparent rounded-full opacity-30 group-hover:opacity-80 transition-opacity duration-500"></div>
-
                   <div class="relative z-10">
                     <div class="flex items-center justify-between mb-6">
                       <div class="flex items-center gap-4">
@@ -1256,13 +1111,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-gray-500">Sostenible</div>
                       </div>
                     </div>
-
                     <h4 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">Liderazgo Sostenible Consolidado</h4>
-
                     <p class="text-gray-700 leading-relaxed mb-6">
                       Reconocimiento como la universidad tecnológica #1 en innovación educativa sostenible por el QS World University Rankings en octubre 2025. Operaciones en campus carbono neutral y programas especializados en energías renovables implementados con éxito.
                     </p>
-
                     <div class="grid grid-cols-3 gap-4 mb-6">
                       <div class="text-center p-3 bg-gradient-to-br from-[var(--ut-green-50)] to-[var(--ut-green-100)] rounded-xl border border-[var(--ut-green-200)]">
                         <div class="text-lg font-bold text-[var(--ut-green-700)]">#1</div>
@@ -1277,7 +1129,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="text-xs text-amber-600 font-medium">Futuro</div>
                       </div>
                     </div>
-
                     <div class="flex flex-wrap gap-2">
                       <span class="px-3 py-1 bg-[var(--ut-green-100)] text-[var(--ut-green-700)] text-xs font-semibold rounded-full">Sostenible</span>
                       <span class="px-3 py-1 bg-lime-100 text-lime-700 text-xs font-semibold rounded-full">Verde</span>
@@ -1291,7 +1142,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
     </div>
-
     <!-- CTA Section Mejorada -->
     <div class="text-center mt-20" data-aos="fade-up">
       <div class="bg-gradient-to-r from-[var(--ut-green-600)] to-[var(--ut-green-800)] rounded-3xl p-12 text-white shadow-2xl">
@@ -1311,7 +1161,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </section>
-
 <!-- Estilos Únicos para Timeline Completa -->
 <style>
 .timeline-container-unique {
@@ -1319,7 +1168,6 @@ document.addEventListener('DOMContentLoaded', function() {
   padding: 2rem 1rem;
   min-height: 800px;
 }
-
 .timeline-line-unique {
   position: absolute;
   left: 50%;
@@ -1337,7 +1185,6 @@ document.addEventListener('DOMContentLoaded', function() {
   box-shadow: 0 0 30px rgba(40, 165, 95, 0.4);
   z-index: 1;
 }
-
 .timeline-line-unique::before {
   content: '';
   position: absolute;
@@ -1349,12 +1196,10 @@ document.addEventListener('DOMContentLoaded', function() {
   border-radius: 50%;
   animation: lineGlow 3s ease-in-out infinite alternate;
 }
-
 @keyframes lineGlow {
   0% { opacity: 0.3; transform: scale(1); }
   100% { opacity: 0.8; transform: scale(1.1); }
 }
-
 .timeline-progress {
   position: absolute;
   top: 0;
@@ -1369,13 +1214,11 @@ document.addEventListener('DOMContentLoaded', function() {
   transition: height 2s ease-out;
   z-index: 2;
 }
-
 .timeline-item-unique {
   position: relative;
   margin-bottom: 4rem;
   z-index: 10;
 }
-
 .timeline-dot-unique {
   position: absolute;
   left: 50%;
@@ -1390,12 +1233,10 @@ document.addEventListener('DOMContentLoaded', function() {
   cursor: pointer;
   transform: translateX(-50%);
 }
-
 .timeline-dot-unique:hover {
   transform: translateX(-50%) scale(1.3) rotate(180deg);
   box-shadow: 0 0 0 10px var(--ut-green-100), 0 0 60px rgba(40, 165, 95, 0.8);
 }
-
 .timeline-dot-unique::after {
   content: '';
   position: absolute;
@@ -1405,12 +1246,10 @@ document.addEventListener('DOMContentLoaded', function() {
   animation: dotPulse 2s ease-in-out infinite;
   opacity: 0;
 }
-
 @keyframes dotPulse {
   0%, 100% { transform: scale(1); opacity: 0; }
   50% { transform: scale(1.5); opacity: 0.6; }
 }
-
 .timeline-card-unique {
   background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
   backdrop-filter: blur(10px);
@@ -1423,7 +1262,6 @@ document.addEventListener('DOMContentLoaded', function() {
   overflow: hidden;
   max-width: 600px;
 }
-
 .timeline-card-unique::before {
   content: '';
   position: absolute;
@@ -1439,141 +1277,115 @@ document.addEventListener('DOMContentLoaded', function() {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
-
 .timeline-card-unique:hover::before {
   opacity: 1;
 }
-
 .timeline-card-unique:hover {
   transform: translateY(-12px) scale(1.02);
   box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(40, 165, 95, 0.1);
 }
-
 /* Responsive Design para Timeline Única */
 @media (max-width: 1024px) {
   .timeline-container-unique {
     padding: 1.5rem 0.5rem;
   }
-
   .timeline-line-unique {
     left: 3rem;
   }
-
   .timeline-dot-unique {
     left: 3rem;
   }
-
   .timeline-card-unique {
     margin-left: 6rem !important;
     margin-right: 0 !important;
     max-width: 500px;
   }
 }
-
 @media (max-width: 768px) {
   .timeline-container-unique {
     padding: 1rem 0.25rem;
   }
-
   .timeline-line-unique {
     left: 2rem;
     width: 4px;
   }
-
   .timeline-dot-unique {
     left: 2rem;
     width: 24px;
     height: 24px;
     border-width: 3px;
   }
-
   .timeline-card-unique {
     margin-left: 4rem !important;
     padding: 1.5rem;
     max-width: none;
   }
-
   .timeline-card-unique .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 3rem;
   }
 }
-
 @media (max-width: 640px) {
   .timeline-line-unique {
     left: 1.5rem;
   }
-
   .timeline-dot-unique {
     left: 1.5rem;
     width: 20px;
     height: 20px;
   }
-
   .timeline-card-unique {
     margin-left: 3rem !important;
     padding: 1rem;
   }
-
   .timeline-card-unique .grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-
   .timeline-card-unique h4 {
     font-size: 1.5rem !important;
   }
-
   .timeline-card-unique .flex.items-center.justify-between {
     flex-direction: column;
     align-items: flex-start !important;
     gap: 1rem;
   }
 }
-
 @media (max-width: 480px) {
   .timeline-line-unique {
     left: 1rem;
   }
-
   .timeline-dot-unique {
     left: 1rem;
   }
-
   .timeline-card-unique {
     margin-left: 2rem !important;
     padding: 0.75rem;
   }
 }
-
 /* Animación de entrada para cards */
 .timeline-card-unique[data-aos] {
   opacity: 0;
   transform: translateY(30px);
 }
-
 .timeline-card-unique[data-aos].aos-animate {
   opacity: 1;
   transform: translateY(0);
 }
-
 /* Efectos de hover mejorados */
 .timeline-card-unique:hover .timeline-dot-unique {
   transform: translateX(-50%) scale(1.5) rotate(360deg);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
-
 <!-- JavaScript para Timeline Única Completa -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Inicializar timeline con animaciones
   initTimeline();
-
   function initTimeline() {
     const timelineItems = document.querySelectorAll('.timeline-item-unique');
     const progressBar = document.querySelector('.timeline-progress');
-
     // Animación de progreso de la línea
     let progress = 0;
     const progressInterval = setInterval(() => {
@@ -1585,41 +1397,34 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInterval(progressInterval);
       }
     }, 50);
-
     // Efectos de hover en dots
     timelineItems.forEach((item, index) => {
       const dot = item.querySelector('.timeline-dot-unique');
       const card = item.querySelector('.timeline-card-unique');
-
       if (dot && card) {
         // Hover en dot
         dot.addEventListener('mouseenter', () => {
           card.style.transform = 'translateY(-8px) scale(1.01)';
           card.style.boxShadow = '0 25px 50px rgba(0,0,0,0.15)';
         });
-
         dot.addEventListener('mouseleave', () => {
           card.style.transform = '';
           card.style.boxShadow = '';
         });
-
         // Hover en card
         card.addEventListener('mouseenter', () => {
           dot.style.transform = 'translateX(-50%) scale(1.2) rotate(45deg)';
           dot.style.boxShadow = '0 0 0 8px var(--ut-green-100), 0 0 40px rgba(40, 165, 95, 0.7)';
         });
-
         card.addEventListener('mouseleave', () => {
           dot.style.transform = 'translateX(-50%)';
           dot.style.boxShadow = '0 0 0 6px var(--ut-green-100), 0 0 40px rgba(40, 165, 95, 0.6)';
         });
-
         // Click para expandir/colapsar
         dot.addEventListener('click', () => toggleTimelineCard(card, dot));
         card.addEventListener('click', () => toggleTimelineCard(card, dot));
       }
     });
-
     // Auto-expandir primera card después de animación
     setTimeout(() => {
       const firstCard = document.querySelector('.timeline-card-unique');
@@ -1630,34 +1435,28 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }, 2000);
   }
-
   function toggleTimelineCard(card, dot) {
     const isExpanded = card.classList.contains('expanded');
     const allCards = document.querySelectorAll('.timeline-card-unique');
     const allDots = document.querySelectorAll('.timeline-dot-unique');
-
     // Cerrar todas las cards
     allCards.forEach(c => {
       c.classList.remove('expanded');
       c.style.maxHeight = '';
       c.style.transform = '';
     });
-
     allDots.forEach(d => {
       d.style.transform = 'translateX(-50%)';
       d.style.boxShadow = '0 0 0 6px var(--ut-green-100), 0 0 40px rgba(40, 165, 95, 0.6)';
     });
-
     // Abrir la card seleccionada si no estaba expandida
     if (!isExpanded) {
       card.classList.add('expanded');
       card.style.maxHeight = 'none';
       card.style.transform = 'translateY(-5px) scale(1.01)';
       card.style.boxShadow = '0 30px 60px rgba(0,0,0,0.2)';
-
       dot.style.transform = 'translateX(-50%) scale(1.3) rotate(180deg)';
       dot.style.boxShadow = '0 0 0 10px var(--ut-green-100), 0 0 60px rgba(40, 165, 95, 0.8)';
-
       // Animación de pulso
       setTimeout(() => {
         dot.style.animation = 'dotPulse 1s ease-in-out';
@@ -1667,7 +1466,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 300);
     }
   }
-
   // Efectos de scroll para timeline
   let ticking = false;
   window.addEventListener('scroll', () => {
@@ -1679,17 +1477,14 @@ document.addEventListener('DOMContentLoaded', function() {
       ticking = true;
     }
   });
-
   function updateTimelineOnScroll() {
     const timelineItems = document.querySelectorAll('.timeline-item-unique');
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
-
     timelineItems.forEach((item, index) => {
       const rect = item.getBoundingClientRect();
       const itemTop = rect.top + scrollY;
       const itemCenter = itemTop + rect.height / 2;
-
       if (scrollY + windowHeight > itemCenter - 100 && scrollY < itemCenter + 100) {
         const dot = item.querySelector('.timeline-dot-unique');
         if (dot) {
@@ -1705,20 +1500,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-
   // Efectos de entrada con AOS
   const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
   };
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const item = entry.target;
         const dot = item.querySelector('.timeline-dot-unique');
         const card = item.querySelector('.timeline-card-unique');
-
         // Animación de entrada del dot
         if (dot) {
           dot.style.animation = 'bounceIn 0.8s ease-out';
@@ -1726,7 +1518,6 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.style.animation = '';
           }, 800);
         }
-
         // Animación de entrada de la card
         if (card) {
           card.style.animation = 'slideInUp 1s ease-out';
@@ -1734,17 +1525,14 @@ document.addEventListener('DOMContentLoaded', function() {
             card.style.animation = '';
           }, 1000);
         }
-
         observer.unobserve(item);
       }
     });
   }, observerOptions);
-
   document.querySelectorAll('.timeline-item-unique').forEach(item => {
     observer.observe(item);
   });
 });
-
 // Animaciones CSS adicionales
 const style = document.createElement('style');
 style.textContent = `
@@ -1753,16 +1541,13 @@ style.textContent = `
     50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
     100% { transform: translateX(-50%) scale(1); opacity: 1; }
   }
-
   @keyframes slideInUp {
     0% { transform: translateY(50px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
   }
-
   .timeline-card-unique.expanded {
     animation: cardExpand 0.5s ease-out;
   }
-
   @keyframes cardExpand {
     0% { transform: scale(1); }
     50% { transform: scale(1.02); }
@@ -1771,20 +1556,18 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 </script>
-
 <!-- Feria de Proyectos para Futuros Universitarios - Expandida -->
 <section class="bg-gradient-to-br from-emerald-50 to-green-50 py-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-20" data-aos="fade-up">
       <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl mb-4">
-        Feria de Proyectos para 
+        Feria de Proyectos para
         <span class="text-green-600">Futuros Universitarios</span>
       </h2>
       <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
         Descubre el talento e innovación de nuestros estudiantes en esta exclusiva exhibición académica anual, donde más de 200 proyectos de ingeniería, IA y sostenibilidad se presentan a líderes comunitarios y empresariales. Edición 2025: "Innovación para un Mañana Sostenible".
       </p>
     </div>
-
     <!-- Mención Honorífica - Visita del Alcalde Miguel Angel - Actualizada a 2025 -->
     <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-2xl overflow-hidden mb-20 relative" data-aos="zoom-in">
       <div class="absolute inset-0 bg-black/10"></div>
@@ -1809,7 +1592,7 @@ document.head.appendChild(style);
             <div class="flex items-center"><i data-feather="award" class="w-4 h-4 mr-2"></i><span>5 Alianzas Nuevas</span></div>
           </div>
         </div>
-        
+       
         <!-- Carrusel en la parte amarilla - Mejorado -->
         <div class="md:w-1/3 bg-gradient-to-br from-yellow-400 to-yellow-600 p-6 relative">
           <div class="carousel-container relative h-full rounded-2xl overflow-hidden shadow-2xl">
@@ -1833,7 +1616,7 @@ document.head.appendChild(style);
                 </div>
               </div>
             </div>
-            
+           
             <!-- Controles mejorados -->
             <button class="carousel-prev absolute left-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-yellow-600 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg">
               <i data-feather="chevron-left" class="w-5 h-5"></i>
@@ -1841,7 +1624,7 @@ document.head.appendChild(style);
             <button class="carousel-next absolute right-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-yellow-600 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg">
               <i data-feather="chevron-right" class="w-5 h-5"></i>
             </button>
-            
+           
             <!-- Indicadores mejorados -->
             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 bg-white/20 backdrop-blur-md rounded-full p-2">
               <div class="carousel-indicator w-3 h-3 bg-white/60 rounded-full cursor-pointer hover:bg-white transition-all duration-300" data-slide="0"></div>
@@ -1852,7 +1635,6 @@ document.head.appendChild(style);
         </div>
       </div>
     </div>
-
     <!-- Proyectos Destacados - Expandido con más detalles realistas -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
       <div class="bg-white rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-500 relative" data-aos="fade-up">
@@ -1881,7 +1663,7 @@ document.head.appendChild(style);
           </a>
         </div>
       </div>
-      
+     
       <div class="bg-white rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-500 relative" data-aos="fade-up" data-aos-delay="100">
         <div class="relative overflow-hidden">
           <img src="./plataforma/app/img/Mecatronica.jpg" alt="Expo Ingeniería" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110">
@@ -1908,7 +1690,7 @@ document.head.appendChild(style);
           </a>
         </div>
       </div>
-      
+     
       <div class="bg-white rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-500 relative" data-aos="fade-up" data-aos-delay="200">
         <div class="relative overflow-hidden">
           <img src="./plataforma/app/img/Negocios.jpg" alt="Foro de Innovación" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110">
@@ -1936,75 +1718,68 @@ document.head.appendChild(style);
         </div>
       </div>
     </div>
-
   </div>
 </section>
-
 <style>
 .carousel-container {
   height: 320px;
 }
-
 .carousel-slides {
   height: 100%;
 }
-
 .carousel-slide {
   width: 100%;
 }
-
 .carousel-indicator.active {
   background: white !important;
   transform: scale(1.3);
 }
 </style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const carouselSlides = document.querySelector('.carousel-slides');
   const indicators = document.querySelectorAll('.carousel-indicator');
   const prevBtn = document.querySelector('.carousel-prev');
   const nextBtn = document.querySelector('.carousel-next');
-  
+ 
   let currentSlide = 0;
   const totalSlides = 3;
   const slideInterval = 4000;
-  
+ 
   function showSlide(slideIndex) {
     currentSlide = (slideIndex + totalSlides) % totalSlides;
     carouselSlides.style.transform = `translateX(-${currentSlide * 100}%)`;
-    
+   
     indicators.forEach((indicator, index) => {
       indicator.classList.toggle('active', index === currentSlide);
     });
   }
-  
+ 
   function nextSlide() {
     showSlide(currentSlide + 1);
   }
-  
+ 
   function prevSlide() {
     showSlide(currentSlide - 1);
   }
-  
+ 
   nextBtn.addEventListener('click', nextSlide);
   prevBtn.addEventListener('click', prevSlide);
-  
+ 
   indicators.forEach((indicator, index) => {
     indicator.addEventListener('click', () => showSlide(index));
   });
-  
+ 
   let autoSlide = setInterval(nextSlide, slideInterval);
-  
+ 
   const carouselContainer = document.querySelector('.carousel-container');
   carouselContainer.addEventListener('mouseenter', () => clearInterval(autoSlide));
   carouselContainer.addEventListener('mouseleave', () => autoSlide = setInterval(nextSlide, slideInterval));
-  
+ 
   indicators[0].classList.add('active');
   feather.replace();
 });
 </script>
-
 <!-- Campus y Planteles - Expandido -->
 <section class="py-24 bg-gradient-to-b from-white to-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -2012,7 +1787,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-6">Nuestros Planteles</h2>
       <p class="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">Infraestructura de vanguardia con certificación LEED para sostenibilidad, equipada con labs de IA, centros de makerspace y espacios colaborativos diseñados para fomentar la innovación y el bienestar estudiantil.</p>
     </div>
-    
+   
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
       <!-- Campus Central -->
       <div class="campus-card bg-white rounded-2xl shadow-2xl overflow-hidden relative group" data-aos="fade-up">
@@ -2040,7 +1815,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </button>
         </div>
       </div>
-      
+     
       <!-- Campus Tecnológico -->
       <div class="campus-card bg-white rounded-2xl shadow-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="100">
         <div class="relative overflow-hidden">
@@ -2067,7 +1842,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </button>
         </div>
       </div>
-      
+     
       <!-- Campus de Innovación -->
       <div class="campus-card bg-white rounded-2xl shadow-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="200">
         <div class="relative overflow-hidden">
@@ -2097,7 +1872,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </section>
-
 <!-- Modal para Campus - Unificado y mejorado -->
 <div id="campusModal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 hidden">
   <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-6xl w-full mx-4 max-h-[95vh] overflow-y-auto relative">
@@ -2111,21 +1885,21 @@ document.addEventListener('DOMContentLoaded', function() {
         <i data-feather="x" class="w-8 h-8"></i>
       </button>
     </div>
-    
+   
     <!-- Carrusel de fotos -->
     <div class="relative h-96 md:h-[500px]">
       <div id="carouselSlides" class="flex h-full transition-transform duration-700 ease-in-out"></div>
-      
+     
       <button id="carouselPrev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 z-10">
         <i data-feather="chevron-left" class="w-6 h-6"></i>
       </button>
       <button id="carouselNext" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 z-10">
         <i data-feather="chevron-right" class="w-6 h-6"></i>
       </button>
-      
+     
       <div id="carouselIndicators" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 bg-black/30 backdrop-blur-md rounded-full p-2"></div>
     </div>
-    
+   
     <!-- Información adicional -->
     <div class="p-8 bg-gradient-to-r from-gray-50 to-white">
       <p id="modalDescription" class="text-gray-700 text-lg mb-6 leading-relaxed"></p>
@@ -2135,7 +1909,6 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="flex items-center"><i data-feather="accessibility" class="w-4 h-4 mr-2"></i><span>Accesible 100%</span></div>
       </div>
     </div>
-
     <!-- Nueva sección de Ubicación -->
     <div id="modalLocation" class="p-8 bg-gray-50 border-t border-gray-100">
       <h4 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
@@ -2147,14 +1920,12 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </div>
-
 <style>
 #campusModal .carousel-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .carousel-indicator {
   width: 12px;
   height: 12px;
@@ -2163,23 +1934,19 @@ document.addEventListener('DOMContentLoaded', function() {
   cursor: pointer;
   transition: all 0.4s ease;
 }
-
 .carousel-indicator.active {
   background-color: white;
   transform: scale(1.3);
 }
-
 /* Estilos para la ubicación clickable */
 .location-link {
   cursor: pointer;
   transition: color 0.2s ease;
 }
-
 .location-link:hover {
   color: var(--ut-green-700) !important;
 }
 </style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('campusModal');
@@ -2194,10 +1961,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const carouselIndicators = document.getElementById('carouselIndicators');
   const carouselPrev = document.getElementById('carouselPrev');
   const carouselNext = document.getElementById('carouselNext');
-  
+ 
   let currentSlide = 0;
   let currentCampus = '';
-  
+ 
   const campusData = {
     central: {
       title: 'Campus Montemorelos',
@@ -2260,31 +2027,31 @@ document.addEventListener('DOMContentLoaded', function() {
       ]
     }
   };
-  
+ 
   function openCampusModal(campus) {
     currentCampus = campus;
     openModal(currentCampus);
   }
-  
+ 
   function openModal(campus) {
     const data = campusData[campus];
     modalTitle.textContent = data.title;
     modalSubtitle.textContent = data.subtitle;
     modalDescription.textContent = data.description;
     modalAddress.textContent = data.location.address;
-    
+   
     const mapUrl = `https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(data.location.address)}&key=`;
     mapEmbed.src = mapUrl;
-    
+   
     carouselSlides.innerHTML = '';
     carouselIndicators.innerHTML = '';
-    
+   
     data.images.forEach((image, index) => {
       const slide = document.createElement('div');
       slide.className = 'carousel-slide flex-shrink-0 w-full';
       slide.innerHTML = `<img src="${image}" alt="${data.title} - Imagen ${index + 1}" class="w-full h-full object-cover">`;
       carouselSlides.appendChild(slide);
-      
+     
       const indicator = document.createElement('div');
       indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
       indicator.addEventListener('click', () => {
@@ -2293,40 +2060,40 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       carouselIndicators.appendChild(indicator);
     });
-    
+   
     currentSlide = 0;
     updateCarousel();
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
   }
-  
+ 
   function closeModalFunc() {
     modal.classList.add('hidden');
     document.body.style.overflow = 'auto';
   }
-  
+ 
   conocerMasBtns.forEach(btn => {
     btn.addEventListener('click', function() {
       currentCampus = this.getAttribute('data-campus');
       openModal(currentCampus);
     });
   });
-  
+ 
   closeModal.addEventListener('click', closeModalFunc);
   modal.addEventListener('click', function(e) {
     if (e.target === modal) closeModalFunc();
   });
-  
+ 
   carouselPrev.addEventListener('click', () => {
     currentSlide = (currentSlide - 1 + campusData[currentCampus].images.length) % campusData[currentCampus].images.length;
     updateCarousel();
   });
-  
+ 
   carouselNext.addEventListener('click', () => {
     currentSlide = (currentSlide + 1) % campusData[currentCampus].images.length;
     updateCarousel();
   });
-  
+ 
   function updateCarousel() {
     carouselSlides.style.transform = `translateX(-${currentSlide * 100}%)`;
     const indicators = carouselIndicators.querySelectorAll('.carousel-indicator');
@@ -2334,18 +2101,17 @@ document.addEventListener('DOMContentLoaded', function() {
       indicator.classList.toggle('active', index === currentSlide);
     });
   }
-  
+ 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
       closeModalFunc();
     }
   });
-  
+ 
   // Exponer función global para onclick en HTML
   window.openCampusModal = openCampusModal;
 });
 </script>
-
 <!-- Tradición Deportiva UTSC - Expandida y Unificada -->
 <section class="py-24 bg-gradient-to-b from-gray-50 to-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -2353,7 +2119,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-6">Tradición Deportiva UTSC</h2>
       <p class="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">Formando atletas de excelencia con valores universitarios, integrando deporte inclusivo y salud mental. En 2025, expandimos a e-sports con torneos de IA gaming y wellness programs certificados.</p>
     </div>
-    
+   
     <div class="grid lg:grid-cols-2 gap-12 mb-20">
       <!-- Selección de Fútbol -->
       <div class="sports-card bg-white rounded-3xl shadow-2xl overflow-hidden relative group" data-aos="fade-up">
@@ -2370,7 +2136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
         </div>
-        
+       
         <div class="p-8 relative z-10">
           <div class="grid grid-cols-3 gap-6 mb-8 text-center">
             <div class="p-4">
@@ -2386,11 +2152,11 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="text-sm text-gray-600 font-medium">Campeones Regionales</div>
             </div>
           </div>
-          
+         
           <p class="text-gray-600 mb-6 text-lg leading-relaxed">
             Nuestra selección de fútbol encarna disciplina, trabajo en equipo y excelencia, compitiendo en ligas interuniversitarias con un enfoque en desarrollo integral, incluyendo talleres de nutrición deportiva y liderazgo comunitario.
           </p>
-          
+         
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-3 text-sm text-gray-500">
               <i data-feather="calendar" class="w-5 h-5 text-green-600"></i>
@@ -2403,7 +2169,6 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </div>
       </div>
-
       <!-- Equipo de Tochito Femenino -->
       <div class="sports-card bg-white rounded-3xl shadow-2xl overflow-hidden relative group" data-aos="fade-up" data-aos-delay="100">
         <div class="relative overflow-hidden h-72">
@@ -2419,7 +2184,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
         </div>
-        
+       
         <div class="p-8 relative z-10">
           <div class="grid grid-cols-3 gap-6 mb-8 text-center">
             <div class="p-4">
@@ -2435,11 +2200,11 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="text-sm text-gray-600 font-medium">Campeonas Estatales</div>
             </div>
           </div>
-          
+         
           <p class="text-gray-600 mb-6 text-lg leading-relaxed">
             El equipo de tochito femenino promueve empoderamiento, estrategia y resiliencia, participando en torneos nacionales con énfasis en equidad de género y programas de mentoría para atletas emergentes.
           </p>
-          
+         
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-3 text-sm text-gray-500">
               <i data-feather="calendar" class="w-5 h-5 text-purple-600"></i>
@@ -2453,7 +2218,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
     </div>
-
     <!-- Logros Deportivos - Expandido -->
     <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-12 text-center" data-aos="fade-up">
       <h3 class="text-3xl font-bold text-gray-900 mb-10">Logros Destacados 2025</h3>
@@ -2489,7 +2253,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </section>
-
 <!-- Modal Unificado para Galerías Deportivas -->
 <div id="galeriaModal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 hidden">
   <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-6xl w-full mx-4 max-h-[95vh] overflow-hidden relative">
@@ -2502,20 +2265,20 @@ document.addEventListener('DOMContentLoaded', function() {
         <i data-feather="x" class="w-8 h-8"></i>
       </button>
     </div>
-    
+   
     <div class="relative h-96 md:h-[500px]">
       <div id="galeriaSlides" class="flex h-full transition-transform duration-700 ease-in-out"></div>
-      
+     
       <button id="galeriaPrev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 z-10">
         <i data-feather="chevron-left" class="w-6 h-6"></i>
       </button>
       <button id="galeriaNext" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 hover:scale-110 z-10">
         <i data-feather="chevron-right" class="w-6 h-6"></i>
       </button>
-      
+     
       <div id="galeriaIndicators" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 bg-black/30 backdrop-blur-md rounded-full p-2"></div>
     </div>
-    
+   
     <div class="p-8 bg-gradient-to-r from-gray-50 to-white">
       <p id="galeriaDescription" class="text-gray-700 text-lg mb-6 leading-relaxed"></p>
       <div class="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-500">
@@ -2526,14 +2289,12 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </div>
-
 <style>
 #galeriaModal .galeria-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .galeria-indicator {
   width: 12px;
   height: 12px;
@@ -2542,13 +2303,11 @@ document.addEventListener('DOMContentLoaded', function() {
   cursor: pointer;
   transition: all 0.4s ease;
 }
-
 .galeria-indicator.active {
   background-color: white;
   transform: scale(1.3);
 }
 </style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const galeriaModal = document.getElementById('galeriaModal');
@@ -2561,10 +2320,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const galeriaIndicators = document.getElementById('galeriaIndicators');
   const galeriaPrev = document.getElementById('galeriaPrev');
   const galeriaNext = document.getElementById('galeriaNext');
-  
+ 
   let currentGaleriaSlide = 0;
   let currentEquipo = '';
-  
+ 
   const equipoData = {
     futbol: {
       title: 'Selección de Fútbol Masculino',
@@ -2588,48 +2347,48 @@ document.addEventListener('DOMContentLoaded', function() {
         './plataforma/app/img/123-IMG_7641.jpg',
         './plataforma/app/img/101-IMG_4617.jpg',
         './plataforma/app/img/99-IMG_3636.jpg'
-        
+       
       ]
     }
   };
-  
+ 
   verGaleriaBtns.forEach(btn => {
     btn.addEventListener('click', function() {
       currentEquipo = this.getAttribute('data-equipo');
       openGaleriaModal(currentEquipo);
     });
   });
-  
+ 
   closeGaleriaModal.addEventListener('click', closeGaleriaModalFunc);
   galeriaModal.addEventListener('click', function(e) {
     if (e.target === galeriaModal) closeGaleriaModalFunc();
   });
-  
+ 
   galeriaPrev.addEventListener('click', () => {
     currentGaleriaSlide = (currentGaleriaSlide - 1 + equipoData[currentEquipo].images.length) % equipoData[currentEquipo].images.length;
     updateGaleriaCarousel();
   });
-  
+ 
   galeriaNext.addEventListener('click', () => {
     currentGaleriaSlide = (currentGaleriaSlide + 1) % equipoData[currentEquipo].images.length;
     updateGaleriaCarousel();
   });
-  
+ 
   function openGaleriaModal(equipo) {
     const data = equipoData[equipo];
     galeriaTitle.textContent = data.title;
     galeriaSubtitle.textContent = data.subtitle;
     galeriaDescription.textContent = data.description;
-    
+   
     galeriaSlides.innerHTML = '';
     galeriaIndicators.innerHTML = '';
-    
+   
     data.images.forEach((image, index) => {
       const slide = document.createElement('div');
       slide.className = 'galeria-slide flex-shrink-0 w-full';
       slide.innerHTML = `<img src="${image}" alt="${data.title} - Imagen ${index + 1}" class="w-full h-full object-cover">`;
       galeriaSlides.appendChild(slide);
-      
+     
       const indicator = document.createElement('div');
       indicator.className = `galeria-indicator ${index === 0 ? 'active' : ''}`;
       indicator.addEventListener('click', () => {
@@ -2638,18 +2397,18 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       galeriaIndicators.appendChild(indicator);
     });
-    
+   
     currentGaleriaSlide = 0;
     updateGaleriaCarousel();
     galeriaModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
   }
-  
+ 
   function closeGaleriaModalFunc() {
     galeriaModal.classList.add('hidden');
     document.body.style.overflow = 'auto';
   }
-  
+ 
   function updateGaleriaCarousel() {
     galeriaSlides.style.transform = `translateX(-${currentGaleriaSlide * 100}%)`;
     const indicators = galeriaIndicators.querySelectorAll('.galeria-indicator');
@@ -2657,7 +2416,7 @@ document.addEventListener('DOMContentLoaded', function() {
       indicator.classList.toggle('active', index === currentGaleriaSlide);
     });
   }
-  
+ 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && !galeriaModal.classList.contains('hidden')) {
       closeGaleriaModalFunc();
@@ -2665,7 +2424,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-
 <!-- Galería de Logros - Expandida -->
 <section class="py-24 bg-gradient-to-b from-emerald-50 to-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -2673,7 +2431,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-6">Logros y Reconocimientos</h2>
       <p class="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">El esfuerzo colectivo de nuestra comunidad académica y deportiva reflejado en premios internacionales, patentes y contribuciones sociales que posicionan a UTSC como líder en 2025.</p>
     </div>
-    
+   
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
       <div class="gallery-item bg-white/80 backdrop-blur-sm p-8 rounded-2xl text-center shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2" data-aos="fade-up">
         <div class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
@@ -2682,7 +2440,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <h4 class="text-xl font-bold text-gray-900 mb-3">QS Stars 5 Estrellas 2025</h4>
         <p class="text-gray-600 text-base leading-relaxed">En innovación educativa y empleabilidad global, superando a 200 instituciones latinoamericanas.</p>
       </div>
-      
+     
       <div class="gallery-item bg-white/80 backdrop-blur-sm p-8 rounded-2xl text-center shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
         <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
           <i data-feather="shield" class="w-10 h-10 text-white"></i>
@@ -2690,7 +2448,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <h4 class="text-xl font-bold text-gray-900 mb-3">ISO 9001 & LEED Oro</h4>
         <p class="text-gray-600 text-base leading-relaxed">Certificaciones en calidad educativa y sostenibilidad ambiental, con reducción del 40% en emisiones de carbono.</p>
       </div>
-      
+     
       <div class="gallery-item bg-white/80 backdrop-blur-sm p-8 rounded-2xl text-center shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
         <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
           <i data-feather="trending-up" class="w-10 h-10 text-white"></i>
@@ -2698,7 +2456,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <h4 class="text-xl font-bold text-gray-900 mb-3">Top 3 Nacional en Empleabilidad</h4>
         <p class="text-gray-600 text-base leading-relaxed">98% de egresados empleados en 6 meses, con salarios promedio 25% superiores al mercado regional.</p>
       </div>
-      
+     
       <div class="gallery-item bg-white/80 backdrop-blur-sm p-8 rounded-2xl text-center shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
         <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
           <i data-feather="zap" class="w-10 h-10 text-white"></i>
@@ -2709,21 +2467,17 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </section>
-
 <script>
 AOS.init({ duration: 1000, easing: 'ease-out-cubic', once: true });
 feather.replace();
-
 // Botón modo oscuro
 (function(){
   const toggle = document.getElementById("toggleDark");
   const body = document.body;
-
   if(localStorage.getItem("theme") === "dark"){
     body.classList.add("dark");
     if (toggle) toggle.innerHTML = "☀️";
   }
-
   if(toggle){
     toggle.addEventListener("click", () => {
       body.classList.toggle("dark");
@@ -2739,7 +2493,6 @@ feather.replace();
   }
 })();
 </script>
-
 <?php include 'footer.php'; ?>
 </body>
 </html>
