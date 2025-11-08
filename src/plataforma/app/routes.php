@@ -1,21 +1,29 @@
 <?php
-$map('GET', '/src/plataforma/ping', function () {
+$map('GET', '/ping', function () {
   header('Content-Type: text/plain; charset=utf-8');
   echo "pong";
 });
 
 use App\Controllers\AuthController;
 use App\Controllers\AdminDashboardController;
-
-require_once __DIR__ . '/controllers/NotificationsController.php';
+use App\Controllers\ChatController;
+use App\Controllers\api\ChatApiController;
+use App\Controllers\NotificationsController;
 
 /* ========== Notifications Routes ========== */
-$map('GET', '/src/plataforma/api/notifications',          [new \App\Controllers\NotificationsController, 'getUnread']);
-$map('POST', '/src/plataforma/api/notifications/read',    [new \App\Controllers\NotificationsController, 'markAsRead']);
-$map('POST', '/src/plataforma/api/notifications/read-all',[new \App\Controllers\NotificationsController, 'markAllAsRead']);
+$map('GET', '/api/notifications',          [new NotificationsController, 'getUnread']);
+$map('POST', '/api/notifications/read',    [new NotificationsController, 'markAsRead']);
+$map('POST', '/api/notifications/read-all',[new NotificationsController, 'markAllAsRead']);
 
 /* ========== Auth Routes ========== */
-$map('GET', '/src/plataforma/login',  [new AuthController, 'showLogin']);
-$map('POST', '/src/plataforma/login', [new AuthController, 'login']);
-$map('GET', '/src/plataforma/logout', [new AuthController, 'logout']);
-$map('GET',  '/src/plataforma/admin',  [new AdminDashboardController,'index']);
+$map('GET', '/login',  [new AuthController, 'showLogin']);
+$map('POST', '/login', [new AuthController, 'login']);
+$map('GET', '/logout', [new AuthController, 'logout']);
+$map('GET',  '/admin',  [new AdminDashboardController,'index']);
+$map('GET',  '/chat',   [new ChatController,'index']);
+
+/* ========== Chat API Routes ========== */
+$map('GET',  '/api/chat/conversations', [new ChatApiController,'getConversations']);
+$map('GET',  '/api/chat/messages',      [new ChatApiController,'getMessages']);
+$map('POST', '/api/chat/send',         [new ChatApiController,'sendMessage']);
+$map('GET',  '/api/chat/contacts',     [new ChatApiController,'getContacts']);
