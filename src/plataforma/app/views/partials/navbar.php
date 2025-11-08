@@ -34,6 +34,7 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
 
       // Sistema y comunicación
       ['href' => '/src/plataforma/app/admin/announcements',      'icon' => 'bell',        'text' => 'Anuncios'],
+      ['href' => '/src/plataforma/app/admin/chat',                        'icon' => 'message-circle','text' => 'Chat'],
       ['href' => '/src/plataforma/app/admin/settings',           'icon' => 'settings',    'text' => 'Configuración'],
   ];
 
@@ -48,6 +49,7 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
         ['href' => '/src/plataforma/app/scholarships',      'icon' => 'gift',       'text' => 'Becas'],
         ['href' => '/src/plataforma/app/surveys',           'icon' => 'clipboard',  'text' => 'Encuestas'],
         ['href' => '/src/plataforma/app/anuncios',          'icon' => 'bell',       'text' => 'Anuncios'],
+        ['href' => '/src/plataforma/app/chat',      'icon' => 'message-circle','text' => 'Chat'],
     ];
 } elseif ($role === 'teacher') {
     $menu = [
@@ -60,16 +62,18 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
         ['href' => '/src/plataforma/app/teacher/grades',    'icon' => 'award',      'text' => 'Calificaciones'],
         ['href' => '/src/plataforma/app/teacher/surveys',   'icon' => 'edit-3',     'text' => 'Encuestas'],
         ['href' => '/src/plataforma/app/teacher/announcements','icon'=>'bell',      'text' => 'Anuncios'],
+        ['href' => '/src/plataforma/app/teacher/chat',      'icon'=>'message-circle','text' => 'Chat'],
     ];
 } elseif ($role === 'capturista') {
     $menu = [
-        ['href' => '/src/plataforma/capturista',                    'icon' => 'home',        'text' => 'Panel'],
-        ['href' => '/src/plataforma/solicitudes',                   'icon' => 'file-text',   'text' => 'Solicitudes'],
+        ['href' => '/src/plataforma/app/capturista',                    'icon' => 'home',        'text' => 'Panel'],
+        ['href' => '/src/plataforma/app/capturista/solicitudes',                   'icon' => 'file-text',   'text' => 'Solicitudes'],
         ['href' => '/src/plataforma/app/capturista/solicitudes/nueva','icon'=>'edit-3',     'text' => 'Capturar solicitud'],
-        ['href' => '/src/plataforma/capturista/importar',           'icon' => 'upload-cloud','text' => 'Importar CSV/Excel'],
-        ['href' => '/src/plataforma/capturista/alumnos',            'icon' => 'users',       'text' => 'Alumnos'],
-        ['href' => '/src/plataforma/capturista/inscripciones',      'icon' => 'check-circle','text' => 'Inscripciones'],
-        ['href' => '/src/plataforma/capturista/reportes',           'icon' => 'bar-chart-2', 'text' => 'Reportes'],
+        ['href' => '/src/plataforma/app/capturista/importar',           'icon' => 'upload-cloud','text' => 'Importar CSV/Excel'],
+        ['href' => '/src/plataforma/app/capturista/alumnos',            'icon' => 'users',       'text' => 'Alumnos'],
+        ['href' => '/src/plataforma/app/capturista/inscripciones',      'icon' => 'check-circle','text' => 'Inscripciones'],
+        ['href' => '/src/plataforma/app/capturista/reportes',           'icon' => 'bar-chart-2', 'text' => 'Reportes'],
+        ['href' => '/src/plataforma/app/capturista/chat',           'icon' => 'message-circle','text' => 'Chat'],
     ];
 }
 

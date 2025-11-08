@@ -225,6 +225,10 @@ $U = $_SESSION['user'] ?? [];
               <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </a>
 
+            <a href="#" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700 relative" aria-label="Chat">
+              <i data-feather="message-circle"></i>
+            </a>
+
             <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
               <i data-feather="user" class="text-primary-700 dark:text-primary-300"></i>
             </div>
