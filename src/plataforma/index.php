@@ -9,16 +9,32 @@ if (session_status() === PHP_SESSION_NONE) {
   ]);
   session_start();
   // --- Compat: normaliza sesión para código viejo ---
-if (!empty($_SESSION['user']['roles']) && is_array($_SESSION['user']['roles'])) {
-  // Copias para código que aún usa las claves antiguas
-  $_SESSION['roles'] = $_SESSION['user']['roles'];      // array de slugs
-  $_SESSION['role']  = $_SESSION['user']['roles'][0];   // primer rol
+  if (!empty($_SESSION['user']['roles']) && is_array($_SESSION['user']['roles'])) {
+    // Copias para código que aún usa las claves antiguas
+    $_SESSION['roles'] = $_SESSION['user']['roles'];      // array de slugs
+    $_SESSION['role']  = $_SESSION['user']['roles'][0];   // primer rol
+  }
 }
 
+/* ==========================================================
+ * CARGA DEL .env (para variables de entorno en PHP)
+ * ========================================================== */
+
+require_once __DIR__ . '/../../vendor/autoload.php'; // Ajusta si tu vendor está fuera de /src
+use Dotenv\Dotenv;
+
+try {
+  // Carga el archivo .env desde la raíz del proyecto
+  $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
+  $dotenv->load();
+} catch (Exception $e) {
+  error_log("⚠️ No se pudo cargar .env: " . $e->getMessage());
 }
 
+/* ==========================================================
+ * CARGA DEL CORE Y CONTROLADORES/MODELOS/HELPERS
+ * ========================================================== */
 
-// cargar core y controladores/modelos/helpers
 foreach (glob(__DIR__ . '/app/core/*.php') as $f) require_once $f;
 foreach (glob(__DIR__ . '/app/controllers/*.php') as $f) require_once $f;
 foreach (glob(__DIR__ . '/app/models/*.php') as $f) require_once $f;
@@ -27,6 +43,7 @@ foreach (glob(__DIR__ . '/app/helpers/*.php') as $f) require_once $f; // <--- NU
 // configurar storage y garantizar carpetas
 $__filesCfg = require __DIR__ . '/app/config/files.php';
 \App\Helpers\Storage::ensureDirs($__filesCfg);
+
 use App\Core\Router;
 use App\Controllers\AuthController;
 use App\Controllers\NotificationsController;
@@ -56,6 +73,7 @@ use App\Controllers\SemestersController;
 use App\Controllers\MateriaGrupoController;
 use App\Controllers\MateriaGrupoProfesorController;
 use App\Controllers\TeacherCoursesController;
+use App\Controllers\ChatController;
 
 $router = new Router();
 
@@ -69,12 +87,14 @@ $map = function($method, $path, $handler) use ($router) {
     if ($method === 'POST') { $router->post($path.'/', $handler); }
   }
 };
+
 $map('GET', '/src/plataforma/debug/session', function () {
   if (session_status()===PHP_SESSION_NONE) session_start();
   header('Content-Type:text/plain; charset=utf-8');
   var_dump($_SESSION);
   exit;
 });
+
 
 /* ========== Auth ========== */
 $map('GET',  '/src/plataforma',         [new AuthController, 'showLogin']); // sin slash
@@ -116,6 +136,26 @@ $map('POST', '/src/plataforma/app/scholarships/apply/{id}',  [new ScholarshipsCo
 $map('GET',  '/src/plataforma/app/surveys',                  [new SurveysController, 'index']);
 $map('GET',  '/src/plataforma/app/surveys/take/{id}',        [new SurveysController, 'take']);
 $map('POST', '/src/plataforma/app/surveys/submit/{id}',      [new SurveysController, 'submit']);
+
+
+/* ========== Chat Routes (vista) ========== */
+$map('GET', '/src/plataforma/app/chat',            [new ChatController, 'index']);
+
+/* Opcionales por dashboard (misma vista; el layout se decide por rol en la vista) */
+$map('GET', '/src/plataforma/app/admin/chat',      [new ChatController, 'index']);
+$map('GET', '/src/plataforma/app/teacher/chat',    [new ChatController, 'index']);
+$map('GET', '/src/plataforma/app/student/chat',    [new ChatController, 'index']);
+$map('GET', '/src/plataforma/app/capturista/chat', [new ChatController, 'index']);
+
+/* ========== Chat API ========== */
+$map('GET',  '/src/plataforma/app/chat/token',         [new ChatController, 'token']);        // JWT para Socket.IO
+$map('GET',  '/src/plataforma/app/chat/conversations', [new ChatController, 'conversations']); // lista conversaciones
+$map('GET',  '/src/plataforma/app/chat/contacts',      [new ChatController, 'contacts']);      // buscar/listar usuarios
+$map('GET',  '/src/plataforma/app/chat/messages/{id}', [new ChatController, 'messages']);      // historial por conversación
+$map('POST', '/src/plataforma/app/chat/start',         [new ChatController, 'start']);         // crear/abrir 1-1
+$map('POST', '/src/plataforma/app/chat/send',          [new ChatController, 'send']);          // fallback HTTP enviar
+
+
 
 /* ========== Panel MAESTRO ========== */
 $map('GET', '/src/plataforma/app/teacher',            [new \App\Controllers\TeacherDashboardController,'index']);
