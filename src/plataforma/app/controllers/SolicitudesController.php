@@ -144,7 +144,7 @@ class SolicitudesController {
 
         $db = new Database();
         $db->query("SELECT * FROM aspirantes WHERE id = ?", [$id]);
-        $aspirante = $db->fetch(PDO::FETCH_OBJ);
+        $aspirante = $db->fetch();
 
         if (!$aspirante) {
             header('Location: /src/plataforma/app/capturista/solicitudes');

@@ -9,6 +9,7 @@ if (!in_array('capturista', $_SESSION['roles'] ?? [], true)) {
 $isEdit = isset($aspirante) && is_object($aspirante);
 $title  = $isEdit ? 'Editar registro' : 'Nuevo registro';
 $desc   = $isEdit ? 'Modifica los datos del aspirante.' : 'Ingresa los datos del aspirante.';
+$aspirante = $aspirante ?? (object)[];
 ?>
 
 <main class="p-6">

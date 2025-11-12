@@ -73,6 +73,7 @@ use App\Controllers\SemestersController;
 use App\Controllers\MateriaGrupoController;
 use App\Controllers\MateriaGrupoProfesorController;
 use App\Controllers\TeacherCoursesController;
+use App\Controllers\CapturistaProfilesController;
 use App\Controllers\ChatController;
 
 $router = new Router();
@@ -214,6 +215,12 @@ $map('POST', '/src/plataforma/app/admin/students/store',    [new StudentsControl
 $map('GET',  '/src/plataforma/app/admin/students/edit/{id}',[new StudentsController, 'edit']);
 $map('POST', '/src/plataforma/app/admin/students/update/{id}',[new StudentsController, 'update']);
 $map('POST', '/src/plataforma/app/admin/students/delete/{id}',[new StudentsController, 'delete']);
+$map('GET', '/src/plataforma/app/admin/capturistas', [new CapturistaProfilesController, 'index']);
+$map('GET', '/src/plataforma/app/admin/capturistas/create', [new CapturistaProfilesController, 'create']);
+$map('POST', '/src/plataforma/app/admin/capturistas/store', [new CapturistaProfilesController, 'store']);
+$map('GET', '/src/plataforma/app/admin/capturistas/edit/{id}', [new CapturistaProfilesController, 'edit']);
+$map('POST', '/src/plataforma/app/admin/capturistas/update/{id}', [new CapturistaProfilesController, 'update']);
+$map('POST', '/src/plataforma/app/admin/capturistas/delete/{id}', [new CapturistaProfilesController, 'delete']);
 $map('GET', '/src/plataforma/app/admin/teachers', [new TeachersController, 'index']);
 $map('GET', '/src/plataforma/app/admin/teachers/export', [new TeachersController, 'export']);
 $map('GET', '/src/plataforma/app/admin/teachers/create', [new TeachersController, 'create']);
@@ -382,33 +389,27 @@ $map('GET', '/src/plataforma/capturista/alumnos/editar/{id}', [new CapturistaAlu
 $map('POST', '/src/plataforma/capturista/alumnos/guardar', [new CapturistaAlumnosController,'guardar']);
 $map('POST', '/src/plataforma/capturista/alumnos/eliminar/{id}', [new CapturistaAlumnosController,'eliminar']);
 
-// Inscripciones
-$map('GET', '/src/plataforma/capturista/inscripciones', [new CapturistaInscripcionesController,'index']);
-$map('GET', '/src/plataforma/capturista/inscripciones/crear', [new CapturistaInscripcionesController,'crear']);
-$map('POST', '/src/plataforma/capturista/inscripciones/guardar', [new CapturistaInscripcionesController,'guardar']);
-$map('POST', '/src/plataforma/capturista/inscripciones/eliminar/{id}', [new CapturistaInscripcionesController,'eliminar']);
-
 // Reportes
-$map('GET', '/src/plataforma/app/capturista/reportes', [new CapturistaReportesController,'index']);
+$map('GET', '/src/plataforma/capturista/reportes', [new CapturistaReportesController,'index']);
 $map('GET', '/src/plataforma/capturista/reportes/estudiantes', [new CapturistaReportesController,'estudiantes']);
 $map('GET', '/src/plataforma/capturista/reportes/profesores', [new CapturistaReportesController,'profesores']);
 $map('GET', '/src/plataforma/capturista/reportes/cursos', [new CapturistaReportesController,'cursos']);
 $map('GET', '/src/plataforma/capturista/reportes/calificaciones', [new CapturistaReportesController,'calificaciones']);
 $map('POST', '/src/plataforma/capturista/reportes/generar', [new CapturistaReportesController,'generar']);
 
-// Solicitudes
-$map('GET', '/src/plataforma/solicitudes', [new SolicitudesController,'index']);
-$map('GET', '/src/plataforma/app/capturista/solicitudes/nueva', [new SolicitudesController,'nueva']);
-$map('POST', '/src/plataforma/app/capturista/solicitudes/guardar', [new SolicitudesController,'guardar']);
-$map('GET', '/src/plataforma/app/capturista/solicitudes/editar/{id}', [new SolicitudesController,'editar']);
-$map('POST', '/src/plataforma/app/capturista/solicitudes/eliminar/{id}', [new SolicitudesController,'eliminar']);
-
 // Capturista · Inscripciones
-$map('GET',  '/src/plataforma/app/capturista/inscripciones',                [new \App\Controllers\CapturistaInscripcionesController, 'index']);
-$map('GET',  '/src/plataforma/app/capturista/inscripciones/nueva',          [new \App\Controllers\CapturistaInscripcionesController, 'nueva']);
-$map('POST', '/src/plataforma/app/capturista/inscripciones/guardar',        [new \App\Controllers\CapturistaInscripcionesController, 'guardar']);
-$map('GET',  '/src/plataforma/app/capturista/inscripciones/editar/{id}',    [new \App\Controllers\CapturistaInscripcionesController, 'editar']);
-$map('POST', '/src/plataforma/app/capturista/inscripciones/eliminar/{id}',  [new \App\Controllers\CapturistaInscripcionesController, 'eliminar']);
+$map('GET',  '/src/plataforma/app/capturista/inscripciones',                [new CapturistaInscripcionesController, 'index']);
+$map('GET',  '/src/plataforma/app/capturista/inscripciones/nueva',          [new CapturistaInscripcionesController, 'nueva']);
+$map('POST', '/src/plataforma/app/capturista/inscripciones/guardar',        [new CapturistaInscripcionesController, 'guardar']);
+$map('GET',  '/src/plataforma/app/capturista/inscripciones/editar/{id}',    [new CapturistaInscripcionesController, 'editar']);
+$map('POST', '/src/plataforma/app/capturista/inscripciones/eliminar/{id}',  [new CapturistaInscripcionesController, 'eliminar']);
+
+// Capturista · Solicitudes
+$map('GET', '/src/plataforma/app/capturista/solicitudes',                  [new SolicitudesController, 'index']);
+$map('GET', '/src/plataforma/app/capturista/solicitudes/nueva',            [new SolicitudesController, 'nueva']);
+$map('POST', '/src/plataforma/app/capturista/solicitudes/guardar',         [new SolicitudesController, 'guardar']);
+$map('GET', '/src/plataforma/app/capturista/solicitudes/editar/{id}',      [new SolicitudesController, 'editar']);
+$map('POST', '/src/plataforma/app/capturista/solicitudes/eliminar/{id}',   [new SolicitudesController, 'eliminar']);
 
 
 $router->dispatch();

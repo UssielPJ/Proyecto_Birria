@@ -6,13 +6,34 @@ $fullName = function ($row) {
     $parts = array_filter($parts, fn($x) => $x !== '');
     return trim(implode(' ', $parts));
 };
+
+// Mostrar mensajes de éxito/error
+$success = isset($_GET['created']) || isset($_GET['updated']);
+$error = $_GET['error'] ?? null;
 ?>
 <div class="container px-6 py-8">
+    <?php if ($success): ?>
+    <div class="mb-6 p-4 rounded-lg bg-green-50 border border-green-200 text-green-700">
+        <div class="flex items-center gap-2">
+            <i data-feather="check-circle" class="w-5 h-5"></i>
+            <span>Operación completada exitosamente.</span>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <?php if ($error): ?>
+    <div class="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
+        <div class="flex items-center gap-2">
+            <i data-feather="alert-circle" class="w-5 h-5"></i>
+            <span><?= $esc($error) ?></span>
+        </div>
+    </div>
+    <?php endif; ?>
     <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm p-6">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold">Gestión de Capturistas</h1>
             <div class="flex gap-3">
-                <a href="/admin/capturistas/create" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                <a href="/src/plataforma/app/admin/capturistas/create" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
                     <i data-feather="user-plus" class="w-4 h-4"></i>
                     Nuevo Capturista
                 </a>
@@ -43,9 +64,11 @@ $fullName = function ($row) {
                 <thead>
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Capturista</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Número Empleado</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Teléfono</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">CURP</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Fecha Ingreso</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Estado</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Fecha de Registro</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Acciones</th>
                     </tr>
                 </thead>
@@ -61,22 +84,25 @@ $fullName = function ($row) {
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium"><?= $esc($fullName($capturista)) ?></div>
+                                    <div class="text-sm text-neutral-500 dark:text-neutral-400"><?= $esc($capturista->email ?? '') ?></div>
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm"><?= $esc($capturista->email ?? '') ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><?= $esc($capturista->numero_empleado ?? '') ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><?= $esc($capturista->capturista_telefono ?? '') ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-xs"><?= $esc($capturista->curp ?? '') ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><?= $capturista->fecha_ingreso ? $esc(date('d/m/Y', strtotime($capturista->fecha_ingreso))) : '' ?></td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= (($capturista->status ?? '') === 'active') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
-                                <?= $esc(ucfirst($capturista->status ?? '')) ?>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= (($capturista->capturista_status ?? '') === 'activo') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
+                                <?= $esc(ucfirst($capturista->capturista_status ?? '')) ?>
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm"><?= $esc(date('d/m/Y', strtotime($capturista->created_at ?? ''))) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex items-center gap-3">
-                                <a href="/admin/capturistas/edit/<?= $esc($capturista->id) ?>" class="text-primary-600 hover:text-primary-900">
+                                <a href="/src/plataforma/app/admin/capturistas/edit/<?= $esc($capturista->id) ?>" class="text-primary-600 hover:text-primary-900">
                                     <i data-feather="edit" class="w-4 h-4"></i>
                                 </a>
-                                <form action="/admin/capturistas/delete/<?= $esc($capturista->id) ?>" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este capturista?');">
+                                <form action="/src/plataforma/app/admin/capturistas/delete/<?= $esc($capturista->id) ?>" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este capturista?');">
                                     <button type="submit" class="text-red-600 hover:text-red-900">
                                         <i data-feather="trash-2" class="w-4 h-4"></i>
                                     </button>
@@ -88,7 +114,7 @@ $fullName = function ($row) {
 
                     <?php if (empty($capturistas)): ?>
                     <tr>
-                        <td colspan="5" class="px-6 py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+                        <td colspan="7" class="px-6 py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
                             No se encontraron capturistas con los filtros aplicados.
                         </td>
                     </tr>

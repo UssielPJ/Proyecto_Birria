@@ -100,7 +100,7 @@ class CareersController
         $db = new Database();
 
         $db->query("SELECT * FROM carreras WHERE id = :id LIMIT 1", [':id'=>$id]);
-        $career = $db->fetch(PDO::FETCH_ASSOC);
+        $career = $db->fetch();
         if (!$career) { $_SESSION['error']='Carrera no encontrada.'; header('Location: /src/plataforma/app/admin/careers'); exit; }
 
         $this->exposePdo($db); // por si la vista usa $pdo

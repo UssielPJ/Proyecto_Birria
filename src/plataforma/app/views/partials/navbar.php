@@ -13,6 +13,7 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
       // Personas
       ['href' => '/src/plataforma/app/admin/students',           'icon' => 'users',       'text' => 'Estudiantes'],
       ['href' => '/src/plataforma/app/admin/teachers',           'icon' => 'user-plus',   'text' => 'Profesores'],
+      ['href' => '/src/plataforma/app/admin/capturistas',        'icon' => 'user-check',  'text' => 'Capturistas'],
 
       // Cohortes y organización académica
       ['href' => '/src/plataforma/app/admin/careers',            'icon' => 'layers',      'text' => 'Carreras'],
@@ -70,7 +71,7 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
         ['href' => '/src/plataforma/app/capturista/solicitudes',                   'icon' => 'file-text',   'text' => 'Solicitudes'],
         ['href' => '/src/plataforma/app/capturista/solicitudes/nueva','icon'=>'edit-3',     'text' => 'Capturar solicitud'],
         ['href' => '/src/plataforma/app/capturista/importar',           'icon' => 'upload-cloud','text' => 'Importar CSV/Excel'],
-        ['href' => '/src/plataforma/app/capturista/alumnos',            'icon' => 'users',       'text' => 'Alumnos'],
+        ['href' => '/src/plataforma/capturista/alumnos',            'icon' => 'users',       'text' => 'Alumnos'],
         ['href' => '/src/plataforma/app/capturista/inscripciones',      'icon' => 'check-circle','text' => 'Inscripciones'],
         ['href' => '/src/plataforma/app/capturista/reportes',           'icon' => 'bar-chart-2', 'text' => 'Reportes'],
         ['href' => '/src/plataforma/app/capturista/chat',           'icon' => 'message-circle','text' => 'Chat'],

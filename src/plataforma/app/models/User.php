@@ -67,6 +67,12 @@ class User {
         return $out;
     }
 
+    public function countPendingRegistrations(): int {
+        // Count users created today or in the last 24 hours
+        $this->db->query("SELECT COUNT(*) FROM ".self::T_USERS." WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 DAY)");
+        return (int)$this->db->fetchColumn();
+    }
+
     /* ===================== Búsquedas básicas ===================== */
     public function findById(int $id): mixed {
         $this->db->query("

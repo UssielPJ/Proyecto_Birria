@@ -130,7 +130,7 @@ class GroupsController
 
         $sqlGrupo = "SELECT * FROM `grupos` WHERE `id` = :id LIMIT 1";
         $db->query($sqlGrupo, [':id' => $id]);
-        $grupo = $db->fetch(PDO::FETCH_ASSOC);
+        $grupo = $db->fetch();
 
         if (!$grupo) {
             $_SESSION['error'] = 'Grupo no encontrado.';
@@ -247,7 +247,7 @@ class GroupsController
             LIMIT 1
         ", [':id' => $id]);
 
-        $grupo = $db->fetch(PDO::FETCH_OBJ);
+        $grupo = $db->fetch();
         if (!$grupo) {
             header('Location: /src/plataforma/app/admin/groups?error=Grupo no encontrado');
             exit;
