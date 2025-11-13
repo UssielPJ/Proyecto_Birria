@@ -6,16 +6,14 @@ use PDO;
 
 class AuthController {
 
-  /* ====== Vista de login con soporte de "toast" ====== */
+  /* ====== Vista de login ====== */
   public function showLogin(){
     if (session_status()===PHP_SESSION_NONE) session_start();
 
-    // Si viene un flash_error de algún redirect anterior, lo mostramos como toast y lo limpiamos.
     $flash = $_SESSION['flash_error'] ?? null;
     if ($flash) unset($_SESSION['flash_error']);
 
-    // Render simple (la vista puede leer variables locales)
-    $error = $flash; // compat: la vista podría imprimir $error también
+    $error = $flash;
     $this->renderLoginView($error);
   }
 
@@ -23,31 +21,34 @@ class AuthController {
   public function login(){
     if (session_status()===PHP_SESSION_NONE) session_start();
 
-    // Ahora esperamos "identificador" desde la vista (matrícula / num. empleado / email opcional)
+    // Puede venir como "identificador" o "email"
     $ident = trim($_POST['identificador'] ?? ($_POST['email'] ?? ''));
     $pass  = $_POST['password'] ?? '';
 
     if ($ident === '' || $pass === '') {
-      // En lugar de redirigir, renderizamos con mensaje flotante
       return $this->renderLoginView('Ingresa tu identificador y contraseña.');
     }
 
     $db = new Database();
 
-    // 1) Resolver usuario por identificador:
-    //    - Si parece email, buscar por users.email
-    //    - Si no, buscar por student_profiles.matricula
-    //    - Si no, buscar por teacher_profiles.numero_empleado
+    /* ---------- 1) Resolver usuario por identificador ---------- */
     $u = null;
 
     if (strpos($ident, '@') !== false) {
-      // Email (compatibilidad)
-      $db->query("SELECT id,email,password,nombre,status FROM users WHERE email = ? LIMIT 1", [$ident]);
-      $u = $db->fetch();
-    } else {
-      // Matrícula (alumno)
+      // Email (caso admin / general)
       $db->query("
-        SELECT u.id,u.email,u.password,u.nombre,u.status, sp.matricula AS identificador
+        SELECT u.id, u.email, u.password, u.nombre, u.status
+        FROM users u
+        WHERE u.email = ?
+        LIMIT 1
+      ", [mb_strtolower($ident)]);
+      $u = $db->fetch();
+
+    } else {
+      // 1.a) Alumno por matrícula
+      $db->query("
+        SELECT u.id, u.email, u.password, u.nombre, u.status,
+               sp.matricula AS identificador
         FROM users u
         JOIN student_profiles sp ON sp.user_id = u.id
         WHERE sp.matricula = ?
@@ -55,10 +56,11 @@ class AuthController {
       ", [$ident]);
       $u = $db->fetch();
 
-      // Número de empleado (docente/adm) si no encontró alumno
+      // 1.b) Docente por número de empleado (si no hubo alumno)
       if (!$u) {
         $db->query("
-          SELECT u.id,u.email,u.password,u.nombre,u.status, tp.numero_empleado AS identificador
+          SELECT u.id, u.email, u.password, u.nombre, u.status,
+                 tp.numero_empleado AS identificador
           FROM users u
           JOIN teacher_profiles tp ON tp.user_id = u.id
           WHERE tp.numero_empleado = ?
@@ -66,18 +68,30 @@ class AuthController {
         ", [$ident]);
         $u = $db->fetch();
       }
+
+      // 1.c) Capturista por número de empleado (si no hubo docente)
+      if (!$u) {
+        $db->query("
+          SELECT u.id, u.email, u.password, u.nombre, u.status,
+                 cp.numero_empleado AS identificador
+          FROM users u
+          JOIN capturista_profiles cp ON cp.user_id = u.id
+          WHERE cp.numero_empleado = ?
+          LIMIT 1
+        ", [$ident]);
+        $u = $db->fetch();
+      }
     }
 
-    // Validación de credenciales
+    /* ---------- 2) Validación de credenciales ---------- */
     if (!$u || !isset($u->password) || !password_verify($pass, $u->password)) {
       return $this->renderLoginView('Identificador o contraseña inválidos.');
     }
-
     if (isset($u->status) && $u->status !== 'active') {
       return $this->renderLoginView('Tu cuenta está inactiva.');
     }
 
-    // 2) Roles por tabla pivote (si existen)
+    /* ---------- 3) Cargar roles desde pivote (si existe) ---------- */
     $roles = [];
     try {
       $db->query("
@@ -88,24 +102,29 @@ class AuthController {
       ", [$u->id]);
       $roles = $db->fetchAll(PDO::FETCH_COLUMN) ?: [];
     } catch (\Throwable $e) {
-      // si no existe la tabla, continuamos
+      // Si no hay tabla de roles, seguimos con inferencia
     }
 
-    // 3) Si no hay roles por pivote, inferir por perfiles
+    /* ---------- 4) Inferir roles por perfiles si no hay pivote ---------- */
     if (empty($roles)) {
+      // Student
       $db->query("SELECT 1 FROM student_profiles WHERE user_id = ? LIMIT 1", [$u->id]);
       if ($db->fetchColumn()) $roles[] = 'student';
 
+      // Teacher
       $db->query("SELECT 1 FROM teacher_profiles WHERE user_id = ? LIMIT 1", [$u->id]);
       if ($db->fetchColumn()) $roles[] = 'teacher';
 
-      try {
-        $db->query("SELECT 1 FROM capturista_profiles WHERE user_id = ? LIMIT 1", [$u->id]);
-        if ($db->fetchColumn()) $roles[] = 'capturista';
-      } catch (\Throwable $e) {}
+      // Capturista
+      $db->query("SELECT 1 FROM capturista_profiles WHERE user_id = ? LIMIT 1", [$u->id]);
+      if ($db->fetchColumn()) $roles[] = 'capturista';
+
+      // (Opcional) admin por bandera en users si la tienes; si no, omitir
+      // $db->query("SELECT is_admin FROM users WHERE id=? LIMIT 1", [$u->id]);
+      // if ((int)$db->fetchColumn() === 1) $roles[] = 'admin';
     }
 
-    // 4) Normalizar slugs + deduplicar
+    /* ---------- 5) Normalizar slugs + deduplicar ---------- */
     $norm = function(string $r): string {
       $r = strtolower(trim($r));
       return match($r) {
@@ -118,7 +137,7 @@ class AuthController {
     };
     $roles = array_values(array_unique(array_map($norm, $roles)));
 
-    // 5) Guardar en sesión (incluye el identificador usado)
+    /* ---------- 6) Guardar sesión ---------- */
     $_SESSION['user'] = [
       'id'            => (int)$u->id,
       'email'         => $u->email ?? null,
@@ -129,21 +148,15 @@ class AuthController {
     $_SESSION['roles'] = $roles;            // compat
     $_SESSION['role']  = $roles[0] ?? null; // compat
 
-    // 6) Redirigir según rol principal
+    /* ---------- 7) Redirección según rol principal ---------- */
     $first = $roles[0] ?? '';
-    if ($first === 'admin') {
-      header('Location: /src/plataforma/app/admin'); exit;
-    } elseif ($first === 'teacher') {
-      header('Location: /src/plataforma/app/teacher'); exit;
-    } elseif ($first === 'student') {
-      // Ajusta esta ruta si tu dashboard de alumno es otra
-      header('Location: /src/plataforma/app'); exit;
-    } elseif ($first === 'capturista') {
-      header('Location: /src/plataforma/capturista'); exit;
-    } else {
-      // Si alguien entra sin rol, mostramos toast y devolvemos la vista (sin 404)
-      return $this->renderLoginView('Tu cuenta no tiene un rol asignado.');
-    }
+    if     ($first === 'admin')      { header('Location: /src/plataforma/app/admin');   exit; }
+    elseif ($first === 'teacher')    { header('Location: /src/plataforma/app/teacher'); exit; }
+    elseif ($first === 'student')    { header('Location: /src/plataforma/app');         exit; }
+    elseif ($first === 'capturista') { header('Location: /src/plataforma/capturista');  exit; }
+
+    // Si llegó aquí, no tiene rol claro
+    return $this->renderLoginView('Tu cuenta no tiene un rol asignado.');
   }
 
   public function logout(){
@@ -157,26 +170,19 @@ class AuthController {
     header('Location: /src/plataforma/'); exit;
   }
 
-  /* ====== Helper para renderizar la vista con mensaje flotante ====== */
+  /* ====== Render login con toast opcional ====== */
   private function renderLoginView(?string $errorMessage = null): void {
     http_response_code($errorMessage ? 401 : 200);
-
-    // Salimos en limpio a la misma vista y montamos un "toast" ligero si hay error
-    // (Si tu vista ya imprime $_SESSION['flash_error'] o $error, también funcionará).
     $error = $errorMessage;
 
-    // Carga la vista en buffer para poder anteponer el toast
     ob_start();
     require __DIR__ . '/../views/auth/login.php';
     $viewHtml = ob_get_clean();
 
     if ($errorMessage) {
-      // Toast minimalista (Tailwind-friendly). Se auto-cierra en 3.5s.
       $toast = <<<HTML
       <div id="login-toast" class="fixed top-5 right-5 z-50 bg-red-600 text-white px-5 py-3 rounded-xl shadow-lg"
-           style="animation: fadein .2s ease-out;">
-        {$this->e($errorMessage)}
-      </div>
+           style="animation: fadein .2s ease-out;">{$this->e($errorMessage)}</div>
       <style>
         @keyframes fadein { from {opacity:0; transform: translateY(-4px);} to {opacity:1; transform: translateY(0);} }
         @keyframes fadeout{ from {opacity:1;} to {opacity:0;} }
@@ -194,7 +200,7 @@ class AuthController {
     } else {
       echo $viewHtml;
     }
-    exit; // Importante: detenemos el flujo aquí para no pasar por Router de nuevo.
+    exit;
   }
 
   private function e(string $s): string {

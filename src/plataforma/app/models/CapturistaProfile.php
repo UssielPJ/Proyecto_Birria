@@ -11,134 +11,214 @@ class CapturistaProfile
     public function __construct(?PDO $pdo = null)
     {
         $this->db = $pdo ?? (new DB())->getPdo();
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
     }
 
-    /**
-     * Crea un nuevo registro de perfil de capturista
-     * @param array $data
-     * @return int ID del registro (user_id)
-     */
+    /* ================= Helpers ================= */
+
+    /** Mapea y normaliza a enum de BD: 'active' | 'inactive' */
+    private function normPerfilStatus(?string $v): string {
+        $v = $v ? mb_strtolower(trim($v)) : 'active';
+        $map = [
+            'activo'   => 'active',
+            'inactivo' => 'inactive',
+        ];
+        if (isset($map[$v])) $v = $map[$v];
+        return in_array($v, ['active','inactive'], true) ? $v : 'active';
+    }
+
+    /** Acepta español/inglés para filtrar, true si mapea a enum válido */
+    private function isPerfilStatus(string $v): bool {
+        $v = $this->normPerfilStatus($v);
+        return in_array($v, ['active','inactive'], true);
+    }
+
+    private function isUserStatus(string $v): bool {
+        return in_array(mb_strtolower(trim($v)), ['active','inactive','suspended'], true);
+    }
+
+    private function normEmpleado(string $v): string {
+        $v = preg_replace('/\D+/', '', $v);
+        return str_pad(substr($v, 0, 4), 4, '0', STR_PAD_LEFT);
+    }
+
+    /** Vacío -> NULL, sino CURP en mayúsculas */
+    private function normCurpNullable(?string $v): ?string {
+        $t = trim((string)($v ?? ''));
+        if ($t === '') return null;
+        return mb_strtoupper($t);
+    }
+
+    /* ================= CRUD perfil ================= */
+
     public function create(array $data): int
     {
-        $sql = "INSERT INTO capturista_profiles (
-                    user_id, numero_empleado, telefono, curp,
-                    fecha_ingreso, status, created_at, updated_at
-                ) VALUES (
-                    :user_id, :numero_empleado, :telefono, :curp,
-                    :fecha_ingreso, :status, NOW(), NOW()
-                )";
+        $sql = "INSERT INTO capturista_profiles
+                (user_id, numero_empleado, curp, fecha_ingreso, status, created_at, updated_at)
+                VALUES (:user_id, :numero_empleado, :curp, :fecha_ingreso, :status, NOW(), NOW())";
 
         $stmt = $this->db->prepare($sql);
 
-        try {
-            $stmt->execute([
-                ':user_id'         => (int)$data['user_id'],
-                ':numero_empleado' => $data['numero_empleado'],
-                ':telefono'        => $data['telefono'],
-                ':curp'            => $data['curp'],
-                ':fecha_ingreso'   => $data['fecha_ingreso'],
-                ':status'          => $data['status'] ?? 'activo',
-            ]);
-        } catch (\PDOException $e) {
-            error_log('CapturistaProfile@create ERROR: ' . $e->getMessage());
-            throw $e;
-        }
+        $userId         = (int)($data['user_id'] ?? 0);
+        $numeroEmpleado = $this->normEmpleado((string)($data['numero_empleado'] ?? '0'));
+        $curp           = $this->normCurpNullable($data['curp'] ?? null);
+        $fechaIngreso   = $data['fecha_ingreso'] ?? null;
+        $status         = $this->normPerfilStatus($data['status'] ?? null);
 
-        return (int)$data['user_id'];
+        $stmt->bindValue(':user_id',         $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':numero_empleado', $numeroEmpleado, PDO::PARAM_STR);
+        if ($curp === null) {
+            $stmt->bindValue(':curp', null, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':curp', $curp, PDO::PARAM_STR);
+        }
+        if ($fechaIngreso === null || $fechaIngreso === '') {
+            $stmt->bindValue(':fecha_ingreso', null, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':fecha_ingreso', $fechaIngreso, PDO::PARAM_STR);
+        }
+        $stmt->bindValue(':status',          $status, PDO::PARAM_STR);
+
+        $stmt->execute();
+        return (int)$this->db->lastInsertId();
     }
 
-    /**
-     * Actualiza el perfil de un capturista según el user_id
-     */
     public function updateByUserId(int $userId, array $data): bool
     {
-        $sql = "UPDATE capturista_profiles SET
-                    numero_empleado = :numero_empleado,
-                    telefono = :telefono,
-                    curp = :curp,
-                    fecha_ingreso = :fecha_ingreso,
-                    status = :status,
-                    updated_at = NOW()
+        $sql = "UPDATE capturista_profiles
+                SET numero_empleado = :numero_empleado,
+                    curp           = :curp,
+                    fecha_ingreso  = :fecha_ingreso,
+                    status         = :status,
+                    updated_at     = NOW()
                 WHERE user_id = :user_id
                 LIMIT 1";
 
         $stmt = $this->db->prepare($sql);
 
-        return $stmt->execute([
-            ':user_id'         => (int)$userId,
-            ':numero_empleado' => $data['numero_empleado'],
-            ':telefono'        => $data['telefono'],
-            ':curp'            => $data['curp'],
-            ':fecha_ingreso'   => $data['fecha_ingreso'],
-            ':status'          => $data['status'] ?? 'activo',
-        ]);
+        $numeroEmpleado = $this->normEmpleado((string)($data['numero_empleado'] ?? '0'));
+        $curp           = $this->normCurpNullable($data['curp'] ?? null);
+        $fechaIngreso   = $data['fecha_ingreso'] ?? null;
+        $status         = $this->normPerfilStatus($data['status'] ?? null);
+
+        $stmt->bindValue(':user_id',         $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':numero_empleado', $numeroEmpleado, PDO::PARAM_STR);
+        if ($curp === null) {
+            $stmt->bindValue(':curp', null, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':curp', $curp, PDO::PARAM_STR);
+        }
+        if ($fechaIngreso === null || $fechaIngreso === '') {
+            $stmt->bindValue(':fecha_ingreso', null, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':fecha_ingreso', $fechaIngreso, PDO::PARAM_STR);
+        }
+        $stmt->bindValue(':status',          $status, PDO::PARAM_STR);
+
+        return $stmt->execute();
     }
 
-    /**
-     * Obtiene el perfil completo de un capturista
-     */
     public function findByUserId(int $userId): ?object
     {
         $stmt = $this->db->prepare("SELECT * FROM capturista_profiles WHERE user_id = :id LIMIT 1");
         $stmt->execute([':id' => $userId]);
-        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        $row = $stmt->fetch();
         return $row ?: null;
     }
 
-    /**
-     * Elimina el perfil del capturista
-     */
     public function deleteByUserId(int $userId): bool
     {
         $stmt = $this->db->prepare("DELETE FROM capturista_profiles WHERE user_id = :id");
         return $stmt->execute([':id' => $userId]);
     }
 
-    /**
-     * Listado con filtros (join con users)
-     */
-    public function getAllWithUser(array $filters = []): array
-    {
-        $query = "SELECT
-                    u.id, u.email, u.nombre, u.apellido_paterno, u.apellido_materno, u.telefono,
-                    u.fecha_nacimiento, u.status as user_status, u.created_at,
-                    cp.numero_empleado, cp.telefono as capturista_telefono, cp.curp,
-                    cp.fecha_ingreso, cp.status as capturista_status
-                  FROM users u
-                  JOIN capturista_profiles cp ON cp.user_id = u.id
-                  WHERE 1=1";
+    /* ================= Listado con users ================= */
 
+    public function getAllWithUser(array $filters, int $limit, int $offset): array
+    {
+        $sql = "SELECT u.id as user_id, u.nombre, u.apellido_paterno, u.apellido_materno,
+                       u.email, u.telefono, u.fecha_nacimiento, u.status as user_status,
+                       cp.numero_empleado, cp.curp, cp.fecha_ingreso, cp.status as capturista_status
+                FROM users u
+                INNER JOIN capturista_profiles cp ON cp.user_id = u.id
+                WHERE 1=1";
         $params = [];
 
         if (!empty($filters['search'])) {
-            $query .= " AND (u.nombre LIKE :search OR u.email LIKE :search OR cp.numero_empleado LIKE :search OR cp.curp LIKE :search)";
-            $params[':search'] = "%{$filters['search']}%";
+            $sql .= " AND (
+                u.nombre LIKE :search
+                OR u.apellido_paterno LIKE :search
+                OR u.apellido_materno LIKE :search
+                OR u.email LIKE :search
+                OR cp.numero_empleado LIKE :search
+                OR cp.curp LIKE :search
+            )";
+            $params[':search'] = '%'.$filters['search'].'%';
         }
+
         if (!empty($filters['status'])) {
-            $query .= " AND cp.status = :status";
-            $params[':status'] = $filters['status'];
-        }
-
-        $query .= " ORDER BY cp.numero_empleado ASC";
-
-        if (isset($filters['limit'])) {
-            $query .= " LIMIT :limit OFFSET :offset";
-            $params[':limit'] = (int)($filters['limit'] ?? 10);
-            $params[':offset'] = (int)($filters['offset'] ?? 0);
-        }
-
-        $stmt = $this->db->prepare($query);
-
-        // Bind seguro
-        foreach ($params as $k => $v) {
-            if (in_array($k, [':limit', ':offset'])) {
-                $stmt->bindValue($k, $v, PDO::PARAM_INT);
-            } else {
-                $stmt->bindValue($k, $v);
+            // Acepta 'activo|inactivo' o 'active|inactive'
+            $mapped = $this->normPerfilStatus($filters['status']);
+            if ($this->isPerfilStatus($mapped)) {
+                $sql .= " AND cp.status = :cpstatus";
+                $params[':cpstatus'] = $mapped;
+            } elseif ($this->isUserStatus($filters['status'])) {
+                $sql .= " AND u.status = :ustatus";
+                $params[':ustatus'] = mb_strtolower(trim($filters['status']));
             }
         }
 
+        $sql .= " ORDER BY cp.numero_empleado ASC LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->db->prepare($sql);
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v, PDO::PARAM_STR);
+        }
+        $stmt->bindValue(':limit',  $limit,  PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        return $stmt->fetchAll() ?: [];
+    }
+
+    public function countWithUser(array $filters): int
+    {
+        $sql = "SELECT COUNT(*)
+                FROM users u
+                INNER JOIN capturista_profiles cp ON cp.user_id = u.id
+                WHERE 1=1";
+        $params = [];
+
+        if (!empty($filters['search'])) {
+            $sql .= " AND (
+                u.nombre LIKE :search
+                OR u.apellido_paterno LIKE :search
+                OR u.apellido_materno LIKE :search
+                OR u.email LIKE :search
+                OR cp.numero_empleado LIKE :search
+                OR cp.curp LIKE :search
+            )";
+            $params[':search'] = '%'.$filters['search'].'%';
+        }
+
+        if (!empty($filters['status'])) {
+            $mapped = $this->normPerfilStatus($filters['status']);
+            if ($this->isPerfilStatus($mapped)) {
+                $sql .= " AND cp.status = :cpstatus";
+                $params[':cpstatus'] = $mapped;
+            } elseif ($this->isUserStatus($filters['status'])) {
+                $sql .= " AND u.status = :ustatus";
+                $params[':ustatus'] = mb_strtolower(trim($filters['status']));
+            }
+        }
+
+        $stmt = $this->db->prepare($sql);
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v, PDO::PARAM_STR);
+        }
+        $stmt->execute();
+        return (int)$stmt->fetchColumn();
     }
 }

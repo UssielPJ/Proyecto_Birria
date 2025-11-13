@@ -221,6 +221,11 @@ $map('POST', '/src/plataforma/app/admin/capturistas/store', [new CapturistaProfi
 $map('GET', '/src/plataforma/app/admin/capturistas/edit/{id}', [new CapturistaProfilesController, 'edit']);
 $map('POST', '/src/plataforma/app/admin/capturistas/update/{id}', [new CapturistaProfilesController, 'update']);
 $map('POST', '/src/plataforma/app/admin/capturistas/delete/{id}', [new CapturistaProfilesController, 'delete']);
+$map('GET', '/src/plataforma/app/admin/capturistas/next-numero', [new CapturistaProfilesController, 'nextNumero']);
+// --- Admin Capturista ---//
+
+
+
 $map('GET', '/src/plataforma/app/admin/teachers', [new TeachersController, 'index']);
 $map('GET', '/src/plataforma/app/admin/teachers/export', [new TeachersController, 'export']);
 $map('GET', '/src/plataforma/app/admin/teachers/create', [new TeachersController, 'create']);
