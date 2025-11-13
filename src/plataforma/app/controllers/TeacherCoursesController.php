@@ -48,16 +48,41 @@ class TeacherCoursesController
         $course = $db->fetch();
         if (!$course) { header('Location: /src/plataforma/app/teacher'); exit; }
 
-        // Tareas del curso (usa mg_id)
+        // ===================== ACTIVIDADES (antes tareas) =====================
         $db->query("
-            SELECT id, title, description, due_at, file_path
-            FROM course_tasks
-            WHERE mg_id = :mg
-            ORDER BY due_at IS NULL, due_at ASC, id DESC
+            SELECT 
+                ct.id,
+                ct.title,
+                ct.description,
+                ct.due_at,
+                ct.file_path,
+                ct.activity_type_id,
+                ct.weight_percent,
+                ct.max_attempts,
+                ct.total_points,
+                ct.parcial,
+                at.name AS activity_type_name,
+                at.slug AS activity_type_slug
+            FROM course_tasks ct
+            LEFT JOIN activity_types at ON at.id = ct.activity_type_id
+            WHERE ct.mg_id = :mg
+            ORDER BY 
+                ct.parcial ASC,
+                ct.due_at IS NULL,  -- primero las que tienen fecha
+                ct.due_at ASC,
+                ct.id DESC
         ", [':mg'=>$mgId]);
-        $tasks = $db->fetchAll() ?? [];
+        $tasks = $db->fetchAll() ?? []; // seguimos llamando $tasks para no romper la vista
 
-        // Entregas recientes (últimas 10) con nombre del alumno y título de la tarea
+        // Catálogo de tipos de actividad para el formulario (Examen, Proyecto, etc.)
+        $db->query("
+            SELECT id, name, slug, default_weight, default_max_attempts
+            FROM activity_types
+            ORDER BY name ASC
+        ");
+        $activityTypes = $db->fetchAll() ?? [];
+
+        // Entregas recientes (últimas 10) con nombre del alumno y título de la actividad
         $db->query("
             SELECT s.id, s.student_user_id, u.nombre AS student_name,
                    s.task_id, t.title AS task_title,
@@ -81,58 +106,163 @@ class TeacherCoursesController
         $resources = $db->fetchAll() ?? [];
 
         View::render('teacher/course_hub', 'teacher', [
-            'course'    => $course,
-            'tasks'     => $tasks,
-            'subs'      => $recentSubmissions,
-            'resources' => $resources,
+            'course'        => $course,
+            'tasks'         => $tasks,          // actividades del curso
+            'activityTypes' => $activityTypes,  // catálogo para el select
+            'subs'          => $recentSubmissions,
+            'resources'     => $resources,
         ]);
     }
 
-    /* ===================== Crear tarea ===================== */
+    /* ===================== Crear actividad (antes tarea) ===================== */
     public function storeTask() {
-        $this->requireRole(['teacher']);
-        $teacherId = (int)($_SESSION['user']['id'] ?? 0);
+    $this->requireRole(['teacher']);
+    $teacherId = (int)($_SESSION['user']['id'] ?? 0);
 
-        $mgId  = (int)($_POST['course_id'] ?? 0); // en el form lo llamamos course_id, pero es mg_id
-        $title = trim($_POST['title'] ?? '');
-        $desc  = trim($_POST['description'] ?? '');
-        $due   = trim($_POST['due_at'] ?? '');
+    // en el form lo llamamos course_id, pero es mg_id
+    $mgId        = (int)($_POST['course_id'] ?? 0);
+    $title       = trim($_POST['title'] ?? '');
+    $desc        = trim($_POST['description'] ?? '');
+    $due         = trim($_POST['due_at'] ?? '');
 
-        if ($mgId<=0 || $title==='') {
-            header("Location: /src/plataforma/app/teacher/courses/show?id={$mgId}#tareas"); exit;
-        }
+    // nuevos campos
+    $typeIdPost   = (int)($_POST['activity_type_id'] ?? 0);
+    $weightPost   = $_POST['weight_percent'] ?? null;
+    $attemptsPost = $_POST['max_attempts'] ?? null;
+    $pointsPost   = $_POST['total_points'] ?? null;
+    $parcialPost  = $_POST['parcial'] ?? null;
 
-        $db = new Database();
-        // Ownership estricto via tabla puente
-        $db->query("
-            SELECT 1
-            FROM materia_grupo_profesor
-            WHERE mg_id = :mg AND teacher_user_id = :tid
-            LIMIT 1
-        ", [':mg'=>$mgId, ':tid'=>$teacherId]);
-        if (!$db->fetchColumn()) { header("Location: /src/plataforma/app/teacher"); exit; }
+    // JSON para exámenes
+    $examJsonPost = trim($_POST['exam_definition'] ?? '');
 
-        // Archivo opcional adjunto de la tarea
-        $fileUrl = null;
-        if (!empty($_FILES['file']['tmp_name'] ?? '')) {
-            $fileUrl = Storage::saveUpload($this->filesCfg(), 'tasks', $_FILES['file']);
-        }
+    if ($mgId<=0 || $title==='') {
+        header("Location: /src/plataforma/app/teacher/courses/show?id={$mgId}#tareas"); exit;
+    }
 
-        $db->query("
-            INSERT INTO course_tasks (mg_id, created_by_teacher_user_id, title, description, due_at, file_path, created_at)
-            VALUES (:mg, :tid, :t, :d, :due, :fp, NOW())
-        ", [
-            ':mg'=>$mgId,
-            ':tid'=>$teacherId,
-            ':t'=>$title,
-            ':d'=>$desc ?: null,
-            ':due'=>$due ?: null,
-            ':fp'=>$fileUrl
-        ]);
+    $db = new Database();
 
+    // Ownership estricto via tabla puente
+    $db->query("
+        SELECT 1
+        FROM materia_grupo_profesor
+        WHERE mg_id = :mg AND teacher_user_id = :tid
+        LIMIT 1
+    ", [':mg'=>$mgId, ':tid'=>$teacherId]);
+    if (!$db->fetchColumn()) { header("Location: /src/plataforma/app/teacher"); exit; }
+
+    // ===================== RESOLVER TIPO =====================
+    $db->query("
+        SELECT id, slug, default_weight, default_max_attempts
+        FROM activity_types
+        WHERE id = :id
+        LIMIT 1
+    ", [':id' => $typeIdPost]);
+
+    $typeRow = $db->fetch();
+    if (!$typeRow) {
         header("Location: /src/plataforma/app/teacher/courses/show?id={$mgId}#tareas");
         exit;
     }
+
+    $slugType = strtolower($typeRow->slug);
+    $activityTypeId = (int)$typeRow->id;
+
+    // ===================== PESO =====================
+    if ($weightPost !== null && $weightPost !== '' && is_numeric($weightPost)) {
+        $weightPercent = (float)$weightPost;
+    } else {
+        $weightPercent = (float)$typeRow->default_weight;
+    }
+    if ($weightPercent < 0)   $weightPercent = 0;
+    if ($weightPercent > 100) $weightPercent = 100;
+
+    // ===================== INTENTOS =====================
+    if ($attemptsPost !== null && $attemptsPost !== '' && is_numeric($attemptsPost)) {
+        $maxAttempts = (int)$attemptsPost;
+    } else {
+        $maxAttempts = (int)$typeRow->default_max_attempts;
+    }
+    if ($maxAttempts <= 0) $maxAttempts = 1;
+    if ($maxAttempts > 10) $maxAttempts = 10;
+
+    // ===================== PUNTOS =====================
+    if ($pointsPost !== null && $pointsPost !== '' && is_numeric($pointsPost)) {
+        $totalPoints = (float)$pointsPost;
+    } else {
+        $totalPoints = 10.0;
+    }
+
+    if ($totalPoints <= 0) $totalPoints = 1;
+    if ($totalPoints > 1000) $totalPoints = 1000;
+
+    // ===================== PARCIAL =====================
+    if ($parcialPost !== null && $parcialPost !== '' && is_numeric($parcialPost)) {
+        $parcial = (int)$parcialPost;
+    } else {
+        $parcial = 1;
+    }
+    if ($parcial <= 0) $parcial = 1;
+    if ($parcial > 3)  $parcial = 3;
+
+    // ===================== ARCHIVO OPCIONAL =====================
+    $fileUrl = null;
+    if (!empty($_FILES['file']['tmp_name'] ?? '')) {
+        $fileUrl = Storage::saveUpload($this->filesCfg(), 'tasks', $_FILES['file']);
+    }
+
+    // ===================== PROCESAR JSON DEL EXAMEN =====================
+    $examDefinition = null;
+
+    if ($slugType === 'exam') {
+        if ($examJsonPost !== '') {
+            $decoded = json_decode($examJsonPost, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $examDefinition = json_encode($decoded);
+
+                // Si el JSON trae due_at, sobreescribir
+                if (!empty($decoded['due_at'])) {
+                    $due = $decoded['due_at'];
+                }
+
+                // Si trae intentos especiales, tomarlos
+                if (!empty($decoded['attempts']) && is_numeric($decoded['attempts'])) {
+                    $maxAttempts = (int)$decoded['attempts'];
+                }
+            }
+        }
+    }
+
+    // ===================== INSERT =====================
+    $sql = "
+        INSERT INTO course_tasks 
+            (mg_id, created_by_teacher_user_id, title, description, due_at, file_path,
+             activity_type_id, weight_percent, max_attempts, total_points, parcial,
+             exam_definition, created_at)
+        VALUES 
+            (:mg, :tid, :t, :d, :due, :fp,
+             :type_id, :weight, :max_attempts, :total_points, :parcial,
+             :exam_definition, NOW())
+    ";
+
+    $db->query($sql, [
+        ':mg'             => $mgId,
+        ':tid'            => $teacherId,
+        ':t'              => $title,
+        ':d'              => $desc ?: null,
+        ':due'            => $due ?: null,
+        ':fp'             => $fileUrl,
+        ':type_id'        => $activityTypeId,
+        ':weight'         => $weightPercent,
+        ':max_attempts'   => $maxAttempts,
+        ':total_points'   => $totalPoints,
+        ':parcial'        => $parcial,
+        ':exam_definition'=> $examDefinition
+    ]);
+
+    header("Location: /src/plataforma/app/teacher/courses/show?id={$mgId}#tareas");
+    exit;
+}
+
 
     /* ===================== Calificar entrega ===================== */
     public function gradeSubmission() {
@@ -149,12 +279,12 @@ class TeacherCoursesController
         }
 
         $db = new Database();
-        // Validar que la entrega pertenece a una tarea de un mg_id asignado a este maestro
+        // Validar que la entrega pertenece a una actividad de un mg_id asignado a este maestro
         $db->query("
             SELECT mgp.teacher_user_id
             FROM task_submissions s
-            JOIN course_tasks t            ON t.id = s.task_id
-            JOIN materia_grupo_profesor mgp ON mgp.mg_id = t.mg_id
+            JOIN course_tasks t              ON t.id = s.task_id
+            JOIN materia_grupo_profesor mgp  ON mgp.mg_id = t.mg_id
             WHERE s.id = :sid
             LIMIT 1
         ", [':sid'=>$submission]);
