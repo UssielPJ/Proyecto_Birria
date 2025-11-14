@@ -116,7 +116,12 @@ $map('GET', '/src/plataforma/app/tareas/submitted', [new \App\Controllers\TasksC
 $map('GET', '/src/plataforma/app/tareas/overdue', [new \App\Controllers\TasksController,          'overdue']);
 $map('GET', '/src/plataforma/app/tareas/view/{id}', [new \App\Controllers\TasksController,          'view']);
 $map('GET', '/src/plataforma/app/tareas/submit/{id}', [new \App\Controllers\TasksController,          'submit']);
+$map('POST', '/src/plataforma/app/tareas/submit/{id}',    [new \App\Controllers\TasksController, 'storeSubmission']);
 $map('POST', '/src/plataforma/app/tareas/store/{id}', [new \App\Controllers\TasksController,          'storeSubmission']);
+// Ver el examen (formulario)
+$map('GET',  '/src/plataforma/app/tareas/exam/{id}',        [new \App\Controllers\TasksController, 'exam']);
+// Enviar respuestas del examen
+$map('POST', '/src/plataforma/app/tareas/exam/{id}',  [new \App\Controllers\TasksController, 'storeExam']);
 $map('GET', '/src/plataforma/app/horario',        [new ScheduleController,       'index']);
 $map('GET', '/src/plataforma/app/calificaciones', [new GradesController,         'index']);
 $map('GET', '/src/plataforma/app/encuestas',      [new SurveysController,        'index']);

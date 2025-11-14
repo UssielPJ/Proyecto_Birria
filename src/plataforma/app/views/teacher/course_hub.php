@@ -222,7 +222,7 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
             </div>
             <div id="exam-questions"></div>
             <p class="help-text mt-2">
-              Para cada pregunta puedes elegir “Opción única” o “Varias correctas” y marcar cuáles opciones son las respuestas correctas.
+              Para cada pregunta elige “Opción única” o “Varias correctas” y marca cuáles opciones son las respuestas correctas.
             </p>
           </div>
         </div>
@@ -244,26 +244,26 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
               <div class="flex items-start justify-between gap-3">
                 <div class="space-y-1">
                   <h3 class="item-title"><?= $esc($t->title ?? '') ?></h3>
-                  <?php if (!empty($t->activity_type_name)): ?>
-                    <div class="text-xs text-neutral-500 dark:text-neutral-400 flex flex-wrap gap-1">
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400 flex flex-wrap gap-1">
+                    <?php if (!empty($t->activity_type_name)): ?>
                       <span class="pill pill-type">
                         <?= $esc($t->activity_type_name) ?>
                       </span>
-                      <?php if (isset($t->weight_percent) && $t->weight_percent > 0): ?>
-                        <span class="pill pill-weight">
-                          Peso: <?= $esc((float)$t->weight_percent) ?>%
-                        </span>
-                      <?php endif; ?>
-                      <?php
-                        $maxAtt = isset($t->max_attempts) && $t->max_attempts > 0 ? (int)$t->max_attempts : 1;
-                        $par    = isset($t->parcial) && $t->parcial > 0 ? (int)$t->parcial : 1;
-                        $pts    = isset($t->total_points) && $t->total_points > 0 ? (float)$t->total_points : 10;
-                      ?>
-                      <span class="pill">Intentos: <?= $maxAtt ?></span>
-                      <span class="pill">Parcial <?= $par ?></span>
-                      <span class="pill">Puntos: <?= $pts ?></span>
-                    </div>
-                  <?php endif; ?>
+                    <?php endif; ?>
+                    <?php if (isset($t->weight_percent) && $t->weight_percent > 0): ?>
+                      <span class="pill pill-weight">
+                        Peso: <?= $esc((float)$t->weight_percent) ?>%
+                      </span>
+                    <?php endif; ?>
+                    <?php
+                      $maxAtt = isset($t->max_attempts) && $t->max_attempts > 0 ? (int)$t->max_attempts : 1;
+                      $par    = isset($t->parcial) && $t->parcial > 0 ? (int)$t->parcial : 1;
+                      $pts    = isset($t->total_points) && $t->total_points > 0 ? (float)$t->total_points : 10;
+                    ?>
+                    <span class="pill">Intentos: <?= $maxAtt ?></span>
+                    <span class="pill">Parcial <?= $par ?></span>
+                    <span class="pill">Puntos: <?= $pts ?></span>
+                  </div>
                   <?php if (!empty($t->description)): ?>
                     <p class="item-text mt-1"><?= $esc($t->description) ?></p>
                   <?php endif; ?>
@@ -311,7 +311,12 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
             <div class="item">
               <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                 <div>
-                  <h3 class="item-title"><?= $esc($s->student_name ?? 'Alumno') ?></h3>
+                  <h3 class="item-title flex items-center gap-2">
+                    <?= $esc($s->student_name ?? 'Alumno') ?>
+                    <?php if (!empty($s->activity_type_slug) && $s->activity_type_slug === 'exam'): ?>
+                      <span class="pill pill-type text-xs">Examen</span>
+                    <?php endif; ?>
+                  </h3>
                   <p class="item-text">
                     <?= $esc($s->task_title ?? 'Actividad') ?> · <?= $esc($s->created_at ?? '') ?>
                   </p>
@@ -676,34 +681,38 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
         </div>
       `;
 
-      const typeSelectQ      = wrapper.querySelector('.exam-question-type');
-      const optionsContainer = wrapper.querySelector('.exam-options-container');
-      const btnAddOption     = wrapper.querySelector('.exam-add-option');
-      const btnRemoveQuestion= wrapper.querySelector('.exam-remove-question');
+      const typeSelectQ       = wrapper.querySelector('.exam-question-type');
+      const optionsContainer  = wrapper.querySelector('.exam-options-container');
+      const btnAddOption      = wrapper.querySelector('.exam-add-option');
+      const btnRemoveQuestion = wrapper.querySelector('.exam-remove-question');
 
       function addOption() {
         const row = document.createElement('div');
         row.className = 'exam-option-row';
         row.innerHTML = `
           <input type="text" class="input exam-option-text" placeholder="Opción">
-          <label class="flex items-center text-xs text-neutral-500">
-            <input type="checkbox" class="exam-option-correct mr-1">
+          <label class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 cursor-pointer">
+            <input type="checkbox" class="exam-option-correct">
             Correcta
           </label>
           <button type="button" class="btn-link exam-remove-option">x</button>
         `;
-        const removeBtn = row.querySelector('.exam-remove-option');
-        const correctCb = row.querySelector('.exam-option-correct');
 
-        removeBtn.addEventListener('click', () => {
+        // Eliminar opción
+        row.querySelector('.exam-remove-option').addEventListener('click', () => {
           row.remove();
         });
 
-        correctCb.addEventListener('change', () => {
-          // Si es single_choice, solo permitir una correcta
-          if (typeSelectQ.value === 'single_choice' && correctCb.checked) {
-            optionsContainer.querySelectorAll('.exam-option-correct').forEach(cb => {
-              if (cb !== correctCb) cb.checked = false;
+        // Asegurar que en single_choice solo haya una correcta
+        const chk = row.querySelector('.exam-option-correct');
+        chk.addEventListener('change', () => {
+          const qWrapper = row.closest('.exam-question');
+          if (!qWrapper) return;
+          const tSel = qWrapper.querySelector('.exam-question-type');
+          const tVal = (tSel?.value || 'single_choice').toLowerCase();
+          if (tVal === 'single_choice' && chk.checked) {
+            qWrapper.querySelectorAll('.exam-option-correct').forEach(other => {
+              if (other !== chk) other.checked = false;
             });
           }
         });
@@ -713,18 +722,10 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
 
       function renderOptions() {
         optionsContainer.innerHTML = '';
-        // Por defecto siempre 2 opciones
+        // por defecto 2 opciones
         addOption();
         addOption();
       }
-
-      typeSelectQ.addEventListener('change', () => {
-        // No necesitamos cambiar el UI de opciones,
-        // solo la lógica de cómo interpretamos las correctas
-        // (single_choice vs multiple_choice) ya se maneja en el submit
-        // pero si quieres resetear al cambiar tipo:
-        // renderOptions();
-      });
 
       btnAddOption.addEventListener('click', () => {
         addOption();
@@ -752,6 +753,7 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
         const opt = typeSelect.options[typeSelect.selectedIndex];
         const slug = opt?.dataset.slug || '';
         if (slug !== 'exam') {
+          // no es examen, no mandamos JSON
           examDefinition.value = '';
           return;
         }
@@ -765,45 +767,46 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
         questionsContainer.querySelectorAll('.exam-question').forEach(q => {
           const textEl = q.querySelector('.exam-question-text');
           const typeEl = q.querySelector('.exam-question-type');
-          const optionsEls = q.querySelectorAll('.exam-option-text');
-          const correctEls = q.querySelectorAll('.exam-option-correct');
+          const qText  = textEl?.value.trim() || '';
+          const qType  = (typeEl?.value || 'single_choice').toLowerCase();
 
-          const typeVal = typeEl?.value || 'single_choice';
-          const qData = {
-            text: textEl?.value || '',
-            type: typeVal,
-            options: []
-          };
+          if (!qText) return;
 
-          const correctIdxs = [];
+          const options = [];
+          const correct = [];
+          let optionIndex = 0;
 
-          optionsEls.forEach((optEl, idx) => {
-            const val = optEl.value.trim();
-            const correctCb = correctEls[idx];
-            if (val) {
-              qData.options.push(val);
-              if (correctCb && correctCb.checked) {
-                correctIdxs.push(idx);
-              }
+          q.querySelectorAll('.exam-option-row').forEach(row => {
+            const optTextEl = row.querySelector('.exam-option-text');
+            const chk       = row.querySelector('.exam-option-correct');
+            const optText   = optTextEl?.value.trim() || '';
+            if (!optText) return;
+
+            options.push(optText);
+            if (chk && chk.checked) {
+              correct.push(optionIndex);
             }
+            optionIndex++;
           });
 
-          // Ajustar correctos según tipo
-          if (typeVal === 'single_choice') {
-            if (correctIdxs.length > 0) {
-              // Tomar solo la primera por seguridad
-              qData.correct_index = correctIdxs[0];
-            }
-          } else if (typeVal === 'multiple_choice') {
-            qData.correct_indices = correctIdxs;
+          // si no hay opciones, no tiene sentido la pregunta
+          if (options.length === 0) return;
+
+          const qData = {
+            text: qText,
+            type: (qType === 'multiple_choice') ? 'multiple_choice' : 'single_choice',
+            options: options
+          };
+
+          if (correct.length > 0) {
+            qData.correct = correct;
           }
 
-          if (qData.text.trim() && qData.options.length > 0) {
-            data.questions.push(qData);
-          }
+          data.questions.push(qData);
         });
 
         examDefinition.value = JSON.stringify(data);
+
         // copiar fecha/intent de campos de examen si están llenos
         if (examDue && examDue.value && !activityDue.value) {
           activityDue.value = examDue.value;
