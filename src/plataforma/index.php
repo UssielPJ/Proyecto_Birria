@@ -75,6 +75,7 @@ use App\Controllers\MateriaGrupoProfesorController;
 use App\Controllers\TeacherCoursesController;
 use App\Controllers\CapturistaProfilesController;
 use App\Controllers\ChatController;
+use App\Controllers\HorariosController;
 
 $router = new Router();
 
@@ -122,7 +123,7 @@ $map('POST', '/src/plataforma/app/tareas/store/{id}', [new \App\Controllers\Task
 $map('GET',  '/src/plataforma/app/tareas/exam/{id}',        [new \App\Controllers\TasksController, 'exam']);
 // Enviar respuestas del examen
 $map('POST', '/src/plataforma/app/tareas/exam/{id}',  [new \App\Controllers\TasksController, 'storeExam']);
-$map('GET', '/src/plataforma/app/horario',        [new ScheduleController,       'index']);
+$map('GET', '/src/plataforma/app/horario',        [new HorariosController,       'horarioAlumno']);
 $map('GET', '/src/plataforma/app/calificaciones', [new GradesController,         'index']);
 $map('GET', '/src/plataforma/app/encuestas',      [new SurveysController,        'index']);
 $map('GET', '/src/plataforma/app/becas',          [new ScholarshipsController,   'index']);
@@ -172,7 +173,9 @@ $map('POST', '/src/plataforma/app/teacher/courses/task/store', [new TeacherCours
 $map('POST', '/src/plataforma/app/teacher/courses/task/grade', [new TeacherCoursesController, 'gradeSubmission']);
 $map('POST', '/src/plataforma/app/teacher/courses/resource/store', [new TeacherCoursesController, 'storeResource']);
 
-$map('GET', '/src/plataforma/app/teacher/horario',    [new ScheduleController, 'index']);
+// Horario para DOCENTE (vista propia del maestro)
+$map('GET', '/src/plataforma/app/teacher/horario', [new HorariosController, 'horarioDocente']);
+
 $map('GET', '/src/plataforma/app/teacher/grades',     [new GradesController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/students',   [new StudentsController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/attendance', [new GradesController, 'index']);
@@ -238,7 +241,31 @@ $map('POST', '/src/plataforma/app/admin/teachers/store', [new TeachersController
 $map('GET', '/src/plataforma/app/admin/teachers/edit/{id}', [new TeachersController, 'edit']);
 $map('POST', '/src/plataforma/app/admin/teachers/update/{id}', [new TeachersController, 'update']);
 $map('POST', '/src/plataforma/app/admin/teachers/delete/{id}', [new TeachersController, 'delete']);
-$map('GET', '/src/plataforma/app/admin/schedule', [new ScheduleController, 'index']);
+
+
+/* ========== Admin Horarios Routes ========== */
+
+// Listado de grupos + estado del horario
+$map('GET',  '/src/plataforma/app/admin/horarios',                               [new HorariosController, 'index']);
+
+// Configurar horas por semana para un grupo
+$map('GET',  '/src/plataforma/app/admin/horarios/configurar-horas/{id}',       [new HorariosController, 'configurarHoras']);
+$map('POST', '/src/plataforma/app/admin/horarios/guardar-horas/{id}',          [new HorariosController, 'guardarHoras']);
+
+// Generar horario automático (borrador)
+$map('GET',  '/src/plataforma/app/admin/horarios/generar/{id}',                [new HorariosController, 'generar']);
+
+// Vista previa del horario generado
+$map('GET',  '/src/plataforma/app/admin/horarios/vista-previa/{id}',           [new HorariosController, 'vistaPrevia']);
+
+// Guardar horario definitivo
+$map('POST', '/src/plataforma/app/admin/horarios/guardar/{id}',                [new HorariosController, 'guardarHorario']);
+
+// Ver horario de un grupo (solo lectura, estilo alumno)
+$map('GET',  '/src/plataforma/app/admin/groups/horario/{id}',                  [new HorariosController, 'verHorarioGrupo']);
+
+
+
 
 /* ========== Admin Groups Routes ========== */
 $map('GET',  '/src/plataforma/app/admin/groups/create',        [new GroupsController, 'create']);

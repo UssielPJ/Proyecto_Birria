@@ -1,10 +1,13 @@
 <?php
-// app/views/student/schedule/index.php
-// Espera:
-// - $schedule: ['HH:MM - HH:MM' => [ dia => ['materia','aula','docente','color'] ]]
-// - opcional: $grupo (código/título del grupo)
+// app/views/teacher/horario.php
+/** @var array $user */
+/** @var array $schedule */
 
-$esc = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
+$esc = function ($v) {
+    return htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
+};
+
+$schedule = $schedule ?? [];
 
 $diasSemana = [
     1 => 'Lunes',
@@ -15,76 +18,52 @@ $diasSemana = [
     6 => 'Sábado',
 ];
 
-// Ordenamos las horas por hora de inicio (primeros 5 caracteres "HH:MM")
-$horas = array_keys($schedule ?? []);
-usort($horas, function (string $a, string $b): int {
-    $ha = substr($a, 0, 5);
-    $hb = substr($b, 0, 5);
-    return strcmp($ha, $hb);
-});
+// Ordenar horas
+$horas = array_keys($schedule);
+sort($horas);
 
-// Función para mapear el "color" lógico a clases Tailwind
-function horario_color_classes(?string $base): string {
-    switch ($base) {
+// Mapeo simple de color lógico -> clases tailwind
+$colorCard = function (string $colorKey): string {
+    switch ($colorKey) {
+        case 'purple': return 'bg-purple-50 dark:bg-purple-900/20 border-purple-500 text-purple-800 dark:text-purple-200';
+        case 'green':  return 'bg-green-50 dark:bg-green-900/20 border-green-500 text-green-800 dark:text-green-200';
+        case 'amber':  return 'bg-amber-50 dark:bg-amber-900/20 border-amber-500 text-amber-800 dark:text-amber-200';
+        case 'red':    return 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-800 dark:text-red-200';
+        case 'indigo': return 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-500 text-indigo-800 dark:text-indigo-200';
+        case 'teal':   return 'bg-teal-50 dark:bg-teal-900/20 border-teal-500 text-teal-800 dark:text-teal-200';
         case 'blue':
-            return 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-800 dark:text-blue-300';
-        case 'purple':
-            return 'bg-purple-50 dark:bg-purple-900/20 border-purple-500 text-purple-800 dark:text-purple-300';
-        case 'green':
-            return 'bg-green-50 dark:bg-green-900/20 border-green-500 text-green-800 dark:text-green-300';
-        case 'amber':
-            return 'bg-amber-50 dark:bg-amber-900/20 border-amber-500 text-amber-800 dark:text-amber-300';
-        case 'red':
-            return 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-800 dark:text-red-300';
-        case 'indigo':
-            return 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-500 text-indigo-800 dark:text-indigo-300';
-        case 'teal':
-            return 'bg-teal-50 dark:bg-teal-900/20 border-teal-500 text-teal-800 dark:text-teal-300';
         default:
-            return 'bg-gray-50 dark:bg-neutral-800/40 border-gray-400 text-gray-800 dark:text-gray-100';
+            return 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-800 dark:text-blue-200';
     }
-}
+};
 ?>
 
 <div class="py-8 max-w-7xl mx-auto">
     <!-- Encabezado -->
     <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-6 text-white mb-8" data-aos="fade-up">
-        <div class="flex items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-                <div class="p-3 bg-white/20 rounded-full">
-                    <i data-feather="calendar" class="w-8 h-8"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold mb-1">Mi Horario</h2>
-                    <p class="opacity-90">
-                        Consulta tus clases y horarios de la semana
-                        <?php if (!empty($grupo)): ?>
-                            · <?= $esc($grupo->codigo ?? '') ?>
-                            <?php if (!empty($grupo->titulo)): ?>
-                                (<?= $esc($grupo->titulo) ?>)
-                            <?php endif; ?>
-                        <?php endif; ?>
-                    </p>
-                </div>
+        <div class="flex items-center gap-4">
+            <div class="p-3 bg-white/20 rounded-full">
+                <i data-feather="calendar" class="w-8 h-8"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-1">Mi Horario</h2>
+                <p class="opacity-90 text-sm">
+                    Docente: <?= $esc($user['name'] ?? '') ?>
+                </p>
+                <p class="opacity-75 text-xs">
+                    Consulta tus clases y grupos asignados durante la semana.
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- Selector de semana + botón descargar -->
+    <!-- Selector semana + botón descargar con menú -->
     <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-4 mb-6 flex items-center justify-between" data-aos="fade-up">
-        <div class="flex items-center gap-2">
-            <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors">
-                <i data-feather="chevron-left" class="w-5 h-5"></i>
-            </button>
-            <h3 class="text-lg font-medium text-gray-800 dark:text-white">
-                Semana actual
-            </h3>
-            <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors">
-                <i data-feather="chevron-right" class="w-5 h-5"></i>
-            </button>
+        <div class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-100">
+            <i data-feather="calendar" class="w-4 h-4"></i>
+            <span>Semana actual</span>
         </div>
 
-        <!-- Botón + menú desplegable (abre hacia arriba) -->
         <div class="relative" id="export-menu-wrapper">
             <button id="btn-export-toggle"
                     type="button"
@@ -94,6 +73,7 @@ function horario_color_classes(?string $base): string {
                 <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
             </button>
 
+            <!-- Menú desplegable (abre hacia arriba) -->
             <div id="export-menu"
                  class="hidden absolute bottom-full right-0 mb-2 w-44
                         bg-white dark:bg-neutral-800
@@ -119,7 +99,7 @@ function horario_color_classes(?string $base): string {
         </div>
     </div>
 
-    <!-- Contenedor que se exporta a PNG/PDF -->
+    <!-- Contenedor que se exporta -->
     <div id="schedule-export">
         <!-- Tabla de horario -->
         <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
@@ -138,22 +118,22 @@ function horario_color_classes(?string $base): string {
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    <?php if (empty($horas)): ?>
+
+                    <?php if (empty($schedule)): ?>
                         <tr>
                             <td colspan="<?= 1 + count($diasSemana) ?>"
                                 class="px-4 py-6 text-center text-sm text-gray-500 dark:text-gray-300">
-                                Aún no hay un horario asignado para tu grupo. Vuelve más tarde o contacta a tu tutor.
+                                Aún no tienes clases asignadas en el horario.
                             </td>
                         </tr>
                     <?php else: ?>
                         <?php
-                        $fila = 0;
+                        $rowIndex = 0;
                         foreach ($horas as $labelHora):
-                            $fila++;
-                            $rowClass = ($fila % 2 === 0)
-                                ? 'bg-gray-50 dark:bg-neutral-700/20'
-                                : '';
-                            ?>
+                            $rowIndex++;
+                            $fila     = $schedule[$labelHora];
+                            $rowClass = $rowIndex % 2 === 0 ? 'bg-gray-50 dark:bg-neutral-700/20' : '';
+                        ?>
                             <tr class="<?= $rowClass ?>">
                                 <!-- Columna hora -->
                                 <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
@@ -162,81 +142,39 @@ function horario_color_classes(?string $base): string {
 
                                 <!-- Columnas por día -->
                                 <?php foreach ($diasSemana as $diaNum => $diaNombre): ?>
-                                    <?php
-                                    $slot = $schedule[$labelHora][$diaNum] ?? null;
-                                    ?>
+                                    <?php $slot = $fila[$diaNum] ?? null; ?>
                                     <td class="px-4 py-3 text-center align-top">
                                         <?php if ($slot): ?>
-                                            <?php
-                                            $classes = horario_color_classes($slot['color'] ?? null);
-                                            ?>
-                                            <div class="rounded-lg p-2 border-l-4 <?= $classes ?>">
-                                                <h4 class="text-sm font-medium">
-                                                    <?= $esc($slot['materia'] ?? 'Materia') ?>
-                                                </h4>
-                                                <?php if (!empty($slot['aula'])): ?>
-                                                    <p class="text-xs mt-0.5 opacity-90">
-                                                        Aula: <?= $esc($slot['aula']) ?>
-                                                    </p>
-                                                <?php endif; ?>
-                                                <?php if (!empty($slot['docente'])): ?>
-                                                    <p class="text-xs mt-0.5 opacity-90">
-                                                        Prof. <?= $esc($slot['docente']) ?>
-                                                    </p>
-                                                <?php endif; ?>
+                                            <?php $classes = $colorCard($slot['color'] ?? 'blue'); ?>
+                                            <div class="inline-block text-left w-full max-w-[220px]">
+                                                <div class="rounded-lg p-2 border-l-4 <?= $classes ?> shadow-sm">
+                                                    <h4 class="text-sm font-semibold">
+                                                        <?= $esc($slot['materia'] ?? 'Materia') ?>
+                                                    </h4>
+                                                    <?php if (!empty($slot['grupo'])): ?>
+                                                        <p class="text-xs opacity-80 mt-1">
+                                                            Grupo: <?= $esc($slot['grupo']) ?>
+                                                        </p>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($slot['aula'])): ?>
+                                                        <p class="text-xs opacity-80">
+                                                            Aula: <?= $esc($slot['aula']) ?>
+                                                        </p>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
                                         <?php else: ?>
-                                            <div class="text-xs text-gray-400 dark:text-gray-500">
-                                                — Libre —
-                                            </div>
+                                            <span class="text-xs text-gray-400 dark:text-gray-500">—</span>
                                         <?php endif; ?>
                                     </td>
                                 <?php endforeach; ?>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
+
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-
-    <!-- Leyenda dinámica -->
-    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6 mt-6" data-aos="fade-up">
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Leyenda de materias</h3>
-
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <?php
-            // Recopilar materias únicas (una vez por materia)
-            $materiasLeyenda = [];
-
-            foreach ($schedule as $hora => $dias) {
-                foreach ($dias as $dia => $info) {
-                    if (!isset($materiasLeyenda[$info['materia']])) {
-                        $materiasLeyenda[$info['materia']] = $info['color'] ?? null;
-                    }
-                }
-            }
-
-            foreach ($materiasLeyenda as $materiaNombre => $color):
-                $bg = match ($color) {
-                    'blue'   => 'bg-blue-500',
-                    'purple' => 'bg-purple-500',
-                    'green'  => 'bg-green-500',
-                    'amber'  => 'bg-amber-500',
-                    'red'    => 'bg-red-500',
-                    'indigo' => 'bg-indigo-500',
-                    'teal'   => 'bg-teal-500',
-                    default  => 'bg-gray-500',
-                };
-            ?>
-                <div class="flex items-center">
-                    <div class="w-4 h-4 rounded mr-2 <?= $bg ?>"></div>
-                    <span class="text-sm text-gray-600 dark:text-gray-300">
-                        <?= htmlspecialchars($materiaNombre) ?>
-                    </span>
-                </div>
-            <?php endforeach; ?>
         </div>
     </div>
 </div>
@@ -259,20 +197,20 @@ function horario_color_classes(?string $base): string {
 
         if (!menuWrapper || !toggleBtn || !menu || !exportNode) return;
 
-        // Mostrar / ocultar menú (posición absoluta relativa al wrapper)
+        // Mostrar / ocultar menú
         toggleBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             menu.classList.toggle('hidden');
         });
 
-        // Cerrar menú al hacer click fuera
+        // Cerrar al hacer click fuera
         document.addEventListener('click', function(e) {
             if (!menuWrapper.contains(e.target)) {
                 menu.classList.add('hidden');
             }
         });
 
-        // Descargar como PNG
+        // PNG
         btnPNG.addEventListener('click', async function() {
             menu.classList.add('hidden');
 
@@ -287,7 +225,7 @@ function horario_color_classes(?string $base): string {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'horario.png';
+                a.download = 'horario-docente.png';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -295,7 +233,7 @@ function horario_color_classes(?string $base): string {
             }, 'image/png');
         });
 
-        // Descargar como PDF
+        // PDF
         btnPDF.addEventListener('click', async function() {
             menu.classList.add('hidden');
 
@@ -314,7 +252,7 @@ function horario_color_classes(?string $base): string {
             const pdfHeight = canvas.height * pdfWidth / canvas.width;
 
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save('horario.pdf');
+            pdf.save('horario-docente.pdf');
         });
     })();
 </script>

@@ -23,7 +23,7 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
 
       // Clases y estructura académica
       ['href' => '/src/plataforma/app/admin/subjects',           'icon' => 'book-open',   'text' => 'Materias'],
-      ['href' => '/src/plataforma/app/admin/schedule',           'icon' => 'clock',       'text' => 'Horarios'],
+      ['href' => '/src/plataforma/app/admin/horarios',           'icon' => 'clock',       'text' => 'Horarios'],
       ['href' => '/src/plataforma/app/admin/materias-grupos',    'icon' => 'link',        'text' => 'Asignar Materias a Grupos'],
       ['href' => '/src/plataforma/app/admin/mg-profesores',       'icon' => 'user-check','text' => 'Asignar Profesor a Materia'],
 
