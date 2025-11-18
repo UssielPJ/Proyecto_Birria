@@ -61,6 +61,18 @@ class GradesController
     /* ===================== Crear ===================== */
     public function create() {
         $this->requireRole(['admin','teacher']);
+        $roles = $_SESSION['user']['roles'] ?? [];
+        $user = $_SESSION['user'];
+
+        if (in_array('teacher', $roles, true) && !in_array('admin', $roles, true)) {
+            // Load students and subjects for teacher
+            $courseModel = new \App\Models\Course();
+            $students = $courseModel->getStudentsByTeacher($user['id']);
+            $subjects = $courseModel->getByTeacher($user['id']);
+            View::render('teacher/grades/create', 'teacher', ['students' => $students, 'subjects' => $subjects]);
+            return;
+        }
+
         View::render('admin/grades/create', 'admin');
     }
 
@@ -77,7 +89,6 @@ class GradesController
         if (!is_numeric($data['grade']) || $data['grade'] < 0 || $data['grade'] > 100) {
             $errors[] = 'La calificación debe ser un número entre 0 y 100.';
         }
-        if (empty($data['period'])) $errors[] = 'El período es requerido.';
 
         if ($errors) {
             header('Location: /src/plataforma/app/admin/grades/create?error=' . urlencode(implode(' ', $errors)));
@@ -87,25 +98,42 @@ class GradesController
         $gradeModel = new Grade();
         $gradeModel->create([
             'student_id' => (int)$data['student_id'],
-            'subject_id' => (int)$data['subject_id'],
+            'assignment_id' => (int)$data['subject_id'], // map subject_id to assignment_id
             'grade'      => (float)$data['grade'],
-            'period'     => $data['period'],
             'comments'   => $data['comments'] ?? '',
             'created_by' => $_SESSION['user']['id'],
         ]);
 
-        header('Location: /src/plataforma/app/admin/grades'); exit;
+        $roles = $_SESSION['user']['roles'] ?? [];
+        $redirect = (in_array('teacher', $roles, true) && !in_array('admin', $roles, true))
+            ? '/src/plataforma/app/teacher/grades'
+            : '/src/plataforma/app/admin/grades';
+        header('Location: ' . $redirect); exit;
     }
 
     /* ===================== Editar ===================== */
     public function edit($id) {
         $this->requireRole(['admin','teacher']);
+        $roles = $_SESSION['user']['roles'] ?? [];
+        $user = $_SESSION['user'];
 
         $gradeModel = new Grade();
         $grade = $gradeModel->findById($id);
 
         if (!$grade) {
-            header('Location: /src/plataforma/app/admin/grades'); exit;
+            $redirect = (in_array('teacher', $roles, true) && !in_array('admin', $roles, true))
+                ? '/src/plataforma/app/teacher/grades'
+                : '/src/plataforma/app/admin/grades';
+            header('Location: ' . $redirect); exit;
+        }
+
+        if (in_array('teacher', $roles, true) && !in_array('admin', $roles, true)) {
+            // Load students and subjects for teacher
+            $courseModel = new \App\Models\Course();
+            $students = $courseModel->getStudentsByTeacher($user['id']);
+            $subjects = $courseModel->getByTeacher($user['id']);
+            View::render('teacher/grades/edit', 'teacher', ['grade' => $grade, 'students' => $students, 'subjects' => $subjects]);
+            return;
         }
 
         View::render('admin/grades/edit', 'admin', ['grade' => $grade]);
@@ -123,7 +151,6 @@ class GradesController
         if (!is_numeric($data['grade']) || $data['grade'] < 0 || $data['grade'] > 100) {
             $errors[] = 'La calificación debe ser un número entre 0 y 100.';
         }
-        if (empty($data['period'])) $errors[] = 'El período es requerido.';
 
         if ($errors) {
             header('Location: /src/plataforma/app/admin/grades/edit/' . $id . '?error=' . urlencode(implode(' ', $errors)));
@@ -132,9 +159,8 @@ class GradesController
 
         $updateData = [
             'student_id' => (int)$data['student_id'],
-            'subject_id' => (int)$data['subject_id'],
+            'assignment_id' => (int)$data['subject_id'], // map subject_id to assignment_id
             'grade'      => (float)$data['grade'],
-            'period'     => $data['period'],
             'comments'   => $data['comments'] ?? '',
             'updated_by' => $_SESSION['user']['id'],
         ];
@@ -142,7 +168,11 @@ class GradesController
         $gradeModel = new Grade();
         $gradeModel->update($id, $updateData);
 
-        header('Location: /src/plataforma/app/admin/grades'); exit;
+        $roles = $_SESSION['user']['roles'] ?? [];
+        $redirect = (in_array('teacher', $roles, true) && !in_array('admin', $roles, true))
+            ? '/src/plataforma/app/teacher/grades'
+            : '/src/plataforma/app/admin/grades';
+        header('Location: ' . $redirect); exit;
     }
 
     /* ===================== Eliminar ===================== */
@@ -152,6 +182,10 @@ class GradesController
         $gradeModel = new Grade();
         $gradeModel->delete($id);
 
-        header('Location: /src/plataforma/app/admin/grades'); exit;
+        $roles = $_SESSION['user']['roles'] ?? [];
+        $redirect = (in_array('teacher', $roles, true) && !in_array('admin', $roles, true))
+            ? '/src/plataforma/app/teacher/grades'
+            : '/src/plataforma/app/admin/grades';
+        header('Location: ' . $redirect); exit;
     }
 }

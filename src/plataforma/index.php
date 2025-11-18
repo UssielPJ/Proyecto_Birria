@@ -76,6 +76,7 @@ use App\Controllers\TeacherCoursesController;
 use App\Controllers\CapturistaProfilesController;
 use App\Controllers\ChatController;
 use App\Controllers\HorariosController;
+use App\Controllers\AttendanceController;
 
 $router = new Router();
 
@@ -178,7 +179,7 @@ $map('GET', '/src/plataforma/app/teacher/horario', [new HorariosController, 'hor
 
 $map('GET', '/src/plataforma/app/teacher/grades',     [new GradesController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/students',   [new StudentsController, 'index']);
-$map('GET', '/src/plataforma/app/teacher/attendance', [new GradesController, 'index']);
+$map('GET', '/src/plataforma/app/teacher/attendance', [new AttendanceController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/announcements', [new AnnouncementsController, 'index']);
 
 /* ========== Teacher Subjects Routes ========== */
