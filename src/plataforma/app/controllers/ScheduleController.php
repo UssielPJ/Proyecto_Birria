@@ -75,11 +75,14 @@ class ScheduleController
                 $schedule = $scheduleModel->getWeekByTeacher((int)$user['id']);
             } else {
                 // Fallback: traer plano y agrupar
-                if (method_exists($scheduleModel, 'getByTeacher')) {
-                    $rows = $scheduleModel->getByTeacher((int)$user['id']);
+                if (method_exists($scheduleModel, 'getAll')) {
+                    $rows = $scheduleModel->getAll(['teacher_id' => (int)$user['id']]);
                 } else {
-                    // último recurso: filtrar manualmente si tu getAll acepta filters
-                    $rows = $scheduleModel->getAll(['profesor_id' => (int)$user['id']]);
+                    // último recurso: obtener todos y filtrar manualmente
+                    $allRows = $scheduleModel->getAll();
+                    $rows = array_filter($allRows, function($row) use ($user) {
+                        return isset($row['teacher_id']) && (int)$row['teacher_id'] === (int)$user['id'];
+                    });
                 }
                 $schedule = $this->buildWeek($rows ?? []);
             }
@@ -96,10 +99,9 @@ class ScheduleController
             if (method_exists($scheduleModel, 'getWeekByStudent')) {
                 $schedule = $scheduleModel->getWeekByStudent((int)$user['id']);
             } else {
-                // Fallback: si existe getByStudent, agrupar; si no, vacío
-                if (method_exists($scheduleModel, 'getByStudent')) {
-                    $rows = $scheduleModel->getByStudent((int)$user['id']);
-                    $schedule = $this->buildWeek($rows ?? []);
+                // Fallback: si es posible obtener horario de estudiante, agrupar; si no, vacío
+                if (method_exists($scheduleModel, 'getWeekByStudent')) {
+                    $schedule = $scheduleModel->getWeekByStudent((int)$user['id']);
                 } else {
                     $schedule = ['Lun'=>[], 'Mar'=>[], 'Mie'=>[], 'Jue'=>[], 'Vie'=>[], 'Sab'=>[], 'Dom'=>[]];
                 }
@@ -169,10 +171,10 @@ class ScheduleController
         $this->requireRole(['admin', 'teacher']);
 
         $scheduleModel = new Schedule();
-        // Tu modelo original no tenía findById; si usas getById, cámbialo aquí:
-        $schedule = method_exists($scheduleModel, 'findById')
-                  ? $scheduleModel->findById($id)
-                  : (method_exists($scheduleModel, 'getById') ? $scheduleModel->getById($id) : null);
+        // Usamos getById que es el método disponible en el modelo
+        $schedule = method_exists($scheduleModel, 'getById')
+                  ? $scheduleModel->getById($id)
+                  : null;
 
         if (!$schedule) {
             header('Location: /src/plataforma/app/admin/schedule'); exit;
