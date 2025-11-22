@@ -64,7 +64,7 @@ class TeacherCoursesController
             exit;
         }
 
-        // ===================== ACTIVIDADES (antes tareas) =====================
+        // ===================== ACTIVIDADES =====================
         $db->query("
             SELECT 
                 ct.id,
@@ -78,8 +78,9 @@ class TeacherCoursesController
                 ct.total_points,
                 ct.parcial,
                 ct.exam_definition,
-                at.name AS activity_type_name,
-                at.slug AS activity_type_slug
+                at.name  AS activity_type_name,
+                at.slug  AS activity_type_slug,
+                at.partial_weight_percent  -- peso de la categoría en el parcial
             FROM course_tasks ct
             LEFT JOIN activity_types at ON at.id = ct.activity_type_id
             WHERE ct.mg_id = :mg
@@ -93,14 +94,13 @@ class TeacherCoursesController
 
         // Catálogo de tipos de actividad para el formulario (Examen, Proyecto, etc.)
         $db->query("
-            SELECT id, name, slug, default_weight, default_max_attempts
+            SELECT id, name, slug, default_weight, default_max_attempts, partial_weight_percent
             FROM activity_types
             ORDER BY name ASC
         ");
         $activityTypes = $db->fetchAll() ?? [];
 
         // Entregas recientes (últimas 10) con nombre del alumno y título de la actividad
-        // 👇 Aquí ya traemos también el tipo de actividad y el answers_json
         $db->query("
             SELECT 
                 s.id,
@@ -137,14 +137,14 @@ class TeacherCoursesController
 
         View::render('teacher/course_hub', 'teacher', [
             'course'        => $course,
-            'tasks'         => $tasks,          // actividades del curso
-            'activityTypes' => $activityTypes,  // catálogo para el select
+            'tasks'         => $tasks,
+            'activityTypes' => $activityTypes,
             'subs'          => $recentSubmissions,
             'resources'     => $resources,
         ]);
     }
 
-    /* ===================== Crear actividad (antes tarea) ===================== */
+    /* ===================== Crear actividad ===================== */
     public function storeTask() {
         $this->requireRole(['teacher']);
         $teacherId = (int)($_SESSION['user']['id'] ?? 0);
@@ -157,7 +157,8 @@ class TeacherCoursesController
 
         // nuevos campos
         $typeIdPost   = (int)($_POST['activity_type_id'] ?? 0);
-        $weightPost   = $_POST['weight_percent'] ?? null;
+        // IMPORTANTE: ya no dependemos del weight_percent del form
+        // $weightPost   = $_POST['weight_percent'] ?? null;
         $attemptsPost = $_POST['max_attempts'] ?? null;
         $pointsPost   = $_POST['total_points'] ?? null;
         $parcialPost  = $_POST['parcial'] ?? null;
@@ -186,7 +187,7 @@ class TeacherCoursesController
 
         // ===================== RESOLVER TIPO =====================
         $db->query("
-            SELECT id, slug, default_weight, default_max_attempts
+            SELECT id, slug, default_weight, default_max_attempts, partial_weight_percent
             FROM activity_types
             WHERE id = :id
             LIMIT 1
@@ -201,12 +202,12 @@ class TeacherCoursesController
         $slugType       = strtolower($typeRow->slug);
         $activityTypeId = (int)$typeRow->id;
 
-        // ===================== PESO =====================
-        if ($weightPost !== null && $weightPost !== '' && is_numeric($weightPost)) {
-            $weightPercent = (float)$weightPost;
-        } else {
-            $weightPercent = (float)$typeRow->default_weight;
-        }
+        // ===================== PESO (INTERNO, NO DEL PARCIAL) =====================
+        // Nuevo modelo: la calificación del parcial se calculará por categoría
+        // usando activity_types.partial_weight_percent.
+        // Este weight_percent por tarea se conserva SOLO como peso relativo
+        // dentro de su tipo (o por compatibilidad). No se usará para el parcial.
+        $weightPercent = (float)$typeRow->default_weight;
         if ($weightPercent < 0)   $weightPercent = 0;
         if ($weightPercent > 100) $weightPercent = 100;
 
@@ -252,7 +253,7 @@ class TeacherCoursesController
                 $decoded = json_decode($examJsonPost, true);
 
                 if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    // Nos aseguramos de guardar un JSON limpio y bien formateado
+                    // Guardar JSON limpio
                     $examDefinition = json_encode($decoded, JSON_UNESCAPED_UNICODE);
 
                     // Si el JSON trae due_at, sobreescribir la fecha de entrega

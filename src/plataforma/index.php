@@ -77,6 +77,8 @@ use App\Controllers\CapturistaProfilesController;
 use App\Controllers\ChatController;
 use App\Controllers\HorariosController;
 use App\Controllers\AttendanceController;
+use App\Controllers\TeacherGradesController;
+use App\Controllers\StudentGradesController;
 
 $router = new Router();
 
@@ -125,7 +127,7 @@ $map('GET',  '/src/plataforma/app/tareas/exam/{id}',        [new \App\Controller
 // Enviar respuestas del examen
 $map('POST', '/src/plataforma/app/tareas/exam/{id}',  [new \App\Controllers\TasksController, 'storeExam']);
 $map('GET', '/src/plataforma/app/horario',        [new HorariosController,       'horarioAlumno']);
-$map('GET', '/src/plataforma/app/calificaciones', [new GradesController,         'index']);
+$map('GET', '/src/plataforma/app/calificaciones', [new StudentGradesController,         'index']);
 $map('GET', '/src/plataforma/app/encuestas',      [new SurveysController,        'index']);
 $map('GET', '/src/plataforma/app/becas',          [new ScholarshipsController,   'index']);
 $map('GET', '/src/plataforma/app/anuncios',       [new AnnouncementsController,  'index']);
@@ -176,8 +178,6 @@ $map('POST', '/src/plataforma/app/teacher/courses/resource/store', [new TeacherC
 
 // Horario para DOCENTE (vista propia del maestro)
 $map('GET', '/src/plataforma/app/teacher/horario', [new HorariosController, 'horarioDocente']);
-
-$map('GET', '/src/plataforma/app/teacher/grades',     [new GradesController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/students',   [new StudentsController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/attendance', [new AttendanceController, 'index']);
 $map('GET', '/src/plataforma/app/teacher/announcements', [new AnnouncementsController, 'index']);
@@ -190,11 +190,16 @@ $map('GET',  '/src/plataforma/app/teacher/subjects/edit/{id}',[new SubjectsContr
 $map('POST', '/src/plataforma/app/teacher/subjects/update/{id}',[new SubjectsController, 'update']);
 $map('POST', '/src/plataforma/app/teacher/subjects/delete/{id}',[new SubjectsController, 'delete']);
 
-/* ========== Teacher Grades Routes ========== */
-$map('GET',  '/src/plataforma/app/teacher/grades/create',   [new GradesController, 'create']);
-$map('POST', '/src/plataforma/app/teacher/grades/store',    [new GradesController, 'store']);
-$map('GET',  '/src/plataforma/app/teacher/grades/edit/{id}',[new GradesController, 'edit']);
-$map('POST', '/src/plataforma/app/teacher/grades/update/{id}',[new GradesController, 'update']);
+// Calificaciones (vista nueva de captura por parcial)
+$map('GET',  '/src/plataforma/app/teacher/grades',              [new TeacherGradesController, 'index']);
+$map('POST', '/src/plataforma/app/teacher/grades/save',         [new TeacherGradesController, 'save']);
+
+// Si todavía usas el CRUD viejo de GradesController, déjalas:
+$map('GET',  '/src/plataforma/app/teacher/grades/create',       [new GradesController, 'create']);
+$map('POST', '/src/plataforma/app/teacher/grades/store',        [new GradesController, 'store']);
+$map('GET',  '/src/plataforma/app/teacher/grades/edit/{id}',    [new GradesController, 'edit']);
+$map('POST', '/src/plataforma/app/teacher/grades/update/{id}',  [new GradesController, 'update']);
+
 
 /* ========== Teacher Surveys Routes ========== */
 $map('GET',  '/src/plataforma/app/teacher/surveys',          [new SurveysController, 'index']);

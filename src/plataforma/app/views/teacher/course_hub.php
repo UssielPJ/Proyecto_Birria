@@ -127,12 +127,8 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
                   ?>
                   <option value="<?= (int)($at->id ?? 0) ?>"
                           data-slug="<?= $esc($slug) ?>"
-                          data-default-weight="<?= $esc((float)($at->default_weight ?? 0)) ?>"
                           data-default-attempts="<?= (int)($at->default_max_attempts ?? 1) ?>">
                     <?= $esc($at->name ?? '') ?>
-                    <?php if (isset($at->default_weight) && $at->default_weight > 0): ?>
-                      (<?= $esc((float)$at->default_weight) ?>%)
-                    <?php endif; ?>
                   </option>
                 <?php endforeach; ?>
               <?php endif; ?>
@@ -150,13 +146,7 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
           </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-3">
-          <div>
-            <label class="label">Peso en el parcial (%)</label>
-            <input class="input" type="number" name="weight_percent" id="activity-weight"
-                   step="0.01" min="0" max="100" placeholder="Ej. 10">
-            <p class="help-text">Si lo dejas vacío se usa el valor sugerido del tipo.</p>
-          </div>
+        <div class="grid md:grid-cols-2 gap-3">
           <div>
             <label class="label">Intentos permitidos</label>
             <input class="input" type="number" name="max_attempts" id="activity-attempts"
@@ -248,11 +238,6 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
                     <?php if (!empty($t->activity_type_name)): ?>
                       <span class="pill pill-type">
                         <?= $esc($t->activity_type_name) ?>
-                      </span>
-                    <?php endif; ?>
-                    <?php if (isset($t->weight_percent) && $t->weight_percent > 0): ?>
-                      <span class="pill pill-weight">
-                        Peso: <?= $esc((float)$t->weight_percent) ?>%
                       </span>
                     <?php endif; ?>
                     <?php
@@ -485,16 +470,6 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
     background:#1e1b4b;
     color:#c7d2fe;
   }
-  .pill-weight{
-    border-color:#22c55e;
-    background:#ecfdf3;
-    color:#15803d;
-  }
-  .dark .pill-weight{
-    border-color:#16a34a;
-    background:#052e16;
-    color:#bbf7d0;
-  }
 
   .hidden{display:none;}
 
@@ -594,9 +569,7 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
   // ===== Lógica de tipo de actividad (normal vs examen) =====
   (function () {
     const typeSelect     = document.getElementById('activity-type');
-    const weightInput    = document.getElementById('activity-weight');
     const attemptsInput  = document.getElementById('activity-attempts');
-    const pointsInput    = document.getElementById('activity-points');
 
     const blockBasic     = document.getElementById('block-basic-activity');
     const blockExam      = document.getElementById('block-exam-activity');
@@ -609,13 +582,9 @@ $resoCount  = is_array($resources) ? count($resources) : 0;
     function updateMode() {
       const opt = typeSelect.options[typeSelect.selectedIndex];
       const slug = opt?.dataset.slug || '';
-      const defaultWeight   = parseFloat(opt?.dataset.defaultWeight || '0');
       const defaultAttempts = parseInt(opt?.dataset.defaultAttempts || '1', 10);
 
-      // Autorellenar peso e intentos si están vacíos
-      if (!weightInput.value && !isNaN(defaultWeight)) {
-        weightInput.value = defaultWeight > 0 ? defaultWeight : '';
-      }
+      // Autorellenar intentos si están vacíos
       if (!attemptsInput.value && !isNaN(defaultAttempts)) {
         attemptsInput.value = defaultAttempts > 0 ? defaultAttempts : '';
       }

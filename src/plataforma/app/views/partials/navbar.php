@@ -29,7 +29,6 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
 
       // Operación escolar
       ['href' => '/src/plataforma/app/admin/grades',             'icon' => 'award',       'text' => 'Calificaciones'],
-      ['href' => '/src/plataforma/app/admin/scholarships',       'icon' => 'gift',        'text' => 'Becas'],
       ['href' => '/src/plataforma/app/admin/surveys',            'icon' => 'clipboard',   'text' => 'Encuestas'],
       ['href' => '/src/plataforma/app/admin/payments',           'icon' => 'dollar-sign', 'text' => 'Pagos'],
 
@@ -47,7 +46,6 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
         ['href' => '/src/plataforma/app/tareas',           'icon' => 'check-square','text' => 'Tareas'],
         ['href' => '/src/plataforma/app/horario',           'icon' => 'calendar',   'text' => 'Horario'],
         ['href' => '/src/plataforma/app/calificaciones',    'icon' => 'award',      'text' => 'Calificaciones'],
-        ['href' => '/src/plataforma/app/scholarships',      'icon' => 'gift',       'text' => 'Becas'],
         ['href' => '/src/plataforma/app/surveys',           'icon' => 'clipboard',  'text' => 'Encuestas'],
         ['href' => '/src/plataforma/app/anuncios',          'icon' => 'bell',       'text' => 'Anuncios'],
         ['href' => '/src/plataforma/app/chat',      'icon' => 'message-circle','text' => 'Chat'],
