@@ -2,11 +2,11 @@
 
 return [
   'db' => [
-    'host'    => 'shuttle.proxy.rlwy.net',   
-    'port'    => 14430,
+    'host'    => 'trolley.proxy.rlwy.net',   
+    'port'    => 40949,
     'name'    => 'railway', 
     'user'    => 'root',        
-    'pass'    => 'kkVCaOrerigVRIIiCdtTYEPFwnDJXCxs',            
+    'pass'    => 'eKPhmDSkAzlaeBcuDgdNErBZNlOdzXWt',            
     'charset' => 'utf8mb4',
   ],
   'app' => [
@@ -18,4 +18,5 @@ return [
       'http://127.0.0.1/Proyecto_Birria',
     ],
   ],
+    'jwt_secret' => 'F4uqAgozCh0B2SKkEa3A3UDIFxt+OExv72heTEUtGlM=',
 ];
