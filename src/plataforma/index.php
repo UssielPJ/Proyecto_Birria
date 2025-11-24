@@ -79,6 +79,7 @@ use App\Controllers\HorariosController;
 use App\Controllers\AttendanceController;
 use App\Controllers\TeacherGradesController;
 use App\Controllers\StudentGradesController;
+use App\Controllers\TeacherStudentsController;
 
 $router = new Router();
 
@@ -178,8 +179,16 @@ $map('POST', '/src/plataforma/app/teacher/courses/resource/store', [new TeacherC
 
 // Horario para DOCENTE (vista propia del maestro)
 $map('GET', '/src/plataforma/app/teacher/horario', [new HorariosController, 'horarioDocente']);
-$map('GET', '/src/plataforma/app/teacher/students',   [new StudentsController, 'index']);
+// === Gestión de estudiantes del maestro ===
+$map('GET',  '/src/plataforma/app/teacher/students',             [new TeacherStudentsController, 'index']);
+$map('GET',  '/src/plataforma/app/teacher/students/seleccionar', [new TeacherStudentsController, 'seleccionar']);
+$map('POST', '/src/plataforma/app/teacher/students/guardar',     [new TeacherStudentsController, 'guardarAsistencia']);
+
+/* ========== Teacher Attendance Routes ========== */
 $map('GET', '/src/plataforma/app/teacher/attendance', [new AttendanceController, 'index']);
+$map('GET',  '/src/plataforma/app/teacher/attendance/obtenerAlumnos', [new AttendanceController, 'obtenerAlumnos']);
+$map('POST', '/src/plataforma/app/teacher/attendance/save',           [new AttendanceController, 'save']);
+/* ========== Teacher Announcements Routes ========== */
 $map('GET', '/src/plataforma/app/teacher/announcements', [new AnnouncementsController, 'index']);
 
 /* ========== Teacher Subjects Routes ========== */

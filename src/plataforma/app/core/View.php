@@ -15,6 +15,7 @@ class View
     $base      = __DIR__ . '/../views';
     $viewFile  = $base . '/' . ltrim($view, '/') . '.php';
     $layoutFile = $layout ? $base . '/layouts/' . ltrim($layout, '/') . '.php' : null;
+    
 
     // variables disponibles en la vista/layout
     extract($data, EXTR_OVERWRITE);
@@ -22,6 +23,7 @@ class View
     // Render de la vista a buffer
     ob_start();
     if (is_file($viewFile)) {
+      
       include $viewFile;
     } else {
       echo "<!-- View no encontrada: {$viewFile} -->";

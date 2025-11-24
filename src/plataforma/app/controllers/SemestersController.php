@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Core\Database;
+use PDO;
 
 class SemestersController
 {
@@ -19,22 +20,99 @@ class SemestersController
     }
 
     /* ========== INDEX ========== */
-    public function index() {
-        $this->requireRole(['admin']);
-        $db = new Database();
+    public function index()
+{
+    $this->requireRole(['admin']);
+    $db = new Database();
 
-        // Trae semestres con la carrera (para listar bonito)
-        $db->query("
-            SELECT s.id, s.carrera_id, s.numero, s.clave,
-                   c.nombre AS carrera_nombre, c.iniciales AS carrera_iniciales
-            FROM semestres s
-            LEFT JOIN carreras c ON c.id = s.carrera_id
-            ORDER BY c.nombre ASC, s.numero ASC
-        ");
-        $semestres = $db->fetchAll(); // objetos
+    // Parámetros desde la URL
+    $buscar    = trim($_GET['q'] ?? '');
+    $career_id = $_GET['career_id'] ?? '';
+    $page      = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $limit     = 10;
+    $offset    = ($page - 1) * $limit;
 
-        View::render('admin/semesters/index', 'admin', ['semestres' => $semestres]);
+    // WHERE dinámico
+    $where  = [];
+    $params = [];
+
+    if ($buscar !== '') {
+        $where[] = "(c.nombre LIKE :b1 
+                     OR c.iniciales LIKE :b2 
+                     OR s.clave LIKE :b3" 
+                 . (ctype_digit($buscar) ? " OR s.numero = :num" : "")
+                 . ")";
+        $params['b1'] = "%{$buscar}%";
+        $params['b2'] = "%{$buscar}%";
+        $params['b3'] = "%{$buscar}%";
+        if (ctype_digit($buscar)) {
+            $params['num'] = (int)$buscar;
+        }
     }
+
+    if ($career_id !== '') {
+        $where[] = "s.carrera_id = :career_id";
+        $params['career_id'] = (int)$career_id;
+    }
+
+    $whereClause = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
+
+    // ==== TOTAL DE REGISTROS ====
+    $sqlTotal = "
+        SELECT COUNT(*) AS total
+        FROM semestres s
+        LEFT JOIN carreras c ON c.id = s.carrera_id
+        $whereClause
+    ";
+    $stmt  = $db->query($sqlTotal, $params);
+    $row   = $stmt->fetch(PDO::FETCH_ASSOC) ?: ['total' => 0];
+    $total = (int)$row['total'];
+    $totalPages = max(1, (int)ceil($total / $limit));
+
+    // ==== LISTADO PAGINADO ====
+    $sql = "
+        SELECT 
+            s.id, s.carrera_id, s.numero, s.clave,
+            c.nombre AS carrera_nombre, 
+            c.iniciales AS carrera_iniciales
+        FROM semestres s
+        LEFT JOIN carreras c ON c.id = s.carrera_id
+        $whereClause
+        ORDER BY c.nombre ASC, s.numero ASC
+        LIMIT :offset, :limit
+    ";
+
+    // Para LIMIT/OFFSET creamos un arreglo aparte
+    $paramsListado = $params;
+    $paramsListado['offset'] = $offset;
+    $paramsListado['limit']  = $limit;
+
+    $stmt = $db->query($sql, $paramsListado);
+    $semestres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // ==== CARRERAS ACTIVAS PARA EL SELECT ====
+    $stmt = $db->query("
+        SELECT id, nombre, iniciales
+        FROM carreras
+        WHERE status = 'activa'
+        ORDER BY nombre ASC
+    ");
+    $careers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Enviamos TODO lo que la vista usa
+    View::render('admin/semesters/index', 'admin', [
+        'semestres'   => $semestres,
+        'careers'     => $careers,
+        'buscar'      => $buscar,
+        'career_id'   => $career_id,
+        'page'        => $page,
+        'total'       => $total,
+        'totalPages'  => $totalPages,
+        'limit'       => $limit,
+        'offset'      => $offset,
+    ]);
+}
+
 
     /* ========== CREATE ========== */
     public function create() {
