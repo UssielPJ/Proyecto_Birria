@@ -21,121 +21,90 @@ class TeacherStudentsController
         $this->requireLogin();
         $userRoles = $_SESSION['user']['roles'] ?? [];
         foreach ($roles as $r) {
-            if (in_array($r, $userRoles, true)) {
-                return;
-            }
+            if (in_array($r, $userRoles, true)) return;
         }
         header('Location: /src/plataforma/login');
         exit;
     }
 
-    /* ========= VISTA PRINCIPAL ========= */
-    public function index() {
+    /* ======================================================
+     * VISTA PRINCIPAL – Gestión de estudiantes
+     * ====================================================== */
+    public function index()
+    {
         $this->requireRole(['teacher']);
 
         $db     = new Database();
         $userId = $_SESSION['user']['id'];
 
-        // Grupos asignados al maestro (FETCH_ASSOC)
+        // Obtener los grupos asignados al maestro
         $db->query("
-            SELECT g.*
+            SELECT 
+                g.id AS group_id,
+                g.codigo,
+                g.titulo AS grupo_titulo
             FROM materia_grupo_profesor mgp
             INNER JOIN materias_grupos mg ON mg.id = mgp.mg_id
             INNER JOIN grupos g ON g.id = mg.grupo_id
             WHERE mgp.teacher_user_id = ?
             GROUP BY g.id
-            ORDER BY g.id
+            ORDER BY g.codigo ASC
         ", [$userId]);
 
-        $gruposAsignados = $db->fetchAll(PDO::FETCH_ASSOC);
+        $grupos = $db->fetchAll(PDO::FETCH_OBJ);
 
         View::render('teacher/students/index', 'teacher', [
-            'title'           => 'Gestión de Estudiantes',
-            'gruposAsignados' => $gruposAsignados,
+            'grupos' => $grupos
         ]);
     }
 
-    /* ========= SELECCIONAR ACCIÓN ========= */
-    public function seleccionar() {
+    /* ======================================================
+     * AJAX – Obtener alumnos del grupo seleccionado
+     * URL: /teacher/students/obtenerAlumnos?group_id=1
+     * ====================================================== */
+    public function obtenerAlumnos()
+    {
         $this->requireRole(['teacher']);
+        header('Content-Type: application/json; charset=utf-8');
 
-        $tipo    = $_GET['tipo']     ?? null;
-        $grupoId = $_GET['grupo_id'] ?? null;
+        try {
+            $groupId = isset($_GET['group_id']) ? (int)$_GET['group_id'] : 0;
 
-        if (!$tipo || !$grupoId) {
-            header('Location: /src/plataforma/app/teacher/students');
-            exit;
+            if ($groupId <= 0) {
+                echo json_encode([
+                    'ok' => false,
+                    'msg' => 'Grupo inválido',
+                    'alumnos' => []
+                ]);
+                return;
+            }
+
+            $db = new Database();
+
+            $alumnos = $db->query("
+                SELECT 
+                    u.id AS user_id,
+                    u.nombre,
+                    u.apellido_paterno,
+                    u.apellido_materno,
+                    sp.matricula
+                FROM student_profiles sp
+                INNER JOIN users u ON u.id = sp.user_id
+                WHERE sp.grupo_id = ?
+                ORDER BY u.apellido_paterno, u.apellido_materno, u.nombre
+            ", [$groupId])->fetchAll(PDO::FETCH_ASSOC);
+
+            echo json_encode([
+                'ok'      => true,
+                'alumnos' => $alumnos
+            ]);
+
+        } catch (\Throwable $e) {
+            echo json_encode([
+                'ok'   => false,
+                'msg'  => 'Error en el servidor',
+                'debug'=> $e->getMessage()
+            ]);
         }
-
-        if ($tipo === 'calificaciones') {
-            header('Location: /src/plataforma/app/teacher/grades?grupo_id='.(int)$grupoId);
-            exit;
-        }
-
-        if ($tipo === 'asistencia') {
-            return $this->asistenciaVista((int)$grupoId);
-        }
-
-        header('Location: /src/plataforma/app/teacher/students');
-        exit;
-    }
-
-    /* ========= VISTA ASISTENCIA ========= */
-    private function asistenciaVista(int $grupoId) {
-        $this->requireRole(['teacher']);
-
-        $db = new Database();
-
-        $db->query("
-            SELECT u.id, u.nombre
-            FROM student_profiles sp
-            INNER JOIN users u ON u.id = sp.user_id
-            WHERE sp.grupo_id = ?
-            ORDER BY u.nombre
-        ", [$grupoId]);
-
-        $alumnos = $db->fetchAll(PDO::FETCH_ASSOC);
-
-        View::render('teacher/students/asistencia', 'teacher', [
-            'title'   => 'Registro de Asistencia',
-            'grupoId' => $grupoId,
-            'alumnos' => $alumnos,
-        ]);
-    }
-
-    /* ========= GUARDAR ASISTENCIA ========= */
-    public function guardarAsistencia() {
-        $this->requireRole(['teacher']);
-
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $grupoId = (int)($_POST['grupo_id'] ?? 0);
-        $fecha   = $_POST['fecha'] ?? null;
-        $alumnos = $_POST['alumnos'] ?? [];
-
-        if (!$grupoId || !$fecha || empty($alumnos)) {
-            $_SESSION['error'] = 'Faltan datos para registrar la asistencia.';
-            header('Location: /src/plataforma/app/teacher/students');
-            exit;
-        }
-
-        $db = new Database();
-
-        foreach ($alumnos as $alumnoId => $estado) {
-            $alumnoId = (int)$alumnoId;
-            $estado   = trim((string)$estado);
-            if (!$alumnoId || $estado === '') continue;
-
-            $db->query("
-                INSERT INTO asistencias (alumno_id, grupo_id, fecha, estado, created_at)
-                VALUES (?, ?, ?, ?, NOW())
-            ", [$alumnoId, $grupoId, $fecha, $estado]);
-        }
-
-        $_SESSION['success'] = 'Asistencia registrada correctamente.';
-        header('Location: /src/plataforma/app/teacher/students');
-        exit;
     }
 }

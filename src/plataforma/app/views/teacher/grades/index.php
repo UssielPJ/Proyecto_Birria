@@ -10,9 +10,10 @@
 
 $esc = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
 
-$selectedGroup   = $currentFilter['group_id']   ?? '';
-$selectedSubject = $currentFilter['subject_id'] ?? '';
-$selectedPartial = $currentFilter['partial_id'] ?? '';
+$selectedGroup       = $currentFilter['group_id']   ?? '';
+$selectedSubject     = $currentFilter['subject_id'] ?? '';
+$selectedPartial     = $currentFilter['partial_id'] ?? '';
+$selectedStudentId   = $currentFilter['student_id'] ?? null; // 🔹 NUEVO
 ?>
 
 <div class="max-w-7xl mx-auto px-4 py-6">
@@ -109,10 +110,31 @@ $selectedPartial = $currentFilter['partial_id'] ?? '';
                 </button>
             </div>
         </div>
+
+        <?php if (!empty($selectedStudentId)): ?>
+            <!-- 🔹 Mantener el filtro de alumno cuando se cambian los filtros -->
+            <input type="hidden" name="student_id" value="<?= $esc($selectedStudentId) ?>">
+        <?php endif; ?>
     </form>
 
     <!-- Zona de captura de calificaciones -->
     <?php if ($selectedGroup && $selectedSubject && $selectedPartial): ?>
+
+        <?php if (!empty($selectedStudentId) && !empty($students)): ?>
+            <!-- 🔹 Aviso de que estás filtrando a un solo alumno -->
+            <div class="mb-4 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800 rounded-xl px-4 py-3 text-xs text-emerald-700 dark:text-emerald-200 flex items-center gap-2">
+                <i data-feather="user-check" class="w-4 h-4"></i>
+                <span>
+                    Visualizando calificaciones para el estudiante:
+                    <span class="font-semibold">
+                        <?= $esc($students[0]['nombre'] ?? 'Estudiante') ?>
+                        <?php if (!empty($students[0]['matricula'])): ?>
+                            (<?= $esc($students[0]['matricula']) ?>)
+                        <?php endif; ?>
+                    </span>
+                </span>
+            </div>
+        <?php endif; ?>
 
         <?php if (!empty($students) && !empty($activities)): ?>
             <form
@@ -124,6 +146,11 @@ $selectedPartial = $currentFilter['partial_id'] ?? '';
                 <input type="hidden" name="group_id" value="<?= $esc($selectedGroup) ?>">
                 <input type="hidden" name="subject_id" value="<?= $esc($selectedSubject) ?>">
                 <input type="hidden" name="partial_id" value="<?= $esc($selectedPartial) ?>">
+
+                <?php if (!empty($selectedStudentId)): ?>
+                    <!-- 🔹 Para que save() conserve el filtro de alumno -->
+                    <input type="hidden" name="student_id" value="<?= $esc($selectedStudentId) ?>">
+                <?php endif; ?>
 
                 <div class="px-4 py-3 md:px-6 md:py-4 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-2">
                     <div>

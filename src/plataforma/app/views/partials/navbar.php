@@ -30,7 +30,6 @@ $role = $_SESSION['user']['roles'][0] ?? 'student';
       // Operación escolar
       ['href' => '/src/plataforma/app/admin/grades',             'icon' => 'award',       'text' => 'Calificaciones'],
       ['href' => '/src/plataforma/app/admin/surveys',            'icon' => 'clipboard',   'text' => 'Encuestas'],
-      ['href' => '/src/plataforma/app/admin/payments',           'icon' => 'dollar-sign', 'text' => 'Pagos'],
 
       // Sistema y comunicación
       ['href' => '/src/plataforma/app/admin/announcements',      'icon' => 'bell',        'text' => 'Anuncios'],

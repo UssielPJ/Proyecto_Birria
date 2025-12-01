@@ -180,9 +180,9 @@ $map('POST', '/src/plataforma/app/teacher/courses/resource/store', [new TeacherC
 // Horario para DOCENTE (vista propia del maestro)
 $map('GET', '/src/plataforma/app/teacher/horario', [new HorariosController, 'horarioDocente']);
 // === Gestión de estudiantes del maestro ===
-$map('GET',  '/src/plataforma/app/teacher/students',             [new TeacherStudentsController, 'index']);
-$map('GET',  '/src/plataforma/app/teacher/students/seleccionar', [new TeacherStudentsController, 'seleccionar']);
-$map('POST', '/src/plataforma/app/teacher/students/guardar',     [new TeacherStudentsController, 'guardarAsistencia']);
+$map('GET', '/src/plataforma/app/teacher/students',                [new TeacherStudentsController, 'index']);
+$map('GET', '/src/plataforma/app/teacher/students/obtenerAlumnos', [new TeacherStudentsController, 'obtenerAlumnos']);
+
 
 /* ========== Teacher Attendance Routes ========== */
 $map('GET', '/src/plataforma/app/teacher/attendance', [new AttendanceController, 'index']);

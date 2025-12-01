@@ -380,7 +380,7 @@ class HorariosController
 
         unset($_SESSION['horario_borrador_' . $groupId]);
 
-        header('Location: /src/plataforma/app/admin/grupos/horario/' . $groupId);
+        header('Location: /src/plataforma/app/admin/groups/horario/' . $groupId);
         exit;
     }
 
